@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 
 @Component({
     selector: 'hero-widget',
-    imports: [ButtonModule, RippleModule],
+    imports: [ButtonModule, RippleModule, InputTextModule],
     template: `
-        <div
-            id="hero"
-            class="flex flex-col pt-6 px-6 lg:px-20 overflow-hidden"
-            style="background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), radial-gradient(77.36% 256.97% at 77.36% 57.52%, rgb(238, 239, 175) 0%, rgb(195, 227, 250) 100%); clip-path: ellipse(150% 87% at 93% 13%)"
-        >
+        <div id="hero" class="flex flex-col pt-6 px-6 pb-6 lg:px-20 overflow-hidden bg-green-200 md:flex-row md:items-center md:justify-between rounded-border">
             <div class="mx-6 md:mx-20 mt-0 md:mt-6">
-                <h1 class="text-6xl font-bold text-gray-900 leading-tight dark:!text-gray-700"><span class="font-light block">Eu sem integer</span>eget magna fermentum</h1>
-                <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">Sed blandit libero volutpat sed cras. Fames ac turpis egestas integer. Placerat in egestas erat...</p>
-                <button pButton pRipple [rounded]="true" type="button" label="Get Started" class="text-xl! mt-8 px-4!"></button>
+                <h1 class="text-6xl font-bold text-gray-900 leading-tight dark:!text-gray-700"><span class="font-light block">Vos cours</span>à votre portée</h1>
+                <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">Reserver, payer, consulter et suivre vos cours facilement.</p>
+                <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
+                    <input pInputText type="text" placeholder="Rechercher un cours" class="w-full md:w-64 !h-[45px] !min-h-[45px] flex-1" />
+                    <button pButton pRipple type="button" label="Réserver" class="text-xl! "></button>
+                </div>
             </div>
-            <div class="flex justify-center md:justify-end">
-                <img src="https://primefaces.org/cdn/templates/sakai/landing/screen-1.png" alt="Hero Image" class="w-9/12 md:w-auto" />
+            <div class="flex justify-center md:justify-end  mt-6 md:mt-0">
+                <img src="assets/banner.webp" alt="Hero Image" class="w-full md:w-[400px] h-auto" />
             </div>
         </div>
     `

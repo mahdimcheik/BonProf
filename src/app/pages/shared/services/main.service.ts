@@ -14,4 +14,11 @@ export class MainService {
             { label: 'Mentions Légales', routerLink: '/mentions-legales' }
         ] as MenuItem[];
     });
+
+    mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
+        return [
+            { label: 'Connexion', routerLink: '/auth/login' },
+            { label: 'Inscription', routerLink: '/auth/register' }
+        ] as MenuItem[];
+    });
 }
