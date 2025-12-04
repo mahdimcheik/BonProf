@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class MainService {
     ApplicationName = 'BonProf';
+    logoUrl = 'assets/bird.svg';
 
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         return [

@@ -18,8 +18,8 @@ import { Component } from '@angular/core';
                         <div class="flex items-center justify-center bg-yellow-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
                             <i class="pi pi-fw pi-users text-2xl! text-yellow-700"></i>
                         </div>
-                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Easy to Use</h5>
-                        <span class="text-surface-600 dark:text-surface-200">Posuere morbi leo urna molestie.</span>
+                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Facilité</h5>
+                        <span class="text-surface-600 dark:text-surface-200">Intuitive et simple à utiliser</span>
                     </div>
                 </div>
             </div>
@@ -30,8 +30,8 @@ import { Component } from '@angular/core';
                         <div class="flex items-center justify-center bg-cyan-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
                             <i class="pi pi-fw pi-palette text-2xl! text-cyan-700"></i>
                         </div>
-                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Fresh Design</h5>
-                        <span class="text-surface-600 dark:text-surface-200">Semper risus in hendrerit.</span>
+                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Design frais</h5>
+                        <span class="text-surface-600 dark:text-surface-200">Expérience agréable et moderne</span>
                     </div>
                 </div>
             </div>
@@ -42,8 +42,8 @@ import { Component } from '@angular/core';
                         <div class="flex items-center justify-center bg-purple-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
                             <i class="pi pi-fw pi-eye text-2xl! text-purple-700"></i>
                         </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Privacy</div>
-                        <span class="text-surface-600 dark:text-surface-200">Neque egestas congue quisque.</span>
+                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Confidentialité</div>
+                        <span class="text-surface-600 dark:text-surface-200">Sécurité et protection des données</span>
                     </div>
                 </div>
             </div>
