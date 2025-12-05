@@ -6,6 +6,9 @@ import Aura from '@primeuix/themes/aura';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
+import { environment } from './environments/environment';
+
+const basePath = environment.API_URL;
 
 export const appConfig: ApplicationConfig = {
     providers: [
