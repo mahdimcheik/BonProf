@@ -6,6 +6,9 @@ import { HttpInterceptorFn } from '@angular/common/http';
  * @returns la requête modifiée avec les informations d'identification.
  */
 export const cookiesInterceptor: HttpInterceptorFn = (req, next) => {
+    if (req.withCredentials === false) {
+        return next(req);
+    }
     const modifiedReq = req.clone({
         withCredentials: true
     });
