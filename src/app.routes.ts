@@ -19,6 +19,10 @@ export const appRoutes: Routes = [
             {
                 path: 'mentions-legales',
                 component: MentionsLegalesPage
+            },
+            {
+                path: 'auth',
+                loadChildren: () => import('./app/pages/auth/auth.routes')
             }
         ]
     },

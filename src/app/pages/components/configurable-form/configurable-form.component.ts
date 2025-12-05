@@ -17,7 +17,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { CustomUploadFileComponent } from './custom-upload-file/custom-upload-file.component';
 import { errorMessages, FormField, FormFieldGroup, Structure } from './related-models';
 @Component({
-    selector: 'app-configurable-form',
+    selector: 'bp-configurable-form',
     styleUrls: ['./configurable-form.component.scss'],
     standalone: true,
     imports: [

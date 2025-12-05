@@ -15,7 +15,9 @@ import { TopbarWidget } from './components/topbarwidget.component';
         <div class="bg-surface-0 dark:bg-surface-900">
             <div id="home" class="landing-wrapper overflow-hidden">
                 <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
-                <router-outlet></router-outlet>
+                <div class="min-h-[calc(100dvh-230px)]">
+                    <router-outlet></router-outlet>
+                </div>
                 <footer-widget />
             </div>
         </div>
