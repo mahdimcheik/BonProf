@@ -18,12 +18,10 @@ import { firstValueFrom } from 'rxjs';
                 <h1 class="text-6xl font-bold text-gray-900 leading-tight dark:!text-gray-700"><span class="font-light block">Vos cours</span>à votre portée</h1>
                 <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">Reserver, payer, consulter et suivre vos cours facilement.</p>
                 <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
-                    <!-- <input pInputText type="text" placeholder="Rechercher un cours" class="w-full md:w-64 !h-[45px] !min-h-[45px] flex-1" /> -->
                     <p-autocomplete (completeMethod)="search($event)" [suggestions]="cities()" optionLabel="name" class="!w-full !md:w-64 !h-[45px] !min-h-[45px] flex-1">
-                        <!-- (completeMethod)="filterCountry($event)" -->
                         <ng-template let-cityDetails #item>
                             <div class="flex items-center gap-2">
-                                <div>{{ cityDetails.properties.cityCode }} {{ cityDetails.properties.city }}</div>
+                                <div>{{ cityDetails.properties.postcode }} {{ cityDetails.properties.city }}</div>
                             </div>
                         </ng-template>
                         <ng-template #header>
