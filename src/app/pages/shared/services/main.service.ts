@@ -52,7 +52,7 @@ export class MainService {
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
         if (user && user.email) {
-            return [];
+            return [{ label: 'Deconnexion', routerLink: '/auth/logout', command: () => this.logout().subscribe() }];
         }
         return [
             { label: 'Connexion', routerLink: '/auth/login' },

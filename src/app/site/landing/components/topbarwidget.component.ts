@@ -1,25 +1,22 @@
-import { AppFloatingConfigurator } from '@/layout/component/app.floatingconfigurator';
 import { LayoutService } from '@/layout/service/layout.service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { DrawerModule } from 'primeng/drawer';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, AppFloatingConfigurator, OverlayBadgeModule, AvatarModule],
+    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule],
     template: `<a class="flex items-center" href="#">
             <img src="assets/bird.svg" alt="SAKAI Logo" class="mr-3" width="40" height="40" />
 
             <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">{{ mainService.ApplicationName }}</span>
-        </a>
-
-        <a pButton [text]="true" severity="secondary" [rounded]="true" pRipple class="lg:hidden!" pStyleClass="@next" enterFromClass="hidden" leaveToClass="hidden" [hideOnOutsideClick]="true">
-            <i class="pi pi-bars text-2xl!"></i>
         </a>
 
         <div class="items-center bg-surface-0 dark:bg-surface-900 grow justify-between hidden lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
@@ -46,12 +43,48 @@ import { StyleClassModule } from 'primeng/styleclass';
                     <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" class="ml-2" shape="circle" [style]="{ width: '35px', height: '35px' }" />
                 }
             </div>
-        </div> `
+        </div>
+        @if (!mobileMenuVisible()) {
+            <a pButton [text]="true" severity="secondary" [rounded]="true" pRipple class="lg:hidden!" (click)="toggleMenu()">
+                <i class="pi pi-bars text-2xl!"></i>
+            </a>
+
+        } @else {
+            <p-drawer [(visible)]="mobileMenuVisible" position="left" [baseZIndex]="1000" styleClass="!w-full md:!w-100 lg:!w-[50rem] md:!mb-0 lg:!mb-0">
+                <ul class="list-none p-0 m-0 flex select-none flex-col cursor-pointer gap-8 w-full justify-center items-center h-full">
+                    @for (item of mainItems(); track $index) {
+                        <li>
+                            <a [routerLink]="item.routerLink" pRipple class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl menu-link" routerLinkActive="active-route" [routerLinkActiveOptions]="{ exact: false }">
+                                <span class="layout-menuitem-text">{{ item.label }}</span>
+                            </a>
+                        </li>
+                    }
+                    <p-divider layout="horizontal" type="solid" [style]="{ width: '100%' }"></p-divider>
+                    @for (item of authItems(); track $index) {
+                        <li>
+                            <a
+                                [routerLink]="item.routerLink ?? ''"
+                                (click)="excuteCommand(item)"
+                                pRipple
+                                class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl menu-link"
+                                routerLinkActive="active-route"
+                                [routerLinkActiveOptions]="{ exact: false }"
+                            >
+                                <span class="layout-menuitem-text">{{ item.label }}</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </p-drawer>
+        }`
 })
 export class TopbarWidget {
     router = inject(Router);
     mainService = inject(MainService);
     layoutService = inject(LayoutService);
+    mobileMenuVisible = signal(false);
+    mainItems = this.mainService.mainTopbarLinks;
+    authItems = this.mainService.mainTopbarSecondaryLinks;
 
     isDarkTheme = computed(() => this.layoutService.layoutConfig().darkTheme);
     notificationsNumber = signal(3);
@@ -62,5 +95,15 @@ export class TopbarWidget {
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+    }
+
+    excuteCommand(item: any) {
+        if (item.command) {
+            item.command(item);
+        }
+    }
+
+    toggleMenu() {
+        this.mobileMenuVisible.set(true);
     }
 }
