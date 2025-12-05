@@ -1,15 +1,17 @@
 import { AppFloatingConfigurator } from '@/layout/component/app.floatingconfigurator';
 import { LayoutService } from '@/layout/service/layout.service';
 import { MainService } from '@/pages/shared/services/main.service';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, AppFloatingConfigurator],
+    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, AppFloatingConfigurator, OverlayBadgeModule, AvatarModule],
     template: `<a class="flex items-center" href="#">
             <img src="assets/bird.svg" alt="SAKAI Logo" class="mr-3" width="40" height="40" />
 
@@ -30,11 +32,19 @@ import { StyleClassModule } from 'primeng/styleclass';
                     </li>
                 }
             </ul>
-            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
-                @for (link of mainService.mainTopbarSecondaryLinks(); track link.label) {
-                    <button pButton pRipple [label]="link.label ?? ''" [routerLink]="link.routerLink" [text]="true"></button>
-                }
+            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-3">
                 <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
+
+                @if (mainService.mainTopbarSecondaryLinks().length > 0 && !mainService.userConnected().email) {
+                    @for (link of mainService.mainTopbarSecondaryLinks(); track link.label) {
+                        <button pButton pRipple [label]="link.label ?? ''" [routerLink]="link.routerLink" [text]="true"></button>
+                    }
+                } @else {
+                    <p-overlaybadge [value]="notioficationsFormatted()">
+                        <i class="pi pi-bell" style="font-size: 2rem"></i>
+                    </p-overlaybadge>
+                    <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" class="ml-2" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                }
             </div>
         </div> `
 })
@@ -44,6 +54,11 @@ export class TopbarWidget {
     layoutService = inject(LayoutService);
 
     isDarkTheme = computed(() => this.layoutService.layoutConfig().darkTheme);
+    notificationsNumber = signal(3);
+    notioficationsFormatted = computed(() => {
+        const num = this.notificationsNumber();
+        return num > 9 ? '9+' : num.toString();
+    });
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));

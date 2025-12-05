@@ -1,4 +1,5 @@
 import { isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
+import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
 import { Landing } from '@/site/landing/landing';
 import { MainPage } from '@/site/landing/pages/main-page/main-page';
 import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/mentions-legales-page';
@@ -12,6 +13,9 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: Landing,
+        resolve: {
+            connection: connectionResolver
+        },
         children: [
             {
                 path: '',

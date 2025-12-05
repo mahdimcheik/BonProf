@@ -50,6 +50,10 @@ export class MainService {
     });
 
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
+        const user = this.userConnected();
+        if (user && user.email) {
+            return [];
+        }
         return [
             { label: 'Connexion', routerLink: '/auth/login' },
             { label: 'Inscription', routerLink: '/auth/register' }
@@ -87,6 +91,11 @@ export class MainService {
                     status: response.status!,
                     data: response.data as LoginOutputDTO
                 };
+            }),
+            tap((res) => {
+                this.token.set(res.data?.token ?? '');
+                this.userConnected.set(res.data?.user as UserDetailsDTO);
+                this.localStorageService.setUser(res.data?.user ?? '');
             })
         );
     }
