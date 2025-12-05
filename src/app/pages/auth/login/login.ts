@@ -1,6 +1,7 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { LogoComponent } from '@/pages/components/logo/logo.component';
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -10,7 +11,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
-import { AuthService, UserLoginDTO } from 'src/client';
+import { catchError } from 'rxjs';
+import { UserLoginDTO } from 'src/client';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +22,7 @@ import { AuthService, UserLoginDTO } from 'src/client';
 })
 export class Login {
     router = inject(Router);
-    authService = inject(AuthService);
+    authService = inject(MainService);
     messageService = inject(MessageService);
 
     loginFormStructure: Structure = {
@@ -63,7 +65,6 @@ export class Login {
         ]
     };
 
-    // Handle form submission from configurable form
     handleFormSubmit(formGroup: FormGroup) {
         const formData = formGroup.value;
         const loginData = {
@@ -74,30 +75,28 @@ export class Login {
         this.loginWithData(loginData);
     }
 
-    // Original submit method (now private)
     private loginWithData(loginData: UserLoginDTO) {
-        // this.authService
-        //     .login(loginData)
-        //     .pipe(
-        //         catchError((err) => {
-        //             this.messageService.add({
-        //                 summary: 'Erreur',
-        //                 detail: 'Mauvais identifiants',
-        //                 severity: 'error'
-        //             });
-        //             this.badCredentials = true;
-        //             throw err;
-        //         })
-        //     )
-        //     .subscribe(() => {
-        //         this.messageService.add({
-        //             summary: 'Connexion réussie',
-        //             detail: `Bienvenue`,
-        //             severity: 'success',
-        //             life: 500,
-        //             icon: 'pi pi-check-circle'
-        //         });
-        //         this.router.navigate(['/']);
-        //     });
+        this.authService
+            .login(loginData)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        summary: 'Erreur',
+                        detail: 'Mauvais identifiants',
+                        severity: 'error'
+                    });
+                    throw err;
+                })
+            )
+            .subscribe(() => {
+                this.messageService.add({
+                    summary: 'Connexion réussie',
+                    detail: `Bienvenue`,
+                    severity: 'success',
+                    life: 500,
+                    icon: 'pi pi-check-circle'
+                });
+                this.router.navigate(['/']);
+            });
     }
 }

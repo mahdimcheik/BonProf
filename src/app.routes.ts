@@ -1,3 +1,4 @@
+import { isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { Landing } from '@/site/landing/landing';
 import { MainPage } from '@/site/landing/pages/main-page/main-page';
 import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/mentions-legales-page';
@@ -22,6 +23,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'auth',
+                canActivate: [isNotConnectedGuard],
                 loadChildren: () => import('./app/pages/auth/auth.routes')
             }
         ]
