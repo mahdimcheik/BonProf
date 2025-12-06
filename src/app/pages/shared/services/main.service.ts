@@ -52,7 +52,7 @@ export class MainService {
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
         if (user && user.email) {
-            return [{ label: 'Deconnexion', routerLink: '/auth/logout', command: () => this.logout().subscribe() }];
+            return [{ label: 'Deconnexion', command: () => this.logout().subscribe() }];
         }
         return [
             { label: 'Connexion', routerLink: '/auth/login' },
@@ -149,6 +149,11 @@ export class MainService {
         return this.authService.authLogoutGet().pipe(
             tap(() => {
                 this.router.navigate(['/']);
+                this.messageService.add({
+                    summary: 'Déconnexion réussie',
+                    detail: 'Vous avez été déconnecté avec succès.',
+                    severity: 'success'
+                });
             })
         );
     }

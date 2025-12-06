@@ -6,13 +6,14 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { DrawerModule } from 'primeng/drawer';
+import { Menu } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule],
+    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule, Menu],
     template: `<a class="flex items-center" href="#">
             <img src="assets/bird.svg" alt="SAKAI Logo" class="mr-3" width="40" height="40" />
 
@@ -29,26 +30,16 @@ import { StyleClassModule } from 'primeng/styleclass';
                     </li>
                 }
             </ul>
-            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-3">
+            <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-1">
                 <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
-
-                @if (mainService.mainTopbarSecondaryLinks().length > 0 && !mainService.userConnected().email) {
-                    @for (link of mainService.mainTopbarSecondaryLinks(); track link.label) {
-                        <button pButton pRipple [label]="link.label ?? ''" [routerLink]="link.routerLink" [text]="true"></button>
-                    }
-                } @else {
-                    <p-overlaybadge [value]="notioficationsFormatted()">
-                        <i class="pi pi-bell" style="font-size: 2rem"></i>
-                    </p-overlaybadge>
-                    <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" class="ml-2" shape="circle" [style]="{ width: '35px', height: '35px' }" />
-                }
+                <p-menu #menu [model]="authItems()" [popup]="true" />
+                <p-avatar (click)="menu.toggle($event)" [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
             </div>
         </div>
         @if (!mobileMenuVisible()) {
             <a pButton [text]="true" severity="secondary" [rounded]="true" pRipple class="lg:hidden!" (click)="toggleMenu()">
                 <i class="pi pi-bars text-2xl!"></i>
             </a>
-
         } @else {
             <p-drawer [(visible)]="mobileMenuVisible" position="left" [baseZIndex]="1000" styleClass="!w-full md:!w-100 lg:!w-[50rem] md:!mb-0 lg:!mb-0">
                 <ul class="list-none p-0 m-0 flex select-none flex-col cursor-pointer gap-8 w-full justify-center items-center h-full">
@@ -60,11 +51,17 @@ import { StyleClassModule } from 'primeng/styleclass';
                         </li>
                     }
                     <p-divider layout="horizontal" type="solid" [style]="{ width: '100%' }"></p-divider>
+                    <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
+                    @if (mainService.userConnected().email) {
+                        <li>
+                            <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                        </li>
+                    }
                     @for (item of authItems(); track $index) {
                         <li>
                             <a
                                 [routerLink]="item.routerLink ?? ''"
-                                (click)="excuteCommand(item)"
+                                (click)="excuteCommand(item); mobileMenuVisible.set(false)"
                                 pRipple
                                 class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl menu-link"
                                 routerLinkActive="active-route"
