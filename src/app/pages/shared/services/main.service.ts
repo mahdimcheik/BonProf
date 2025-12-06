@@ -6,14 +6,14 @@ import {
     AuthService,
     ForgotPasswordInput,
     LoginOutputDTO,
-    LoginOutputDTOResponseDTO,
-    ObjectResponseDTO,
+    LoginOutputDTOResponse,
+    ObjectResponse,
     PasswordRecoveryInput,
-    PasswordResetResponseDTOResponseDTO,
-    StringResponseDTO,
+    PasswordResetResponseDTOResponse,
+    StringResponse,
     UserCreateDTO,
     UserDetailsDTO,
-    UserDetailsDTOResponseDTO,
+    UserDetailsDTOResponse,
     UserLoginDTO
 } from 'src/client';
 import { environment } from 'src/environments/environment';
@@ -65,7 +65,7 @@ export class MainService {
      * @param userDTO les données de l'utilisateur à enregistrer
      * @returns Un observable contenant la réponse de l'API
      */
-    register(userDTO: UserCreateDTO): Observable<UserDetailsDTOResponseDTO> {
+    register(userDTO: UserCreateDTO): Observable<UserDetailsDTOResponse> {
         return this.authService.authRegisterPost(userDTO).pipe(
             catchError((error) => {
                 console.error("Erreur lors de l'inscription :", error);
@@ -73,7 +73,7 @@ export class MainService {
                     message: error.message ?? 'Erreur inconnue',
                     status: error.status ?? 500,
                     data: {} as UserDetailsDTO
-                } as UserDetailsDTOResponseDTO);
+                } as UserDetailsDTOResponse);
             })
         );
     }
@@ -83,7 +83,7 @@ export class MainService {
      * @param userLoginDTO les données de connexion de l'utilisateur
      * @returns Un observable contenant la réponse de l'API
      */
-    login(userLoginDTO: UserLoginDTO): Observable<LoginOutputDTOResponseDTO> {
+    login(userLoginDTO: UserLoginDTO): Observable<LoginOutputDTOResponse> {
         return this.authService.authLoginPost(userLoginDTO).pipe(
             map((response) => {
                 return {
@@ -103,7 +103,7 @@ export class MainService {
      * Rafraîchit le token d'authentification.
      * @returns Un observable contenant la réponse de l'API
      */
-    refreshToken(): Observable<LoginOutputDTOResponseDTO> {
+    refreshToken(): Observable<LoginOutputDTOResponse> {
         return this.authService.authRefreshTokenGet().pipe(
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
@@ -116,7 +116,7 @@ export class MainService {
      * @param input les données pour réinitialiser le mot de passe (email)
      * @returns Un observable contenant la réponse de l'API
      */
-    forgotPassword(input: { email: string }): Observable<PasswordResetResponseDTOResponseDTO> {
+    forgotPassword(input: { email: string }): Observable<PasswordResetResponseDTOResponse> {
         const forgotPasswordInput: ForgotPasswordInput = {
             email: input.email
         };
@@ -128,7 +128,7 @@ export class MainService {
      * @param changePassword les données pour réinitialiser le mot de passe (token, newPassword)
      * @returns Un observable contenant la réponse de l'API
      */
-    resetPassword(changePassword: PasswordRecoveryInput): Observable<StringResponseDTO> {
+    resetPassword(changePassword: PasswordRecoveryInput): Observable<StringResponse> {
         return this.authService.authResetPasswordPost(changePassword);
     }
 
@@ -143,7 +143,7 @@ export class MainService {
         this.token.set('');
     }
 
-    logout(): Observable<ObjectResponseDTO> {
+    logout(): Observable<ObjectResponse> {
         this.reset();
 
         return this.authService.authLogoutGet().pipe(
