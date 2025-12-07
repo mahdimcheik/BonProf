@@ -1,0 +1,11 @@
+<div class="flex flex-col lg:flex-row w-full gap-6 mt-4">
+    <div class="w-full lg:w-[280px] flex-shrink-0">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus illo, totam est ut sapiente laudantium dolores, ipsa quas, voluptatum laborum quibusdam? Repellat quia itaque suscipit cumque unde voluptates ipsa esse!
+    </div>
+    <div class="flex-1">
+        <bp-configurable-form [structure]="contactStructure" #configurableForm></bp-configurable-form>
+        <div class="w-full gap-2 mt-4 flex justify-end">
+            <p-button label="Envoyer" styleClass="w-full sm:w-auto" (onClick)="configurableForm.onSubmit()"></p-button>
+        </div>
+    </div>
+</div>

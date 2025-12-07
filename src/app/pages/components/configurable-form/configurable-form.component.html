@@ -18,7 +18,7 @@
         }
 
         <!-- Form Content -->
-        <div class="p-0 lg:p-6 configurable-form-body">
+        <div class="configurable-form-body">
             <form [formGroup]="form()" (ngSubmit)="onSubmit()" class="space-y-8 configurable-form-content">
                 <!-- Global Validation Errors -->
                 @if (verboseError() && hasGlobalValidationErrors() && isFormTouched()) {
