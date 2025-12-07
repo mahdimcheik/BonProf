@@ -1,18 +1,21 @@
 import { Component, input } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Avatar } from 'primeng/avatar';
 import { Button } from 'primeng/button';
-import { LoginOutput } from 'src/client';
+import { Card } from 'primeng/card';
+import { Divider } from 'primeng/divider';
+import { UserDetails } from 'src/client';
 import { ConfigurableFormComponent } from '../configurable-form/configurable-form.component';
 import { Structure } from '../configurable-form/related-models';
 
 @Component({
     selector: 'bp-contact-form',
-    imports: [ConfigurableFormComponent, Button],
+    imports: [ConfigurableFormComponent, Button, Card, Avatar, Divider],
     templateUrl: './contact-form.html',
     styleUrls: ['./contact-form.scss']
 })
 export class ContactForm {
-    teacherprofile = input.required<LoginOutput>();
+    teacherprofile = input.required<UserDetails>();
     contactStructure: Structure = {
         id: 'contactForm',
         name: 'contactForm',

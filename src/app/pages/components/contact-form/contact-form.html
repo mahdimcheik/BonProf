@@ -1,6 +1,28 @@
 <div class="flex flex-col lg:flex-row w-full gap-6 mt-4">
     <div class="w-full lg:w-[280px] flex-shrink-0">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus illo, totam est ut sapiente laudantium dolores, ipsa quas, voluptatum laborum quibusdam? Repellat quia itaque suscipit cumque unde voluptates ipsa esse!
+        <p-card>
+            <div class="flex flex-col items-center text-center gap-4">
+                <!-- Teacher Image -->
+                <p-avatar [image]="teacherprofile().imgUrl || 'assets/user.svg'" size="xlarge" shape="square" style="width: 250px; height: 250px" />
+
+                <!-- Teacher Name -->
+                <div class="flex flex-col gap-2">
+                    <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacherprofile().firstName }} {{ teacherprofile().lastName }}</h3>
+
+                    @if (teacherprofile().email) {
+                    <div class="flex items-center justify-center gap-2 text-surface-600 dark:text-surface-400">
+                        <i class="pi pi-envelope text-sm"></i>
+                        <span class="text-sm">{{ teacherprofile().email }}</span>
+                    </div>
+                    }
+                </div>
+
+                <!-- Additional Info -->
+                <p-divider styleClass="my-2"></p-divider>
+
+                <p class="text-surface-700 dark:text-surface-300 text-sm m-0">Remplissez le formulaire pour contacter votre professeur</p>
+            </div>
+        </p-card>
     </div>
     <div class="flex-1">
         <bp-configurable-form [structure]="contactStructure" #configurableForm></bp-configurable-form>
