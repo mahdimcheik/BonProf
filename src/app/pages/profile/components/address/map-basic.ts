@@ -27,15 +27,24 @@ export class MapBasic implements AfterViewInit, OnDestroy {
 
     private map!: L.Map;
     private markersLayer = L.markerClusterGroup();
+    private mapInitialized = false;
 
     ngAfterViewInit(): void {
         this.initMap();
+        this.mapInitialized = true;
+        // Load markers after map is initialized
+        this.loadMarkers();
+        this.fitMapToMarkers();
     }
 
     constructor() {
         effect(() => {
             const _ = this.data();
-            this.loadMarkers();
+            // Only update markers if map is already initialized
+            if (this.mapInitialized) {
+                this.loadMarkers();
+                this.fitMapToMarkers();
+            }
         });
     }
 
@@ -78,6 +87,15 @@ export class MapBasic implements AfterViewInit, OnDestroy {
             const marker = L.marker([p.lat, p.lng], { icon });
             this.markersLayer.addLayer(marker);
         });
+    }
+
+    private fitMapToMarkers(): void {
+        if (!this.map) return;
+
+        const bounds = this.markersLayer.getBounds();
+        if (bounds.isValid()) {
+            this.map.fitBounds(bounds, { padding: [50, 50] });
+        }
     }
 
     ngOnDestroy(): void {

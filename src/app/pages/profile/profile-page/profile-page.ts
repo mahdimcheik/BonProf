@@ -33,4 +33,15 @@ export class ProfilePage {
         longitude: -0.235181,
         createdAt: new Date()
     };
+    address1: AddressDetails = {
+        id: 'address-id',
+        street: '67 avenue de paris',
+        city: 'Chevanceaux',
+        state: 'Charente-Maritime',
+        zipCode: '17210',
+        country: 'France',
+        latitude: 46.301912,
+        longitude: -0.235181,
+        createdAt: new Date()
+    };
 }
