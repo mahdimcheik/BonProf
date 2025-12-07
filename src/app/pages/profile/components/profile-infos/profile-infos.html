@@ -1,30 +1,48 @@
-<div class="flex gap-4 p-2 flex-col md:flex-row justify-between order-1 border-solid border-gray-300 dark:border-gray-700 rounded-md">
-    <div class="p-1">
-        <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image" [imageClass]="'md:w-[250px] w-full rounded-md'" preview="true" />
-    </div>
-    <div class="flex flex-col lg:flex-row gap-2 w-full justify-between">
-        <div class="flex flex-col gap-2">
-            <div class="flex flex-col lg:flex-row items-center">
-                <h2 class="!p-0 !m-0">Nom prenom</h2>
-                <p-button label="Voir le profil" variant="text" />
+<p-card styleClass="shadow-md">
+    <div class="flex gap-6 flex-col md:flex-row">
+        <!-- Profile Image -->
+        <div class="flex-shrink-0">
+            <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Profile Image" [imageClass]="'w-full md:w-[250px] h-auto rounded-xl object-cover shadow-sm'" preview="true" />
+        </div>
+
+        <!-- Profile Content -->
+        <div class="flex flex-col lg:flex-row gap-6 w-full justify-between">
+            <!-- Profile Details -->
+            <div class="flex flex-col gap-4 flex-1">
+                <!-- Name and Profile Link -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                    <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">Nom Prénom</h2>
+                    <p-button label="Voir le profil" [text]="true" icon="pi pi-external-link" iconPos="right" size="small" styleClass="text-primary" />
+                </div>
+
+                <!-- Info Items -->
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-map-marker text-xl text-primary"></i>
+                        <span class="text-base">Ville, Pays</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-briefcase text-xl text-primary"></i>
+                        <span class="text-base">Titre, présentation rapide</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-graduation-cap text-xl text-primary"></i>
+                        <span class="text-base">Dernier diplôme obtenu</span>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-col gap-2 lg:flex-row items-center">
-                <i class="pi pi-map"></i>
-                Ville, Pays
-            </div>
-            <div class="flex flex-col gap-2 lg:flex-row items-center">
-                <i class="pi pi-map"></i>
-                title , presentation rapide
-            </div>
-            <div class="flex flex-col gap-2 lg:flex-row items-center">
-                <i class="pi pi-diploma"></i>
-                dernier diplome obtenu
+
+            <!-- Pricing and Action -->
+            <div class="flex flex-col justify-center items-center gap-4 lg:min-w-[250px] p-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+                <div class="text-center">
+                    <p class="text-sm text-surface-600 dark:text-surface-400 mb-1">Tarif horaire</p>
+                    <span class="text-4xl font-bold text-primary">28€/h</span>
+                </div>
+
+                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" />
+
+                <p-tag value="Premier cours gratuit" severity="success" styleClass="text-sm font-semibold" icon="pi pi-gift" />
             </div>
         </div>
-        <div class="flex flex-col justify-center items-center gap-2">
-            <span class="text-2xl font-bold">28$/h</span>
-            <p-button label="Réserver" styleClass="h-16 w-48"></p-button>
-            <span class="text-lg font-bold text-green-600">Premier cours gratuit</span>
-        </div>
     </div>
-</div>
+</p-card>

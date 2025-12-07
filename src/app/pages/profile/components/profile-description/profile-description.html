@@ -1,43 +1,91 @@
-<div class="flex flex-col lg:flex-row w-full h-full p-2">
-    <div class="w-full lg:w-[250px] h-full p-4">
-        <div class="flex flex-col w-full mb-4">
-            <p class="text-lg font-bold !mb-1">Je parle</p>
-            <ul>
-                <li>Français</li>
-                <li>Anglais</li>
-                <li>Espagnol</li>
-            </ul>
-        </div>
-        <div class="flex flex-col w-full mb-4">
-            <p class="text-lg font-bold !mb-1">J'enseigne</p>
-            <ul>
-                <li>Math</li>
-                <li>Physique</li>
-                <li>Chimie</li>
-            </ul>
-        </div>
-        <div class="flex flex-col w-full mb-4">
-            <p class="text-lg font-bold !mb-1">Mes reseaux</p>
-            <ul class="flex flex-row gap-2">
-                <li><i class="pi pi-linkedin"></i></li>
-                <li><i class="pi pi-facebook"></i></li>
-                <li><i class="pi pi-twitter"></i></li>
-                <li><i class="pi pi-github"></i></li>
-            </ul>
+<div class="flex flex-col lg:flex-row w-full gap-6">
+    <!-- Sidebar -->
+    <div class="w-full lg:w-[280px] flex-shrink-0">
+        <div class="flex flex-col gap-4">
+            <!-- Languages Card -->
+            <p-card styleClass="shadow-sm">
+                <ng-template pTemplate="header">
+                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+                        <i class="pi pi-comments text-2xl text-primary"></i>
+                        <h3 class="text-xl font-bold m-0">Je parle</h3>
+                    </div>
+                </ng-template>
+                <ul class="list-none p-0 m-0 flex flex-col gap-2">
+                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-check-circle text-primary"></i>
+                        <span>Français</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-check-circle text-primary"></i>
+                        <span>Anglais</span>
+                    </li>
+                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-check-circle text-primary"></i>
+                        <span>Espagnol</span>
+                    </li>
+                </ul>
+            </p-card>
+
+            <!-- Subjects Card -->
+            <p-card styleClass="shadow-sm">
+                <ng-template pTemplate="header">
+                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+                        <i class="pi pi-book text-2xl text-primary"></i>
+                        <h3 class="text-xl font-bold m-0">J'enseigne</h3>
+                    </div>
+                </ng-template>
+                <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
+                    <li>
+                        <p-tag value="Math" severity="info" styleClass="text-sm" />
+                    </li>
+                    <li>
+                        <p-tag value="Physique" severity="info" styleClass="text-sm" />
+                    </li>
+                    <li>
+                        <p-tag value="Chimie" severity="info" styleClass="text-sm" />
+                    </li>
+                </ul>
+            </p-card>
+
+            <!-- Social Networks Card -->
+            <p-card styleClass="shadow-sm">
+                <ng-template pTemplate="header">
+                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+                        <i class="pi pi-share-alt text-2xl text-primary"></i>
+                        <h3 class="text-xl font-bold m-0">Mes réseaux</h3>
+                    </div>
+                </ng-template>
+                <ul class="list-none p-0 m-0 flex gap-3">
+                    <li>
+                        <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" />
+                    </li>
+                    <li>
+                        <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" />
+                    </li>
+                    <li>
+                        <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" />
+                    </li>
+                    <li>
+                        <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" />
+                    </li>
+                </ul>
+            </p-card>
         </div>
     </div>
-    <div class="flex-1 h-full bg-gray-100">
-        <div class="p-4">
-            <p>Titre detaille'' fsdf sdfg xfh zdfg xfhz dfg xfgh</p>
-            <pre>
-Description detaillee'' fsdf sdfg xfh zdfg xfhz dfg xfgh
 
-                asd ad reg zcb 
-                asd ad reg zcb
-                
-                sdf dfg jy dcghj dy xfghert iojx,dk gj;ofgh 
-                sdf dfg fg dgg d
-            </pre>
-        </div>
+    <!-- Main Content -->
+    <div class="flex-1">
+        <p-card styleClass="shadow-sm h-full">
+            <ng-template pTemplate="header">
+                <div class="px-4 pt-4 pb-2">
+                    <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0 mb-2">À propos</h3>
+                    <p class="text-lg text-surface-700 dark:text-surface-300 m-0">Titre détaillé fsdf sdfg xfh zdfg xfhz dfg xfgh</p>
+                </div>
+            </ng-template>
+
+            <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line">
+                Description détaillée fsdf sdfg xfh zdfg xfhz dfg xfgh asd ad reg zcb asd ad reg zcb sdf dfg jy dcghj dy xfghert iojx,dk gj;ofgh sdf dfg fg dgg d
+            </div>
+        </p-card>
     </div>
 </div>
