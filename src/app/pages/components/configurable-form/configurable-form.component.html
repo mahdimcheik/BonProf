@@ -135,6 +135,15 @@
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
                                             ></textarea>
                                         }
+                                        @if (element.type === 'texteditor') {
+                                            <p-editor
+                                                [id]="element.id"
+                                                [formControlName]="element.name"
+                                                [style]="{ height: '200px' }"
+                                                class="w-full configurable-form-input configurable-form-texteditor"
+                                                [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                            ></p-editor>
+                                        }
 
                                         @if (element.type === 'select') {
                                             <p-select
@@ -425,6 +434,16 @@
                                                         class="w-full configurable-form-input configurable-form-textarea"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
                                                     ></textarea>
+                                                }
+
+                                                @if (field.type === 'texteditor') {
+                                                    <p-editor
+                                                        [id]="element.id"
+                                                        [formControlName]="element.name"
+                                                        [style]="{ height: '200px' }"
+                                                        class="w-full configurable-form-input configurable-form-texteditor"
+                                                        [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                    ></p-editor>
                                                 }
 
                                                 <!-- Select -->

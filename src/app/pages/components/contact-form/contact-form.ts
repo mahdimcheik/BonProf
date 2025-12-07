@@ -52,14 +52,13 @@ export class ContactForm {
                         name: 'email',
                         type: 'email',
                         label: 'Email',
-                        required: true,
                         placeholder: 'Si différent de celui utilisé pour la création du compte',
                         fullWidth: true
                     },
                     {
                         id: 'message',
                         name: 'message',
-                        type: 'textarea',
+                        type: 'texteditor',
                         label: 'Message',
                         required: true,
                         placeholder: 'Votre message',

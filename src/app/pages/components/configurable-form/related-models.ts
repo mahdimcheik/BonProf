@@ -4,7 +4,7 @@ export interface FormField<T> {
     id: string;
     label: string;
     name: string;
-    type: 'text' | 'number' | 'email' | 'password' | 'date' | 'checkbox' | 'radio' | 'select' | 'textarea' | 'color' | 'multiselect' | 'file';
+    type: 'text' | 'number' | 'email' | 'password' | 'date' | 'checkbox' | 'radio' | 'select' | 'textarea' | 'color' | 'multiselect' | 'file' | 'texteditor';
     timeOnly?: boolean;
     showTime?: boolean;
     placeholder?: string;

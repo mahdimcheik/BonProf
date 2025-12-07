@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { DatePickerModule } from 'primeng/datepicker';
+import { EditorModule } from 'primeng/editor';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -35,7 +36,8 @@ import { errorMessages, FormField, FormFieldGroup, Structure } from './related-m
         ColorPickerModule,
         ButtonModule,
         InputGroupModule,
-        InputGroupAddonModule
+        InputGroupAddonModule,
+        EditorModule
     ],
     templateUrl: './configurable-form.component.html',
     changeDetection: ChangeDetectionStrategy.Default
