@@ -1,0 +1,30 @@
+<div class="flex gap-4 p-2 flex-col md:flex-row justify-between order-1 border-solid border-gray-300 dark:border-gray-700 rounded-md">
+    <div class="p-1">
+        <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image" [imageClass]="'md:w-[250px] w-full rounded-md'" preview="true" />
+    </div>
+    <div class="flex flex-col lg:flex-row gap-2 w-full justify-between">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col lg:flex-row items-center">
+                <h2 class="!p-0 !m-0">Nom prenom</h2>
+                <p-button label="Voir le profil" variant="text" />
+            </div>
+            <div class="flex flex-col gap-2 lg:flex-row items-center">
+                <i class="pi pi-map"></i>
+                Ville, Pays
+            </div>
+            <div class="flex flex-col gap-2 lg:flex-row items-center">
+                <i class="pi pi-map"></i>
+                title , presentation rapide
+            </div>
+            <div class="flex flex-col gap-2 lg:flex-row items-center">
+                <i class="pi pi-diploma"></i>
+                dernier diplome obtenu
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center gap-2">
+            <span class="text-2xl font-bold">28$/h</span>
+            <p-button label="Réserver" styleClass="h-16 w-48"></p-button>
+            <span class="text-lg font-bold text-green-600">Premier cours gratuit</span>
+        </div>
+    </div>
+</div>

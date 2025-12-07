@@ -2,20 +2,7 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import {
-    AuthService,
-    ForgotPasswordInput,
-    LoginOutputDTO,
-    LoginOutputDTOResponse,
-    ObjectResponse,
-    PasswordRecoveryInput,
-    PasswordResetResponseDTOResponse,
-    StringResponse,
-    UserCreateDTO,
-    UserDetailsDTO,
-    UserDetailsDTOResponse,
-    UserLoginDTO
-} from 'src/client';
+import { AuthService, ForgotPasswordInput, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecoveryInput, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -44,7 +31,7 @@ export class MainService {
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         return [
             { label: 'Accueil', routerLink: '/' },
-            { label: 'Documentation', routerLink: '/documentation' },
+            { label: 'Profil', routerLink: '/profile' },
             { label: 'Mentions Légales', routerLink: '/mentions-legales' }
         ] as MenuItem[];
     });
@@ -65,15 +52,15 @@ export class MainService {
      * @param userDTO les données de l'utilisateur à enregistrer
      * @returns Un observable contenant la réponse de l'API
      */
-    register(userDTO: UserCreateDTO): Observable<UserDetailsDTOResponse> {
+    register(userDTO: UserCreate): Observable<UserDetailsResponse> {
         return this.authService.authRegisterPost(userDTO).pipe(
             catchError((error) => {
                 console.error("Erreur lors de l'inscription :", error);
                 return of({
                     message: error.message ?? 'Erreur inconnue',
                     status: error.status ?? 500,
-                    data: {} as UserDetailsDTO
-                } as UserDetailsDTOResponse);
+                    data: {} as UserDetails
+                } as UserDetailsResponse);
             })
         );
     }
@@ -83,18 +70,18 @@ export class MainService {
      * @param userLoginDTO les données de connexion de l'utilisateur
      * @returns Un observable contenant la réponse de l'API
      */
-    login(userLoginDTO: UserLoginDTO): Observable<LoginOutputDTOResponse> {
+    login(userLoginDTO: UserLogin): Observable<LoginOutputResponse> {
         return this.authService.authLoginPost(userLoginDTO).pipe(
             map((response) => {
                 return {
                     message: response.message ?? '',
                     status: response.status!,
-                    data: response.data as LoginOutputDTO
+                    data: response.data as LoginOutput
                 };
             }),
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
-                this.userConnected.set(res.data?.user as UserDetailsDTO);
+                this.userConnected.set(res.data?.user as UserDetails);
                 this.localStorageService.setUser(res.data?.user ?? '');
             })
         );
@@ -103,11 +90,11 @@ export class MainService {
      * Rafraîchit le token d'authentification.
      * @returns Un observable contenant la réponse de l'API
      */
-    refreshToken(): Observable<LoginOutputDTOResponse> {
+    refreshToken(): Observable<LoginOutputResponse> {
         return this.authService.authRefreshTokenGet().pipe(
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
-                this.userConnected.set(res.data?.user as UserDetailsDTO);
+                this.userConnected.set(res.data?.user as UserDetails);
             })
         );
     }
@@ -116,7 +103,7 @@ export class MainService {
      * @param input les données pour réinitialiser le mot de passe (email)
      * @returns Un observable contenant la réponse de l'API
      */
-    forgotPassword(input: { email: string }): Observable<PasswordResetResponseDTOResponse> {
+    forgotPassword(input: { email: string }): Observable<PasswordResetOutputResponse> {
         const forgotPasswordInput: ForgotPasswordInput = {
             email: input.email
         };
@@ -139,7 +126,7 @@ export class MainService {
      */
     reset(): void {
         this.localStorageService.reset();
-        this.userConnected.set({} as UserDetailsDTO);
+        this.userConnected.set({} as UserDetails);
         this.token.set('');
     }
 

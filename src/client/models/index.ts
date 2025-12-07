@@ -23,23 +23,23 @@ export interface ForgotPasswordInput {
     email: string;
 }
 
-export interface GenderDetailsDTO {
+export interface GenderDetails {
     readonly id?: string;
     readonly name?: string | null;
     readonly color?: string | null;
     readonly icon?: string | null;
 }
 
-export interface LoginOutputDTO {
+export interface LoginOutput {
     token: string;
     refreshToken: string;
-    user: UserDetailsDTO;
+    user: UserDetails;
 }
 
-export interface LoginOutputDTOResponse {
+export interface LoginOutputResponse {
     message: string;
     status: number;
-    data?: LoginOutputDTO;
+    data?: LoginOutput;
     count?: number | null;
 }
 
@@ -57,20 +57,20 @@ export interface PasswordRecoveryInput {
     passwordConfirmation: string;
 }
 
-export interface PasswordResetResponseDTO {
+export interface PasswordResetOutput {
     resetToken: string;
     email: string;
     id: string;
 }
 
-export interface PasswordResetResponseDTOResponse {
+export interface PasswordResetOutputResponse {
     message: string;
     status: number;
-    data?: PasswordResetResponseDTO;
+    data?: PasswordResetOutput;
     count?: number | null;
 }
 
-export interface RoleDetailsDTO {
+export interface RoleDetails {
     id?: string;
     name: string | null;
     color?: string | null;
@@ -85,7 +85,7 @@ export interface StringResponse {
     count?: number | null;
 }
 
-export interface UserCreateDTO {
+export interface UserCreate {
     email: string;
     password: string;
     firstName: string;
@@ -98,7 +98,7 @@ export interface UserCreateDTO {
     genderId?: string;
 }
 
-export interface UserDetailsDTO {
+export interface UserDetails {
     id: string;
     firstName: string;
     lastName: string;
@@ -106,21 +106,21 @@ export interface UserDetailsDTO {
     email: string;
     dateOfBirth?: Date;
     phoneNumber?: string | null;
-    gender?: GenderDetailsDTO;
+    gender?: GenderDetails;
     createdAt?: Date;
-    roles: Array<RoleDetailsDTO>;
+    roles: Array<RoleDetails>;
 }
 
-export interface UserDetailsDTOResponse {
+export interface UserDetailsResponse {
     message: string;
     status: number;
-    data?: UserDetailsDTO;
+    data?: UserDetails;
     count?: number | null;
 }
 
 export interface UserInfosWithtoken {
     token: string;
-    user: UserDetailsDTO;
+    user: UserDetails;
 }
 
 export interface UserInfosWithtokenResponse {
@@ -130,12 +130,12 @@ export interface UserInfosWithtokenResponse {
     count?: number | null;
 }
 
-export interface UserLoginDTO {
+export interface UserLogin {
     email: string;
     password: string;
 }
 
-export interface UserUpdateDTO {
+export interface UserUpdateInput {
     firstName: string;
     lastName: string;
     dateOfBirth: Date;

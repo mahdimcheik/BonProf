@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { catchError } from 'rxjs';
-import { UserLoginDTO } from 'src/client';
+import { UserLogin } from 'src/client';
 
 @Component({
     selector: 'app-login',
@@ -75,7 +75,7 @@ export class Login {
         this.loginWithData(loginData);
     }
 
-    private loginWithData(loginData: UserLoginDTO) {
+    private loginWithData(loginData: UserLogin) {
         this.authService
             .login(loginData)
             .pipe(

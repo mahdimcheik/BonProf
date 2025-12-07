@@ -1,3 +1,4 @@
+import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
 import { isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
 import { Landing } from '@/site/landing/landing';
@@ -20,6 +21,10 @@ export const appRoutes: Routes = [
             {
                 path: '',
                 component: MainPage
+            },
+            {
+                path: 'profile',
+                component: ProfilePage
             },
             {
                 path: 'mentions-legales',
