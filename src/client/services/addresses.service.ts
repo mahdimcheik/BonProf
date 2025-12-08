@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, AddressDetailsListResponse, AddressDetailsResponse, AddressCreate, AddressUpdate, ObjectResponse } from "../models";
+import { RequestOptions, AddressDetailsListResponse, AddressDetailsResponse, AddressUpdate, ObjectResponse, AddressCreate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class AddressesService {
@@ -57,6 +57,38 @@ export class AddressesService {
         return this.httpClient.get(url, requestOptions);
     }
 
+    addressesIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<AddressDetailsResponse>;
+    addressesIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<AddressDetailsResponse>>;
+    addressesIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<AddressDetailsResponse>>;
+    addressesIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/addresses/${id}`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, addressUpdate, requestOptions);
+    }
+
+    addressesIdDelete(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    addressesIdDelete(id: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    addressesIdDelete(id: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
+    addressesIdDelete(id: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/addresses/${id}`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.delete(url, requestOptions);
+    }
+
     addressesUserUserIdGet(userId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<AddressDetailsListResponse>;
     addressesUserUserIdGet(userId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<AddressDetailsListResponse>>;
     addressesUserUserIdGet(userId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<AddressDetailsListResponse>>;
@@ -73,11 +105,11 @@ export class AddressesService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    addressesCreatePost(addressCreate?: AddressCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<AddressDetailsResponse>;
-    addressesCreatePost(addressCreate?: AddressCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<AddressDetailsResponse>>;
-    addressesCreatePost(addressCreate?: AddressCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<AddressDetailsResponse>>;
-    addressesCreatePost(addressCreate?: AddressCreate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/addresses/create`;
+    addressesPost(addressCreate?: AddressCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<AddressDetailsResponse>;
+    addressesPost(addressCreate?: AddressCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<AddressDetailsResponse>>;
+    addressesPost(addressCreate?: AddressCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<AddressDetailsResponse>>;
+    addressesPost(addressCreate?: AddressCreate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/addresses`;
 
         const requestOptions: any = {
             observe: observe as any,
@@ -87,37 +119,5 @@ export class AddressesService {
         };
 
         return this.httpClient.post(url, addressCreate, requestOptions);
-    }
-
-    addressesUpdateIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<AddressDetailsResponse>;
-    addressesUpdateIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<AddressDetailsResponse>>;
-    addressesUpdateIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<AddressDetailsResponse>>;
-    addressesUpdateIdPut(id: string, addressUpdate?: AddressUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/addresses/update/${id}`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.put(url, addressUpdate, requestOptions);
-    }
-
-    addressesDeleteIdDelete(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
-    addressesDeleteIdDelete(id: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
-    addressesDeleteIdDelete(id: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
-    addressesDeleteIdDelete(id: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/addresses/delete/${id}`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.delete(url, requestOptions);
     }
 }
