@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, effect, input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, computed, input, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { AddressDetails, UserDetails } from 'src/client';
@@ -7,7 +7,7 @@ import { AddressDetails, UserDetails } from 'src/client';
     selector: 'bp-map-basic',
     imports: [],
     styleUrls: ['./map-basic.scss'],
-    template: '<div id="map" class="map-container rounded-md"></div>'
+    template: '<div id="map" class="map-container rounded-xl"></div>'
 })
 export class MapBasic implements AfterViewInit, OnDestroy {
     teacher = input.required<UserDetails>();
@@ -32,21 +32,11 @@ export class MapBasic implements AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
         this.initMap();
         this.mapInitialized = true;
-        // Load markers after map is initialized
         this.loadMarkers();
         this.fitMapToMarkers();
     }
 
-    constructor() {
-        effect(() => {
-            const _ = this.data();
-            // Only update markers if map is already initialized
-            if (this.mapInitialized) {
-                this.loadMarkers();
-                this.fitMapToMarkers();
-            }
-        });
-    }
+    constructor() {}
 
     private initMap(): void {
         this.map = L.map('map').setView([48.8566, 2.3522], 12);
