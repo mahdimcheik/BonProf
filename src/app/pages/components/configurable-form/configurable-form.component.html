@@ -142,7 +142,8 @@
                                                 [style]="{ height: '200px' }"
                                                 class="w-full configurable-form-input configurable-form-texteditor"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
-                                            ></p-editor>
+                                            >
+                                            </p-editor>
                                         }
 
                                         @if (element.type === 'select') {
@@ -438,12 +439,13 @@
 
                                                 @if (field.type === 'texteditor') {
                                                     <p-editor
-                                                        [id]="element.id"
-                                                        [formControlName]="element.name"
+                                                        [id]="field.id"
+                                                        [formControlName]="field.name"
                                                         [style]="{ height: '200px' }"
                                                         class="w-full configurable-form-input configurable-form-texteditor"
-                                                        [class.p-invalid]="isDirectFieldInvalid(element.name)"
-                                                    ></p-editor>
+                                                        [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                    >
+                                                    </p-editor>
                                                 }
 
                                                 <!-- Select -->

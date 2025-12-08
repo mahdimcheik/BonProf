@@ -1,3 +1,4 @@
+import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
 import { isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
@@ -23,8 +24,12 @@ export const appRoutes: Routes = [
                 component: MainPage
             },
             {
-                path: 'profile',
+                path: 'profile/:id',
                 component: ProfilePage
+            },
+            {
+                path: 'teachers/:id/edition',
+                component: ProfileEditionPage
             },
             {
                 path: 'mentions-legales',

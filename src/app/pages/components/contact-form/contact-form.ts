@@ -52,7 +52,6 @@ export class ContactForm {
                         name: 'email',
                         type: 'email',
                         label: 'Email',
-                        value: 'mahdi@mahdi.fr',
                         placeholder: 'Si différent de celui utilisé pour la création du compte',
                         fullWidth: true
                     },

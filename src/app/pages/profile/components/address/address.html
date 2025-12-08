@@ -2,9 +2,9 @@
     <span class="w-2"></span>
     <div class="flex flex-col gap-1">
         <p class="font-semibold !mb-0">Où se déroule les cours</p>
-        <p class="text-xs !mb-0 text-gray-600 dark:text-gray-300">{{ address()?.city }} - {{ address()?.state }} - {{ address()?.zipCode }} - {{ address()?.country }}</p>
-        @if (address()?.additionalInfo) {
-        <p class="text-xs !mb-0 text-gray-500 dark:text-gray-400">{{ address()?.additionalInfo }}</p>
+        <p class="text-xs !mb-0 text-gray-600 dark:text-gray-300">{{ address().city }} - {{ address().state }} - {{ address().zipCode }} - {{ address().country }}</p>
+        @if (address().additionalInfo) {
+        <p class="text-xs !mb-0 text-gray-500 dark:text-gray-400">{{ address().additionalInfo }}</p>
         }
     </div>
 </div>
