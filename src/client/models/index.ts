@@ -19,6 +19,7 @@ export interface AddressCreate {
     latitude?: number | null;
     teacherId?: string;
     studentId?: string;
+    typeId?: string;
 }
 
 export interface AddressDetails {
@@ -60,7 +61,9 @@ export interface AddressUpdate {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId: string;
+    teacherId: string;
+    studentId?: string;
+    typeId?: string;
 }
 
 export interface FileUrl {
