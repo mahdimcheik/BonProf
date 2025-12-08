@@ -1,11 +1,15 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { LogoComponent } from '@/pages/components/logo/logo.component';
+import { MainService } from '@/pages/shared/services/main.service';
 import { ageValidator, passwordStrengthValidator, passwordValidator } from '@/pages/shared/validators/confirmPasswordValidator';
 import { Component, inject, signal } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { firstValueFrom } from 'rxjs';
+import { UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
@@ -14,6 +18,9 @@ import { ButtonModule } from 'primeng/button';
 })
 export class Inscription {
     router = inject(Router);
+    mainService = inject(MainService);
+    messageService = inject(MessageService);
+
     roleOptions = [
         {
             id: '87a0a5ed-c7bb-4394-a163-7ed7560b4a01',
@@ -57,8 +64,8 @@ export class Inscription {
                 label: 'Inscription',
                 fields: [
                     {
-                        id: 'role',
-                        name: 'role',
+                        id: 'roleId',
+                        name: 'roleId',
                         type: 'select',
                         label: "Je m'inscris en tant que",
                         displayKey: 'name',
@@ -215,5 +222,30 @@ export class Inscription {
         ]
     };
 
-    submit(event: any) {}
+    async submit(event: FormGroup<any>) {
+        const value = event.value;
+        const userCreationData: UserCreate = {
+            ...value.inscriptionForm,
+            ...value.privacy,
+            ...value.optionalFields
+        };
+        console.log(userCreationData);
+
+        try {
+            const res = await firstValueFrom(this.mainService.register(userCreationData));
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Inscription réussie',
+                detail: 'Votre compte a été créé avec succès.'
+            });
+            await this.router.navigate(['/auth/login']);
+        } catch {
+            this.messageService.add({
+                severity: 'error',
+                summary: "Erreur d'inscription",
+                detail: 'Une erreur est survenue lors de la création de votre compte. Veuillez réessayer.'
+            });
+            return;
+        }
+    }
 }
