@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, computed, input, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { AddressDetails, UserDetails } from 'src/client';
+import { AddressDetails, TeacherDetails } from 'src/client';
 
 @Component({
     selector: 'bp-map-basic',
@@ -10,7 +10,7 @@ import { AddressDetails, UserDetails } from 'src/client';
     template: '<div id="map" class="map-container rounded-xl"></div>'
 })
 export class MapBasic implements AfterViewInit, OnDestroy {
-    teacher = input.required<UserDetails>();
+    teacher = input.required<TeacherDetails>();
     addressProfessor = input.required<AddressDetails>();
     addressStudent = input<AddressDetails | null>(null);
     data = computed<AddressDetails[]>(() => {

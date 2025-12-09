@@ -1,7 +1,10 @@
 import { ContactForm } from '@/pages/components/contact-form/contact-form';
-import { Component } from '@angular/core';
+import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Divider } from 'primeng/divider';
-import { AddressDetails, UserDetails } from 'src/client';
+import { firstValueFrom } from 'rxjs';
+import { AddressDetails, TeacherDetails } from 'src/client';
 import { Address } from '../components/address/address';
 import { MapBasic } from '../components/address/map-basic';
 import { ProfileDescription } from '../components/profile-description/profile-description';
@@ -12,15 +15,11 @@ import { ProfileInfos } from '../components/profile-infos/profile-infos';
     imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic],
     templateUrl: './profile-page.html'
 })
-export class ProfilePage {
-    teacherprofile: UserDetails = {
-        id: 'mahdi-id',
-        email: 'mahdi@mahdi.com',
-        firstName: 'First name',
-        lastName: 'Last name',
-        imgUrl: '',
-        roles: []
-    };
+export class ProfilePage implements OnInit {
+    teacherWrapperService = inject(TeacherWrapperService);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
+    teacherprofile = signal<TeacherDetails | null>(null);
 
     address: AddressDetails = {
         id: 'address-id',
@@ -44,4 +43,20 @@ export class ProfilePage {
         longitude: -0.235181,
         createdAt: new Date()
     };
+
+    ngOnInit() {
+        const routeData = this.activatedRoute.params.subscribe((params) => {
+            const teacherId = params['id'];
+            this.loadData(teacherId);
+        });
+    }
+
+    async loadData(teacherId: string) {
+        if (teacherId === 'me') {
+            const teacherData = await firstValueFrom(this.teacherWrapperService.getTeacherFullProfile());
+            if (teacherData.data) {
+                this.teacherprofile.set(teacherData.data);
+            }
+        }
+    }
 }

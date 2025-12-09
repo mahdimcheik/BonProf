@@ -1,5 +1,7 @@
 <div class="max-w-[1280px] mx-auto p-4 md:p-6">
-    <bp-profile-infos></bp-profile-infos>
+    @if( teacherprofile() ) {
+    <bp-profile-infos [teacher]="teacherprofile()!"></bp-profile-infos>
+    }
 
     <p-divider class="my-6"></p-divider>
 
@@ -7,8 +9,12 @@
 
     <div class="my-4">
         <bp-address [address]="address"></bp-address>
-        <bp-map-basic [addressProfessor]="address" [addressStudent]="address1" [teacher]="teacherprofile"></bp-map-basic>
+        <bp-map-basic [addressProfessor]="address" [addressStudent]="address1" [teacher]="teacherprofile()!"></bp-map-basic>
     </div>
 
-    <bp-contact-form [teacherprofile]="teacherprofile"></bp-contact-form>
+    <p-divider class="my-6"></p-divider>
+
+    @if( teacherprofile() ) {
+    <bp-contact-form [teacherprofile]="teacherprofile()!"></bp-contact-form>
+    }
 </div>

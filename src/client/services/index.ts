@@ -10,3 +10,4 @@
 export { AddressesService } from "./addresses.service";
 export { AuthService } from "./auth.service";
 export { FormationsService } from "./formations.service";
+export { TeacherProfileService } from "./teacherProfile.service";

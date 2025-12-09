@@ -11,7 +11,7 @@
             <div class="flex flex-col gap-4 flex-1">
                 <!-- Name and Profile Link -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                    <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">Nom Prénom</h2>
+                    <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacher().user.firstName }} {{ teacher().user.lastName }}</h2>
                     <p-button label="Editer mon profil" [text]="true" icon="pi pi-pencil" iconPos="right" size="small" styleClass="text-primary" [routerLink]="['/dashboard/teacher/profile', 'me', 'edition']" />
                 </div>
 

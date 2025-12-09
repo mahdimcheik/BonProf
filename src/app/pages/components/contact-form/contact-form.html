@@ -3,16 +3,15 @@
         <p-card>
             <div class="flex flex-col items-center text-center gap-4">
                 <!-- Teacher Image -->
-                <p-avatar [image]="teacherprofile().imgUrl || 'assets/user.svg'" size="xlarge" shape="square" style="width: 250px; height: 250px" />
+                <p-avatar [image]="teacherprofile().user.imgUrl || 'assets/user.svg'" size="xlarge" shape="square" style="width: 250px; height: 250px" />
 
                 <!-- Teacher Name -->
                 <div class="flex flex-col gap-2">
-                    <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacherprofile().firstName }} {{ teacherprofile().lastName }}</h3>
-
-                    @if (teacherprofile().email) {
+                    <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacherprofile().user.firstName }} {{ teacherprofile().user.lastName }}</h3>
+                    @if (teacherprofile().user.email) {
                     <div class="flex items-center justify-center gap-2 text-surface-600 dark:text-surface-400">
                         <i class="pi pi-envelope text-sm"></i>
-                        <span class="text-sm">{{ teacherprofile().email }}</span>
+                        <span class="text-sm">{{ teacherprofile().user.email }}</span>
                     </div>
                     }
                 </div>

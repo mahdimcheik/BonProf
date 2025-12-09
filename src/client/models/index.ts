@@ -410,6 +410,44 @@ export interface StringResponse {
     count?: number | null;
 }
 
+export interface TeacherDetails {
+    id: string;
+    title?: string | null;
+    description?: string | null;
+    userId: string;
+    user: UserDetails;
+    addresses?: Array<AddressDetails>;
+    formations?: Array<FormationDetails>;
+    createdAt: Date;
+    updatedAt?: Date | null;
+}
+
+export interface TeacherDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<TeacherDetails>;
+    count?: number | null;
+}
+
+export interface TeacherDetailsResponse {
+    message: string;
+    status: number;
+    data?: TeacherDetails;
+    count?: number | null;
+}
+
+export interface TeacherProfileCreate {
+    title?: string | null;
+    description?: string | null;
+    userId: string;
+}
+
+export interface TeacherProfileUpdate {
+    id: string;
+    title?: string | null;
+    description?: string | null;
+}
+
 export interface TypeAddress {
     id?: string;
     createdAt?: Date;

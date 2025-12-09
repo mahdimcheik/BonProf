@@ -4,7 +4,7 @@ import { Avatar } from 'primeng/avatar';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
-import { UserDetails } from 'src/client';
+import { TeacherDetails } from 'src/client';
 import { ConfigurableFormComponent } from '../configurable-form/configurable-form.component';
 import { Structure } from '../configurable-form/related-models';
 
@@ -15,7 +15,7 @@ import { Structure } from '../configurable-form/related-models';
     styleUrls: ['./contact-form.scss']
 })
 export class ContactForm {
-    teacherprofile = input.required<UserDetails>();
+    teacherprofile = input.required<TeacherDetails>();
     contactStructure: Structure = {
         id: 'contactForm',
         name: 'contactForm',
