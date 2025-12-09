@@ -18,4 +18,7 @@ export class FormationWrapperService {
     updateFormation(formation: FormationUpdate) {
         return this.formationsService.formationsPut(formation);
     }
+    deleteFormation(formationId: string) {
+        return this.formationsService.formationsIdDelete(formationId);
+    }
 }

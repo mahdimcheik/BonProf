@@ -1,15 +1,16 @@
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { SmartElementComponent } from '@/pages/components/smart-element/smart-element.component';
 import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
 import { DatePipe } from '@angular/common';
-import { Component, inject, model, signal } from '@angular/core';
+import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { FormationCreate, FormationDetails, FormationUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-formation-card',
-    imports: [SmartElementComponent, DatePipe, FormationsEdition],
+    imports: [SmartElementComponent, DatePipe, FormationsEdition, ConfirmModalComponent],
     templateUrl: './formation-card.html'
 })
 export class FormationCard {
@@ -20,6 +21,7 @@ export class FormationCard {
     formation = model.required<FormationDetails>();
     showEditModal = signal(false);
     showDeleteConfirm = signal(false);
+    needRefresh = output<boolean>();
 
     cancel() {
         this.showEditModal.set(false);
@@ -37,6 +39,19 @@ export class FormationCard {
             }
         } finally {
             this.editMode.set(false);
+        }
+    }
+    showConfirmModal() {
+        this.showDeleteConfirm.set(true);
+    }
+
+    async deleteFormation() {
+        try {
+            await firstValueFrom(this.formationWrapperService.deleteFormation(this.formation().id));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'La formation a été supprimée avec succès.' });
+            this.needRefresh.emit(true);
+        } finally {
+            this.showDeleteConfirm.set(false);
         }
     }
 }

@@ -5,7 +5,13 @@
             <bp-formations-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewFormation($event)" (clickCancel)="hideAddFormationBox()"></bp-formations-edition>
         </div>
         } @for (formation of formations(); track formation.id) {
-        <bp-formation-card [formation]="formation" [editMode]="false"></bp-formation-card>
+        <bp-formation-card [formation]="formation" [editMode]="false" (needRefresh)="loadData()"></bp-formation-card>
+        }@empty {
+        <div class="text-center">
+            <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
+            <p class="text-gray-500">Pas de formations fournies</p>
+            <button pButton label="Ajouter votre première formation" class="mt-3 p-button-outlined" (click)="showAddformationBox()"></button>
+        </div>
         }
     </ng-template>
 

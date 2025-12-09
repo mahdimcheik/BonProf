@@ -1,7 +1,7 @@
-import { Component, input, output, model, computed } from '@angular/core';
-import { DialogModule } from 'primeng/dialog';
-import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { Component, computed, input, model, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 export interface ConfirmModalData {
     title: string;
@@ -13,7 +13,7 @@ export interface ConfirmModalData {
 }
 
 @Component({
-    selector: 'app-confirm-modal',
+    selector: 'bp-confirm-modal',
     imports: [DialogModule, ButtonModule, CommonModule],
     templateUrl: './confirm-modal.component.html',
     styleUrl: './confirm-modal.component.scss'
@@ -22,9 +22,9 @@ export class ConfirmModalComponent {
     // Inputs using signal-based API
     visible = model<boolean>(false);
     title = input<string>('Confirmation');
-    question = input<string>('Are you sure you want to proceed?');
-    confirmText = input<string>('Confirm');
-    cancelText = input<string>('Cancel');
+    question = input<string>('Vous êtes sûr de vouloir continuer ?');
+    confirmText = input<string>('Confirmer');
+    cancelText = input<string>('Annuler');
     severity = input<'info' | 'warning' | 'danger' | 'success'>('warning');
     confirmButtonOnly = input<boolean>(false);
 

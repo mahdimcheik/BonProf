@@ -1,5 +1,5 @@
 @if(!editMode()){
-<app-smart-element [title]="'Formation'" [editMode]="true" [editButtonIcon]="'pi pi-pencil'" [deleteButtonIcon]="'pi pi-trash'" (onEditClick)="editMode.set(true)">
+<app-smart-element [title]="'Formation'" [editMode]="true" [editButtonIcon]="'pi pi-pencil'" [deleteButtonIcon]="'pi pi-trash'" (onEditClick)="editMode.set(true)" (onDeleteClick)="showConfirmModal()">
     <ng-template #main>
         <div class="flex gap-2 p-2 pl-0">
             <span class="w-2"></span>
@@ -13,4 +13,6 @@
 </app-smart-element>
 } @else {
 <bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
+} @if(showDeleteConfirm()){
+<bp-confirm-modal [(visible)]="showDeleteConfirm" [question]="'Vous êtes sûr de vouloir supprimer la formation ?'" [title]="`Suppression : ${formation().title}`" [confirmText]="'Oui, supprimer'" (onConfirm)="deleteFormation()"></bp-confirm-modal>
 }
