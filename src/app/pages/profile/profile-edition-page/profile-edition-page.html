@@ -1,20 +1,20 @@
 <div class="card">
-    <p-tabs value="0">
+    <p-tabs value="personnalInfos">
         <p-tablist>
-            <p-tab value="0">Infos personnelles</p-tab>
-            <p-tab value="1">Langages/Spécialités</p-tab>
-            <p-tab value="2">Formations/Experiences</p-tab>
-            <p-tab value="3">Addresses</p-tab>
+            <p-tab value="personnalInfos">Infos personnelles</p-tab>
+            <p-tab value="formations">Formations</p-tab>
+            <p-tab value="experiences">Formations/Experiences</p-tab>
+            <p-tab value="addresses">Addresses</p-tab>
         </p-tablist>
         <p-tabpanels>
-            <p-tabpanel value="0">
+            <p-tabpanel value="personnalInfos">
                 <bp-personnal-infos-edition></bp-personnal-infos-edition>
             </p-tabpanel>
-            <p-tabpanel value="1">
+            <p-tabpanel value="formations">
                 <bp-formations-list></bp-formations-list>
                 <!-- <bp-formation-card [formation]="formation" [editMode]="false"></bp-formation-card> -->
             </p-tabpanel>
-            <p-tabpanel value="2">
+            <p-tabpanel value="experiences">
                 <ng-template #content>Complex components that should only be initialized when the tab becomes active</ng-template>
             </p-tabpanel>
         </p-tabpanels>

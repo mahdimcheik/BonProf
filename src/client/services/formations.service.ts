@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, FormationDetailsListResponse, FormationDetailsResponse, FormationUpdate, BooleanResponse, FormationCreate } from "../models";
+import { RequestOptions, FormationDetailsListResponse, FormationDetailsResponse, BooleanResponse, FormationCreate, FormationUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class FormationsService {
@@ -55,22 +55,6 @@ export class FormationsService {
         };
 
         return this.httpClient.get(url, requestOptions);
-    }
-
-    formationsIdPut(id: string, formationUpdate?: FormationUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<FormationDetailsResponse>;
-    formationsIdPut(id: string, formationUpdate?: FormationUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<FormationDetailsResponse>>;
-    formationsIdPut(id: string, formationUpdate?: FormationUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<FormationDetailsResponse>>;
-    formationsIdPut(id: string, formationUpdate?: FormationUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/formations/${id}`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.put(url, formationUpdate, requestOptions);
     }
 
     formationsIdDelete(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<BooleanResponse>;
@@ -119,5 +103,21 @@ export class FormationsService {
         };
 
         return this.httpClient.post(url, formationCreate, requestOptions);
+    }
+
+    formationsPut(formationUpdate?: FormationUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<FormationDetailsResponse>;
+    formationsPut(formationUpdate?: FormationUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<FormationDetailsResponse>>;
+    formationsPut(formationUpdate?: FormationUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<FormationDetailsResponse>>;
+    formationsPut(formationUpdate?: FormationUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/formations`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, formationUpdate, requestOptions);
     }
 }

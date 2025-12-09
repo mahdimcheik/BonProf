@@ -12,5 +12,5 @@
     </ng-template>
 </app-smart-element>
 } @else {
-<bp-formations-edition [formation]="formation()" (clickSubmit)="editMode.set(false)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
+<bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
 }

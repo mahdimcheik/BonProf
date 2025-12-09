@@ -1,10 +1,12 @@
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { FormationCard } from '@/pages/formations/components/formation-card/formation-card';
 import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
+import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { FormationDetails } from 'src/client';
+import { firstValueFrom } from 'rxjs';
+import { FormationCreate, FormationDetails } from 'src/client';
 
 @Component({
     selector: 'bp-formations-list',
@@ -12,6 +14,7 @@ import { FormationDetails } from 'src/client';
     templateUrl: './formations-list.html'
 })
 export class FormationsList {
+    formationWrapperService = inject(FormationWrapperService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
@@ -20,7 +23,7 @@ export class FormationsList {
 
     editMode = model(true);
     buttonIcon = model('pi pi-plus');
-    showEditModal = signal(false);
+    showEditBox = signal(false);
 
     formations = signal<FormationDetails[]>([
         {
@@ -43,13 +46,31 @@ export class FormationsList {
         }
     ]);
 
-    async ngOnInit() {}
+    async ngOnInit() {
+        await this.loadData();
+    }
 
-    async openModal() {
-        this.showEditModal.set(true);
+    async loadData() {
+        const formationsData = await firstValueFrom(this.formationWrapperService.getFormations());
+        this.formations.set(formationsData.data || []);
+    }
+
+    async showAddformationBox() {
+        this.showEditBox.set(true);
+    }
+
+    hideAddFormationBox() {
+        this.showEditBox.set(false);
     }
 
     cancel() {
-        this.showEditModal.set(false);
+        this.showEditBox.set(false);
+    }
+
+    async addNewFormation(event: FormationCreate) {
+        const res = await firstValueFrom(this.formationWrapperService.addFormation(event));
+        this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Formation ajoutée avec succès' });
+        this.showEditBox.set(false);
+        await this.loadData();
     }
 }

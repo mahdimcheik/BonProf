@@ -2,7 +2,7 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { Component, computed, model, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormationDetails } from 'src/client';
+import { FormationCreate, FormationDetails, FormationUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-formations-edition',
@@ -10,7 +10,7 @@ import { FormationDetails } from 'src/client';
     templateUrl: './formations-edition.html'
 })
 export class FormationsEdition {
-    clickSubmit = output<void>();
+    clickSubmit = output<FormationDetails | FormationCreate | FormationUpdate>();
     clickCancel = output<void>();
     formation = model<FormationDetails | undefined>(undefined);
 
@@ -28,9 +28,9 @@ export class FormationsEdition {
                     label: formation ? `Editer la formation: ${formation.title}` : 'Ajouter une formation',
                     fields: [
                         { id: 'title', label: 'Titre', name: 'title', type: 'text', required: true, value: formation ? formation.title : '', placeholder: 'Titre de la formation' },
-                        { id: 'institution', label: 'Institution', name: 'institution', type: 'text', required: true, value: formation ? formation.institute : '', placeholder: 'Institution' },
-                        { id: 'dateFrom', label: 'Date de début', name: 'dateFrom', type: 'date', required: true, value: formation ? formation.dateFrom : '' },
-                        { id: 'dateTo', label: 'Date de fin', name: 'dateTo', type: 'date', required: false, value: formation ? formation.dateTo : '' },
+                        { id: 'institute', label: 'Institution', name: 'institute', type: 'text', required: true, value: formation ? formation.institute : '', placeholder: 'Institution' },
+                        { id: 'dateFrom', label: 'Date de début', name: 'dateFrom', type: 'date', required: true, value: formation ? new Date(formation.dateFrom) : '' },
+                        { id: 'dateTo', label: 'Date de fin', name: 'dateTo', type: 'date', required: false, value: formation && formation.dateTo ? new Date(formation.dateTo) : '' },
                         { id: 'description', label: 'Description', name: 'description', type: 'textarea', required: true, value: formation ? formation.description : '', fullWidth: true, placeholder: 'Description' }
                     ]
                 }
@@ -39,7 +39,14 @@ export class FormationsEdition {
     });
 
     submit($event: FormGroup<any>) {
-        this.clickSubmit.emit();
+        const values = $event.value.informations;
+        if (this.formation()) {
+            const updatedFormation: FormationUpdate = values;
+            updatedFormation.id = this.formation()!.id;
+            this.clickSubmit.emit(updatedFormation);
+        } else {
+            this.clickSubmit.emit(values as FormationCreate);
+        }
     }
     onCancel() {
         this.clickCancel.emit();

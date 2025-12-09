@@ -193,6 +193,7 @@ export interface FormationDetailsResponse {
 }
 
 export interface FormationUpdate {
+    id: string;
     title: string;
     description: string;
     institute: string;
@@ -469,10 +470,12 @@ export interface UserCreate {
     lastName: string;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
-    phoneNumber?: string | null;
     dateOfBirth: Date;
-    roleId?: string;
-    genderId?: string;
+    phoneNumber?: string | null;
+    title?: string | null;
+    description?: string | null;
+    roleId: string;
+    genderId: string;
 }
 
 export interface UserDetails {
