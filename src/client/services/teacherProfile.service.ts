@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, TeacherDetailsListResponse, TeacherDetailsResponse, TeacherProfileCreate, TeacherProfileUpdate } from "../models";
+import { RequestOptions, TeacherDetailsListResponse, TeacherDetailsResponse, TeacherProfileUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeacherProfileService {
@@ -71,22 +71,6 @@ export class TeacherProfileService {
         };
 
         return this.httpClient.get(url, requestOptions);
-    }
-
-    teacherprofilePost(teacherProfileCreate?: TeacherProfileCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;
-    teacherprofilePost(teacherProfileCreate?: TeacherProfileCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsResponse>>;
-    teacherprofilePost(teacherProfileCreate?: TeacherProfileCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsResponse>>;
-    teacherprofilePost(teacherProfileCreate?: TeacherProfileCreate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/teacherprofile`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.post(url, teacherProfileCreate, requestOptions);
     }
 
     teacherprofilePut(teacherProfileUpdate?: TeacherProfileUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;

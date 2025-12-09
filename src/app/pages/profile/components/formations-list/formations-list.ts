@@ -2,12 +2,13 @@ import { SmartSectionComponent } from '@/pages/components/smart-section/smart-se
 import { FormationCard } from '@/pages/formations/components/formation-card/formation-card';
 import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
+import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { FormationCreate, FormationDetails } from 'src/client';
+import { FormationCreate } from 'src/client';
 
 @Component({
     selector: 'bp-formations-list',
@@ -16,6 +17,7 @@ import { FormationCreate, FormationDetails } from 'src/client';
 })
 export class FormationsList {
     formationWrapperService = inject(FormationWrapperService);
+    teacherWrapperService = inject(TeacherWrapperService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
@@ -26,10 +28,10 @@ export class FormationsList {
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 
-    formations = signal<FormationDetails[]>([]);
+    formations = this.teacherWrapperService.formationList;
 
     async ngOnInit() {
-        await this.loadData();
+        // await this.loadData();
     }
 
     async loadData() {

@@ -75,17 +75,8 @@
 
     <!-- Main Content -->
     <div class="flex-1">
-        <p-card styleClass="shadow-sm h-full">
-            <ng-template pTemplate="header">
-                <div class="px-4 pt-4 pb-2">
-                    <h3 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0 mb-2">À propos</h3>
-                    <p class="text-lg text-surface-700 dark:text-surface-300 m-0">Titre détaillé fsdf sdfg xfh zdfg xfhz dfg xfgh</p>
-                </div>
-            </ng-template>
-
-            <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line">
-                Description détaillée fsdf sdfg xfh zdfg xfhz dfg xfgh asd ad reg zcb asd ad reg zcb sdf dfg jy dcghj dy xfghert iojx,dk gj;ofgh sdf dfg fg dgg d
-            </div>
+        <p-card styleClass="shadow-sm h-full" [header]="teacher()?.title ?? 'Description'">
+            <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
         <div></div>
     </div>
