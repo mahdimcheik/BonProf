@@ -5,12 +5,13 @@ import { FormationWrapperService } from '@/pages/shared/services/formation-wrapp
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
 import { FormationCreate, FormationDetails } from 'src/client';
 
 @Component({
     selector: 'bp-formations-list',
-    imports: [SmartSectionComponent, FormationCard, FormationsEdition],
+    imports: [SmartSectionComponent, FormationCard, FormationsEdition, ButtonModule],
     templateUrl: './formations-list.html'
 })
 export class FormationsList {
@@ -25,26 +26,7 @@ export class FormationsList {
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 
-    formations = signal<FormationDetails[]>([
-        {
-            id: '1',
-            title: 'Formation 1',
-            description: 'Description de la formation 1',
-            institute: 'Institut 1',
-            dateFrom: new Date('2020-01-01'),
-            dateTo: new Date('2020-06-01'),
-            createdAt: new Date()
-        },
-        {
-            id: '2',
-            title: 'Formation 2',
-            description: 'Description de la formation 2',
-            institute: 'Institut 2',
-            dateFrom: new Date('2021-01-01'),
-            dateTo: new Date('2021-06-01'),
-            createdAt: new Date()
-        }
-    ]);
+    formations = signal<FormationDetails[]>([]);
 
     async ngOnInit() {
         await this.loadData();
