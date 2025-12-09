@@ -105,5 +105,6 @@ export class ConfirmModalComponent {
     close(): void {
         this.visible.set(false);
         this.onClose.emit();
+        this.onCancel.emit();
     }
 }

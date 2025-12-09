@@ -14,5 +14,13 @@
 } @else {
 <bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
 } @if(showDeleteConfirm()){
-<bp-confirm-modal [(visible)]="showDeleteConfirm" [question]="'Vous êtes sûr de vouloir supprimer la formation ?'" [title]="`Suppression : ${formation().title}`" [confirmText]="'Oui, supprimer'" (onConfirm)="deleteFormation()"></bp-confirm-modal>
+<bp-confirm-modal
+    [(visible)]="showDeleteConfirm"
+    [question]="'Vous êtes sûr de vouloir supprimer la formation ?'"
+    [title]="`Suppression : ${formation().title}`"
+    [confirmText]="'Oui, supprimer'"
+    (onConfirm)="deleteFormation()"
+    (onCancel)="hideConfirmModal()"
+    (onClose)="hideConfirmModal()"
+></bp-confirm-modal>
 }

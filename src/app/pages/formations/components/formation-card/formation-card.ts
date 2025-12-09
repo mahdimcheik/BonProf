@@ -44,6 +44,9 @@ export class FormationCard {
     showConfirmModal() {
         this.showDeleteConfirm.set(true);
     }
+    hideConfirmModal() {
+        this.showDeleteConfirm.set(false);
+    }
 
     async deleteFormation() {
         try {
