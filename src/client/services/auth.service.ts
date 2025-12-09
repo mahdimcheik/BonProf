@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { UserCreate, RequestOptions, UserDetailsResponse, UserUpdateInput, UserLogin, LoginOutputResponse, StringResponse, UserInfosWithtokenResponse, ForgotPasswordInput, PasswordResetOutputResponse, PasswordRecoveryInput, ObjectResponse, FileUrlResponse } from "../models";
+import { UserCreate, RequestOptions, UserDetailsResponse, UserUpdateInput, UserLogin, LoginOutputResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetOutputResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -136,10 +136,10 @@ export class AuthService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    authForgotPasswordPost(forgotPasswordInput?: ForgotPasswordInput, observe?: 'body', options?: RequestOptions<'json'>): Observable<PasswordResetOutputResponse>;
-    authForgotPasswordPost(forgotPasswordInput?: ForgotPasswordInput, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PasswordResetOutputResponse>>;
-    authForgotPasswordPost(forgotPasswordInput?: ForgotPasswordInput, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PasswordResetOutputResponse>>;
-    authForgotPasswordPost(forgotPasswordInput?: ForgotPasswordInput, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'body', options?: RequestOptions<'json'>): Observable<PasswordResetOutputResponse>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PasswordResetOutputResponse>>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PasswordResetOutputResponse>>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/auth/forgot-password`;
 
         const requestOptions: any = {
@@ -149,13 +149,13 @@ export class AuthService {
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.post(url, forgotPasswordInput, requestOptions);
+        return this.httpClient.post(url, forgotPassword, requestOptions);
     }
 
-    authResetPasswordPost(passwordRecoveryInput?: PasswordRecoveryInput, observe?: 'body', options?: RequestOptions<'json'>): Observable<StringResponse>;
-    authResetPasswordPost(passwordRecoveryInput?: PasswordRecoveryInput, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<StringResponse>>;
-    authResetPasswordPost(passwordRecoveryInput?: PasswordRecoveryInput, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<StringResponse>>;
-    authResetPasswordPost(passwordRecoveryInput?: PasswordRecoveryInput, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    authResetPasswordPost(passwordRecovery?: PasswordRecovery, observe?: 'body', options?: RequestOptions<'json'>): Observable<StringResponse>;
+    authResetPasswordPost(passwordRecovery?: PasswordRecovery, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<StringResponse>>;
+    authResetPasswordPost(passwordRecovery?: PasswordRecovery, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<StringResponse>>;
+    authResetPasswordPost(passwordRecovery?: PasswordRecovery, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/auth/reset-password`;
 
         const requestOptions: any = {
@@ -165,7 +165,7 @@ export class AuthService {
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.post(url, passwordRecoveryInput, requestOptions);
+        return this.httpClient.post(url, passwordRecovery, requestOptions);
     }
 
     authRefreshTokenGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginOutputResponse>;

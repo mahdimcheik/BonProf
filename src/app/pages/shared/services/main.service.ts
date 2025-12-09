@@ -2,7 +2,7 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AuthService, ForgotPasswordInput, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecoveryInput, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
+import { AuthService, ForgotPassword, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecovery, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -104,7 +104,7 @@ export class MainService {
      * @returns Un observable contenant la réponse de l'API
      */
     forgotPassword(input: { email: string }): Observable<PasswordResetOutputResponse> {
-        const forgotPasswordInput: ForgotPasswordInput = {
+        const forgotPasswordInput: ForgotPassword = {
             email: input.email
         };
         return this.authService.authForgotPasswordPost(forgotPasswordInput);
@@ -115,7 +115,7 @@ export class MainService {
      * @param changePassword les données pour réinitialiser le mot de passe (token, newPassword)
      * @returns Un observable contenant la réponse de l'API
      */
-    resetPassword(changePassword: PasswordRecoveryInput): Observable<StringResponse> {
+    resetPassword(changePassword: PasswordRecovery): Observable<StringResponse> {
         return this.authService.authResetPasswordPost(changePassword);
     }
 

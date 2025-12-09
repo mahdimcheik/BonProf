@@ -81,7 +81,7 @@ export interface FileUrlResponse {
     count?: number | null;
 }
 
-export interface ForgotPasswordInput {
+export interface ForgotPassword {
     email: string;
 }
 
@@ -156,7 +156,7 @@ export interface ObjectResponse {
     count?: number | null;
 }
 
-export interface PasswordRecoveryInput {
+export interface PasswordRecovery {
     userId: string;
     resetToken: string;
     password: string;

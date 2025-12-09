@@ -2,7 +2,7 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { ageValidator } from '@/pages/shared/validators/confirmPasswordValidator';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -13,7 +13,7 @@ import { TeacherProfileUpdate } from 'src/client';
     imports: [ConfigurableFormComponent],
     templateUrl: './personnal-infos-edition.html'
 })
-export class PersonnalInfosEdition {
+export class PersonnalInfosEdition implements OnInit {
     teacherWarapperService = inject(TeacherWrapperService);
     router = inject(Router);
     teacherProfile = this.teacherWarapperService.teacherProfile;
@@ -163,4 +163,6 @@ export class PersonnalInfosEdition {
         await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
         await this.router.navigate(['dashboard/teacher/profile/me']);
     }
+
+    ngOnInit(): void {}
 }
