@@ -37,6 +37,7 @@ export interface FormField<T> {
 
     // value formatter
     valueFormatter?: (value: T | T[]) => any;
+    asyncAction?: (query: any) => Promise<any>;
 }
 
 export interface FormFieldGroup {

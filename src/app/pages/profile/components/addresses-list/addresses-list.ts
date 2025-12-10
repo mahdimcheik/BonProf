@@ -12,8 +12,7 @@ import { AddressCreate, AddressDetails } from 'src/client/models';
 @Component({
     selector: 'bp-addresses-list',
     imports: [SmartSectionComponent, AddressEdition, AddressCard],
-    templateUrl: './addresses-list.html',
-    styleUrl: './addresses-list.scss'
+    templateUrl: './addresses-list.html'
 })
 export class AddressesList {
     addressWrapperService = inject(AddressWrapperService);

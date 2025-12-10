@@ -1,3 +1,26 @@
 <div>
+    <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
+        <p-autocomplete
+            [(ngModel)]="selectedCity"
+            (completeMethod)="search($event)"
+            [suggestions]="cities()"
+            optionLabel="displayLabel"
+            styleClass="flex-1"
+            [inputStyleClass]="'w-full h-[45px]'"
+            [panelStyle]="{ 'z-index': '9999' }"
+            appendTo="body"
+            placeholder="Entrez votre ville ou code postal"
+        >
+            <ng-template let-cityDetails #item>
+                <div class="flex items-center gap-2">
+                    <div>{{ cityDetails.displayLabel }}</div>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <div class="font-medium px-3 py-2">Villes et codes postaux</div>
+            </ng-template>
+        </p-autocomplete>
+        <button pButton pRipple type="button" label="Réserver" class="text-xl!"></button>
+    </div>
     <bp-configurable-form [structure]="addressForm()" (onFormSubmit)="submit($event)" (onCancel)="onCancel()"></bp-configurable-form>
 </div>

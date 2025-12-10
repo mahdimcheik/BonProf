@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -37,7 +38,8 @@ import { errorMessages, FormField, FormFieldGroup, Structure } from './related-m
         ButtonModule,
         InputGroupModule,
         InputGroupAddonModule,
-        EditorModule
+        EditorModule,
+        AutoCompleteModule
     ],
     templateUrl: './configurable-form.component.html',
     changeDetection: ChangeDetectionStrategy.Default
