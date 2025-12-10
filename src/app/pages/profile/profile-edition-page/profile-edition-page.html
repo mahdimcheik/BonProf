@@ -3,8 +3,8 @@
         <p-tablist>
             <p-tab value="personnalInfos">Infos personnelles</p-tab>
             <p-tab value="formations">Formations</p-tab>
-            <p-tab value="experiences">Formations/Experiences</p-tab>
             <p-tab value="addresses">Addresses</p-tab>
+            <p-tab value="experiences">Formations/Experiences</p-tab>
         </p-tablist>
         <p-tabpanels>
             <p-tabpanel value="personnalInfos">
@@ -12,6 +12,9 @@
             </p-tabpanel>
             <p-tabpanel value="formations">
                 <bp-formations-list></bp-formations-list>
+            </p-tabpanel>
+            <p-tabpanel value="addresses">
+                <bp-addresses-list></bp-addresses-list>
             </p-tabpanel>
             <p-tabpanel value="experiences">
                 <ng-template #content>Complex components that should only be initialized when the tab becomes active</ng-template>

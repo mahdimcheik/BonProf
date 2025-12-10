@@ -51,6 +51,7 @@ export interface AddressDetailsResponse {
 }
 
 export interface AddressUpdate {
+    id: string;
     street: string;
     city: string;
     state: string;

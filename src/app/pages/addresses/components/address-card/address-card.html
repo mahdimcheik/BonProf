@@ -1,0 +1,13 @@
+@if(!editMode()){
+
+<div class="flex gap-2 p-2 pl-0">
+    <span class="w-2"></span>
+    <div class="flex flex-col gap-1">
+        <p class="font-semibold !mb-0">{{ address().city }}</p>
+        <p class="text-xs !mb-0 text-gray-600 dark:text-gray-400">{{ address().street }}</p>
+        <p class="text-xs !mb-0 text-gray-700 dark:text-gray-400">{{ address().additionalInfo }}</p>
+    </div>
+</div>
+}@else {
+<bp-address-edition [address]="address()"></bp-address-edition>
+}

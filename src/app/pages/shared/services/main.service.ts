@@ -2,7 +2,7 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AuthService, ForgotPassword, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecovery, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
+import { AddressDetails, AuthService, ForgotPassword, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecovery, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -19,6 +19,9 @@ export class MainService {
     logoUrl = 'assets/bird.svg';
     baseUrl = environment.API_URL;
     token = signal<string>('');
+
+    // addresses
+    AddressesList = signal<AddressDetails[]>([]);
 
     // pour la page profile
     userConnected = signal({} as any);
