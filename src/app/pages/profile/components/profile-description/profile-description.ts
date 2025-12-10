@@ -18,4 +18,7 @@ export class ProfileDescription {
         const description = this.teacher()?.description || 'Pas de description fournie';
         return this.sanitizer.bypassSecurityTrustHtml(description.replace(/\n/g, '<br>'));
     });
+    languages = computed(() => {
+        return this.teacher()?.languages || [];
+    });
 }

@@ -11,18 +11,12 @@
                     </div>
                 </ng-template>
                 <ul class="list-none p-0 m-0 flex flex-col gap-2">
+                    @for (language of languages(); track language.name) {
                     <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-check-circle text-primary"></i>
-                        <span>Français</span>
+                        <span>{{language.name}}</span>
                     </li>
-                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
-                        <i class="pi pi-check-circle text-primary"></i>
-                        <span>Anglais</span>
-                    </li>
-                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
-                        <i class="pi pi-check-circle text-primary"></i>
-                        <span>Espagnol</span>
-                    </li>
+                    }
                 </ul>
             </p-card>
 
@@ -56,18 +50,25 @@
                     </div>
                 </ng-template>
                 <ul class="list-none p-0 m-0 flex gap-3">
+                    @if(teacher()?.linkedIn) {
                     <li>
                         <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" />
                     </li>
+                    } @if(teacher()?.faceBook) {
                     <li>
                         <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" />
                     </li>
+                    } @if(teacher()?.twitter) {
                     <li>
                         <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" />
                     </li>
+                    } @if(teacher()?.gitHub) {
                     <li>
                         <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" />
                     </li>
+                    } @if(!teacher()?.linkedIn && !teacher()?.faceBook && !teacher()?.twitter && !teacher()?.gitHub) {
+                    <div class="text-surface-600 dark:text-surface-400 text-sm">Aucun réseau social renseigné.</div>
+                    }
                 </ul>
             </p-card>
         </div>

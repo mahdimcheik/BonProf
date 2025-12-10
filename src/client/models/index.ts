@@ -136,6 +136,38 @@ export interface GenderDetails {
     readonly icon?: string | null;
 }
 
+export interface LanguageCreate {
+    id?: string;
+    name?: string | null;
+    color?: string | null;
+}
+
+export interface LanguageDetails {
+    id?: string;
+    name?: string | null;
+    color?: string | null;
+}
+
+export interface LanguageDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<LanguageDetails>;
+    count?: number | null;
+}
+
+export interface LanguageDetailsResponse {
+    message: string;
+    status: number;
+    data?: LanguageDetails;
+    count?: number | null;
+}
+
+export interface LanguageUpdate {
+    id?: string;
+    name?: string | null;
+    color?: string | null;
+}
+
 export interface LoginOutput {
     token: string;
     refreshToken: string;
@@ -201,6 +233,11 @@ export interface TeacherDetails {
     formations?: Array<FormationDetails>;
     createdAt: Date;
     updatedAt?: Date | null;
+    languages?: Array<LanguageDetails>;
+    linkedIn?: string | null;
+    faceBook?: string | null;
+    gitHub?: string | null;
+    twitter?: string | null;
 }
 
 export interface TeacherDetailsListResponse {
@@ -217,11 +254,21 @@ export interface TeacherDetailsResponse {
     count?: number | null;
 }
 
+export interface TeacherLanguageCreate {
+    teacherId: string;
+    languageId: string;
+}
+
 export interface TeacherProfileUpdate {
     id: string;
     title?: string | null;
     user?: UserUpdateInput;
     description?: string | null;
+    languagesIds?: Array<string>;
+    linkedIn?: string | null;
+    faceBook?: string | null;
+    gitHub?: string | null;
+    twitter?: string | null;
 }
 
 export interface UserCreate {

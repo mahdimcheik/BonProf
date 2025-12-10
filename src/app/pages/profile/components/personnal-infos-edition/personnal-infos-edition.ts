@@ -2,11 +2,11 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { ageValidator } from '@/pages/shared/validators/confirmPasswordValidator';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { TeacherProfileUpdate } from 'src/client';
+import { LanguageDetails, TeacherProfileUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -17,6 +17,7 @@ export class PersonnalInfosEdition implements OnInit {
     teacherWarapperService = inject(TeacherWrapperService);
     router = inject(Router);
     teacherProfile = this.teacherWarapperService.teacherProfile;
+    languagesList = signal<LanguageDetails[]>([]);
 
     personnalInfosStructure = computed<Structure>(() => {
         const teacher = this.teacherProfile();
@@ -100,6 +101,17 @@ export class PersonnalInfosEdition implements OnInit {
                             fullWidth: true,
                             required: false,
                             placeholder: 'Description'
+                        },
+                        {
+                            id: 'languagesIds',
+                            label: 'Langues parlées',
+                            name: 'languagesIds',
+                            type: 'multiselect',
+                            compareKey: 'id',
+                            displayKey: 'name',
+                            value: this.teacherProfile()?.languages?.map((lang) => lang.id) || [],
+                            fullWidth: true,
+                            options: this.languagesList()
                         }
                     ]
                 },
@@ -117,16 +129,16 @@ export class PersonnalInfosEdition implements OnInit {
                             placeholder: 'LinkedIn'
                         },
                         {
-                            id: 'facebook',
-                            name: 'facebook',
+                            id: 'faceBook',
+                            name: 'faceBook',
                             type: 'text',
-                            label: 'Facebook',
+                            label: 'FaceBook',
                             required: false,
-                            placeholder: 'Facebook'
+                            placeholder: 'FaceBook'
                         },
                         {
-                            id: 'github',
-                            name: 'github',
+                            id: 'gitHub',
+                            name: 'gitHub',
                             type: 'text',
                             label: 'GitHub',
                             required: false,
@@ -153,6 +165,11 @@ export class PersonnalInfosEdition implements OnInit {
             ...this.teacherProfile(),
             title: teacher.optionalFields.title,
             description: teacher.optionalFields.description,
+            languagesIds: teacher.optionalFields.languagesIds,
+            linkedIn: teacher.socialLinks.linkedIn,
+            faceBook: teacher.socialLinks.faceBook,
+            gitHub: teacher.socialLinks.gitHub,
+            twitter: teacher.socialLinks.twitter,
             id: this.teacherProfile()?.id!,
             user: {
                 firstName: teacher.personnalInfos.firstName,
@@ -164,5 +181,11 @@ export class PersonnalInfosEdition implements OnInit {
         await this.router.navigate(['dashboard/teacher/profile/me']);
     }
 
-    ngOnInit(): void {}
+    ngOnInit() {
+        this.loadData();
+    }
+    async loadData() {
+        const languagesData = await firstValueFrom(this.teacherWarapperService.getAvailableLanguages());
+        this.languagesList.set(languagesData);
+    }
 }
