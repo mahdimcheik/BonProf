@@ -1,15 +1,72 @@
 @if(!editMode()){
-<div class="flex flex-row w-full justify-between">
-    <div class="flex gap-2 p-2 pl-0">
-        <span class="w-2"></span>
-        <div class="flex flex-col gap-1">
-            <p class="font-semibold !mb-0">{{ address().city }}</p>
-            <p class="text-xs !mb-0 text-gray-600 dark:text-gray-400">{{ address().street }}</p>
-            <p class="text-xs !mb-0 text-gray-700 dark:text-gray-400">{{ address().additionalInfo }}</p>
+<p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+    <div class="flex flex-col gap-4">
+        <!-- Address Header -->
+        <div class="flex justify-between items-start">
+            <div class="flex items-start gap-3 flex-1">
+                <div class="flex-shrink-0 mt-1">
+                    <i class="pi pi-map-marker text-2xl text-primary"></i>
+                </div>
+                <div class="flex flex-col gap-2 flex-1">
+                    <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ address().city }}</h3>
+
+                    @if (address().street) {
+                    <div class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-home text-sm"></i>
+                        <span class="text-sm">{{ address().street }}</span>
+                    </div>
+                    } @if (address().zipCode) {
+                    <div class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-inbox text-sm"></i>
+                        <span class="text-sm">{{ address().zipCode }}</span>
+                    </div>
+                    } @if (address().additionalInfo) {
+                    <div class="flex items-start gap-2 text-surface-600 dark:text-surface-400">
+                        <i class="pi pi-info-circle text-sm mt-0.5"></i>
+                        <span class="text-sm">{{ address().additionalInfo }}</span>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2 flex-shrink-0">
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="goEditMode()" pTooltip="Modifier" tooltipPosition="top" />
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="showConfirmModal()" pTooltip="Supprimer" tooltipPosition="top" />
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="border-t pt-4 border-surface-200 dark:border-surface-700">
+            <bp-map-basic [user]="teacher()!.user" [mainAddress]="address()"></bp-map-basic>
         </div>
     </div>
-    <bp-map-basic [user]="teacher()!.user" [mainAddress]="address()"></bp-map-basic>
-</div>
+</p-card>
+
+<!-- Delete Confirmation Modal -->
+<p-dialog [(visible)]="showDeleteConfirm" [modal]="true" [closable]="true" [draggable]="false" [style]="{ width: '450px' }" header="Confirmer la suppression">
+    <div class="flex items-start gap-3 py-4">
+        <i class="pi pi-exclamation-triangle text-3xl text-orange-500"></i>
+        <div class="flex-1">
+            <p class="m-0 text-surface-700 dark:text-surface-300">Êtes-vous sûr de vouloir supprimer l'adresse <strong>{{ address().city }}</strong> ?</p>
+            <p class="mt-2 mb-0 text-sm text-surface-600 dark:text-surface-400">Cette action est irréversible.</p>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Annuler" [text]="true" severity="secondary" (onClick)="hideConfirmModal()" />
+        <p-button label="Supprimer" severity="danger" (onClick)="deleteAddress()" />
+    </ng-template>
+</p-dialog>
 }@else {
-<bp-address-edition [address]="address()"></bp-address-edition>
+<p-card styleClass="shadow-md">
+    <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
+            <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier l'adresse</h3>
+            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="cancel()" pTooltip="Annuler" tooltipPosition="top" />
+        </div>
+
+        <bp-address-edition [address]="address()" (clickSubmit)="editAddress($event)" (clickCancel)="cancel()"></bp-address-edition>
+    </div>
+</p-card>
 }

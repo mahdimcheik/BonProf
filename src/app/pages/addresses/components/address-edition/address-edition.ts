@@ -7,13 +7,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
-import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-address-edition',
-    imports: [ConfigurableFormComponent, AutoComplete, CommonModule, FormsModule, Card],
+    imports: [ConfigurableFormComponent, AutoComplete, CommonModule, FormsModule],
     templateUrl: './address-edition.html'
 })
 export class AddressEdition implements OnInit {
@@ -39,8 +38,8 @@ export class AddressEdition implements OnInit {
             formFieldGroups: [
                 {
                     id: 'informations',
-                    name: address ? `Editer l'adresse: ${address.city}` : 'Ajouter une adresse',
-                    label: address ? `Editer l'adresse: ${address.city}` : 'Ajouter une adresse',
+                    name: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
+                    label: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
                     fields: [
                         { id: 'typeId', label: "Type d'adresse", name: 'typeId', type: 'radio', required: false, value: address ? address.typeId : '', compareKey: 'id', options: this.types(), fullWidth: true, displayKey: 'name' },
                         { id: 'city', label: 'Ville', name: 'city', type: 'text', required: true, value: address ? address.city : '', placeholder: 'Ville' },
@@ -54,6 +53,8 @@ export class AddressEdition implements OnInit {
     });
 
     ngOnInit(): void {
+        console.log('address', this.address());
+
         this.loadData();
     }
 
@@ -90,15 +91,6 @@ export class AddressEdition implements OnInit {
 
     submit($event: FormGroup<any>) {
         const values = $event.value.informations;
-        // if (this.address()) {
-        //     values.country = 'France';
-        //     const updatedAddress: AddressUpdate = values;
-        //     updatedAddress.id = (this.address() as AddressDetails)!.id;
-        //     this.clickSubmit.emit(updatedAddress);
-        // } else {
-        //     values.country = 'France';
-        //     this.clickSubmit.emit(values as AddressCreate);
-        // }
         if (this.address() && (this.address() as any)?.id) {
             values.id = (this.address() as AddressDetails).id;
             const addressUpdate = {

@@ -6,12 +6,14 @@ import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails } from 'src/client/models';
 
 @Component({
     selector: 'bp-addresses-list',
-    imports: [SmartSectionComponent, AddressEdition, AddressCard],
+    imports: [SmartSectionComponent, AddressEdition, AddressCard, Button, Card],
     templateUrl: './addresses-list.html'
 })
 export class AddressesList {

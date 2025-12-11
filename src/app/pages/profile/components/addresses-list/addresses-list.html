@@ -1,9 +1,15 @@
 <app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddformationBox()">
     <ng-template #main>
         @if (showEditBox()) {
-        <div class="mt-4">
-            <bp-address-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewAddress($event)" (clickCancel)="hideAddFormationBox()"></bp-address-edition>
-        </div>
+        <p-card styleClass="shadow-md">
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
+                    <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Ajouter une nouvelle adresse</h3>
+                    <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="cancel()" pTooltip="Annuler" tooltipPosition="top" />
+                </div>
+                <bp-address-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewAddress($event)" (clickCancel)="hideAddFormationBox()"></bp-address-edition>
+            </div>
+        </p-card>
         } @for (address of addresses(); track address.id) {
         <bp-address-card [address]="address" [editMode]="false" (needRefresh)="loadData()"></bp-address-card>
         }@empty {

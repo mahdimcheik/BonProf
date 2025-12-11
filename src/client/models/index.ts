@@ -53,7 +53,6 @@ export interface AddressUpdate {
     id: string;
     street: string;
     city: string;
-    state: string;
     country: string;
     zipCode: string;
     additionalInfo?: string | null;

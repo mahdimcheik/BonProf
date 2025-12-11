@@ -3,12 +3,16 @@ import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-s
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Dialog } from 'primeng/dialog';
+import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client';
 import { AddressEdition } from '../address-edition/address-edition';
 @Component({
     selector: 'bp-address-card',
-    imports: [AddressEdition, MapBasic],
+    imports: [AddressEdition, MapBasic, Card, Button, Dialog, Tooltip],
     templateUrl: './address-card.html'
 })
 export class AddressCard {
@@ -18,18 +22,17 @@ export class AddressCard {
 
     editMode = model(true);
     address = model.required<AddressDetails>();
-    showEditModal = signal(false);
     showDeleteConfirm = signal(false);
     teacher = this.teacherWrapperService.teacherProfile;
 
     needRefresh = output<boolean>();
 
     cancel() {
-        this.showEditModal.set(false);
+        this.editMode.set(false);
     }
 
-    openEditModal() {
-        this.showEditModal.set(true);
+    goEditMode() {
+        this.editMode.set(true);
     }
 
     async editAddress(address: AddressDetails | AddressCreate | AddressUpdate) {

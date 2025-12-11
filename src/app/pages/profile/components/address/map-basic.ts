@@ -42,7 +42,7 @@ export class MapBasic implements AfterViewInit, OnDestroy {
     constructor() {}
 
     private initMap(): void {
-        this.map = L.map('map').setView([48.8566, 2.3522], 12);
+        this.map = L.map('map').setView([48.8566, 2.3522], 64);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap'
@@ -86,8 +86,10 @@ export class MapBasic implements AfterViewInit, OnDestroy {
         if (!this.map) return;
 
         const bounds = this.markersLayer.getBounds();
-        if (bounds.isValid()) {
+        if (bounds.isValid() && this.secondaryAddress()) {
             this.map.fitBounds(bounds, { padding: [50, 50] });
+        } else {
+            this.map.setView([this.mainAddress().latitude!, this.mainAddress().longitude!], 13);
         }
     }
 
