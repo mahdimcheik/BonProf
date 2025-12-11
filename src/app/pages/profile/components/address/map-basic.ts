@@ -1,26 +1,26 @@
 import { AfterViewInit, Component, computed, input, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { AddressDetails, TeacherDetails } from 'src/client';
+import { AddressDetails, UserDetails } from 'src/client';
 
 @Component({
     selector: 'bp-map-basic',
     imports: [],
     styleUrls: ['./map-basic.scss'],
-    template: '<div id="map" class="map-container rounded-xl"></div>'
+    template: '@if(mainAddress().latitude && mainAddress().longitude){<div id="map" class=" rounded-xl min-h-[200px] w-full min-w-[300px]"></div>}'
 })
 export class MapBasic implements AfterViewInit, OnDestroy {
-    teacher = input.required<TeacherDetails>();
-    addressProfessor = input.required<AddressDetails>();
-    addressStudent = input<AddressDetails | null>(null);
+    user = input.required<UserDetails>();
+    mainAddress = input.required<AddressDetails>();
+    secondaryAddress = input<AddressDetails | null>(null);
     data = computed<AddressDetails[]>(() => {
-        const addressProf = this.addressProfessor();
-        const addressStudent = this.addressStudent();
+        const mainAddress = this.mainAddress();
+        const secondaryAddress = this.secondaryAddress();
 
         var addresses: AddressDetails[] = [];
-        addresses.push(addressProf);
-        if (addressStudent) {
-            addresses.push(addressStudent);
+        addresses.push(mainAddress);
+        if (secondaryAddress) {
+            addresses.push(secondaryAddress);
         }
         return addresses;
     });
@@ -34,6 +34,9 @@ export class MapBasic implements AfterViewInit, OnDestroy {
         this.mapInitialized = true;
         this.loadMarkers();
         this.fitMapToMarkers();
+
+        console.log('user', this.user());
+        console.log('main addresse', this.mainAddress());
     }
 
     constructor() {}

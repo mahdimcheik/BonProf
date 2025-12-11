@@ -3,10 +3,11 @@
         <p-autocomplete
             [(ngModel)]="selectedCity"
             (completeMethod)="search($event)"
+            (onSelect)="onCitySelect($event)"
             [suggestions]="cities()"
             optionLabel="displayLabel"
             styleClass="flex-1"
-            [inputStyleClass]="'w-full h-[45px]'"
+            [inputStyleClass]="'w-full h-[45px] my-2' "
             [panelStyle]="{ 'z-index': '9999' }"
             appendTo="body"
             placeholder="Entrez votre ville ou code postal"
@@ -20,7 +21,6 @@
                 <div class="font-medium px-3 py-2">Villes et codes postaux</div>
             </ng-template>
         </p-autocomplete>
-        <button pButton pRipple type="button" label="Réserver" class="text-xl!"></button>
     </div>
     <bp-configurable-form [structure]="addressForm()" (onFormSubmit)="submit($event)" (onCancel)="onCancel()"></bp-configurable-form>
 </div>

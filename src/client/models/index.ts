@@ -11,27 +11,26 @@ import { HttpContext, HttpHeaders } from "@angular/common/http";
 export interface AddressCreate {
     street: string;
     city: string;
-    state: string;
     country: string;
     zipCode: string;
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId?: string;
-    typeId?: string;
+    userId: string;
+    typeId: string;
 }
 
 export interface AddressDetails {
     id: string;
     street: string;
     city: string;
-    state: string;
     country: string;
     zipCode: string;
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
     userId?: string;
+    typeId: string;
     createdAt: Date;
     updatedAt?: Date | null;
 }
@@ -61,7 +60,7 @@ export interface AddressUpdate {
     longitude?: number | null;
     latitude?: number | null;
     userId: string;
-    typeId?: string;
+    typeId: string;
 }
 
 export interface BooleanResponse {
@@ -230,7 +229,6 @@ export interface TeacherDetails {
     description?: string | null;
     userId: string;
     user: UserDetails;
-    addresses?: Array<AddressDetails>;
     formations?: Array<FormationDetails>;
     createdAt: Date;
     updatedAt?: Date | null;
@@ -272,6 +270,20 @@ export interface TeacherProfileUpdate {
     twitter?: string | null;
 }
 
+export interface TypeAddressDetails {
+    id: string;
+    name: string;
+    color: string;
+    icon?: string | null;
+}
+
+export interface TypeAddressDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<TypeAddressDetails>;
+    count?: number | null;
+}
+
 export interface UserCreate {
     email: string;
     password: string;
@@ -298,6 +310,7 @@ export interface UserDetails {
     gender?: GenderDetails;
     createdAt?: Date;
     roles: Array<RoleDetails>;
+    addresses: Array<AddressDetails>;
 }
 
 export interface UserDetailsResponse {

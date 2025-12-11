@@ -11,11 +11,13 @@
                     </div>
                 </ng-template>
                 <ul class="list-none p-0 m-0 flex flex-col gap-2">
-                    @for (language of languages(); track language.name) {
+                    @if(languages().length !== 0) { @for (language of languages(); track language.name) {
                     <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-check-circle text-primary"></i>
                         <span>{{language.name}}</span>
                     </li>
+                    } }@else {
+                    <li class="text-surface-600 dark:text-surface-400 text-sm">Aucune langue renseignée.</li>
                     }
                 </ul>
             </p-card>

@@ -1,4 +1,6 @@
+import { MapBasic } from '@/pages/profile/components/address/map-basic';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
+import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
@@ -6,17 +8,19 @@ import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client';
 import { AddressEdition } from '../address-edition/address-edition';
 @Component({
     selector: 'bp-address-card',
-    imports: [AddressEdition],
+    imports: [AddressEdition, MapBasic],
     templateUrl: './address-card.html'
 })
 export class AddressCard {
     addressWrapperService = inject(AddressWrapperService);
+    teacherWrapperService = inject(TeacherWrapperService);
     messageService = inject(MessageService);
 
     editMode = model(true);
     address = model.required<AddressDetails>();
     showEditModal = signal(false);
     showDeleteConfirm = signal(false);
+    teacher = this.teacherWrapperService.teacherProfile;
 
     needRefresh = output<boolean>();
 

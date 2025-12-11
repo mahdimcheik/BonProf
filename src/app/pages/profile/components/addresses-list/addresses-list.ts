@@ -27,10 +27,10 @@ export class AddressesList {
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 
-    addresses = this.mainService.AddressesList;
+    addresses = signal<AddressDetails[]>([]);
 
     async ngOnInit() {
-        // await this.loadData();
+        await this.loadData();
     }
 
     async loadData() {
@@ -51,7 +51,7 @@ export class AddressesList {
     }
 
     async addNewAddress(event: AddressCreate | AddressDetails) {
-        await firstValueFrom(this.addressWrapperService.addAddress(event));
+        await firstValueFrom(this.addressWrapperService.addAddress(event as AddressCreate));
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Adresse ajoutée avec succès' });
         this.showEditBox.set(false);
         await this.loadData();

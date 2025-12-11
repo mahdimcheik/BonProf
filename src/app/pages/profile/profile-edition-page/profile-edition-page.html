@@ -1,5 +1,5 @@
 <div class="card">
-    <p-tabs value="personnalInfos">
+    <p-tabs value="personnalInfos" lazy>
         <p-tablist>
             <p-tab value="personnalInfos">Infos personnelles</p-tab>
             <p-tab value="formations">Formations</p-tab>
@@ -8,13 +8,19 @@
         </p-tablist>
         <p-tabpanels>
             <p-tabpanel value="personnalInfos">
-                <bp-personnal-infos-edition></bp-personnal-infos-edition>
+                <ng-template #content>
+                    <bp-personnal-infos-edition></bp-personnal-infos-edition>
+                </ng-template>
             </p-tabpanel>
             <p-tabpanel value="formations">
-                <bp-formations-list></bp-formations-list>
+                <ng-template #content>
+                    <bp-formations-list></bp-formations-list>
+                </ng-template>
             </p-tabpanel>
             <p-tabpanel value="addresses">
-                <bp-addresses-list></bp-addresses-list>
+                <ng-template #content>
+                    <bp-addresses-list></bp-addresses-list>
+                </ng-template>
             </p-tabpanel>
             <p-tabpanel value="experiences">
                 <ng-template #content>Complex components that should only be initialized when the tab becomes active</ng-template>

@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { FormationCreate } from 'src/client';
+import { FormationCreate, FormationDetails } from 'src/client';
 
 @Component({
     selector: 'bp-formations-list',
@@ -28,10 +28,10 @@ export class FormationsList {
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 
-    formations = this.teacherWrapperService.formationList;
+    formations = signal<FormationDetails[]>([]);
 
     async ngOnInit() {
-        // await this.loadData();
+        await this.loadData();
     }
 
     async loadData() {

@@ -12,3 +12,4 @@ export { AuthService } from "./auth.service";
 export { FormationsService } from "./formations.service";
 export { LanguagesService } from "./languages.service";
 export { TeacherProfileService } from "./teacherProfile.service";
+export { TypeAddressesService } from "./typeAddresses.service";
