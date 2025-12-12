@@ -62,30 +62,17 @@ export class AddressEdition implements OnInit {
         await firstValueFrom(this.addressWrapperService.getAddressTypes());
     }
 
-    // async asyncAction(event: any): Promise<CityDetails[]> {
-    //     const response = await firstValueFrom(this.httpclient.get<any>(`https://api-adresse.data.gouv.fr/search/?q=${event.query}&type=municipality`, { withCredentials: false }));
-
-    //     const citiesWithLabel = response.features.map((city: CityDetails) => ({
-    //         ...city,
-    //         displayLabel: `${city.properties.postcode} ${city.properties.city}`
-    //     }));
-
-    //     this.cities.set(citiesWithLabel);
-    //     this.address.set(this.selectedCity ? this.cityToAddress(this.selectedCity!) : undefined);
-
-    //     return citiesWithLabel;
-    // }
     cityToAddress(city: CityDetails): AddressCreate {
         return {
             city: city.properties.city,
             zipCode: city.properties.postcode,
-            street: '',
-            country: 'France',
+            street: this.address()?.street || '',
+            country: this.address()?.country || 'France',
+            additionalInfo: this.address()?.additionalInfo || '',
+            userId: this.address()?.userId || '',
+            typeId: this.address()?.typeId || '',
             latitude: city.geometry.coordinates[1],
-            longitude: city.geometry.coordinates[0],
-            additionalInfo: '',
-            userId: '',
-            typeId: '0'
+            longitude: city.geometry.coordinates[0]
         };
     }
 

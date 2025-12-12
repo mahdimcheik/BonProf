@@ -1,3 +1,4 @@
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { MapBasic } from '@/pages/profile/components/address/map-basic';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
@@ -5,14 +6,13 @@ import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
-import { Dialog } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client';
 import { AddressEdition } from '../address-edition/address-edition';
 @Component({
     selector: 'bp-address-card',
-    imports: [AddressEdition, MapBasic, Card, Button, Dialog, Tooltip],
+    imports: [AddressEdition, MapBasic, Card, Button, Tooltip, ConfirmModalComponent],
     templateUrl: './address-card.html'
 })
 export class AddressCard {
