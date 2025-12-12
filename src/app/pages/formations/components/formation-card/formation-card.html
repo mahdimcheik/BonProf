@@ -1,18 +1,53 @@
 @if(!editMode()){
-<app-smart-element [title]="'Formation'" [editMode]="true" [editButtonIcon]="'pi pi-pencil'" [deleteButtonIcon]="'pi pi-trash'" (onEditClick)="editMode.set(true)" (onDeleteClick)="showConfirmModal()">
-    <ng-template #main>
-        <div class="flex gap-2 p-2 pl-0">
-            <span class="w-2"></span>
-            <div class="flex flex-col gap-1">
-                <p class="font-semibold !mb-0">{{ formation().title }}</p>
-                <p class="text-xs !mb-0 text-gray-600 dark:text-gray-400">{{ formation().institute }} - {{ formation().dateFrom | date }} @if (formation().dateTo) { à {{ formation().dateTo | date }} } @else { (En cours) }</p>
-                <p class="text-xs !mb-0 text-gray-700 dark:text-gray-400">{{ formation().description }}</p>
+<p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+    <div class="flex flex-col gap-4">
+        <!-- Formation Header -->
+        <div class="flex justify-between items-start">
+            <div class="flex items-start gap-3 flex-1">
+                <div class="flex-shrink-0 mt-2">
+                    <i class="pi pi-graduation-cap text-primary" style="font-size: 18px"></i>
+                </div>
+                <div class="flex flex-col gap-2 flex-1">
+                    <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ formation().title }}</h3>
+
+                    <div class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-building text-sm"></i>
+                        <span class="text-sm">{{ formation().institute }}</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-calendar text-sm"></i>
+                        <span class="text-sm"> {{ formation().dateFrom | date }} @if (formation().dateTo) { à {{ formation().dateTo | date }} } @else { - En cours } </span>
+                    </div>
+
+                    @if (formation().description) {
+                    <div class="flex items-start gap-2 text-surface-600 dark:text-surface-400 mt-2">
+                        <i class="pi pi-info-circle text-sm mt-0.5"></i>
+                        <span class="text-sm">{{ formation().description }}</span>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2 flex-shrink-0">
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(true)" pTooltip="Modifier" tooltipPosition="top" />
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="showConfirmModal()" pTooltip="Supprimer" tooltipPosition="top" />
             </div>
         </div>
-    </ng-template>
-</app-smart-element>
+    </div>
+</p-card>
 } @else {
-<bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
+<p-card styleClass="shadow-md">
+    <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
+            <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier la formation</h3>
+            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(false)" pTooltip="Annuler" tooltipPosition="top" />
+        </div>
+
+        <bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
+    </div>
+</p-card>
 } @if(showDeleteConfirm()){
 <bp-confirm-modal
     [(visible)]="showDeleteConfirm"

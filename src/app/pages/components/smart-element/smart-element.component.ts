@@ -1,10 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, contentChild, model, output, TemplateRef } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-smart-element',
-    imports: [NgTemplateOutlet, ButtonModule],
+    imports: [NgTemplateOutlet, Button, Card, Tooltip],
     templateUrl: './smart-element.component.html',
     styleUrl: './smart-element.component.scss'
 })

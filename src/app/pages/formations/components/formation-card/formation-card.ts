@@ -1,16 +1,18 @@
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
-import { SmartElementComponent } from '@/pages/components/smart-element/smart-element.component';
 import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
 import { DatePipe } from '@angular/common';
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { FormationCreate, FormationDetails, FormationUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-formation-card',
-    imports: [SmartElementComponent, DatePipe, FormationsEdition, ConfirmModalComponent],
+    imports: [DatePipe, FormationsEdition, ConfirmModalComponent, Card, Button, Tooltip],
     templateUrl: './formation-card.html'
 })
 export class FormationCard {

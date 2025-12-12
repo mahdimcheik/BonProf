@@ -1,13 +1,20 @@
-<main [class]="`p-2 min-h-[100px] flex items-center   rounded-lg bg-white dark:bg-[var(--primary-contrast-color)]`" [style]="`box-shadow: inset 4px 0 0 0 ${innerColor()};`">
-    <div class="start flex-1">
-        @if (mainContent()) {
-            <ng-container [ngTemplateOutlet]="mainContent()"></ng-container>
-        }
+<p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+    <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-start">
+            <!-- Main Content -->
+            <div class="flex items-start gap-3 flex-1">
+                @if (mainContent()) {
+                    <ng-container [ngTemplateOutlet]="mainContent()"></ng-container>
+                }
+            </div>
+
+            <!-- Action Buttons -->
+            @if (editMode()) {
+                <div class="flex gap-2 flex-shrink-0">
+                    <p-button [icon]="editButtonIcon()" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="onEditClick.emit()" pTooltip="Modifier" tooltipPosition="top" />
+                    <p-button [icon]="deleteButtonIcon()" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="onDeleteClick.emit()" pTooltip="Supprimer" tooltipPosition="top" />
+                </div>
+            }
+        </div>
     </div>
-    <div class="flex gap-2 p-2">
-        @if (editMode()) {
-            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (click)="onEditClick.emit()"> </p-button>
-            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (click)="onDeleteClick.emit()"> </p-button>
-        }
-    </div>
-</main>
+</p-card>
