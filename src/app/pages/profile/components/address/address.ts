@@ -8,8 +8,6 @@ import { AddressDetails } from 'src/client';
     templateUrl: './address.html'
 })
 export class Address {
-    // addressMainService = inject(AddressesMainService);
     messageService = inject(MessageService);
-
     address = model.required<AddressDetails>();
 }

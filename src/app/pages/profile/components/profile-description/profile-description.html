@@ -1,15 +1,13 @@
 <div class="flex flex-col lg:flex-row w-full gap-6">
     <!-- Sidebar -->
-    <div class="w-full lg:w-[280px] flex-shrink-0">
+    <p-card class="w-full lg:w-[280px] flex-shrink-0">
         <div class="flex flex-col gap-4">
             <!-- Languages Card -->
-            <p-card styleClass="shadow-sm">
-                <ng-template pTemplate="header">
-                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
-                        <i class="pi pi-comments text-2xl text-primary"></i>
-                        <h3 class="text-xl font-bold m-0">Je parle</h3>
-                    </div>
-                </ng-template>
+            <div class="shadow-sm">
+                <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+                    <i class="pi pi-comments text-2xl text-primary"></i>
+                    <h3 class="text-xl font-bold m-0">Je parle</h3>
+                </div>
                 <ul class="list-none p-0 m-0 flex flex-col gap-2">
                     @if(languages().length !== 0) { @for (language of languages(); track language.name) {
                     <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
@@ -20,16 +18,14 @@
                     <li class="text-surface-600 dark:text-surface-400 text-sm">Aucune langue renseignée.</li>
                     }
                 </ul>
-            </p-card>
+            </div>
 
             <!-- Subjects Card -->
-            <p-card styleClass="shadow-sm">
-                <ng-template pTemplate="header">
-                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
-                        <i class="pi pi-book text-2xl text-primary"></i>
-                        <h3 class="text-xl font-bold m-0">J'enseigne</h3>
-                    </div>
-                </ng-template>
+            <div class="shadow-sm">
+                <div class="flex items-center gap-2 px-4 pt-4 pb-2">
+                    <i class="pi pi-book text-2xl text-primary"></i>
+                    <h3 class="text-xl font-bold m-0">J'enseigne</h3>
+                </div>
                 <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
                     <li>
                         <p-tag value="Math" severity="info" styleClass="text-sm" />
@@ -41,16 +37,14 @@
                         <p-tag value="Chimie" severity="info" styleClass="text-sm" />
                     </li>
                 </ul>
-            </p-card>
+            </div>
 
             <!-- Social Networks Card -->
-            <p-card styleClass="shadow-sm">
-                <ng-template pTemplate="header">
-                    <div class="flex items-center gap-2 px-4 pt-4 pb-2">
-                        <i class="pi pi-share-alt text-2xl text-primary"></i>
-                        <h3 class="text-xl font-bold m-0">Mes réseaux</h3>
-                    </div>
-                </ng-template>
+            <div class="shadow-sm">
+                <div class="flex items-center gap-2 p-2">
+                    <i class="pi pi-share-alt text-2xl text-primary"></i>
+                    <h3 class="text-xl font-bold m-0">Mes réseaux</h3>
+                </div>
                 <ul class="list-none p-0 m-0 flex gap-3">
                     @if(teacher()?.linkedIn) {
                     <li>
@@ -72,9 +66,9 @@
                     <div class="text-surface-600 dark:text-surface-400 text-sm">Aucun réseau social renseigné.</div>
                     }
                 </ul>
-            </p-card>
+            </div>
         </div>
-    </div>
+    </p-card>
 
     <!-- Main Content -->
     <div class="flex-1">

@@ -2,6 +2,7 @@ import { ContactForm } from '@/pages/components/contact-form/contact-form';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
 import { AddressDetails, TeacherDetails } from 'src/client';
@@ -12,7 +13,7 @@ import { ProfileInfos } from '../components/profile-infos/profile-infos';
 
 @Component({
     selector: 'bp-profile-page',
-    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic],
+    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card],
     templateUrl: './profile-page.html'
 })
 export class ProfilePage implements OnInit {
