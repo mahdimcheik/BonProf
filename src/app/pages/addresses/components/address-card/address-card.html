@@ -5,7 +5,7 @@
         <div class="flex justify-between items-start">
             <div class="flex items-start gap-3 flex-1">
                 <div class="flex-shrink-0 mt-2">
-                    <i class="pi pi-map-marker text-primary" style="font-size: 18px"></i>
+                    <i [class]="iconclass()" style="font-size: 18px"></i>
                 </div>
                 <div class="flex flex-col gap-2 flex-1">
                     <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ address().city }}</h3>

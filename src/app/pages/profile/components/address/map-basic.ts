@@ -7,12 +7,16 @@ import { AddressDetails, UserDetails } from 'src/client';
     selector: 'bp-map-basic',
     imports: [],
     styleUrls: ['./map-basic.scss'],
-    template: '@if(mainAddress().latitude && mainAddress().longitude){<div id="map" class=" rounded-xl min-h-[200px] w-full min-w-[300px]"></div>}'
+    template: '@if(mainAddress().latitude && mainAddress().longitude){<div [id]="mapId" class=" rounded-xl min-h-[200px] w-full min-w-[300px]"></div>}'
 })
 export class MapBasic implements AfterViewInit, OnDestroy {
     user = input.required<UserDetails>();
     mainAddress = input.required<AddressDetails>();
     secondaryAddress = input<AddressDetails | null>(null);
+
+    // Generate unique map ID for each instance
+    mapId = `map-${Math.random().toString(36).substr(2, 9)}`;
+
     data = computed<AddressDetails[]>(() => {
         const mainAddress = this.mainAddress();
         const secondaryAddress = this.secondaryAddress();
@@ -34,15 +38,12 @@ export class MapBasic implements AfterViewInit, OnDestroy {
         this.mapInitialized = true;
         this.loadMarkers();
         this.fitMapToMarkers();
-
-        console.log('user', this.user());
-        console.log('main addresse', this.mainAddress());
     }
 
     constructor() {}
 
     private initMap(): void {
-        this.map = L.map('map').setView([48.8566, 2.3522], 64);
+        this.map = L.map(this.mapId).setView([48.8566, 2.3522], 64);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap'
@@ -76,7 +77,6 @@ export class MapBasic implements AfterViewInit, OnDestroy {
                 iconSize: [30, 30],
                 iconAnchor: [15, 30]
             });
-
             const marker = L.marker([p.lat, p.lng], { icon });
             this.markersLayer.addLayer(marker);
         });
@@ -84,7 +84,6 @@ export class MapBasic implements AfterViewInit, OnDestroy {
 
     private fitMapToMarkers(): void {
         if (!this.map) return;
-
         const bounds = this.markersLayer.getBounds();
         if (bounds.isValid() && this.secondaryAddress()) {
             this.map.fitBounds(bounds, { padding: [50, 50] });

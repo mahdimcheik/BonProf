@@ -1,8 +1,9 @@
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { MapBasic } from '@/pages/profile/components/address/map-basic';
+import { AddressTypePipe } from '@/pages/shared/pipes/address-type-pipe';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
-import { Component, inject, model, output, signal } from '@angular/core';
+import { Component, computed, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
@@ -13,7 +14,8 @@ import { AddressEdition } from '../address-edition/address-edition';
 @Component({
     selector: 'bp-address-card',
     imports: [AddressEdition, MapBasic, Card, Button, Tooltip, ConfirmModalComponent],
-    templateUrl: './address-card.html'
+    templateUrl: './address-card.html',
+    providers: [AddressTypePipe]
 })
 export class AddressCard {
     addressWrapperService = inject(AddressWrapperService);
@@ -24,6 +26,12 @@ export class AddressCard {
     address = model.required<AddressDetails>();
     showDeleteConfirm = signal(false);
     teacher = this.teacherWrapperService.teacherProfile;
+    addressTypePipe = inject(AddressTypePipe);
+
+    iconclass = computed(() => {
+        const typeId = this.address().typeId;
+        return `pi ${this.addressTypePipe.transform(typeId)} text-primary`;
+    });
 
     needRefresh = output<boolean>();
 
