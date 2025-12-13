@@ -236,6 +236,7 @@ export interface TeacherDetails {
     faceBook?: string | null;
     gitHub?: string | null;
     twitter?: string | null;
+    priceIndicative?: number;
 }
 
 export interface TeacherDetailsListResponse {
@@ -267,6 +268,7 @@ export interface TeacherProfileUpdate {
     faceBook?: string | null;
     gitHub?: string | null;
     twitter?: string | null;
+    priceIndicative?: number;
 }
 
 export interface TypeAddressDetails {

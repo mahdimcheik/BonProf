@@ -2,7 +2,7 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
-import { ageValidator } from '@/pages/shared/validators/confirmPasswordValidator';
+import { ageValidator, socialMediaUrlValidator } from '@/pages/shared/validators/confirmPasswordValidator';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -114,6 +114,16 @@ export class PersonnalInfosEdition implements OnInit {
                             value: this.teacherProfile()?.languages?.map((lang) => lang.id) || [],
                             fullWidth: true,
                             options: this.languagesList()
+                        },
+                        {
+                            id: 'priceIndicative',
+                            name: 'priceIndicative',
+                            type: 'number',
+                            label: 'Tarif indicatif (€ par heure)',
+                            value: teacher?.priceIndicative || null,
+                            fullWidth: true,
+                            required: false,
+                            placeholder: 'Tarif indicatif'
                         }
                     ]
                 },
@@ -128,7 +138,9 @@ export class PersonnalInfosEdition implements OnInit {
                             type: 'text',
                             label: 'LinkedIn',
                             required: false,
-                            placeholder: 'LinkedIn'
+                            placeholder: 'LinkedIn',
+                            value: teacher?.linkedIn || '',
+                            validation: [socialMediaUrlValidator('linkedin')]
                         },
                         {
                             id: 'faceBook',
@@ -136,7 +148,9 @@ export class PersonnalInfosEdition implements OnInit {
                             type: 'text',
                             label: 'FaceBook',
                             required: false,
-                            placeholder: 'FaceBook'
+                            placeholder: 'FaceBook',
+                            value: teacher?.faceBook || '',
+                            validation: [socialMediaUrlValidator('facebook')]
                         },
                         {
                             id: 'gitHub',
@@ -144,7 +158,9 @@ export class PersonnalInfosEdition implements OnInit {
                             type: 'text',
                             label: 'GitHub',
                             required: false,
-                            placeholder: 'GitHub'
+                            placeholder: 'GitHub',
+                            value: teacher?.gitHub || '',
+                            validation: [socialMediaUrlValidator('github')]
                         },
                         {
                             id: 'twitter',
@@ -152,7 +168,9 @@ export class PersonnalInfosEdition implements OnInit {
                             type: 'text',
                             label: 'Twitter',
                             required: false,
-                            placeholder: 'Twitter'
+                            placeholder: 'Twitter',
+                            value: teacher?.twitter || '',
+                            validation: [socialMediaUrlValidator('twitter')]
                         }
                     ]
                 }
@@ -172,6 +190,7 @@ export class PersonnalInfosEdition implements OnInit {
             faceBook: teacher.socialLinks.faceBook,
             gitHub: teacher.socialLinks.gitHub,
             twitter: teacher.socialLinks.twitter,
+            priceIndicative: teacher.optionalFields.priceIndicative,
             id: this.teacherProfile()?.id!,
             user: {
                 firstName: teacher.personnalInfos.firstName,

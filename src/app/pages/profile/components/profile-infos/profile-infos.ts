@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
@@ -13,4 +13,7 @@ import { TeacherDetails } from 'src/client';
 })
 export class ProfileInfos {
     teacher = input.required<TeacherDetails>();
+    address = computed(() => {
+        return this.teacher().user.addresses.length > 0 ? this.teacher().user.addresses[0] : null;
+    });
 }

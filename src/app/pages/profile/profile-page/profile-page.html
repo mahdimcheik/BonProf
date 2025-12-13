@@ -7,10 +7,13 @@
 
     <bp-profile-description></bp-profile-description>
 
+    @if(mainAddress()) {
+
     <p-card class="my-4">
-        <bp-address [address]="address"></bp-address>
-        <bp-map-basic [mainAddress]="address" [secondaryAddress]="address1" [user]="teacherprofile()!.user"></bp-map-basic>
+        <bp-address [address]="mainAddress()!"></bp-address>
+        <bp-map-basic [mainAddress]="mainAddress()!" [user]="teacherprofile()!.user"></bp-map-basic>
     </p-card>
+    }
 
     <p-divider class="my-6"></p-divider>
 

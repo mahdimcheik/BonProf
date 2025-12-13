@@ -17,27 +17,31 @@
 
                 <!-- Info Items -->
                 <div class="flex flex-col gap-3">
+                    @if(address()) {
                     <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-map-marker text-xl text-primary"></i>
-                        <span class="text-base">Ville, Pays</span>
+                        <span class="text-base">{{ address()?.city ?? '' }}, {{ address()?.country ?? '' }}</span>
                     </div>
+                    }
                     <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-briefcase text-xl text-primary"></i>
-                        <span class="text-base">Titre, présentation rapide</span>
-                    </div>
-                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
-                        <i class="pi pi-graduation-cap text-xl text-primary"></i>
-                        <span class="text-base">Dernier diplôme obtenu</span>
+                        <span class="text-base">{{teacher().title}}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Pricing and Action -->
             <div class="flex flex-col justify-center items-center gap-4 lg:min-w-[250px] p-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
+                @if(teacher().priceIndicative) {
                 <div class="text-center">
-                    <p class="text-sm text-surface-600 dark:text-surface-400 mb-1">Tarif horaire</p>
-                    <span class="text-4xl font-bold text-primary">28€/h</span>
+                    <p class="text-sm text-surface-600 dark:text-surface-400 mb-1">Tarif indicatif</p>
+                    <span class="text-4xl font-bold text-primary">{{teacher().priceIndicative}}€/h</span>
                 </div>
+                }@else {
+                <div class="text-center">
+                    <p class="text-sm text-surface-600 dark:text-surface-400 mb-1">Prix dynamique</p>
+                </div>
+                }
 
                 <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" />
 

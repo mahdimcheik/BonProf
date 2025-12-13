@@ -59,3 +59,31 @@ export function ageValidator(): ValidatorFn {
         return age >= 13 ? null : { underage: "L'âge doit être supérieur à 13 ans" };
     };
 }
+
+type SocialMedia = 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'github';
+
+const SOCIAL_MEDIA_PATTERNS: Record<SocialMedia, RegExp> = {
+    facebook: /^https?:\/\/(www\.)?facebook\.com\/.+$/i,
+    twitter: /^https?:\/\/(www\.)?(twitter\.com|x\.com)\/.+$/i,
+    instagram: /^https?:\/\/(www\.)?instagram\.com\/.+$/i,
+    linkedin: /^https?:\/\/(www\.)?linkedin\.com\/.+$/i,
+    github: /^https?:\/\/(www\.)?github\.com\/.+$/i
+};
+
+export function socialMediaUrlValidator(platform: SocialMedia): ValidatorFn {
+    return (control: AbstractControl<string | null>) => {
+        if (!control.value) {
+            return null; // champ vide = valide (laisser Required gérer ça)
+        }
+
+        const pattern = SOCIAL_MEDIA_PATTERNS[platform];
+
+        const isValid = pattern.test(control.value);
+
+        return isValid
+            ? null
+            : {
+                  socialMediaError: `L'URL ne correspond pas au format de ${platform}.`
+              };
+    };
+}

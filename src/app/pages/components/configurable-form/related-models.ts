@@ -83,6 +83,9 @@ export const errorMessages: { [key: string]: (errValue: any) => string } = {
     passwordDifference: () => 'Les mots de passe ne correspondent pas.',
     underage: () => "L'âge doit être supérieur à 13 ans.",
 
+    // Social media URL validation errors
+    socialMediaError: () => "L'URL ne correspond pas au format du reseau.",
+
     // Group-level validation errors
     namesShouldBeDifferent: () => 'Le prénom et le nom doivent être différents.',
     passwordsDoNotMatch: () => 'Les mots de passe ne correspondent pas.',

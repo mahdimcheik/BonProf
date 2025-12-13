@@ -1,80 +1,87 @@
 <div class="flex flex-col lg:flex-row w-full gap-6">
     <!-- Sidebar -->
-    <p-card class="w-full lg:w-[280px] flex-shrink-0">
+    <div class="w-full lg:w-[280px] flex-shrink-0">
         <div class="flex flex-col gap-4">
             <!-- Languages Card -->
-            <div class="shadow-sm">
-                <div class="flex items-center gap-2 px-4 pt-4 pb-2">
-                    <i class="pi pi-comments text-2xl text-primary"></i>
-                    <h3 class="text-xl font-bold m-0">Je parle</h3>
+            <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <i class="pi pi-comments text-2xl text-primary"></i>
+                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Je parle</p>
+                    </div>
+                    <ul class="list-none p-0 m-0 flex flex-col gap-2">
+                        @if(languages().length !== 0) { @for (language of languages(); track language.name) {
+                        <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
+                            <i class="pi pi-check-circle text-primary text-sm"></i>
+                            <span class="text-sm">{{language.name}}</span>
+                        </li>
+                        } } @else {
+                        <li class="text-surface-600 dark:text-surface-400 text-sm italic">Aucune langue renseignée.</li>
+                        }
+                    </ul>
                 </div>
-                <ul class="list-none p-0 m-0 flex flex-col gap-2">
-                    @if(languages().length !== 0) { @for (language of languages(); track language.name) {
-                    <li class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
-                        <i class="pi pi-check-circle text-primary"></i>
-                        <span>{{language.name}}</span>
-                    </li>
-                    } }@else {
-                    <li class="text-surface-600 dark:text-surface-400 text-sm">Aucune langue renseignée.</li>
-                    }
-                </ul>
-            </div>
+            </p-card>
 
             <!-- Subjects Card -->
-            <div class="shadow-sm">
-                <div class="flex items-center gap-2 px-4 pt-4 pb-2">
-                    <i class="pi pi-book text-2xl text-primary"></i>
-                    <h3 class="text-xl font-bold m-0">J'enseigne</h3>
+            <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <i class="pi pi-book text-2xl text-primary"></i>
+                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">J'enseigne</p>
+                    </div>
+                    <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
+                        <li>
+                            <p-tag value="Math" severity="info" styleClass="text-sm" />
+                        </li>
+                        <li>
+                            <p-tag value="Physique" severity="info" styleClass="text-sm" />
+                        </li>
+                        <li>
+                            <p-tag value="Chimie" severity="info" styleClass="text-sm" />
+                        </li>
+                    </ul>
                 </div>
-                <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
-                    <li>
-                        <p-tag value="Math" severity="info" styleClass="text-sm" />
-                    </li>
-                    <li>
-                        <p-tag value="Physique" severity="info" styleClass="text-sm" />
-                    </li>
-                    <li>
-                        <p-tag value="Chimie" severity="info" styleClass="text-sm" />
-                    </li>
-                </ul>
-            </div>
+            </p-card>
 
             <!-- Social Networks Card -->
-            <div class="shadow-sm">
-                <div class="flex items-center gap-2 p-2">
-                    <i class="pi pi-share-alt text-2xl text-primary"></i>
-                    <h3 class="text-xl font-bold m-0">Mes réseaux</h3>
-                </div>
-                <ul class="list-none p-0 m-0 flex gap-3">
-                    @if(teacher()?.linkedIn) {
-                    <li>
-                        <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" />
-                    </li>
-                    } @if(teacher()?.faceBook) {
-                    <li>
-                        <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" />
-                    </li>
-                    } @if(teacher()?.twitter) {
-                    <li>
-                        <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" />
-                    </li>
-                    } @if(teacher()?.gitHub) {
-                    <li>
-                        <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" />
-                    </li>
-                    } @if(!teacher()?.linkedIn && !teacher()?.faceBook && !teacher()?.twitter && !teacher()?.gitHub) {
-                    <div class="text-surface-600 dark:text-surface-400 text-sm">Aucun réseau social renseigné.</div>
+            <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <i class="pi pi-share-alt text-2xl text-primary"></i>
+                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
+                    </div>
+                    @if(teacher()?.linkedIn || teacher()?.faceBook || teacher()?.twitter || teacher()?.gitHub) {
+                    <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
+                        @if(teacher()?.linkedIn) {
+                        <li>
+                            <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="LinkedIn" tooltipPosition="top" />
+                        </li>
+                        } @if(teacher()?.faceBook) {
+                        <li>
+                            <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Facebook" tooltipPosition="top" />
+                        </li>
+                        } @if(teacher()?.twitter) {
+                        <li>
+                            <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Twitter" tooltipPosition="top" />
+                        </li>
+                        } @if(teacher()?.gitHub) {
+                        <li>
+                            <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="GitHub" tooltipPosition="top" />
+                        </li>
+                        }
+                    </ul>
+                    } @else {
+                    <div class="text-surface-600 dark:text-surface-400 text-sm italic">Aucun réseau social renseigné.</div>
                     }
-                </ul>
-            </div>
+                </div>
+            </p-card>
         </div>
-    </p-card>
+    </div>
 
     <!-- Main Content -->
     <div class="flex-1">
-        <p-card styleClass="shadow-sm h-full" [header]="teacher()?.title ?? 'Description'">
+        <p-card styleClass="shadow-md h-full" [header]="teacher()?.title ?? 'Description'">
             <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
-        <div></div>
     </div>
 </div>
