@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { map, of, tap } from 'rxjs';
-import { CategoryCursusDetails, CategoryCursusService, CursusCreate, CursusService, LevelCursusDetails, LevelCursusService } from 'src/client';
+import { CategoryCursusDetails, CategoryCursusService, CursusCreate, CursusService, CursusUpdate, LevelCursusDetails, LevelCursusService } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +15,10 @@ export class CursusWrapperService {
 
     addCurus(cursus: CursusCreate) {
         return this.cursusService.cursusCreatePost(cursus);
+    }
+
+    updateCursus(cursus: CursusUpdate) {
+        return this.cursusService.cursusPut(cursus);
     }
 
     getCursus() {

@@ -26,20 +26,21 @@
             <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
-                        <i class="pi pi-book text-2xl text-primary"></i>
-                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">J'enseigne</p>
+                        <i class="pi pi-share-alt text-2xl text-primary"></i>
+                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
+                    @let cursuses = teacher()?.cursuses || []; @if(cursuses.length > 0) {
                     <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
+                        @for(cursus of cursuses; track cursus.id) {
                         <li>
-                            <p-tag value="Math" severity="info" styleClass="text-sm" />
+                            <p-tag [value]="cursus.name" styleClass="text-sm" />
                         </li>
-                        <li>
-                            <p-tag value="Physique" severity="info" styleClass="text-sm" />
-                        </li>
-                        <li>
-                            <p-tag value="Chimie" severity="info" styleClass="text-sm" />
-                        </li>
+
+                        }
                     </ul>
+                    } @else {
+                    <div class="text-surface-600 dark:text-surface-400 text-sm italic">Aucun cours renseigné.</div>
+                    }
                 </div>
             </p-card>
 

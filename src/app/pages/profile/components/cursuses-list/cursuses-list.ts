@@ -38,11 +38,11 @@ export class CursusesList {
         this.cursuses.set(cursusesData || []);
     }
 
-    async showAddformationBox() {
+    async showAddCursusBox() {
         this.showEditBox.set(true);
     }
 
-    hideAddFormationBox() {
+    hideAddCursusBox() {
         this.showEditBox.set(false);
     }
 

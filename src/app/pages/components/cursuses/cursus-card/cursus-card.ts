@@ -3,6 +3,8 @@ import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
+import { Tag } from 'primeng/tag';
+import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
 import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
@@ -10,7 +12,7 @@ import { CursusEdition } from '../cursus-edition/cursus-edition';
 
 @Component({
     selector: 'bp-cursus-card',
-    imports: [Card, Button, ConfirmModalComponent, CursusEdition],
+    imports: [Card, Button, ConfirmModalComponent, CursusEdition, Tag, Tooltip],
     templateUrl: './cursus-card.html'
 })
 export class CursusCard {
@@ -32,14 +34,15 @@ export class CursusCard {
     }
 
     async editCursus(cursus: CursusDetails | CursusCreate | CursusUpdate) {
-        // try {
-        //     const newFormation = await firstValueFrom(this.formationWrapperService.updateFormation(formation as FormationUpdate));
-        //     if (newFormation.data) {
-        //         this.formation.set(newFormation.data);
-        //     }
-        // } finally {
-        //     this.editMode.set(false);
-        // }
+        try {
+            const newFormation = await firstValueFrom(this.cursusWrapperService.updateCursus(cursus as CursusUpdate));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Cours édité avec succès' });
+            if (newFormation.data) {
+                this.cursus.set(newFormation.data);
+            }
+        } finally {
+            this.editMode.set(false);
+        }
     }
     showConfirmModal() {
         this.showDeleteConfirm.set(true);

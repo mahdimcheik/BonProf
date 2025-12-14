@@ -1,4 +1,5 @@
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -13,6 +14,7 @@ import { Structure } from '../../configurable-form/related-models';
 })
 export class CursusEdition implements OnInit {
     cursusWrapperService = inject(CursusWrapperService);
+    mainService = inject(MainService);
 
     clickSubmit = output<CursusDetails | CursusCreate | CursusUpdate>();
     clickCancel = output<void>();
@@ -75,11 +77,14 @@ export class CursusEdition implements OnInit {
 
     submit($event: FormGroup<any>) {
         const values = $event.value.informations;
+        console.log(values);
+
         if (this.cursus()) {
             const updatedCursus: CursusUpdate = values;
             updatedCursus.id = this.cursus()!.id;
             this.clickSubmit.emit(updatedCursus);
         } else {
+            values.teacherId = this.mainService.userConnected()?.id;
             this.clickSubmit.emit(values as CursusCreate);
         }
     }

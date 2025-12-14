@@ -1,19 +1,53 @@
 @if(!editMode()){
 <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
     <div class="flex flex-col gap-4">
-        <!-- Formation Header -->
+        <!-- Cursus Header -->
         <div class="flex justify-between items-start">
             <div class="flex items-start gap-3 flex-1">
                 <div class="flex-shrink-0 mt-2">
-                    <i class="pi pi-graduation-cap text-primary" style="font-size: 18px"></i>
+                    <i [class]="cursus().icon || 'pi pi-book'" [style.color]="cursus().color" style="font-size: 18px"></i>
                 </div>
-                <div class="flex flex-col gap-2 flex-1">
+                <div class="flex flex-col gap-3 flex-1">
                     <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ cursus().name }}</h3>
 
-                    <div class="flex items-center gap-2 text-surface-700 dark:text-surface-300">
-                        <i class="pi pi-building text-sm"></i>
+                    @if (cursus().description) {
+                    <div class="flex items-start gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-align-left text-sm mt-0.5"></i>
                         <span class="text-sm">{{ cursus().description }}</span>
                     </div>
+                    }
+
+                    <!-- Level -->
+                    @if (cursus().level) {
+                    <div class="flex items-center gap-2">
+                        <i class="pi pi-chart-line text-sm text-surface-600 dark:text-surface-400"></i>
+                        <span class="text-sm font-medium text-surface-700 dark:text-surface-300"> Niveau: </span>
+                        <p-tag [value]="cursus().level?.name" [style]="{ 'background-color': cursus().level?.color, 'color': '#fff' }" styleClass="text-xs font-semibold">
+                            @if (cursus().level?.icon) {
+                            <i [class]="cursus().level?.icon" class="mr-1"></i>
+                            }
+                        </p-tag>
+                    </div>
+                    }
+
+                    <!-- Categories -->
+                    @if (cursus().categories && cursus().categories!.length > 0) {
+                    <div class="flex items-start gap-2">
+                        <i class="pi pi-tags text-sm text-surface-600 dark:text-surface-400 mt-0.5"></i>
+                        <div class="flex flex-row gap-2 justify-center items-center">
+                            <span class="text-sm font-medium text-surface-700 dark:text-surface-300"> Catégories: </span>
+                            <div class="flex flex-wrap gap-2">
+                                @for (category of cursus().categories; track category.id) {
+                                <p-tag [value]="category.name" [style]="{ 'background-color': category.color, 'color': '#fff' }" styleClass="text-xs">
+                                    @if (category.icon) {
+                                    <i [class]="category.icon" class="mr-1"></i>
+                                    }
+                                </p-tag>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    }
                 </div>
             </div>
 

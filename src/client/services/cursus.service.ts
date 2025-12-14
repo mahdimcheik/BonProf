@@ -121,11 +121,11 @@ export class CursusService {
         return this.httpClient.post(url, cursusCreate, requestOptions);
     }
 
-    cursusUpdateIdPut(id: string, cursusUpdate?: CursusUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<CursusDetailsResponse>;
-    cursusUpdateIdPut(id: string, cursusUpdate?: CursusUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<CursusDetailsResponse>>;
-    cursusUpdateIdPut(id: string, cursusUpdate?: CursusUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<CursusDetailsResponse>>;
-    cursusUpdateIdPut(id: string, cursusUpdate?: CursusUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/cursus/update/${id}`;
+    cursusPut(cursusUpdate?: CursusUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<CursusDetailsResponse>;
+    cursusPut(cursusUpdate?: CursusUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<CursusDetailsResponse>>;
+    cursusPut(cursusUpdate?: CursusUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<CursusDetailsResponse>>;
+    cursusPut(cursusUpdate?: CursusUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/cursus`;
 
         const requestOptions: any = {
             observe: observe as any,

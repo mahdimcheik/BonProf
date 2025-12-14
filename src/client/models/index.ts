@@ -155,7 +155,6 @@ export interface CursusCreate {
     icon?: string | null;
     description?: string | null;
     levelId: string;
-    teacherId: string;
     categoryIds?: Array<string>;
 }
 
@@ -195,7 +194,6 @@ export interface CursusUpdate {
     icon?: string | null;
     description?: string | null;
     levelId: string;
-    teacherId: string;
     categoryIds?: Array<string>;
 }
 
