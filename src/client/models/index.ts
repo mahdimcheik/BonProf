@@ -149,6 +149,16 @@ export interface Cursus {
     categories?: Array<CategoryCursus>;
 }
 
+export interface CursusCreate {
+    name: string;
+    color: string;
+    icon?: string | null;
+    description?: string | null;
+    levelId: string;
+    teacherId: string;
+    categoryIds?: Array<string>;
+}
+
 export interface CursusDetails {
     id: string;
     name: string;
@@ -162,6 +172,31 @@ export interface CursusDetails {
     categories?: Array<CategoryCursusDetails>;
     createdAt: Date;
     updatedAt?: Date | null;
+}
+
+export interface CursusDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<CursusDetails>;
+    count?: number | null;
+}
+
+export interface CursusDetailsResponse {
+    message: string;
+    status: number;
+    data?: CursusDetails;
+    count?: number | null;
+}
+
+export interface CursusUpdate {
+    id: string;
+    name: string;
+    color: string;
+    icon?: string | null;
+    description?: string | null;
+    levelId: string;
+    teacherId: string;
+    categoryIds?: Array<string>;
 }
 
 export interface Experience {
