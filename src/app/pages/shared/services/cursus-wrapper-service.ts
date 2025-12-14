@@ -1,12 +1,17 @@
-import { inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import { CursusCreate, CursusService } from 'src/client';
+import { inject, Injectable, signal } from '@angular/core';
+import { map, of, tap } from 'rxjs';
+import { CategoryCursusDetails, CategoryCursusService, CursusCreate, CursusService, LevelCursusDetails, LevelCursusService } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CursusWrapperService {
     cursusService = inject(CursusService);
+    levelCursusService = inject(LevelCursusService);
+    categoryCursusService = inject(CategoryCursusService);
+
+    categoryCursuses = signal<CategoryCursusDetails[]>([]);
+    levelCursuses = signal<LevelCursusDetails[]>([]);
 
     addCurus(cursus: CursusCreate) {
         return this.cursusService.cursusCreatePost(cursus);
@@ -26,5 +31,30 @@ export class CursusWrapperService {
 
     delteCursus(cursusId: string) {
         return this.cursusService.cursusIdDelete(cursusId);
+    }
+
+    // levels et categories
+    getCursusLevels(forceFetch: boolean = false) {
+        if (this.levelCursuses().length) {
+            return of(this.levelCursuses());
+        }
+        return this.levelCursusService.levelcursusAllGet().pipe(
+            tap((response) => {
+                this.levelCursuses.set(response.data || []);
+            }),
+            map((res) => res.data || [])
+        );
+    }
+
+    getCategories(forceFetch: boolean = false) {
+        if (this.categoryCursuses().length > 0 && !forceFetch) {
+            return of(this.categoryCursuses());
+        }
+        return this.categoryCursusService.categorycursusAllGet().pipe(
+            tap((response) => {
+                this.categoryCursuses.set(response.data || []);
+            }),
+            map((res) => res.data || [])
+        );
     }
 }
