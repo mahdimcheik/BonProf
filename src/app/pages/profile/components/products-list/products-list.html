@@ -1,0 +1,29 @@
+<app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddCursusBox()">
+    <ng-template #main>
+        @if (showEditBox()) {
+        <div class="mt-4">
+            <bp-product-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewProduct($event)"></bp-product-edition>
+            <!-- <bp-formations-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewFormation($event)" (clickCancel)="hideAddFormationBox()"></bp-formations-edition> -->
+        </div>
+        } @for (product of products(); track product.id) {
+        <!-- <bp-product-card [product]="product" [editMode]="false" (needRefresh)="loadData()"></bp-product-card> -->
+        <bp-product-card [product]="product" [editMode]="false" (needRefresh)="loadData()"></bp-product-card>
+        }@empty {
+        <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
+            <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
+            <p class="text-gray-500">Pas de formations fournies</p>
+            @if(!showEditBox()){
+            <button pButton label="Ajouter votre première formation" class="mt-3 p-button-outlined" (click)="showAddCursusBox()"></button>
+            }
+        </div>
+        }
+    </ng-template>
+
+    <ng-template #empty>
+        <div class="text-center">
+            <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
+            <p class="text-gray-500">Pas de formations fournies</p>
+            <button pButton label="Ajouter votre première formation" class="mt-3 p-button-outlined" (click)="showAddCursusBox()"></button>
+        </div>
+    </ng-template>
+</app-smart-section>

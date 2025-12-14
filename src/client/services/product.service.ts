@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, ProductDetailsListResponse, ProductDetailsResponse, ProductUpdate, ObjectResponse, ProductCreate } from "../models";
+import { RequestOptions, ProductDetailsListResponse, ProductDetailsResponse, ObjectResponse, ProductCreate, ProductUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class ProductService {
@@ -55,22 +55,6 @@ export class ProductService {
         };
 
         return this.httpClient.get(url, requestOptions);
-    }
-
-    productIdPut(id: string, productUpdate?: ProductUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<ProductDetailsResponse>;
-    productIdPut(id: string, productUpdate?: ProductUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ProductDetailsResponse>>;
-    productIdPut(id: string, productUpdate?: ProductUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ProductDetailsResponse>>;
-    productIdPut(id: string, productUpdate?: ProductUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/product/${id}`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.put(url, productUpdate, requestOptions);
     }
 
     productIdDelete(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
@@ -135,5 +119,21 @@ export class ProductService {
         };
 
         return this.httpClient.post(url, productCreate, requestOptions);
+    }
+
+    productPut(productUpdate?: ProductUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<ProductDetailsResponse>;
+    productPut(productUpdate?: ProductUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ProductDetailsResponse>>;
+    productPut(productUpdate?: ProductUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ProductDetailsResponse>>;
+    productPut(productUpdate?: ProductUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/product`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, productUpdate, requestOptions);
     }
 }

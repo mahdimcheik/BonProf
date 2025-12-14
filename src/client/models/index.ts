@@ -497,7 +497,7 @@ export interface ProductCreate {
 }
 
 export interface ProductDetails {
-    id?: string;
+    id: string;
     name: string | null;
     description: string | null;
     price: number;
@@ -519,6 +519,7 @@ export interface ProductDetailsResponse {
 }
 
 export interface ProductUpdate {
+    id: string;
     name: string | null;
     description: string | null;
     price: number;

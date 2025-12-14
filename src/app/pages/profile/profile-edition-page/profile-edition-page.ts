@@ -5,10 +5,11 @@ import { AddressesList } from '../components/addresses-list/addresses-list';
 import { CursusesList } from '../components/cursuses-list/cursuses-list';
 import { FormationsList } from '../components/formations-list/formations-list';
 import { PersonnalInfosEdition } from '../components/personnal-infos-edition/personnal-infos-edition';
+import { ProductsList } from '../components/products-list/products-list';
 
 @Component({
     selector: 'bp-profile-edition-page',
-    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList, CursusesList],
+    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList, CursusesList, ProductsList],
     templateUrl: './profile-edition-page.html'
 })
 export class ProfileEditionPage implements OnInit {

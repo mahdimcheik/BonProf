@@ -1,0 +1,55 @@
+@if(!editMode()){
+<p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex flex-col gap-4">
+        <!-- Cursus Header -->
+        <div class="flex justify-between items-start">
+            <div class="flex items-start gap-3 flex-1">
+                <div class="flex flex-col gap-3 flex-1">
+                    <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ product().name }}</h3>
+
+                    @if (product().description) {
+                    <div class="flex items-start gap-2 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-align-left text-sm mt-0.5"></i>
+                        <span class="text-sm">{{ product().description }}</span>
+                    </div>
+                    }
+
+                    <!-- Level -->
+                    @if (product().cursus) {
+                    <div class="flex items-center gap-2">
+                        <i class="pi pi-chart-line text-sm text-surface-600 dark:text-surface-400"></i>
+                        <span class="text-sm font-medium text-surface-700 dark:text-surface-300"> Matière : {{ product().cursus?.name }} </span>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2 flex-shrink-0">
+                <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(true)" pTooltip="Modifier" tooltipPosition="top" />
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="showConfirmModal()" pTooltip="Supprimer" tooltipPosition="top" />
+            </div>
+        </div>
+    </div>
+</p-card>
+} @else {
+<p-card styleClass="shadow-md">
+    <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
+            <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier la formation</h3>
+            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(false)" pTooltip="Annuler" tooltipPosition="top" />
+        </div>
+        <!-- <bp-product-edition [product]="product()" (clickSubmit)="editProduct($event)" (clickCancel)="editMode.set(false)"></bp-product-edition> -->
+    </div>
+</p-card>
+} @if(showDeleteConfirm()){
+<bp-confirm-modal
+    [(visible)]="showDeleteConfirm"
+    [question]="'Vous êtes sûr de vouloir supprimer le cours ?'"
+    [title]="`Suppression : ${product().name}`"
+    [confirmText]="'Oui, supprimer'"
+    (onConfirm)="deleteProduct()"
+    (onCancel)="hideConfirmModal()"
+    (onClose)="hideConfirmModal()"
+></bp-confirm-modal>
+}
