@@ -33,7 +33,7 @@
                     <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
                         @for(cursus of cursuses; track cursus.id) {
                         <li>
-                            <p-tag [value]="cursus.name" styleClass="text-sm" />
+                            <p-tag [value]="cursus.name" styleClass="text-sm" [style]="{backgroundColor: cursus.color ?? 'lightGreen', color: '#fff' }" />
                         </li>
 
                         }
