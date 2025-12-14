@@ -14,5 +14,6 @@ export { CursusService } from "./cursus.service";
 export { FormationsService } from "./formations.service";
 export { LanguagesService } from "./languages.service";
 export { LevelCursusService } from "./levelCursus.service";
+export { ProductService } from "./product.service";
 export { TeacherProfileService } from "./teacherProfile.service";
 export { TypeAddressesService } from "./typeAddresses.service";

@@ -477,6 +477,54 @@ export interface PaymentMethod {
     icon?: string | null;
 }
 
+export interface Product {
+    id?: string;
+    createdAt?: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    name: string | null;
+    description: string | null;
+    price: number;
+    cursusId?: string;
+    cursus?: Cursus;
+}
+
+export interface ProductCreate {
+    name: string | null;
+    description: string | null;
+    price: number;
+    cursusId?: string;
+}
+
+export interface ProductDetails {
+    id?: string;
+    name: string | null;
+    description: string | null;
+    price: number;
+    cursus?: CursusDetails;
+}
+
+export interface ProductDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<ProductDetails>;
+    count?: number | null;
+}
+
+export interface ProductDetailsResponse {
+    message: string;
+    status: number;
+    data?: ProductDetails;
+    count?: number | null;
+}
+
+export interface ProductUpdate {
+    name: string | null;
+    description: string | null;
+    price: number;
+    cursusId?: string;
+}
+
 export interface ProfileStudent {
     id?: string;
     createdAt?: Date;
@@ -520,6 +568,8 @@ export interface Reservation {
     description?: string | null;
     slotId?: string;
     slot?: Slot;
+    productId?: string;
+    product?: Product;
     status?: StatusReservation;
     statusId?: string;
     orderId?: string;
