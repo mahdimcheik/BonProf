@@ -1,5 +1,5 @@
 <bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-plus'">
-    <div content>
-        <bp-configurable-form [structure]="slotForm()"></bp-configurable-form>
+    <div content class="w-full">
+        <bp-configurable-form [structure]="slotForm()" class="[&_.configurable-form-container]:max-w-none [&_.configurable-form-container]:mx-0"></bp-configurable-form>
     </div>
 </bp-base-modal>

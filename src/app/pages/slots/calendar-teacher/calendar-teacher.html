@@ -19,5 +19,5 @@
 </ejs-schedule>
 
 @if(visibleCreateSlotModal()) {
-<bp-modal-create-slot [(visible)]="visibleCreateSlotModal"></bp-modal-create-slot>
+<bp-modal-create-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate"></bp-modal-create-slot>
 }

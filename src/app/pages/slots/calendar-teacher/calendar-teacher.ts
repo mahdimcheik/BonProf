@@ -1,3 +1,4 @@
+import { CalendarEvent } from '@/pages/shared/models/calendarModels';
 import { Component, computed, model, signal, viewChild } from '@angular/core';
 import { DayService, DragAndDropService, MonthService, PopupOpenEventArgs, ResizeService, ScheduleComponent, ScheduleModule, WeekService, WorkWeekService } from '@syncfusion/ej2-angular-schedule';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
@@ -16,7 +17,11 @@ export class CalendarTeacher {
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
 
     // Calendar configuration
-    public selectedDate: Date = new Date();
+    public selectedDate: CalendarEvent = {
+        startTime: new Date(2025, 11, 15, 21, 0),
+        endTime: new Date(2025, 11, 15, 21, 30),
+        subject: ''
+    };
 
     public eventSettings = computed(() => {
         return {
@@ -72,7 +77,11 @@ export class CalendarTeacher {
     // click on cell
     onCellClick(event: any) {
         console.log('cell click', event);
-        this.selectedDate = event.startTime;
+        this.selectedDate = {
+            startTime: new Date(event.startTime.toISOString()),
+            endTime: new Date(event.endTime.toISOString()),
+            subject: ''
+        };
     }
 
     // open  create modal
