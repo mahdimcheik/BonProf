@@ -18,7 +18,7 @@ import { AppTopbar } from './app.topbar';
             <div class="layout-main">
                 <router-outlet></router-outlet>
             </div>
-            <app-footer></app-footer>
+            <!-- <app-footer></app-footer> -->
         </div>
         <div class="layout-mask animate-fadein"></div>
     </div> `
