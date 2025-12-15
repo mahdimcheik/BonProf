@@ -116,6 +116,8 @@
                                                 [formControlName]="element.name"
                                                 class="w-full configurable-form-input configurable-form-date-input"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                             />
                                         }
 
@@ -416,6 +418,8 @@
                                                         [formControlName]="field.name"
                                                         class="w-full configurable-form-input configurable-form-date-input"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                     />
                                                 }
 
