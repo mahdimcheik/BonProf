@@ -30,8 +30,8 @@ export class ProfileEditionPage implements OnInit {
         {
             Id: 2,
             Subject: 'Cours de mathématiques',
-            StartTime: new Date(2025, 11, 15, 14, 0),
-            EndTime: new Date(2025, 11, 15, 15, 30),
+            StartTime: new Date(2025, 11, 16, 14, 0),
+            EndTime: new Date(2025, 11, 16, 15, 30),
             IsAllDay: false
         }
     ];

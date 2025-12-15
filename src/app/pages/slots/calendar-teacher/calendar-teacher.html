@@ -1,2 +1,19 @@
-<ejs-schedule width="100%" height="650px" [selectedDate]="selectedDate" [eventSettings]="eventSettings()" [startHour]="startHour" [endHour]="endHour" [timeScale]="timeScale" [allowDragAndDrop]="true" [allowResizing]="true" currentView="Week">
+<ejs-schedule
+    #scheduleRef
+    width="100%"
+    height="650px"
+    [eventSettings]="eventSettings()"
+    [startHour]="startHour"
+    [endHour]="endHour"
+    [timeScale]="timeScale"
+    [allowDragAndDrop]="true"
+    [allowResizing]="true"
+    currentView="Week"
+    (dragStart)="onDragStart($event)"
+    (dragStop)="onDragStop($event)"
+    (resizeStart)="onResizeStart($event)"
+    (resizeStop)="onResizeStop($event)"
+    (cellClick)="onCellClick($event)"
+    (popupOpen)="onPopupOpen($event)"
+>
 </ejs-schedule>
