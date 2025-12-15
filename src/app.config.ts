@@ -8,6 +8,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { registerLicense } from '@syncfusion/ej2-base';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
@@ -15,6 +16,7 @@ import { provideDefaultClient } from './client/providers';
 import { environment } from './environments/environment';
 
 const basePath = environment.API_URL;
+registerLicense(environment.SYNCFUSION_LICENSE_KEY);
 
 export const appConfig: ApplicationConfig = {
     providers: [

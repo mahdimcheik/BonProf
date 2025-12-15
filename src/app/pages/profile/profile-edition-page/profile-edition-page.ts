@@ -7,10 +7,11 @@ import { CursusesList } from '../components/cursuses-list/cursuses-list';
 import { FormationsList } from '../components/formations-list/formations-list';
 import { PersonnalInfosEdition } from '../components/personnal-infos-edition/personnal-infos-edition';
 import { ProductsList } from '../components/products-list/products-list';
+import { TestCalendar } from '../components/test-calendar/test-calendar';
 
 @Component({
     selector: 'bp-profile-edition-page',
-    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList, CursusesList, ProductsList],
+    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList, CursusesList, ProductsList, TestCalendar],
     templateUrl: './profile-edition-page.html'
 })
 export class ProfileEditionPage implements OnInit {
