@@ -2,11 +2,11 @@ import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-s
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TabsModule } from 'primeng/tabs';
-import { AddressesList } from '../components/addresses-list/addresses-list';
-import { CursusesList } from '../components/cursuses-list/cursuses-list';
-import { FormationsList } from '../components/formations-list/formations-list';
+import { AddressesList } from '../components/addresses/addresses-list/addresses-list';
+import { CursusesList } from '../components/cursuses/cursuses-list/cursuses-list';
+import { FormationsList } from '../components/formations/formations-list/formations-list';
 import { PersonnalInfosEdition } from '../components/personnal-infos-edition/personnal-infos-edition';
-import { ProductsList } from '../components/products-list/products-list';
+import { ProductsList } from '../components/products/products-list/products-list';
 import { TestCalendar } from '../components/test-calendar/test-calendar';
 
 @Component({

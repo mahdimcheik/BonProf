@@ -1,6 +1,6 @@
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
-import { FormationCard } from '@/pages/formations/components/formation-card/formation-card';
-import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
+import { FormationCard } from '@/pages/profile/components/formations/formation-card/formation-card';
+import { FormationsEdition } from '@/pages/profile/components/formations/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';

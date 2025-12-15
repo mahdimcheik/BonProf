@@ -4,8 +4,8 @@ import { Component, computed, inject, model, OnInit, output } from '@angular/cor
 import { FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
-import { ConfigurableFormComponent } from '../../configurable-form/configurable-form.component';
-import { Structure } from '../../configurable-form/related-models';
+import { ConfigurableFormComponent } from '../../../../components/configurable-form/configurable-form.component';
+import { Structure } from '../../../../components/configurable-form/related-models';
 
 @Component({
     selector: 'bp-cursus-edition',

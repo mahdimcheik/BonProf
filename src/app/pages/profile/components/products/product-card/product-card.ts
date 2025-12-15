@@ -5,7 +5,7 @@ import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { ProductCreate, ProductDetails, ProductUpdate } from 'src/client';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from '../../../../components/confirm-modal/confirm-modal.component';
 
 @Component({
     selector: 'bp-product-card',

@@ -6,8 +6,8 @@ import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
 import { TeacherDetails } from 'src/client';
-import { Address } from '../components/address/address';
-import { MapBasic } from '../components/address/map-basic';
+import { Address } from '../components/addresses/address/address';
+import { MapBasic } from '../components/addresses/address/map-basic';
 import { ProfileDescription } from '../components/profile-description/profile-description';
 import { ProfileInfos } from '../components/profile-infos/profile-infos';
 

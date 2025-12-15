@@ -1,6 +1,6 @@
-import { AddressCard } from '@/pages/addresses/components/address-card/address-card';
-import { AddressEdition } from '@/pages/addresses/components/address-edition/address-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
+import { AddressCard } from '@/pages/profile/components/addresses/address-card/address-card';
+import { AddressEdition } from '@/pages/profile/components/addresses/address-edition/address-edition';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';

@@ -1,5 +1,5 @@
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
-import { MapBasic } from '@/pages/profile/components/address/map-basic';
+import { MapBasic } from '@/pages/profile/components/addresses/address/map-basic';
 import { AddressTypePipe } from '@/pages/shared/pipes/address-type-pipe';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
