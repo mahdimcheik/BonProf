@@ -6,14 +6,14 @@ import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Button } from 'primeng/button';
+import { Button, ButtonModule } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails } from 'src/client/models';
 
 @Component({
     selector: 'bp-addresses-list',
-    imports: [SmartSectionComponent, AddressEdition, AddressCard, Button, Card],
+    imports: [SmartSectionComponent, AddressEdition, AddressCard, Button, Card, ButtonModule],
     templateUrl: './addresses-list.html'
 })
 export class AddressesList {
@@ -36,15 +36,19 @@ export class AddressesList {
     }
 
     async loadData() {
-        const addressesData = await firstValueFrom(this.addressWrapperService.getAddresses());
+        if (this.mainService?.userConnected()?.id == null) {
+            this.addresses.set([]);
+            return;
+        }
+        const addressesData = await firstValueFrom(this.addressWrapperService.getAddressesByUser(this.mainService?.userConnected()?.id ?? ''));
         this.addresses.set(addressesData.data || []);
     }
 
-    async showAddformationBox() {
+    async showAddAddressBox() {
         this.showEditBox.set(true);
     }
 
-    hideAddFormationBox() {
+    hideAddAddressBox() {
         this.showEditBox.set(false);
     }
 

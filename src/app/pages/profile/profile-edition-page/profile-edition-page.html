@@ -1,5 +1,5 @@
 <div class="card">
-    <p-tabs value="personnalInfos" lazy>
+    <p-tabs value="personnalInfos" lazy [value]="tab" (valueChange)="onTabChange($event)">
         <p-tablist>
             <p-tab value="personnalInfos">Infos personnelles</p-tab>
             <p-tab value="formations">Formations</p-tab>
@@ -21,11 +21,6 @@
             <p-tabpanel value="addresses">
                 <ng-template #content>
                     <bp-addresses-list></bp-addresses-list>
-                </ng-template>
-            </p-tabpanel>
-            <p-tabpanel value="cours">
-                <ng-template #content>
-                    <bp-cursuses-list></bp-cursuses-list>
                 </ng-template>
             </p-tabpanel>
             <p-tabpanel value="cours">

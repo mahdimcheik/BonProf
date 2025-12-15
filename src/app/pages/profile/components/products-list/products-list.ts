@@ -6,12 +6,13 @@ import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-s
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
 import { ProductCreate, ProductDetails } from 'src/client';
 
 @Component({
     selector: 'bp-products-list',
-    imports: [SmartSectionComponent, ProductEdition, ProductCard],
+    imports: [SmartSectionComponent, ProductEdition, ProductCard, ButtonModule],
     templateUrl: './products-list.html'
 })
 export class ProductsList {
@@ -21,7 +22,7 @@ export class ProductsList {
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
 
-    title = 'Liste des Formations';
+    title = 'Liste des produits';
 
     editMode = model(true);
     buttonIcon = model('pi pi-plus');

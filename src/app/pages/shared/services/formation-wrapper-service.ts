@@ -15,6 +15,10 @@ export class FormationWrapperService {
         return this.formationsService.formationsAllGet();
     }
 
+    getTeacherFormations(teacherId: string) {
+        return this.formationsService.formationsTeacherIdGet(teacherId);
+    }
+
     updateFormation(formation: FormationUpdate) {
         return this.formationsService.formationsPut(formation);
     }

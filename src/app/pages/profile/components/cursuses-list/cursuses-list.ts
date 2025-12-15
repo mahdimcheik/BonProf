@@ -2,21 +2,22 @@ import { CursusCard } from '@/pages/components/cursuses/cursus-card/cursus-card'
 import { CursusEdition } from '@/pages/components/cursuses/cursus-edition/cursus-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails } from 'src/client';
 
 @Component({
     selector: 'bp-cursuses-list',
-    imports: [SmartSectionComponent, CursusCard, CursusEdition],
+    imports: [SmartSectionComponent, CursusCard, CursusEdition, ButtonModule],
     templateUrl: './cursuses-list.html'
 })
 export class CursusesList {
     cursusWrapperService = inject(CursusWrapperService);
-    teacherWrapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
@@ -34,7 +35,11 @@ export class CursusesList {
     }
 
     async loadData() {
-        const cursusesData = await firstValueFrom(this.cursusWrapperService.getCursusByTeacher(this.teacherWrapperService?.teacherProfile()?.id ?? ''));
+        if (this.mainService?.userConnected()?.id == null) {
+            this.cursuses.set([]);
+            return;
+        }
+        const cursusesData = await firstValueFrom(this.cursusWrapperService.getCursusByTeacher(this.mainService?.userConnected()?.id ?? ''));
         this.cursuses.set(cursusesData || []);
     }
 

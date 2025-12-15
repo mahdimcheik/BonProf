@@ -1,5 +1,6 @@
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TabsModule } from 'primeng/tabs';
 import { AddressesList } from '../components/addresses-list/addresses-list';
 import { CursusesList } from '../components/cursuses-list/cursuses-list';
@@ -14,8 +15,27 @@ import { ProductsList } from '../components/products-list/products-list';
 })
 export class ProfileEditionPage implements OnInit {
     teacherWrapperService = inject(TeacherWrapperService);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
+    tab: string = 'personnalInfos';
 
     ngOnInit() {
         this.teacherWrapperService.getTeacherFullProfile().subscribe();
+        this.activatedRoute.queryParams.subscribe((params) => {
+            const tabParam = params['tab'];
+            if (tabParam) {
+                this.tab = tabParam;
+            } else {
+                this.tab = 'personnalInfos';
+            }
+        });
+    }
+
+    onTabChange(tabValue: string | number | undefined) {
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { tab: tabValue },
+            queryParamsHandling: 'merge'
+        });
     }
 }

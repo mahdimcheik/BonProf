@@ -1,4 +1,4 @@
-<app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddformationBox()">
+<app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddAddressBox()">
     <ng-template #main>
         @if (showEditBox()) {
         <p-card styleClass="shadow-md">
@@ -7,7 +7,7 @@
                     <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Ajouter une nouvelle adresse</h3>
                     <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="cancel()" pTooltip="Annuler" tooltipPosition="top" />
                 </div>
-                <bp-address-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewAddress($event)" (clickCancel)="hideAddFormationBox()"></bp-address-edition>
+                <bp-address-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewAddress($event)" (clickCancel)="hideAddAddressBox()"></bp-address-edition>
             </div>
         </p-card>
         } @for (address of addresses(); track address.id) {
@@ -15,9 +15,9 @@
         }@empty {
         <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
             <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
-            <p class="text-gray-500">Pas de formations fournies</p>
+            <p class="text-gray-500">Pas d'adresses fournies</p>
             @if(!showEditBox()){
-            <button pButton label="Ajouter votre première formation" class="mt-3 p-button-outlined" (click)="showAddformationBox()"></button>
+            <button pButton label="Ajouter votre première adresse" class="mt-3 p-button-outlined" (click)="showAddAddressBox()"></button>
             }
         </div>
         }
@@ -26,8 +26,8 @@
     <ng-template #empty>
         <div class="text-center">
             <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
-            <p class="text-gray-500">Pas de formations fournies</p>
-            <button pButton label="Ajouter votre première formation" class="mt-3 p-button-outlined" (click)="showAddformationBox()"></button>
+            <p class="text-gray-500">Pas d'adresses fournies</p>
+            <button pButton label="Ajouter votre première adresse" class="mt-3 p-button-outlined" (click)="showAddAddressBox()"></button>
         </div>
     </ng-template>
 </app-smart-section>

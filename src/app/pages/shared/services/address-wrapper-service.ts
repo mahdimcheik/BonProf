@@ -30,6 +30,10 @@ export class AddressWrapperService {
         return this.addressesService.addressesAllGet();
     }
 
+    getAddressesByUser(userId: string) {
+        return this.addressesService.addressesUserIdGet(userId);
+    }
+
     updateAddress(address: AddressUpdate) {
         return this.addressesService.addressesPut(address);
     }

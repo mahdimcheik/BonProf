@@ -2,7 +2,7 @@ import { SmartSectionComponent } from '@/pages/components/smart-section/smart-se
 import { FormationCard } from '@/pages/formations/components/formation-card/formation-card';
 import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -17,7 +17,7 @@ import { FormationCreate, FormationDetails } from 'src/client';
 })
 export class FormationsList {
     formationWrapperService = inject(FormationWrapperService);
-    teacherWrapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
@@ -35,7 +35,11 @@ export class FormationsList {
     }
 
     async loadData() {
-        const formationsData = await firstValueFrom(this.formationWrapperService.getFormations());
+        if (this.mainService?.userConnected()?.id == null) {
+            this.formations.set([]);
+            return;
+        }
+        const formationsData = await firstValueFrom(this.formationWrapperService.getTeacherFormations(this.mainService?.userConnected()?.id ?? ''));
         this.formations.set(formationsData.data || []);
     }
 
