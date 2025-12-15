@@ -29,7 +29,7 @@ export class CursusEdition implements OnInit {
             name: 'Cursus',
             label: 'Cursus',
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'informations',
                     name: cursus ? `Editer le cursus: ${cursus.name}` : 'Ajouter un cursus',

@@ -17,3 +17,7 @@
     (popupOpen)="onPopupOpen($event)"
 >
 </ejs-schedule>
+
+@if(visibleCreateSlotModal()) {
+<bp-modal-create-slot [(visible)]="visibleCreateSlotModal"></bp-modal-create-slot>
+}

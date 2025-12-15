@@ -1,13 +1,11 @@
-import { Component, contentChild, ElementRef, input, model, TemplateRef, viewChild } from '@angular/core';
-import { DialogModule } from 'primeng/dialog';
-import { DrawerModule } from 'primeng/drawer';
-import { ConfigurableFormComponent } from '../configurable-form/configurable-form.component';
-import { DatePipe } from '@angular/common';
+import { Component, input, model } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
-    selector: 'app-base-modal',
+    selector: 'bp-base-modal',
     imports: [DialogModule, DrawerModule, ButtonModule, DividerModule],
 
     templateUrl: './base-modal.component.html',

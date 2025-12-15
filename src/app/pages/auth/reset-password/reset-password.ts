@@ -28,7 +28,7 @@ export class ResetPassword {
         styleClass: 'md:min-w-[40rem] min-w-[90vw] !p-0',
         hideCancelButton: true,
         hideSubmitButton: true,
-        formFieldGroups: [
+        sections: [
             {
                 id: 'password',
                 name: 'password',

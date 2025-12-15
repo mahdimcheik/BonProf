@@ -57,7 +57,7 @@ export class Inscription {
         styleClass: 'max-w-[40rem] ',
         hideCancelButton: true,
         hideSubmitButton: true,
-        formFieldGroups: [
+        sections: [
             {
                 id: 'inscriptionForm',
                 name: 'inscriptionForm',

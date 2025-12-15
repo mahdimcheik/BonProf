@@ -1,6 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 
-export interface FormField<T> {
+export interface Field<T> {
     id: string;
     label: string;
     name: string;
@@ -40,11 +40,11 @@ export interface FormField<T> {
     asyncAction?: (query: any) => Promise<any>;
 }
 
-export interface FormFieldGroup {
+export interface Section {
     id: string;
     name: string;
     label?: string;
-    fields: FormField<any>[];
+    fields: Field<any>[];
     description?: string;
     icon?: string;
     styleClass?: string;
@@ -60,8 +60,8 @@ export interface Structure {
     description?: string;
     icon?: string;
     imgUrl?: string;
-    formFieldGroups?: FormFieldGroup[];
-    formFields?: FormField<any>[];
+    sections?: Section[];
+    fields?: Field<any>[];
     globalValidators?: ValidatorFn[];
     styleClass?: string;
     submitButtonLabel?: string;

@@ -21,7 +21,7 @@ export class FormationsEdition {
             name: 'Formation',
             label: 'Formation',
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'informations',
                     name: formation ? `Editer la formation: ${formation.title}` : 'Ajouter une formation',

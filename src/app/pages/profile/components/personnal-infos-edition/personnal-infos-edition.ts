@@ -28,7 +28,7 @@ export class PersonnalInfosEdition implements OnInit {
             name: 'personnalInfos',
             label: 'Informations personnelles',
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'personnalInfos',
                     name: 'personnalInfos',

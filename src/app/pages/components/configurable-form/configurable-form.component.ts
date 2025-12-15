@@ -17,7 +17,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { CustomUploadFileComponent } from './custom-upload-file/custom-upload-file.component';
-import { errorMessages, FormField, FormFieldGroup, Structure } from './related-models';
+import { errorMessages, Field, Section, Structure } from './related-models';
 @Component({
     selector: 'bp-configurable-form',
     styleUrls: ['./configurable-form.component.scss'],
@@ -82,22 +82,22 @@ export class ConfigurableFormComponent implements OnInit {
         const structure = this.structure();
         if (!structure) return [];
 
-        const elements: (FormField<any> | FormFieldGroup)[] = [];
+        const elements: (Field<any> | Section)[] = [];
 
         // Add FormFieldGroups
-        structure.formFieldGroups?.forEach((group) => {
+        structure.sections?.forEach((group) => {
             elements.push(group);
         });
 
         // Add FormFields
-        structure.formFields?.forEach((field) => {
+        structure.fields?.forEach((field) => {
             elements.push(field);
         });
 
         // Sort by order, default to high value if no order specified
         return [...elements].sort((a, b) => {
-            const orderA = (a as FormField<any> | FormFieldGroup).order ?? 999999;
-            const orderB = (b as FormField<any> | FormFieldGroup).order ?? 999999;
+            const orderA = (a as Field<any> | Section).order ?? 999999;
+            const orderB = (b as Field<any> | Section).order ?? 999999;
             return orderA - orderB;
         });
     });
@@ -124,11 +124,11 @@ export class ConfigurableFormComponent implements OnInit {
         const formControls: { [key: string]: FormGroup | FormControl } = {};
 
         // Create FormGroups for each FormFieldGroup
-        structure.formFieldGroups?.forEach((group: FormFieldGroup) => {
+        structure.sections?.forEach((group: Section) => {
             const groupControls: { [key: string]: FormControl } = {};
 
             // Add all fields from this group to the group's FormGroup
-            group.fields.forEach((field: FormField<any>) => {
+            group.fields.forEach((field: Field<any>) => {
                 const validators = this.createFieldValidators(field);
                 const initialValue = field.value !== undefined && field.value !== null ? field.value : this.getDefaultValue(field.type);
                 const control = this.fb.control(
@@ -148,7 +148,7 @@ export class ConfigurableFormComponent implements OnInit {
         });
 
         // Create FormControls for direct formFields
-        structure.formFields?.forEach((field: FormField<any>) => {
+        structure.fields?.forEach((field: Field<any>) => {
             const validators = this.createFieldValidators(field);
             const initialValue = field.value !== undefined && field.value !== null ? field.value : this.getDefaultValue(field.type);
             const control = this.fb.control(
@@ -171,7 +171,7 @@ export class ConfigurableFormComponent implements OnInit {
         this.setupFormReactivity();
     }
 
-    private createFieldValidators(field: FormField<any>): any[] {
+    private createFieldValidators(field: Field<any>): any[] {
         const validators = [];
 
         // Add required validator if field is required
@@ -244,7 +244,7 @@ export class ConfigurableFormComponent implements OnInit {
             const errors = control.errors;
             if (errors) {
                 const fieldLabel = this.structure()
-                    ?.formFieldGroups?.find((group) => group.id === groupId)
+                    ?.sections?.find((group) => group.id === groupId)
                     ?.fields.find((field) => field.name === fieldName)?.label;
                 const errorKey = Object.keys(errors)[0];
                 return this.errorMessages[errorKey] ? `${fieldLabel} : ${this.errorMessages[errorKey](errors[errorKey])}` : 'Erreur de validation';
@@ -310,7 +310,7 @@ export class ConfigurableFormComponent implements OnInit {
         if (control && control.invalid && (control.dirty || control.touched)) {
             const errors = control.errors;
             if (errors) {
-                const fieldLabel = this.structure()?.formFields?.find((field) => field.name === fieldName)?.label;
+                const fieldLabel = this.structure()?.fields?.find((field) => field.name === fieldName)?.label;
                 const errorKey = Object.keys(errors)[0];
                 return this.errorMessages[errorKey] ? `${fieldLabel} : ${this.errorMessages[errorKey](errors[errorKey])}` : 'Erreur de validation';
             }
@@ -366,7 +366,7 @@ export class ConfigurableFormComponent implements OnInit {
         return flattened;
     }
 
-    getSelectOptions(field: FormField<any>): any[] {
+    getSelectOptions(field: Field<any>): any[] {
         if (!field.options) return [];
 
         if (field.displayKey || field.compareKey) {
@@ -379,14 +379,14 @@ export class ConfigurableFormComponent implements OnInit {
         return field.options;
     }
 
-    getOptionValue(option: any, field: FormField<any>): any {
+    getOptionValue(option: any, field: Field<any>): any {
         if (field.compareKey) {
             return option[field.compareKey];
         }
         return option.value !== undefined ? option.value : option;
     }
 
-    getOptionLabel(option: any, field: FormField<any>): string {
+    getOptionLabel(option: any, field: Field<any>): string {
         let label: string;
 
         if (field.displayKey) {
@@ -403,7 +403,7 @@ export class ConfigurableFormComponent implements OnInit {
         return label;
     }
 
-    getSortedFieldsInGroup(group: FormFieldGroup): FormField<any>[] {
+    getSortedFieldsInGroup(group: Section): Field<any>[] {
         return [...group.fields].sort((a, b) => {
             const orderA = a.order ?? 999999;
             const orderB = b.order ?? 999999;
@@ -411,24 +411,24 @@ export class ConfigurableFormComponent implements OnInit {
         });
     }
 
-    isFormField(element: FormField<any> | FormFieldGroup): element is FormField<any> {
+    isFormField(element: Field<any> | Section): element is Field<any> {
         return 'name' in element && 'type' in element;
     }
 
-    isFormFieldGroup(element: FormField<any> | FormFieldGroup): element is FormFieldGroup {
-        return 'fields' in element && Array.isArray((element as FormFieldGroup).fields);
+    isFormFieldGroup(element: Field<any> | Section): element is Section {
+        return 'fields' in element && Array.isArray((element as Section).fields);
     }
 
-    trackByFieldId(index: number, field: FormField<any>): string {
+    trackByFieldId(index: number, field: Field<any>): string {
         return field.id;
     }
 
-    trackByGroupId(index: number, group: FormFieldGroup): string {
+    trackByGroupId(index: number, group: Section): string {
         return group.id;
     }
 
-    trackByElementId(index: number, element: FormField<any> | FormFieldGroup): string {
-        return this.isFormField(element) ? element.id : (element as FormFieldGroup).id;
+    trackByElementId(index: number, element: Field<any> | Section): string {
+        return this.isFormField(element) ? element.id : (element as Section).id;
     }
 
     onCancelClick() {
