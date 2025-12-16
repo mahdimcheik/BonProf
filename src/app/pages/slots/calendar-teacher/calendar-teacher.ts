@@ -1,6 +1,10 @@
 import { CalendarEvent } from '@/pages/shared/models/calendarModels';
-import { Component, computed, model, signal, viewChild } from '@angular/core';
+import { MainService } from '@/pages/shared/services/main.service';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { Component, computed, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import { DayService, DragAndDropService, MonthService, PopupOpenEventArgs, ResizeService, ScheduleComponent, ScheduleModule, WeekService, WorkWeekService } from '@syncfusion/ej2-angular-schedule';
+import { firstValueFrom } from 'rxjs';
+import { SlotCreate, SlotDetails } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 
 @Component({
@@ -10,17 +14,19 @@ import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
     templateUrl: './calendar-teacher.html',
     providers: [DayService, WeekService, WorkWeekService, MonthService, ResizeService, DragAndDropService]
 })
-export class CalendarTeacher {
+export class CalendarTeacher implements OnInit {
+    mainService = inject(MainService);
+    slotWrapperService = inject(SlotWrapperService);
     // Input for events data
-    events = model<any[]>([]);
+    events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
 
     // Calendar configuration
     public selectedDate: CalendarEvent = {
-        startTime: new Date(2025, 11, 15, 21, 0),
-        endTime: new Date(2025, 11, 15, 21, 30),
-        subject: ''
+        StartTime: new Date(2025, 11, 15, 21, 0),
+        EndTime: new Date(2025, 11, 15, 21, 30),
+        Subject: ''
     };
 
     public eventSettings = computed(() => {
@@ -39,6 +45,15 @@ export class CalendarTeacher {
         interval: 60,
         slotCount: 2
     };
+    ngOnInit(): void {
+        this.loadData();
+    }
+
+    async loadData() {
+        const events = await firstValueFrom(this.slotWrapperService.getSlotsByTeacher(new Date(2025, 11, 1), new Date(2025, 11, 30)));
+        this.events.set(events?.map((e) => this.slotToEvent(e)) ?? []);
+        console.log(this.events());
+    }
 
     // Method to control drag and drop permission
     onDragStart(args: any): void {
@@ -79,9 +94,9 @@ export class CalendarTeacher {
         console.log('event click', event);
 
         this.selectedDate = {
-            startTime: new Date(event.startTime.toISOString()),
-            endTime: new Date(event.endTime.toISOString()),
-            subject: ''
+            StartTime: new Date(event.startTime.toISOString()),
+            EndTime: new Date(event.endTime.toISOString()),
+            Subject: ''
         };
         this.visibleCreateSlotModal.set(true);
     }
@@ -114,5 +129,32 @@ export class CalendarTeacher {
     clickEvent(event: any) {
         console.log('event ', event);
         this.visibleCreateSlotModal.set(true);
+    }
+
+    async handleEvent(event: any) {
+        console.log('event', event);
+        const newEvent: SlotCreate = {
+            dateFrom: event.dateFrom,
+            dateTo: event.dateTo,
+            typeId: event.extendedProps?.['typeSlotId'] || '',
+            teacherId: this.mainService.userConnected().id
+        };
+
+        console.log('newEvent', newEvent);
+        try {
+            const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
+            await this.loadData();
+        } catch (ex) {
+            console.log('exception : ', ex);
+        }
+    }
+
+    slotToEvent(slot: SlotDetails): CalendarEvent {
+        return {
+            StartTime: new Date(slot.dateFrom),
+            EndTime: new Date(slot.dateTo),
+            Id: slot.id,
+            Subject: 'subject'
+        };
     }
 }

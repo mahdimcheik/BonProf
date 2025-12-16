@@ -57,7 +57,7 @@ export class ModalCreateSlot implements OnInit {
                             label: 'Date de début',
                             required: true,
                             placeholder: 'Sélectionner la date de début',
-                            value: event.startTime
+                            value: event.StartTime
                         },
                         {
                             id: 'dateTo',
@@ -69,7 +69,7 @@ export class ModalCreateSlot implements OnInit {
                             required: true,
                             fullWidth: true,
                             placeholder: 'Sélectionner la date de fin',
-                            value: event.endTime
+                            value: event.EndTime
                         }
                     ]
                 }
@@ -82,7 +82,7 @@ export class ModalCreateSlot implements OnInit {
     }
 
     submit(formData: FormGroup<any>) {
-        const newEvent: CalendarEvent = {
+        const newEvent = {
             ...formData.value.slotDetails,
             extendedProps: {
                 typeSlotId: formData.value.slotDetails.typeSlotId

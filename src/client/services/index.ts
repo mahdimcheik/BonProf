@@ -15,6 +15,7 @@ export { FormationsService } from "./formations.service";
 export { LanguagesService } from "./languages.service";
 export { LevelCursusService } from "./levelCursus.service";
 export { ProductService } from "./product.service";
+export { SlotsService } from "./slots.service";
 export { TeacherProfileService } from "./teacherProfile.service";
 export { TypeAddressesService } from "./typeAddresses.service";
 export { TypeSlotsService } from "./typeSlots.service";

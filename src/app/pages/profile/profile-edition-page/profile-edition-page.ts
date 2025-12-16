@@ -1,3 +1,4 @@
+import { CalendarEvent } from '@/pages/shared/models/calendarModels';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { CalendarTeacher } from '@/pages/slots/calendar-teacher/calendar-teacher';
 import { Component, inject, OnInit } from '@angular/core';
@@ -19,21 +20,21 @@ export class ProfileEditionPage implements OnInit {
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
     tab: string = 'personnalInfos';
-    events: object[] = [
-        {
-            Id: 1,
-            Subject: 'Cours de physiques',
-            StartTime: new Date(2025, 11, 15, 21, 0),
-            EndTime: new Date(2025, 11, 15, 21, 30),
-            IsAllDay: false
-        },
-        {
-            Id: 2,
-            Subject: 'Cours de mathématiques',
-            StartTime: new Date(2025, 11, 16, 14, 0),
-            EndTime: new Date(2025, 11, 16, 15, 30),
-            IsAllDay: false
-        }
+    events: CalendarEvent[] = [
+        // {
+        //     Id: '1',
+        //     Subject: 'Cours de physiques',
+        //     StartTime: new Date(2025, 11, 15, 21, 0),
+        //     EndTime: new Date(2025, 11, 15, 21, 30),
+        //     IsAllDay: false
+        // },
+        // {
+        //     Id: 2,
+        //     Subject: 'Cours de mathématiques',
+        //     StartTime: new Date(2025, 11, 16, 14, 0),
+        //     EndTime: new Date(2025, 11, 16, 15, 30),
+        //     IsAllDay: false
+        // }
     ];
 
     ngOnInit() {

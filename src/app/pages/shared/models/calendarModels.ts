@@ -1,8 +1,8 @@
 export type CalendarEvent = {
-    id?: number;
-    subject: string;
-    startTime: Date;
-    endTime: Date;
-    isAllDay?: boolean;
-    extendedProps?: Record<string, any>;
+    Id?: string;
+    Subject: string;
+    StartTime: Date;
+    EndTime: Date;
+    IsAllDay?: boolean;
+    ExtendedProps?: Record<string, any>;
 };

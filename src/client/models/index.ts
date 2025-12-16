@@ -601,6 +601,36 @@ export interface Slot {
     reservation?: Reservation;
 }
 
+export interface SlotCreate {
+    dateFrom: Date;
+    dateTo: Date;
+    teacherId: string;
+    typeId: string;
+}
+
+export interface SlotDetails {
+    id: string;
+    dateFrom: Date;
+    dateTo: Date;
+    teacher?: TeacherDetails;
+    typeId: string;
+    type?: TypeSlotDetails;
+}
+
+export interface SlotDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<SlotDetails>;
+    count?: number | null;
+}
+
+export interface SlotDetailsResponse {
+    message: string;
+    status: number;
+    data?: SlotDetails;
+    count?: number | null;
+}
+
 export interface StatusAccount {
     id?: string;
     createdAt?: Date;
