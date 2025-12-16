@@ -83,33 +83,36 @@ export class CalendarTeacher {
             endTime: new Date(event.endTime.toISOString()),
             subject: ''
         };
+        this.visibleCreateSlotModal.set(true);
     }
 
     // open  create modal
     public onPopupOpen(args: PopupOpenEventArgs): void {
-        console.log('popup arg', args);
+        // console.log('popup arg', args);
+        args.cancel = true;
+        return;
 
         // On vérifie si c'est la popup d'édition ou de création rapide
-        if (args.type === 'Editor' || args.type === 'QuickInfo') {
-            // 1. On annule l'ouverture de la fenêtre Syncfusion
-            args.cancel = true;
+        // if (args.type === 'Editor' || args.type === 'QuickInfo') {
+        //     // 1. On annule l'ouverture de la fenêtre Syncfusion
+        //     args.cancel = true;
 
-            // 2. On récupère les infos du créneau cliqué (Date début, fin, etc.)
-            const dataClick = args.data;
+        //     // 2. On récupère les infos du créneau cliqué (Date début, fin, etc.)
+        //     const dataClick = args.data;
 
-            // 3. On ouvre notre propre modal de création/édition avec les infos récupérées
-            if (args?.data?.['Subject'] != undefined) {
-                console.log('event subject ', args?.data?.['Subject']);
-            } else {
-                console.log('event subject ', args?.data?.['Subject']);
+        //     // 3. On ouvre notre propre modal de création/édition avec les infos récupérées
+        //     if (args?.data?.['Subject'] != undefined) {
+        //         console.log('event subject ', args?.data?.['Subject']);
+        //     } else {
+        //         console.log('event subject ', args?.data?.['Subject']);
 
-                this.visibleCreateSlotModal.set(true);
-            }
-        }
+        //         this.visibleCreateSlotModal.set(true);
+        //     }
+        // }
     }
 
     clickEvent(event: any) {
         console.log('event ', event);
-        event.originalEvent.stopPropagation();
+        this.visibleCreateSlotModal.set(true);
     }
 }

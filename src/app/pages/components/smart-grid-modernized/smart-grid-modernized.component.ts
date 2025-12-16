@@ -16,8 +16,7 @@ import { ActionButtonRendererComponent } from '../smart-grid/default-component';
 @Component({
     selector: 'app-smart-grid-modernized',
     imports: [TableModule, InputTextModule, CustomSortComponent, PaginatorModule, PopoverModule, SelectModule, MultiSelectModule, ButtonModule, DatePickerModule, CommonModule, FormsModule, NgComponentOutlet],
-    templateUrl: './smart-grid-modernized.component.html',
-    styleUrl: './smart-grid-modernized.component.scss'
+    templateUrl: './smart-grid-modernized.component.html'
 })
 export class SmartGridModernizedComponent<T extends Record<string, any>> implements OnInit {
     data = model<T[]>([]);
