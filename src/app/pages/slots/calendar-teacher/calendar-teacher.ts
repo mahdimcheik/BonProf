@@ -76,7 +76,8 @@ export class CalendarTeacher {
 
     // click on cell
     onCellClick(event: any) {
-        console.log('cell click', event);
+        console.log('event click', event);
+
         this.selectedDate = {
             startTime: new Date(event.startTime.toISOString()),
             endTime: new Date(event.endTime.toISOString()),
@@ -86,6 +87,8 @@ export class CalendarTeacher {
 
     // open  create modal
     public onPopupOpen(args: PopupOpenEventArgs): void {
+        console.log('popup arg', args);
+
         // On vérifie si c'est la popup d'édition ou de création rapide
         if (args.type === 'Editor' || args.type === 'QuickInfo') {
             // 1. On annule l'ouverture de la fenêtre Syncfusion
@@ -95,7 +98,18 @@ export class CalendarTeacher {
             const dataClick = args.data;
 
             // 3. On ouvre notre propre modal de création/édition avec les infos récupérées
-            this.visibleCreateSlotModal.set(true);
+            if (args?.data?.['Subject'] != undefined) {
+                console.log('event subject ', args?.data?.['Subject']);
+            } else {
+                console.log('event subject ', args?.data?.['Subject']);
+
+                this.visibleCreateSlotModal.set(true);
+            }
         }
+    }
+
+    clickEvent(event: any) {
+        console.log('event ', event);
+        event.originalEvent.stopPropagation();
     }
 }

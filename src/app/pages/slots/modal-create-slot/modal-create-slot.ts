@@ -2,7 +2,8 @@ import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.com
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { CalendarEvent } from '@/pages/shared/models/calendarModels';
-import { Component, computed, model } from '@angular/core';
+import { Component, computed, model, output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'bp-modal-create-slot',
@@ -13,6 +14,7 @@ export class ModalCreateSlot {
     visible = model(false);
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
+    submitClicked = output<CalendarEvent>();
 
     slotForm = computed<Structure>(() => {
         const event = this.event();
@@ -57,4 +59,15 @@ export class ModalCreateSlot {
             ]
         };
     });
+
+    submit(formData: FormGroup<any>) {
+        const newEvent: CalendarEvent = {
+            ...formData.value.slotDetails
+        };
+        this.submitClicked.emit(newEvent);
+        this.visible.set(false);
+    }
+    cancel() {
+        this.visible.set(false);
+    }
 }
