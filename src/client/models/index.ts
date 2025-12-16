@@ -580,9 +580,9 @@ export interface Reservation {
 }
 
 export interface RoleDetails {
-    id?: string;
+    id: string;
     name: string | null;
-    color?: string | null;
+    color: string | null;
     createdAt?: Date;
     updatedAt?: Date | null;
 }
@@ -707,6 +707,42 @@ export interface TypeSlot {
     createdAt?: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
+    name: string;
+    color: string;
+    icon?: string | null;
+}
+
+export interface TypeSlotCreate {
+    name: string;
+    color: string;
+    icon?: string | null;
+}
+
+export interface TypeSlotDetails {
+    id: string;
+    name: string;
+    color: string;
+    icon?: string | null;
+    createdAt: Date;
+    updatedAt?: Date | null;
+}
+
+export interface TypeSlotDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<TypeSlotDetails>;
+    count?: number | null;
+}
+
+export interface TypeSlotDetailsResponse {
+    message: string;
+    status: number;
+    data?: TypeSlotDetails;
+    count?: number | null;
+}
+
+export interface TypeSlotUpdate {
+    id: string;
     name: string;
     color: string;
     icon?: string | null;

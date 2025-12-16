@@ -4,4 +4,5 @@ export type CalendarEvent = {
     startTime: Date;
     endTime: Date;
     isAllDay?: boolean;
+    extendedProps?: Record<string, any>;
 };

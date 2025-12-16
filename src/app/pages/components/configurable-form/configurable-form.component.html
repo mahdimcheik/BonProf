@@ -159,6 +159,8 @@
                                                 [placeholder]="element.placeholder || 'Sélectionnez une option'"
                                                 class="w-full configurable-form-input configurable-form-select"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                             >
                                                 <ng-template pTemplate="item" let-option>
                                                     {{ getOptionLabel(option, element) }}
@@ -182,6 +184,8 @@
                                                 selectAllLabel="Sélectionner tout"
                                                 class="w-full configurable-form-input configurable-form-select"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                             >
                                                 <ng-template pTemplate="item" let-option>
                                                     {{ getOptionLabel(option, element) }}
@@ -464,6 +468,8 @@
                                                         [placeholder]="field.placeholder || 'Sélectionnez une option'"
                                                         class="w-full configurable-form-input configurable-form-select"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                     >
                                                         <ng-template pTemplate="item" let-option>
                                                             {{ getOptionLabel(option, field) }}
@@ -488,6 +494,8 @@
                                                         selectAllLabel="Sélectionner tout"
                                                         class="w-full configurable-form-input configurable-form-select"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                     >
                                                         <ng-template pTemplate="item" let-option>
                                                             {{ getOptionLabel(option, field) }}
