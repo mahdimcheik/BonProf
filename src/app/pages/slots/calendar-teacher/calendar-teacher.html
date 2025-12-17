@@ -1,7 +1,7 @@
 <ejs-schedule
     #scheduleRef
     width="100%"
-    height="650px"
+    height="700px"
     [eventSettings]="eventSettings()"
     [startHour]="startHour"
     [endHour]="endHour"
@@ -17,7 +17,15 @@
     (cellClick)="onCellClick($event)"
     (popupOpen)="onPopupOpen($event)"
     (eventClick)="clickEvent($event)"
+    (eventRendered)="applyBgColor($event)"
 >
+    <ng-template #eventSettingsTemplate let-data>
+        @let slot = data.ExtendedProps?.['slot'];
+        <div class="template-wrap" class="h-full w-full">
+            <div class="subject"></div>
+            <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
+        </div>
+    </ng-template>
 </ejs-schedule>
 
 @if(visibleCreateSlotModal()) {

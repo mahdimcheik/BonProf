@@ -1,15 +1,29 @@
 import { CalendarEvent } from '@/pages/shared/models/calendarModels';
 import { MainService } from '@/pages/shared/services/main.service';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, model, OnInit, signal, viewChild } from '@angular/core';
-import { CellClickEventArgs, DayService, DragAndDropService, EventClickArgs, MonthService, PopupOpenEventArgs, ResizeService, ScheduleComponent, ScheduleModule, WeekService, WorkWeekService } from '@syncfusion/ej2-angular-schedule';
+import {
+    CellClickEventArgs,
+    DayService,
+    DragAndDropService,
+    EventClickArgs,
+    EventRenderedArgs,
+    MonthService,
+    PopupOpenEventArgs,
+    ResizeService,
+    ScheduleComponent,
+    ScheduleModule,
+    WeekService,
+    WorkWeekService
+} from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
 import { SlotCreate, SlotDetails } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
-    imports: [ScheduleModule, ModalCreateSlot],
+    imports: [ScheduleModule, ModalCreateSlot, DatePipe],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -153,8 +167,18 @@ export class CalendarTeacher implements OnInit {
             Id: slot.id,
             Subject: 'subject',
             ExtendedProps: {
-                slot: slot
+                slot: slot,
+                BgColor: slot.type?.color
             }
         };
+    }
+
+    // styles signals
+    applyBgColor(args: EventRenderedArgs): void {
+        const slot = (args.data as any).ExtendedProps?.['slot'] as SlotDetails;
+        args.element.style.backgroundColor = slot.type?.color || 'transparent';
+        args.element.style.borderRadius = '4px';
+        args.element.style.border = ' 1px solid #ccc';
+        args.element.style.padding = '8px';
     }
 }
