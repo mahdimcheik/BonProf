@@ -5,6 +5,7 @@ import { CalendarEvent } from '@/pages/shared/models/calendarModels';
 import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { SlotDetails } from 'src/client';
 
 @Component({
     selector: 'bp-modal-create-slot',
@@ -16,7 +17,7 @@ export class ModalCreateSlot implements OnInit {
     visible = model(false);
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
-    submitClicked = output<CalendarEvent>();
+    submitClicked = output<SlotDetails>();
     typeSlots = this.typeSlotsService.typeSlots;
 
     slotForm = computed<Structure>(() => {
@@ -45,7 +46,7 @@ export class ModalCreateSlot implements OnInit {
                             required: true,
                             placeholder: 'Sélectionner le type de créneau',
                             fullWidth: true,
-                            value: null
+                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null
                         },
                         {
                             id: 'dateFrom',
@@ -57,7 +58,7 @@ export class ModalCreateSlot implements OnInit {
                             label: 'Date de début',
                             required: true,
                             placeholder: 'Sélectionner la date de début',
-                            value: event.StartTime
+                            value: event?.StartTime ?? new Date()
                         },
                         {
                             id: 'dateTo',
@@ -69,7 +70,7 @@ export class ModalCreateSlot implements OnInit {
                             required: true,
                             fullWidth: true,
                             placeholder: 'Sélectionner la date de fin',
-                            value: event.EndTime
+                            value: event?.EndTime ?? new Date()
                         }
                     ]
                 }
