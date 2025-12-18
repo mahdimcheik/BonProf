@@ -5,7 +5,7 @@ import { CalendarEvent } from '@/pages/shared/models/calendarModels';
 import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SlotCreate, SlotUpdate } from 'src/client';
+import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-modal-create-slot',
@@ -17,7 +17,7 @@ export class ModalCreateSlot implements OnInit {
     visible = model(false);
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
-    slot = computed<SlotCreate | SlotUpdate | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
+    slot = computed<SlotDetails | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     submitClicked = output<SlotCreate | SlotUpdate>();
     typeSlots = this.typeSlotsService.typeSlots;
 
@@ -86,7 +86,7 @@ export class ModalCreateSlot implements OnInit {
     submit(formData: FormGroup<any>) {
         const newEvent = {
             ...formData.value.slotDetails,
-            id: (this.slot() as any)?.id ?? undefined
+            id: this.slot()?.id ?? undefined
         };
         this.submitClicked.emit(newEvent);
         this.visible.set(false);
