@@ -631,6 +631,14 @@ export interface SlotDetailsResponse {
     count?: number | null;
 }
 
+export interface SlotUpdate {
+    id: string;
+    dateFrom: Date;
+    dateTo: Date;
+    teacherId: string;
+    typeId: string;
+}
+
 export interface StatusAccount {
     id?: string;
     createdAt?: Date;

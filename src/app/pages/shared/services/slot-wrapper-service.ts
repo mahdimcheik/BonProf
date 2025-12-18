@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
-import { SlotCreate, SlotsService } from 'src/client';
+import { SlotCreate, SlotsService, SlotUpdate } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +10,16 @@ export class SlotWrapperService {
 
     addSlot(slotData: SlotCreate) {
         return this.slotsService.slotsTeacherAddPost(slotData).pipe(
+            catchError((res) => {
+                console.log('error res : ', res);
+                return of();
+            }),
+            map((response) => response.data)
+        );
+    }
+
+    updateSlot(slotData: SlotUpdate) {
+        return this.slotsService.slotsTeacherUpdatePut(slotData).pipe(
             catchError((res) => {
                 console.log('error res : ', res);
                 return of();

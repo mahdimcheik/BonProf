@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, BooleanResponse, SlotDetailsListResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, SlotDetailsListResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -39,6 +39,22 @@ export class SlotsService {
         };
 
         return this.httpClient.post(url, slotCreate, requestOptions);
+    }
+
+    slotsTeacherUpdatePut(slotUpdate?: SlotUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsResponse>;
+    slotsTeacherUpdatePut(slotUpdate?: SlotUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsResponse>>;
+    slotsTeacherUpdatePut(slotUpdate?: SlotUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsResponse>>;
+    slotsTeacherUpdatePut(slotUpdate?: SlotUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/teacher/update`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, slotUpdate, requestOptions);
     }
 
     slotsTeacherRemoveSlotIdDelete(slotId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<BooleanResponse>;

@@ -18,7 +18,7 @@ import {
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
-import { SlotCreate, SlotDetails } from 'src/client';
+import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
@@ -128,7 +128,6 @@ export class CalendarTeacher implements OnInit {
     clickEvent(event: EventClickArgs) {
         const selectedEvent = event.event as any;
         this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
-        console.log('slot', event);
 
         // Handle Date objects properly - they're already Date instances, not strings
         const startTime = selectedEvent?.StartTime;
@@ -143,20 +142,32 @@ export class CalendarTeacher implements OnInit {
         this.visibleCreateSlotModal.set(true);
     }
 
-    async handleEvent(event: any) {
-        const newEvent: SlotCreate = {
-            dateFrom: event.dateFrom,
-            dateTo: event.dateTo,
-            typeId: event.extendedProps?.['typeSlotId'] || '',
-            teacherId: this.mainService.userConnected().id
-        };
+    async handleEvent(event: SlotCreate | SlotUpdate) {
+        const id = event && 'id' in event ? event.id : undefined;
+        if (id) {
+            teacherId: this.mainService.userConnected().id;
+            const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
 
-        console.log('newEvent', newEvent);
-        try {
-            const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
-            await this.loadData();
-        } catch (ex) {
-            console.log('exception : ', ex);
+            try {
+                const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
+                await this.loadData();
+            } catch (ex) {
+                console.log('exception : ', ex);
+            }
+        } else {
+            const newEvent: SlotCreate = {
+                dateFrom: event.dateFrom,
+                dateTo: event.dateTo,
+                typeId: event.typeId,
+                teacherId: this.mainService.userConnected().id
+            };
+
+            try {
+                const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
+                await this.loadData();
+            } catch (ex) {
+                console.log('exception : ', ex);
+            }
         }
     }
 
