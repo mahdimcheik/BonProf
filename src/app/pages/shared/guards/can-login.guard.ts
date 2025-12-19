@@ -9,12 +9,12 @@ import { MainService } from '../services/main.service';
  */
 export const canNotLoginGuard: CanActivateFn = async (route, state) => {
     const authService = inject(MainService);
-    if (authService.userConnected().email) {
+    if (authService.userConnected()?.email) {
         return false;
     } else {
         try {
             await firstValueFrom(authService.refreshToken());
-            if (authService.userConnected().email) {
+            if (authService.userConnected()?.email) {
                 return false;
             } else {
                 return true;
@@ -27,11 +27,11 @@ export const canNotLoginGuard: CanActivateFn = async (route, state) => {
 
 export const canNotRegisterGuard: CanActivateFn = async (route, state) => {
     const authService = inject(MainService);
-    if (authService.userConnected().email) return false;
+    if (authService.userConnected()?.email) return false;
     else {
         try {
             await firstValueFrom(authService.refreshToken());
-            if (authService.userConnected().email) {
+            if (authService.userConnected()?.email) {
                 return false;
             } else {
                 return true;
@@ -45,13 +45,13 @@ export const canNotRegisterGuard: CanActivateFn = async (route, state) => {
 export const isConnectedGuard: CanActivateFn = async (route, state) => {
     const authService = inject(MainService);
     // Check if the user is connected , dans la mémoire
-    if (authService.userConnected().email) {
+    if (authService.userConnected()?.email) {
         return true;
     }
 
     try {
         await firstValueFrom(authService.refreshToken());
-        if (authService.userConnected().email) {
+        if (authService.userConnected()?.email) {
             return true;
         }
         return false;
@@ -63,12 +63,12 @@ export const isConnectedGuard: CanActivateFn = async (route, state) => {
 export const isNotConnectedGuard: CanActivateFn = async (route, state) => {
     const authService = inject(MainService);
     // Check if the user is connected , dans la mémoire
-    if (authService.userConnected().email) {
+    if (authService.userConnected()?.email) {
         return false;
     }
     try {
         await firstValueFrom(authService.refreshToken());
-        if (authService.userConnected().email) {
+        if (authService.userConnected()?.email) {
             return false;
         }
         return true;

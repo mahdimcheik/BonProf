@@ -4,7 +4,7 @@ import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
 import { Tag } from 'primeng/tag';
-import { TeacherDetails } from 'src/client';
+import { ProfileDetails } from 'src/client';
 
 @Component({
     selector: 'bp-profile-infos',
@@ -12,8 +12,11 @@ import { TeacherDetails } from 'src/client';
     templateUrl: './profile-infos.html'
 })
 export class ProfileInfos {
-    teacher = input.required<TeacherDetails>();
+    teacher = input.required<ProfileDetails>();
     address = computed(() => {
-        return this.teacher().user.addresses.length > 0 ? this.teacher().user.addresses[0] : null;
+        if (this.teacher() && this.teacher().addresses) {
+            return this.teacher().addresses?.length! > 0 ? this.teacher().addresses![0] : null;
+        }
+        return null;
     });
 }

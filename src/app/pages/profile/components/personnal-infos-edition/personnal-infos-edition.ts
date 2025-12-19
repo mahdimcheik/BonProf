@@ -7,7 +7,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { LanguageDetails, TeacherProfileUpdate } from 'src/client';
+import { LanguageDetails } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -18,11 +18,11 @@ export class PersonnalInfosEdition implements OnInit {
     teacherWarapperService = inject(TeacherWrapperService);
     languagesWrapperService = inject(LanguagesWrapperService);
     router = inject(Router);
-    teacherProfile = this.teacherWarapperService.teacherProfile;
+    teacher = this.teacherWarapperService.teacher;
     languagesList = signal<LanguageDetails[]>([]);
 
     personnalInfosStructure = computed<Structure>(() => {
-        const teacher = this.teacherProfile();
+        const teacher = this.teacher();
         return {
             id: 'personnalInfos',
             name: 'personnalInfos',
@@ -41,7 +41,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'firstName',
                             label: 'Prénom',
                             type: 'text',
-                            value: teacher?.user.firstName || '',
+                            value: teacher?.user?.firstName || '',
                             placeholder: 'Prénom',
                             required: true,
                             validation: [Validators.required]
@@ -51,7 +51,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'lastName',
                             label: 'Nom',
                             type: 'text',
-                            value: teacher?.user.lastName || '',
+                            value: teacher?.user?.lastName || '',
                             placeholder: 'Nom',
                             required: true,
                             validation: [Validators.required, Validators.minLength(3)]
@@ -61,7 +61,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'dateOfBirth',
                             type: 'date',
                             label: 'Date de naissance',
-                            value: teacher?.user.dateOfBirth ? new Date(teacher.user.dateOfBirth) : new Date('2000-01-01'),
+                            value: teacher?.user?.dateOfBirth ? new Date(teacher.user.dateOfBirth) : new Date('2000-01-01'),
                             fullWidth: true,
                             required: true,
                             placeholder: 'Date de naissance',
@@ -79,7 +79,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'phoneNumber',
                             type: 'text',
                             label: 'Numéro de téléphone',
-                            value: teacher?.user.phoneNumber || '',
+                            value: teacher?.user?.phoneNumber || '',
                             fullWidth: true,
                             required: false,
                             placeholder: 'Numéro de téléphone'
@@ -111,7 +111,7 @@ export class PersonnalInfosEdition implements OnInit {
                             type: 'multiselect',
                             compareKey: 'id',
                             displayKey: 'name',
-                            value: this.teacherProfile()?.languages?.map((lang) => lang.id) || [],
+                            value: this.teacher()?.languages?.map((lang) => lang.id) || [],
                             fullWidth: true,
                             options: this.languagesList()
                         },
@@ -120,7 +120,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'priceIndicative',
                             type: 'number',
                             label: 'Tarif indicatif (€ par heure)',
-                            value: teacher?.priceIndicative || null,
+                            value: teacher?.teacher?.priceIndicative || null,
                             fullWidth: true,
                             required: false,
                             placeholder: 'Tarif indicatif'
@@ -179,27 +179,27 @@ export class PersonnalInfosEdition implements OnInit {
     });
 
     async submit(event: FormGroup<any>) {
-        console.log(event.value);
-        const teacher = event.value;
-        const updatedTeacher: TeacherProfileUpdate = {
-            ...this.teacherProfile(),
-            title: teacher.optionalFields.title,
-            description: teacher.optionalFields.description,
-            languagesIds: teacher.optionalFields.languagesIds,
-            linkedIn: teacher.socialLinks.linkedIn,
-            faceBook: teacher.socialLinks.faceBook,
-            gitHub: teacher.socialLinks.gitHub,
-            twitter: teacher.socialLinks.twitter,
-            priceIndicative: teacher.optionalFields.priceIndicative,
-            id: this.teacherProfile()?.id!,
-            user: {
-                firstName: teacher.personnalInfos.firstName,
-                lastName: teacher.personnalInfos.lastName,
-                dateOfBirth: teacher.personnalInfos.dateOfBirth
-            }
-        };
-        await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
-        await this.router.navigate(['dashboard/teacher/profile/me']);
+        // console.log(event.value);
+        // const teacher = event.value;
+        // const updatedTeacher: TeacherProfileUpdate = {
+        //     ...this.teacher(),
+        //     title: teacher.optionalFields.title,
+        //     description: teacher.optionalFields.description,
+        //     languagesIds: teacher.optionalFields.languagesIds,
+        //     linkedIn: teacher.socialLinks.linkedIn,
+        //     faceBook: teacher.socialLinks.faceBook,
+        //     gitHub: teacher.socialLinks.gitHub,
+        //     twitter: teacher.socialLinks.twitter,
+        //     priceIndicative: teacher.optionalFields.priceIndicative,
+        //     id: this.teacher()?.profile?.id!,
+        //     user: {
+        //         firstName: teacher.personnalInfos.firstName,
+        //         lastName: teacher.personnalInfos.lastName,
+        //         dateOfBirth: teacher.personnalInfos.dateOfBirth
+        //     }
+        // };
+        // await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
+        // await this.router.navigate(['dashboard/teacher/profile/me']);
     }
 
     ngOnInit() {

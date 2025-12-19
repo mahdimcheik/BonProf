@@ -33,7 +33,7 @@ import { StyleClassModule } from 'primeng/styleclass';
             <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-1">
                 <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
                 <p-menu #menu [model]="authItems()" [popup]="true" />
-                <p-avatar (click)="menu.toggle($event)" [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                <p-avatar (click)="menu.toggle($event)" [image]="(userConnected()?.imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
             </div>
         </div>
         @if (!mobileMenuVisible()) {
@@ -52,9 +52,9 @@ import { StyleClassModule } from 'primeng/styleclass';
                     }
                     <p-divider layout="horizontal" type="solid" [style]="{ width: '100%' }"></p-divider>
                     <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
-                    @if (mainService.userConnected().email) {
+                    @if (mainService.userConnected()?.email) {
                         <li>
-                            <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                            <p-avatar [image]="(mainService.userConnected()?.imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
                         </li>
                     }
                     @for (item of authItems(); track $index) {
@@ -82,6 +82,8 @@ export class TopbarWidget {
     mobileMenuVisible = signal(false);
     mainItems = this.mainService.mainTopbarLinks;
     authItems = this.mainService.mainTopbarSecondaryLinks;
+    userConnected = this.mainService.userConnected;
+    profile = computed(() => this.userConnected()?.profile);
 
     isDarkTheme = computed(() => this.layoutService.layoutConfig().darkTheme);
     notificationsNumber = signal(3);

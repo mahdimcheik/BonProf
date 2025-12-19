@@ -1,26 +1,27 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { tap } from 'rxjs';
-import { LanguagesService, TeacherDetails, TeacherProfileService, TeacherProfileUpdate } from 'src/client';
+import { map, tap } from 'rxjs';
+import { LanguagesService, ProfileDetails, TeacherProfileService } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TeacherWrapperService {
-    teacherService = inject(TeacherProfileService);
+    teacherProfileService = inject(TeacherProfileService);
     languagesService = inject(LanguagesService);
-    teacherProfile = signal<TeacherDetails | null>(null);
+    teacher = signal<ProfileDetails | null>(null);
 
     getTeacherFullProfile() {
-        return this.teacherService.teacherprofileMyProfileGet().pipe(
+        return this.teacherProfileService.teacherprofileMyProfileGet().pipe(
+            map((response) => response.data),
             tap((response) => {
-                if (response.data) {
-                    this.teacherProfile.set(response.data);
+                if (response) {
+                    this.teacher.set(response);
                 }
             })
         );
     }
 
-    updateTeacherProfile(updatedProfile: TeacherProfileUpdate) {
-        return this.teacherService.teacherprofilePut(updatedProfile);
-    }
+    // updateTeacherProfile(updatedProfile: TeacherUpdate) {
+    //     return this.teacherService.teacherprofilePut(updatedProfile);
+    // }
 }

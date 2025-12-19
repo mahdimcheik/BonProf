@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, TeacherDetailsListResponse, TeacherDetailsResponse, TeacherProfileUpdate } from "../models";
+import { RequestOptions, ProfileDetailsResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeacherProfileService {
@@ -25,25 +25,9 @@ export class TeacherProfileService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    teacherprofileAllGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsListResponse>;
-    teacherprofileAllGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsListResponse>>;
-    teacherprofileAllGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsListResponse>>;
-    teacherprofileAllGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/teacherprofile/all`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.get(url, requestOptions);
-    }
-
-    teacherprofileMyProfileGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;
-    teacherprofileMyProfileGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsResponse>>;
-    teacherprofileMyProfileGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsResponse>>;
+    teacherprofileMyProfileGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<ProfileDetailsResponse>;
+    teacherprofileMyProfileGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ProfileDetailsResponse>>;
+    teacherprofileMyProfileGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ProfileDetailsResponse>>;
     teacherprofileMyProfileGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teacherprofile/my-profile`;
 
@@ -57,9 +41,9 @@ export class TeacherProfileService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    teacherprofileUserUserIdGet(userId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;
-    teacherprofileUserUserIdGet(userId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsResponse>>;
-    teacherprofileUserUserIdGet(userId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsResponse>>;
+    teacherprofileUserUserIdGet(userId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ProfileDetailsResponse>;
+    teacherprofileUserUserIdGet(userId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ProfileDetailsResponse>>;
+    teacherprofileUserUserIdGet(userId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ProfileDetailsResponse>>;
     teacherprofileUserUserIdGet(userId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teacherprofile/user/${userId}`;
 
@@ -71,21 +55,5 @@ export class TeacherProfileService {
         };
 
         return this.httpClient.get(url, requestOptions);
-    }
-
-    teacherprofilePut(teacherProfileUpdate?: TeacherProfileUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;
-    teacherprofilePut(teacherProfileUpdate?: TeacherProfileUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsResponse>>;
-    teacherprofilePut(teacherProfileUpdate?: TeacherProfileUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsResponse>>;
-    teacherprofilePut(teacherProfileUpdate?: TeacherProfileUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/teacherprofile`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.put(url, teacherProfileUpdate, requestOptions);
     }
 }

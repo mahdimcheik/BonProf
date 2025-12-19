@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, computed, input, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { AddressDetails, UserDetails } from 'src/client';
-
+import { AddressDetails } from 'src/client';
 @Component({
     selector: 'bp-map-basic',
     imports: [],
@@ -10,7 +9,6 @@ import { AddressDetails, UserDetails } from 'src/client';
     template: '@if(mainAddress().latitude && mainAddress().longitude){<div [id]="mapId" class=" rounded-xl min-h-[200px] w-full min-w-[300px]"></div>}'
 })
 export class MapBasic implements AfterViewInit, OnDestroy {
-    user = input.required<UserDetails>();
     mainAddress = input.required<AddressDetails>();
     secondaryAddress = input<AddressDetails | null>(null);
 

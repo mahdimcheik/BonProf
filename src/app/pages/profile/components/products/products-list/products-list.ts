@@ -35,7 +35,7 @@ export class ProductsList {
     }
 
     async loadData() {
-        const productsData = await firstValueFrom(this.productWrapperService.getTeacherProducts(this.teacherWrapperService?.teacherProfile()?.id ?? ''));
+        const productsData = await firstValueFrom(this.productWrapperService.getTeacherProducts(this.teacherWrapperService?.teacher()?.id ?? ''));
         this.products.set(productsData.data || []);
     }
 

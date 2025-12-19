@@ -20,22 +20,7 @@ export class ProfileEditionPage implements OnInit {
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
     tab: string = 'personnalInfos';
-    events: CalendarEvent[] = [
-        // {
-        //     Id: '1',
-        //     Subject: 'Cours de physiques',
-        //     StartTime: new Date(2025, 11, 15, 21, 0),
-        //     EndTime: new Date(2025, 11, 15, 21, 30),
-        //     IsAllDay: false
-        // },
-        // {
-        //     Id: 2,
-        //     Subject: 'Cours de mathématiques',
-        //     StartTime: new Date(2025, 11, 16, 14, 0),
-        //     EndTime: new Date(2025, 11, 16, 15, 30),
-        //     IsAllDay: false
-        // }
-    ];
+    events: CalendarEvent[] = [];
 
     ngOnInit() {
         this.teacherWrapperService.getTeacherFullProfile().subscribe();

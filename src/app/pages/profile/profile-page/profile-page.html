@@ -5,13 +5,13 @@
 
     <p-divider class="my-6"></p-divider>
 
-    <bp-profile-description></bp-profile-description>
+    <bp-profile-description [teacher]="teacherprofile()!"></bp-profile-description>
 
     @if(mainAddress()) {
 
     <p-card class="my-4">
         <bp-address [address]="mainAddress()!"></bp-address>
-        <bp-map-basic [mainAddress]="mainAddress()!" [user]="teacherprofile()!.user"></bp-map-basic>
+        <bp-map-basic [mainAddress]="mainAddress()!"></bp-map-basic>
     </p-card>
     }
 

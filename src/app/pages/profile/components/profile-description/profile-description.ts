@@ -1,9 +1,10 @@
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, model } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
+import { ProfileDetails } from 'src/client';
 
 @Component({
     selector: 'bp-profile-description',
@@ -12,7 +13,7 @@ import { Tag } from 'primeng/tag';
 })
 export class ProfileDescription {
     teacherWrapperService = inject(TeacherWrapperService);
-    teacher = this.teacherWrapperService.teacherProfile;
+    teacher = model.required<ProfileDetails>();
     sanitizer = inject(DomSanitizer);
     descriptionSafeHtml = computed<SafeHtml>(() => {
         const description = this.teacher()?.description || 'Pas de description fournie';

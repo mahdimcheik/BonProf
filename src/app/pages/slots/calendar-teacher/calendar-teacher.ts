@@ -145,8 +145,7 @@ export class CalendarTeacher implements OnInit {
     async handleEvent(event: SlotCreate | SlotUpdate) {
         const id = event && 'id' in event ? event.id : undefined;
         if (id) {
-            teacherId: this.mainService.userConnected().id;
-            const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
+            const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected()?.id } as SlotUpdate;
 
             try {
                 const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
@@ -159,7 +158,7 @@ export class CalendarTeacher implements OnInit {
                 dateFrom: event.dateFrom,
                 dateTo: event.dateTo,
                 typeId: event.typeId,
-                teacherId: this.mainService.userConnected().id
+                teacherId: this.mainService.userConnected()?.id!
             };
 
             try {

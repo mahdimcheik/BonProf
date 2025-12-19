@@ -24,7 +24,7 @@ export class MainService {
     AddressesList = signal<AddressDetails[]>([]);
 
     // pour la page profile
-    userConnected = signal({} as any);
+    userConnected = signal<UserDetails | null>(null);
 
     isAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Admin'));
     isSuperAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'SuperAdmin'));
