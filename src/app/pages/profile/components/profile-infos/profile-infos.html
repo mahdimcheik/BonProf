@@ -1,21 +1,17 @@
-<p-card styleClass="shadow-md">
+<!-- <p-card styleClass="shadow-md">
     <div class="flex gap-6 flex-col md:flex-row">
-        <!-- Profile Image -->
+     
         <div class="flex-shrink-0">
             <p-image src="assets/user.svg" alt="Profile Image" [imageClass]="'w-full md:w-[260px] h-auto rounded-xl object-cover shadow-sm'" preview="true" />
         </div>
 
-        <!-- Profile Content -->
         <div class="flex flex-col lg:flex-row gap-6 w-full justify-between">
-            <!-- Profile Details -->
             <div class="flex flex-col gap-4 flex-1">
-                <!-- Name and Profile Link -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                     <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacher().user.firstName }} {{ teacher().user.lastName }}</h2>
                     <p-button label="Editer mon profil" [text]="true" icon="pi pi-pencil" iconPos="right" size="small" styleClass="text-primary" [routerLink]="['/dashboard/teacher/profile', 'me', 'edition']" />
                 </div>
 
-                <!-- Info Items -->
                 <div class="flex flex-col gap-3">
                     @if(address()) {
                     <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
@@ -30,7 +26,6 @@
                 </div>
             </div>
 
-            <!-- Pricing and Action -->
             <div class="flex flex-col justify-center items-center gap-4 lg:min-w-[250px] p-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
                 @if(teacher().priceIndicative) {
                 <div class="text-center">
@@ -49,4 +44,4 @@
             </div>
         </div>
     </div>
-</p-card>
+</p-card> -->
