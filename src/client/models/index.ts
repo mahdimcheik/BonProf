@@ -10,7 +10,7 @@
 import { HttpContext, HttpHeaders } from "@angular/common/http";
 export interface Address {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     street: string;
@@ -20,9 +20,9 @@ export interface Address {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId?: string;
-    user?: UserApp;
-    typeId?: string;
+    profileId: string;
+    profile?: Profile;
+    typeId: string;
     type?: TypeAddress;
 }
 
@@ -34,7 +34,7 @@ export interface AddressCreate {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId: string;
+    profileId: string;
     typeId: string;
 }
 
@@ -47,7 +47,7 @@ export interface AddressDetails {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId?: string;
+    profileId?: string;
     typeId: string;
     createdAt: Date;
     updatedAt?: Date | null;
@@ -76,7 +76,7 @@ export interface AddressUpdate {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    userId: string;
+    profileId: string;
     typeId: string;
 }
 
@@ -89,7 +89,7 @@ export interface BooleanResponse {
 
 export interface CategoryCursus {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -135,17 +135,17 @@ export interface CategoryCursusUpdate {
 
 export interface Cursus {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
     color: string;
     icon?: string | null;
     description?: string | null;
-    levelId?: string;
+    levelId: string;
     level?: LevelCursus;
-    teacherId?: string;
-    teacher?: ProfileTeacher;
+    teacherId: string;
+    teacher?: Teacher;
     categories?: Array<CategoryCursus>;
 }
 
@@ -167,7 +167,7 @@ export interface CursusDetails {
     levelId: string;
     level?: LevelCursusDetails;
     teacherId: string;
-    teacher?: ProfileTeacher;
+    teacher?: Teacher;
     categories?: Array<CategoryCursusDetails>;
     createdAt: Date;
     updatedAt?: Date | null;
@@ -199,7 +199,7 @@ export interface CursusUpdate {
 
 export interface Experience {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     title: string;
@@ -207,8 +207,8 @@ export interface Experience {
     company: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
-    teacher?: ProfileTeacher;
+    teacherId: string;
+    teacher?: Teacher;
 }
 
 export interface FileUrl {
@@ -228,16 +228,16 @@ export interface ForgotPassword {
 
 export interface Formation {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    title: string | null;
-    institute: string | null;
-    description: string | null;
+    title: string;
+    institute: string;
+    description: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
-    teacher?: ProfileTeacher;
+    teacherId: string;
+    teacher?: Teacher;
 }
 
 export interface FormationCreate {
@@ -286,7 +286,7 @@ export interface FormationUpdate {
 
 export interface Gender {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -308,13 +308,13 @@ export interface GuidIdentityUserRole {
 
 export interface Language {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
     color: string;
     icon?: string | null;
-    teachers?: Array<ProfileTeacher>;
+    teachers?: Array<Teacher>;
 }
 
 export interface LanguageCreate {
@@ -351,7 +351,7 @@ export interface LanguageUpdate {
 
 export interface LevelCursus {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -395,16 +395,16 @@ export interface LevelCursusUpdate {
     icon?: string | null;
 }
 
-export interface LoginOutput {
+export interface Login {
     token: string;
     refreshToken: string;
     user: UserDetails;
 }
 
-export interface LoginOutputResponse {
+export interface LoginResponse {
     message: string;
     status: number;
-    data?: LoginOutput;
+    data?: Login;
     count?: number | null;
 }
 
@@ -417,18 +417,16 @@ export interface ObjectResponse {
 
 export interface Order {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    orderNumber?: string | null;
-    orderDate?: Date;
-    totalAmount?: number;
+    orderNumber: string;
+    orderDate: Date;
+    totalAmount: number;
     reductionPercentage?: number;
     reductionAmount?: number;
-    studentId?: string;
-    student?: ProfileStudent;
-    teacherId?: string;
-    teacher?: ProfileTeacher;
+    studentId: string;
+    student?: Student;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
@@ -441,35 +439,35 @@ export interface PasswordRecovery {
     passwordConfirmation: string;
 }
 
-export interface PasswordResetOutput {
+export interface PasswordReset {
     resetToken: string;
     email: string;
     id: string;
 }
 
-export interface PasswordResetOutputResponse {
+export interface PasswordResetResponse {
     message: string;
     status: number;
-    data?: PasswordResetOutput;
+    data?: PasswordReset;
     count?: number | null;
 }
 
 export interface Payment {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    amount?: number;
-    methodId?: string;
+    amount: number;
+    methodId: string;
     method?: PaymentMethod;
-    orderId?: string;
+    orderId: string;
     order?: Order;
     transactionRef?: string;
 }
 
 export interface PaymentMethod {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -479,7 +477,7 @@ export interface PaymentMethod {
 
 export interface Product {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string | null;
@@ -526,57 +524,56 @@ export interface ProductUpdate {
     cursusId?: string;
 }
 
-export interface ProfileStudent {
+export interface Profile {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    userId?: string;
-    user?: UserApp;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    imgUrl?: string | null;
     addresses?: Array<Address>;
     formations?: Array<Formation>;
-    reservations?: Array<Reservation>;
-    orders?: Array<Order>;
-}
-
-export interface ProfileTeacher {
-    id?: string;
-    createdAt?: Date;
-    updatedAt?: Date | null;
-    archivedAt?: Date | null;
-    title?: string | null;
-    description?: string | null;
+    languages?: Array<Language>;
     userId?: string;
     user?: UserApp;
-    linkedIn?: string | null;
-    faceBook?: string | null;
-    gitHub?: string | null;
-    twitter?: string | null;
-    priceIndicative?: number;
-    cursuses?: Array<Cursus>;
-    experiences?: Array<Experience>;
-    formations?: Array<Formation>;
-    slots?: Array<Slot>;
-    languages?: Array<Language>;
+    genderId: string;
+    gender?: Gender;
+}
+
+export interface ProfileCreate {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    genderId: string;
+}
+
+export interface ProfileDetails {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    imgUrl?: string | null;
+    gender: GenderDetails;
 }
 
 export interface Reservation {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    title?: string | null;
-    description?: string | null;
-    slotId?: string;
+    title: string;
+    description: string;
+    slotId: string;
     slot?: Slot;
-    productId?: string;
+    productId: string;
     product?: Product;
+    statusId: string;
     status?: StatusReservation;
-    statusId?: string;
-    orderId?: string;
+    orderId: string;
     order?: Order;
-    studentId?: string;
-    student?: ProfileStudent;
+    studentId: string;
+    student?: Student;
 }
 
 export interface RoleDetails {
@@ -589,13 +586,13 @@ export interface RoleDetails {
 
 export interface Slot {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    dateFrom?: Date;
-    dateTo?: Date;
-    teacherId?: string;
-    teacher?: ProfileTeacher;
+    dateFrom: Date;
+    dateTo: Date;
+    teacherId: string;
+    teacher?: Teacher;
     typeId?: string;
     type?: TypeSlot;
     reservation?: Reservation;
@@ -641,7 +638,7 @@ export interface SlotUpdate {
 
 export interface StatusAccount {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -649,9 +646,16 @@ export interface StatusAccount {
     icon?: string | null;
 }
 
+export interface StatusAccountDetails {
+    readonly id?: string;
+    readonly name?: string | null;
+    readonly color?: string | null;
+    readonly icon?: string | null;
+}
+
 export interface StatusReservation {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -664,6 +668,36 @@ export interface StringResponse {
     status: number;
     data?: string | null;
     count?: number | null;
+}
+
+export interface Student {
+    id?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    userId: string;
+    user?: UserApp;
+    reservations?: Array<Reservation>;
+    orders?: Array<Order>;
+}
+
+export interface Teacher {
+    id?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    title?: string | null;
+    description?: string | null;
+    userId?: string;
+    user?: UserApp;
+    linkedIn?: string | null;
+    faceBook?: string | null;
+    gitHub?: string | null;
+    twitter?: string | null;
+    priceIndicative?: number;
+    cursuses?: Array<Cursus>;
+    experiences?: Array<Experience>;
+    slots?: Array<Slot>;
 }
 
 export interface TeacherDetails {
@@ -698,27 +732,9 @@ export interface TeacherDetailsResponse {
     count?: number | null;
 }
 
-export interface TeacherLanguageCreate {
-    teacherId: string;
-    languageId: string;
-}
-
-export interface TeacherProfileUpdate {
-    id: string;
-    title?: string | null;
-    user?: UserUpdateInput;
-    description?: string | null;
-    languagesIds?: Array<string>;
-    linkedIn?: string | null;
-    faceBook?: string | null;
-    gitHub?: string | null;
-    twitter?: string | null;
-    priceIndicative?: number;
-}
-
 export interface TypeAddress {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -742,7 +758,7 @@ export interface TypeAddressDetailsListResponse {
 
 export interface TypeSlot {
     id?: string;
-    createdAt?: Date;
+    createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
     name: string;
@@ -802,50 +818,35 @@ export interface UserApp {
     lockoutEnd?: Date | null;
     lockoutEnabled?: boolean;
     accessFailedCount?: number;
-    firstName: string | null;
-    lastName: string | null;
-    dateOfBirth: Date;
-    imgUrl?: string | null;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
-    archivedAt?: Date | null;
     updatedAt?: Date | null;
-    createdAt?: Date;
-    userRoles?: Array<GuidIdentityUserRole>;
-    addresses?: Array<Address>;
-    genderId?: string;
-    gender?: Gender;
-    statusId?: string;
+    archivedAt?: Date | null;
+    createdAt: Date;
+    statusId: string;
     status?: StatusAccount;
+    teacher?: Teacher;
+    student?: Student;
+    profile?: Profile;
+    userRoles?: Array<GuidIdentityUserRole>;
 }
 
 export interface UserCreate {
     email: string;
     password: string;
-    firstName: string;
-    lastName: string;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
-    dateOfBirth: Date;
-    phoneNumber?: string | null;
-    title?: string | null;
-    description?: string | null;
     roleId: string;
-    genderId: string;
+    profile: ProfileCreate;
 }
 
 export interface UserDetails {
     id: string;
-    firstName: string;
-    lastName: string;
-    imgUrl?: string | null;
     email: string;
     dateOfBirth?: Date;
-    phoneNumber?: string | null;
-    gender?: GenderDetails;
-    createdAt?: Date;
+    status?: StatusAccountDetails;
     roles: Array<RoleDetails>;
-    addresses: Array<AddressDetails>;
+    profile: ProfileDetails;
 }
 
 export interface UserDetailsResponse {
@@ -872,11 +873,8 @@ export interface UserLogin {
     password: string;
 }
 
-export interface UserUpdateInput {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    phoneNumber?: string | null;
+export interface UserUpdate {
+    [key: string]: never;
 }
 
 /** Request Options for Angular HttpClient requests */

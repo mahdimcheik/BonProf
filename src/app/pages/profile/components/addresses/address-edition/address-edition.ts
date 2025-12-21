@@ -69,7 +69,7 @@ export class AddressEdition implements OnInit {
             street: this.address()?.street || '',
             country: this.address()?.country || 'France',
             additionalInfo: this.address()?.additionalInfo || '',
-            userId: this.address()?.userId || '',
+            profileId: this.address()?.profileId || '',
             typeId: this.address()?.typeId || '',
             latitude: city.geometry.coordinates[1],
             longitude: city.geometry.coordinates[0]

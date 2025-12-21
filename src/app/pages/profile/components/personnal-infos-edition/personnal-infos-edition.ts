@@ -75,16 +75,6 @@ export class PersonnalInfosEdition implements OnInit {
                     label: 'Champs facultatifs',
                     fields: [
                         {
-                            id: 'phoneNumber',
-                            name: 'phoneNumber',
-                            type: 'text',
-                            label: 'Numéro de téléphone',
-                            value: teacher?.user.phoneNumber || '',
-                            fullWidth: true,
-                            required: false,
-                            placeholder: 'Numéro de téléphone'
-                        },
-                        {
                             id: 'title',
                             name: 'title',
                             type: 'text',
