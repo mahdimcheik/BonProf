@@ -21,6 +21,6 @@ export class TeacherWrapperService {
     }
 
     // updateTeacherProfile(updatedProfile: TeacherProfileUpdate) {
-    //     return this.teacherService.teacherprofilePut(updatedProfile);
+    //     return this.teacherService.te(updatedProfile);
     // }
 }

@@ -25,7 +25,8 @@ export class AddressCard {
     editMode = model(true);
     address = model.required<AddressDetails>();
     showDeleteConfirm = signal(false);
-    teacher = this.teacherWrapperService.teacherProfile;
+    user = this.teacherWrapperService.teacher;
+    teacher = computed(() => this.teacherWrapperService.teacher());
     addressTypePipe = inject(AddressTypePipe);
 
     iconclass = computed(() => {

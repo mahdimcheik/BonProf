@@ -1,5 +1,6 @@
 // import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 // import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
+import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
@@ -47,11 +48,11 @@ export const appRoutes: Routes = [
                     {
                         path: 'profile/:id',
                         component: ProfilePage
+                    },
+                    {
+                        path: 'profile/:id/edition',
+                        component: ProfileEditionPage
                     }
-                    // {
-                    //     path: 'profile/:id/edition',
-                    //     component: ProfileEditionPage
-                    // }
                 ]
             }
         ]
