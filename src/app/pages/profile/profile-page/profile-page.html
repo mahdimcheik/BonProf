@@ -1,6 +1,6 @@
-<!-- <div class="max-w-[1280px] mx-auto p-4 md:p-6">
-    @if( teacherprofile() ) {
-    <bp-profile-infos [teacher]="teacherprofile()!"></bp-profile-infos>
+<div class="max-w-[1280px] mx-auto p-4 md:p-6">
+    @if( user() ) {
+    <bp-profile-infos [user]="user()!"></bp-profile-infos>
     }
 
     <p-divider class="my-6"></p-divider>
@@ -11,13 +11,13 @@
 
     <p-card class="my-4">
         <bp-address [address]="mainAddress()!"></bp-address>
-        <bp-map-basic [mainAddress]="mainAddress()!" [user]="teacherprofile()!.user"></bp-map-basic>
+        <bp-map-basic [mainAddress]="mainAddress()!" [user]="user()!"></bp-map-basic>
     </p-card>
     }
 
     <p-divider class="my-6"></p-divider>
 
-    @if( teacherprofile() ) {
-    <bp-contact-form [teacherprofile]="teacherprofile()!"></bp-contact-form>
+    @if( user() ) {
+    <bp-contact-form [teacherprofile]="user()!"></bp-contact-form>
     }
-</div> -->
+</div>

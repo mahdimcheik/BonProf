@@ -12,13 +12,19 @@ import { Tag } from 'primeng/tag';
 })
 export class ProfileDescription {
     teacherWrapperService = inject(TeacherWrapperService);
-    teacher = this.teacherWrapperService.teacherProfile;
+    user = this.teacherWrapperService.teacher;
+    profile = computed(() => {
+        return this.user()?.profile;
+    });
+    teacher = computed(() => {
+        return this.user()?.teacher;
+    });
     sanitizer = inject(DomSanitizer);
     descriptionSafeHtml = computed<SafeHtml>(() => {
         const description = this.teacher()?.description || 'Pas de description fournie';
         return this.sanitizer.bypassSecurityTrustHtml(description.replace(/\n/g, '<br>'));
     });
     languages = computed(() => {
-        return this.teacher()?.languages || [];
+        return this.profile()?.languages || [];
     });
 }

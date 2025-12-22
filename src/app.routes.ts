@@ -1,5 +1,6 @@
 // import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 // import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
+import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
 import { Landing } from '@/site/landing/landing';
@@ -43,10 +44,10 @@ export const appRoutes: Routes = [
             {
                 path: 'teacher',
                 children: [
-                    // {
-                    //     path: 'profile/:id',
-                    //     component: ProfilePage
-                    // },
+                    {
+                        path: 'profile/:id',
+                        component: ProfilePage
+                    }
                     // {
                     //     path: 'profile/:id/edition',
                     //     component: ProfileEditionPage

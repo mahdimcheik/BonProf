@@ -27,9 +27,9 @@
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
-                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
+                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes cours</p>
                     </div>
-                    @let cursuses = teacher()?.cursuses || []; @if(cursuses.length > 0) {
+                    <!-- @let cursuses = teacher()?.cursuses || []; @if(cursuses.length > 0) {
                     <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
                         @for(cursus of cursuses; track cursus.id) {
                         <li>
@@ -37,10 +37,10 @@
                         </li>
 
                         }
-                    </ul>
-                    } @else {
+                    </ul> -->
+                    <!-- } @else {
                     <div class="text-surface-600 dark:text-surface-400 text-sm italic">Aucun cours renseigné.</div>
-                    }
+                    } -->
                 </div>
             </p-card>
 
