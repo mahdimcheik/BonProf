@@ -301,6 +301,13 @@ export interface GenderDetails {
     readonly icon?: string | null;
 }
 
+export interface GenderDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<GenderDetails>;
+    count?: number | null;
+}
+
 export interface GuidIdentityUserRole {
     userId?: string;
     roleId?: string;
@@ -555,6 +562,9 @@ export interface ProfileDetails {
     dateOfBirth: Date;
     imgUrl?: string | null;
     gender: GenderDetails;
+    formations?: Array<FormationDetails>;
+    addresses?: Array<AddressDetails>;
+    languages?: Array<LanguageDetails>;
 }
 
 export interface Reservation {
@@ -582,6 +592,13 @@ export interface RoleDetails {
     color: string | null;
     createdAt?: Date;
     updatedAt?: Date | null;
+}
+
+export interface RoleDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<RoleDetails>;
+    count?: number | null;
 }
 
 export interface Slot {
@@ -681,6 +698,13 @@ export interface Student {
     orders?: Array<Order>;
 }
 
+export interface StudentDetails {
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    id: string;
+}
+
 export interface Teacher {
     id?: string;
     createdAt: Date;
@@ -704,12 +728,8 @@ export interface TeacherDetails {
     id: string;
     title?: string | null;
     description?: string | null;
-    userId: string;
-    user: UserDetails;
-    formations?: Array<FormationDetails>;
     createdAt: Date;
     updatedAt?: Date | null;
-    languages?: Array<LanguageDetails>;
     cursuses?: Array<CursusDetails>;
     linkedIn?: string | null;
     faceBook?: string | null;
@@ -847,6 +867,8 @@ export interface UserDetails {
     status?: StatusAccountDetails;
     roles: Array<RoleDetails>;
     profile: ProfileDetails;
+    teacher?: TeacherDetails;
+    student?: StudentDetails;
 }
 
 export interface UserDetailsResponse {
