@@ -567,6 +567,13 @@ export interface ProfileDetails {
     languages?: Array<LanguageDetails>;
 }
 
+export interface ProfileUpdate {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    genderId: string;
+}
+
 export interface Reservation {
     id?: string;
     createdAt: Date;
@@ -750,6 +757,18 @@ export interface TeacherDetailsResponse {
     status: number;
     data?: TeacherDetails;
     count?: number | null;
+}
+
+export interface TeacherUpdate {
+    title?: string | null;
+    description?: string | null;
+    profile?: ProfileUpdate;
+    languageIds?: Array<string>;
+    linkedIn?: string | null;
+    faceBook?: string | null;
+    gitHub?: string | null;
+    twitter?: string | null;
+    priceIndicative?: number;
 }
 
 export interface TypeAddress {

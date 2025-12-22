@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
-import { LanguagesService, TeachersService, UserDetails } from 'src/client';
+import { LanguagesService, TeachersService, TeacherUpdate, UserDetails } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ export class TeacherWrapperService {
         );
     }
 
-    // updateTeacherProfile(updatedProfile: TeacherProfileUpdate) {
-    //     return this.teacherService.te(updatedProfile);
-    // }
+    updateTeacherProfile(updatedProfile: TeacherUpdate) {
+        return this.teacherService.teachersUpdateProfilePut(updatedProfile);
+    }
 }
