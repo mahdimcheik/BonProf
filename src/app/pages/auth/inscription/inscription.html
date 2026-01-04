@@ -1,6 +1,6 @@
 <div class="mt-12 flex flex-col items-center w-full">
     <bp-logo />
-    <bp-configurable-form [structure]="inscriptionFormStructure" #formComponent (onFormSubmit)="submit($event)" (onCancel)="router.navigate(['/auth/login'])" [verboseError]="false"> </bp-configurable-form>
+    <bp-configurable-form [structure]="inscriptionFormStructure()" #formComponent (onFormSubmit)="submit($event)" (onCancel)="router.navigate(['/auth/login'])" [verboseError]="false"> </bp-configurable-form>
     <div class="flex items-center justify-between mb-8 gap-8 mt-4">
         <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary" [routerLink]="'/auth/login'">Connexion</span>
         <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary" [routerLink]="'/auth/forgot-password'">Mot de passe oublié?</span>

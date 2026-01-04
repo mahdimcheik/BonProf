@@ -55,11 +55,12 @@ export class AddressesList {
     cancel() {
         this.showEditBox.set(false);
     }
+    async addNewAddress(event: any) {}
 
-    async addNewAddress(event: AddressCreate | AddressDetails) {
-        await firstValueFrom(this.addressWrapperService.addAddress(event as AddressCreate));
-        this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Adresse ajoutée avec succès' });
-        this.showEditBox.set(false);
-        await this.loadData();
-    }
+    // async addNewAddress(event: AddressCreate | AddressDetails) {
+    //     await firstValueFrom(this.addressWrapperService.addAddress(event as AddressCreate));
+    //     this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Adresse ajoutée avec succès' });
+    //     this.showEditBox.set(false);
+    //     await this.loadData();
+    // }
 }

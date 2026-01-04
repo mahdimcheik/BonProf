@@ -1,55 +1,48 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { LogoComponent } from '@/pages/components/logo/logo.component';
+import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
+import { RoleWrapperService } from '@/pages/shared/services/role-wrapper-service';
 import { ageValidator, passwordStrengthValidator, passwordValidator } from '@/pages/shared/validators/confirmPasswordValidator';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { UserCreate } from 'src/client';
+import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
     imports: [ConfigurableFormComponent, LogoComponent, RouterLink, ButtonModule],
     templateUrl: './inscription.html'
 })
-export class Inscription {
+export class Inscription implements OnInit {
     router = inject(Router);
+    genderWrapperService = inject(GenderWrapperService);
+    roleWrapperService = inject(RoleWrapperService);
     mainService = inject(MainService);
     messageService = inject(MessageService);
 
-    roleOptions = [
-        {
-            id: '87a0a5ed-c7bb-4394-a163-7ed7560b4a01',
-            name: 'Etudiant',
-            label: 'Etudiant'
-        },
-        {
-            id: '87a0a5ed-c7bb-4394-a163-7ed7560b3703',
-            name: 'Professeur',
-            label: 'Professeur'
+    roleOptions = signal<RoleDetails[]>([]);
+    authorizedRoles = computed(() => this.roleOptions().filter((role) => role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b4a01' || role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b3703')); // Example: filter for 'student' and 'teacher' roles
+    genderOptions = signal<GenderDetails[]>([]);
+
+    selectedGender = computed(() => {
+        if (this.genderOptions().length > 0) {
+            return this.genderOptions()[0];
         }
-    ];
-
-    genderOptions = [
-        {
-            id: '87a0a5ed-c7bb-4394-a163-7ed7560b4a01',
-            name: 'Homme',
-            label: 'Homme'
-        },
-        {
-            id: '87a0a5ed-c7bb-4394-a163-7ed7560b3703',
-            name: 'Femme',
-            label: 'Femme'
+        return null;
+    });
+    selectedRole = computed(() => {
+        if (this.authorizedRoles().length > 0) {
+            return this.authorizedRoles()[0];
         }
-    ];
+        return null;
+    });
 
-    selectedGender = signal(this.genderOptions[0]);
-
-    inscriptionFormStructure: Structure = {
+    inscriptionFormStructure = computed<Structure>(() => ({
         id: 'inscriptionForm',
         name: 'inscriptionForm',
         label: 'Inscription',
@@ -71,9 +64,9 @@ export class Inscription {
                         displayKey: 'name',
                         compareKey: 'id',
                         required: true,
-                        value: this.roleOptions[0].id,
+                        value: this.selectedRole()?.id,
                         placeholder: 'Choissir un rôle',
-                        options: this.roleOptions,
+                        options: this.authorizedRoles(),
                         fullWidth: true,
                         validation: [Validators.required]
                     },
@@ -134,13 +127,13 @@ export class Inscription {
                         validation: [Validators.required, ageValidator()]
                     },
                     {
-                        id: 'gender',
-                        name: 'gender',
+                        id: 'genderId',
+                        name: 'genderId',
                         label: 'Genre',
                         type: 'select',
                         placeholder: 'Genre',
                         required: true,
-                        options: this.genderOptions,
+                        options: this.genderOptions(),
                         value: this.selectedGender()?.id,
                         displayKey: 'name',
                         compareKey: 'id',
@@ -220,7 +213,17 @@ export class Inscription {
                 ]
             }
         ]
-    };
+    }));
+
+    ngOnInit(): void {
+        this.loadData();
+    }
+    async loadData() {
+        const genders = await firstValueFrom(this.genderWrapperService.getGenders());
+        this.genderOptions.set(genders ?? []);
+        const roles = await firstValueFrom(this.roleWrapperService.getRoles());
+        this.roleOptions.set(roles ?? []);
+    }
 
     async submit(event: FormGroup<any>) {
         const value = event.value;
