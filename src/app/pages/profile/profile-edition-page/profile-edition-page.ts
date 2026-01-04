@@ -20,7 +20,8 @@ export class ProfileEditionPage implements OnInit {
     tab: string = 'personnalInfos';
 
     ngOnInit() {
-        this.teacherWrapperService.getTeacherFullProfile().subscribe();
+        this.teacherWrapperService.getTeacherFullProfile();
+        // .subscribe();
         this.activatedRoute.queryParams.subscribe((params) => {
             const tabParam = params['tab'];
             if (tabParam) {

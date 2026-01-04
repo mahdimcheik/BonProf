@@ -40,7 +40,7 @@ export class AddressesList {
             this.addresses.set([]);
             return;
         }
-        const addressesData = await firstValueFrom(this.addressWrapperService.getAddressesByUser(this.mainService?.userConnected()?.id ?? ''));
+        const addressesData = await firstValueFrom(this.addressWrapperService.getAddresses());
         this.addresses.set(addressesData.data || []);
     }
 

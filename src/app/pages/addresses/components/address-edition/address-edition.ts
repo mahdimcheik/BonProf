@@ -2,6 +2,7 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { CityDetails } from '@/pages/shared/models/geolocalisation';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
@@ -22,6 +23,8 @@ export class AddressEdition implements OnInit {
     clickCancel = output<void>();
     address = model<AddressDetails | AddressCreate | undefined>(undefined);
     types = this.addressWrapperService.typeAddresses;
+    mainService = inject(MainService);
+    user = this.mainService.userConnected();
 
     // Cities for autocomplete
     cities = signal<CityDetails[]>([]);
@@ -69,7 +72,7 @@ export class AddressEdition implements OnInit {
             street: this.address()?.street || '',
             country: this.address()?.country || 'France',
             additionalInfo: this.address()?.additionalInfo || '',
-            userId: this.address()?.userId || '',
+            userId: this.user()?.id || '',
             typeId: this.address()?.typeId || '',
             latitude: city.geometry.coordinates[1],
             longitude: city.geometry.coordinates[0]

@@ -2,7 +2,7 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AddressDetails, AuthService, ForgotPassword, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecovery, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
+import { AddressDetails, AuthService, ForgotPassword, Login, LoginResponse, ObjectResponse, PasswordRecovery, PasswordResetResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -73,13 +73,13 @@ export class MainService {
      * @param userLoginDTO les données de connexion de l'utilisateur
      * @returns Un observable contenant la réponse de l'API
      */
-    login(userLoginDTO: UserLogin): Observable<LoginOutputResponse> {
+    login(userLoginDTO: UserLogin): Observable<LoginResponse> {
         return this.authService.authLoginPost(userLoginDTO).pipe(
             map((response) => {
                 return {
                     message: response.message ?? '',
                     status: response.status!,
-                    data: response.data as LoginOutput
+                    data: response.data as Login
                 };
             }),
             tap((res) => {
@@ -93,7 +93,7 @@ export class MainService {
      * Rafraîchit le token d'authentification.
      * @returns Un observable contenant la réponse de l'API
      */
-    refreshToken(): Observable<LoginOutputResponse> {
+    refreshToken(): Observable<LoginResponse> {
         return this.authService.authRefreshTokenGet().pipe(
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
@@ -106,7 +106,7 @@ export class MainService {
      * @param input les données pour réinitialiser le mot de passe (email)
      * @returns Un observable contenant la réponse de l'API
      */
-    forgotPassword(input: { email: string }): Observable<PasswordResetOutputResponse> {
+    forgotPassword(input: { email: string }): Observable<PasswordResetResponse> {
         const forgotPasswordInput: ForgotPassword = {
             email: input.email
         };

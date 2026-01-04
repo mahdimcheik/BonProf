@@ -15,7 +15,7 @@ export class ProfileDescription {
     teacher = this.teacherWrapperService.teacherProfile;
     sanitizer = inject(DomSanitizer);
     descriptionSafeHtml = computed<SafeHtml>(() => {
-        const description = this.teacher()?.description || 'Pas de description fournie';
+        const description = this.teacher()?.teacher?.description || 'Pas de description fournie';
         return this.sanitizer.bypassSecurityTrustHtml(description.replace(/\n/g, '<br>'));
     });
     languages = computed(() => {

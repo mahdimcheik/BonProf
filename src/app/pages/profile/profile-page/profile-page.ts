@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
-import { TeacherDetails } from 'src/client';
+import { TeacherDetails, UserDetails } from 'src/client';
 import { Address } from '../components/address/address';
 import { MapBasic } from '../components/address/map-basic';
 import { ProfileDescription } from '../components/profile-description/profile-description';
@@ -20,9 +20,9 @@ export class ProfilePage implements OnInit {
     teacherWrapperService = inject(TeacherWrapperService);
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
-    teacherprofile = signal<TeacherDetails | null>(null);
+    teacherprofile = signal<UserDetails | null>(null);
     mainAddress = computed(() => {
-        return this.teacherprofile()?.user.addresses[0] || null;
+        return this.teacherprofile()?.addresses[0] || null;
     });
 
     ngOnInit() {
@@ -33,11 +33,11 @@ export class ProfilePage implements OnInit {
     }
 
     async loadData(teacherId: string) {
-        if (teacherId === 'me') {
-            const teacherData = await firstValueFrom(this.teacherWrapperService.getTeacherFullProfile());
-            if (teacherData.data) {
-                this.teacherprofile.set(teacherData.data);
-            }
-        }
+        // if (teacherId === 'me') {
+        //     const teacherData = await firstValueFrom(this.teacherWrapperService.getTeacherFullProfile());
+        //     if (teacherData.data) {
+        //         this.teacherprofile.set(teacherData.data);
+        //     }
+        // }
     }
 }

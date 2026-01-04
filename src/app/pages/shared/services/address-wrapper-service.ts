@@ -27,11 +27,7 @@ export class AddressWrapperService {
     }
 
     getAddresses() {
-        return this.addressesService.addressesAllGet();
-    }
-
-    getAddressesByUser(userId: string) {
-        return this.addressesService.addressesUserIdGet(userId);
+        return this.addressesService.addressesGet();
     }
 
     updateAddress(address: AddressUpdate) {

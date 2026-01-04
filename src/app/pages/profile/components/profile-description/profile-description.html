@@ -29,7 +29,7 @@
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
                         <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
-                    @let cursuses = teacher()?.cursuses || []; @if(cursuses.length > 0) {
+                    @let cursuses = teacher()?.teacher?.cursuses || []; @if(cursuses.length > 0) {
                     <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
                         @for(cursus of cursuses; track cursus.id) {
                         <li>
@@ -51,21 +51,21 @@
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
                         <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
-                    @if(teacher()?.linkedIn || teacher()?.faceBook || teacher()?.twitter || teacher()?.gitHub) {
+                    @if(teacher()?.teacher?.linkedIn || teacher()?.teacher?.faceBook || teacher()?.teacher?.twitter || teacher()?.teacher?.gitHub) {
                     <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
-                        @if(teacher()?.linkedIn) {
+                        @if(teacher()?.teacher?.linkedIn) {
                         <li>
                             <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="LinkedIn" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.faceBook) {
+                        } @if(teacher()?.teacher?.faceBook) {
                         <li>
                             <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Facebook" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.twitter) {
+                        } @if(teacher()?.teacher?.twitter) {
                         <li>
                             <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Twitter" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.gitHub) {
+                        } @if(teacher()?.teacher?.gitHub) {
                         <li>
                             <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="GitHub" tooltipPosition="top" />
                         </li>
@@ -81,7 +81,7 @@
 
     <!-- Main Content -->
     <div class="flex-1">
-        <p-card styleClass="shadow-md h-full" [header]="teacher()?.title ?? 'Description'">
+        <p-card styleClass="shadow-md h-full" [header]="teacher()?.teacher?.title ?? 'Description'">
             <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
     </div>

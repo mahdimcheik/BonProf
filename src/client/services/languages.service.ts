@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, LanguageDetailsListResponse, LanguageDetailsResponse, LanguageCreate, LanguageUpdate, ObjectResponse, TeacherLanguageCreate } from "../models";
+import { RequestOptions, LanguageDetailsListResponse, LanguageCreate, LanguageDetailsResponse, LanguageUpdate, ObjectResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class LanguagesService {
@@ -41,27 +41,11 @@ export class LanguagesService {
         return this.httpClient.post(url, null, requestOptions);
     }
 
-    languagesIdGet(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<LanguageDetailsResponse>;
-    languagesIdGet(id: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LanguageDetailsResponse>>;
-    languagesIdGet(id: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LanguageDetailsResponse>>;
-    languagesIdGet(id: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/languages/${id}`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.get(url, requestOptions);
-    }
-
-    languagesUserTeacherIdGet(teacherId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<LanguageDetailsListResponse>;
-    languagesUserTeacherIdGet(teacherId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LanguageDetailsListResponse>>;
-    languagesUserTeacherIdGet(teacherId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LanguageDetailsListResponse>>;
-    languagesUserTeacherIdGet(teacherId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/languages/user/${teacherId}`;
+    languagesUserGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<LanguageDetailsListResponse>;
+    languagesUserGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LanguageDetailsListResponse>>;
+    languagesUserGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LanguageDetailsListResponse>>;
+    languagesUserGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/languages/user`;
 
         const requestOptions: any = {
             observe: observe as any,
@@ -121,22 +105,6 @@ export class LanguagesService {
         return this.httpClient.delete(url, requestOptions);
     }
 
-    languagesTeacherAddPost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
-    languagesTeacherAddPost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
-    languagesTeacherAddPost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
-    languagesTeacherAddPost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/languages/teacher/add`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.post(url, teacherLanguageCreate, requestOptions);
-    }
-
     languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
     languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
     languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
@@ -151,21 +119,5 @@ export class LanguagesService {
         };
 
         return this.httpClient.post(url, requestBody, requestOptions);
-    }
-
-    languagesUserRemovePost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
-    languagesUserRemovePost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
-    languagesUserRemovePost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
-    languagesUserRemovePost(teacherLanguageCreate?: TeacherLanguageCreate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/languages/user/remove`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.post(url, teacherLanguageCreate, requestOptions);
     }
 }
