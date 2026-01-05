@@ -3,3 +3,14 @@
 @use './layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
+
+.e-schedule,
+.e-schedule .e-content-wrap {
+    background-color: #1e1e1e !important;
+    color: #fff !important;
+}
+
+.app-dark.e-appointment {
+    background-color: #333 !important;
+    border-color: #444 !important;
+}
