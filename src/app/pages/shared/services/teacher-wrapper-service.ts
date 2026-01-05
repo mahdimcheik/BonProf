@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
-import { LanguagesService, TeacherDetails, TeachersService, TeacherUpdate, UserDetails } from 'src/client';
+import { LanguagesService, TeacherDetails, TeachersService, TeacherUpdate, UserDetails, UserUpdate } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -11,16 +11,16 @@ export class TeacherWrapperService {
     teacherProfile = signal<UserDetails | null>(null);
 
     getTeacherFullProfile() {
-        // return this.teacherService.teachersMyProfileGet().pipe(
-        //     tap((response) => {
-        //         if (response.data) {
-        //             this.teacherProfile.set(response.data.teacher ?? null);
-        //         }
-        //     })
-        // );
+        return this.teacherService.teachersMyProfileGet().pipe(
+            tap((response) => {
+                if (response.data) {
+                    this.teacherProfile.set(response.data ?? null);
+                }
+            })
+        );
     }
 
-    updateTeacherProfile(updatedProfile: TeacherUpdate) {
+    updateTeacherProfile(updatedProfile: UserUpdate) {
         return this.teacherService.teachersUpdateProfilePut(updatedProfile);
     }
 }

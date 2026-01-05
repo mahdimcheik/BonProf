@@ -33,11 +33,11 @@ export class ProfilePage implements OnInit {
     }
 
     async loadData(teacherId: string) {
-        // if (teacherId === 'me') {
-        //     const teacherData = await firstValueFrom(this.teacherWrapperService.getTeacherFullProfile());
-        //     if (teacherData.data) {
-        //         this.teacherprofile.set(teacherData.data);
-        //     }
-        // }
+        if (teacherId === 'me') {
+            const teacherData = await firstValueFrom(this.teacherWrapperService.getTeacherFullProfile());
+            if (teacherData.data) {
+                this.teacherprofile.set(teacherData.data);
+            }
+        }
     }
 }

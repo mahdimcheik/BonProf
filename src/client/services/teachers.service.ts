@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, TeacherDetailsListResponse, UserDetailsResponse, TeacherDetailsResponse, TeacherUpdate } from "../models";
+import { RequestOptions, TeacherDetailsListResponse, UserDetailsResponse, TeacherDetailsResponse, UserUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeachersService {
@@ -73,10 +73,10 @@ export class TeachersService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    teachersUpdateProfilePut(teacherUpdate?: TeacherUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
-    teachersUpdateProfilePut(teacherUpdate?: TeacherUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
-    teachersUpdateProfilePut(teacherUpdate?: TeacherUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
-    teachersUpdateProfilePut(teacherUpdate?: TeacherUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    teachersUpdateProfilePut(userUpdate?: UserUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
+    teachersUpdateProfilePut(userUpdate?: UserUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
+    teachersUpdateProfilePut(userUpdate?: UserUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
+    teachersUpdateProfilePut(userUpdate?: UserUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teachers/update-profile`;
 
         const requestOptions: any = {
@@ -86,6 +86,6 @@ export class TeachersService {
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.put(url, teacherUpdate, requestOptions);
+        return this.httpClient.put(url, userUpdate, requestOptions);
     }
 }

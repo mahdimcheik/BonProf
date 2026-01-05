@@ -45,7 +45,7 @@ export class Inscription implements OnInit {
 
     inscriptionFormStructure = computed<Structure>(() => {
         const roleId = this.selectedUserType();
-        if (roleId == '87a0a5ed-c7bb-4394-a163-7ed7560b3703') {
+        if (roleId == '87a0a5ed-c7bb-4394-a163-7ed7560b4a01') {
             return {
                 id: 'inscriptionForm',
                 name: 'inscriptionForm',
@@ -348,6 +348,7 @@ export class Inscription implements OnInit {
         const userCreationData: UserCreate = {
             ...value.inscriptionForm,
             ...value.privacy,
+            roleId: this.selectedUserType(),
             teacher: {
                 ...value.optionalFields
             }

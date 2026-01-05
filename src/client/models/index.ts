@@ -724,11 +724,6 @@ export interface TeacherDetailsResponse {
 export interface TeacherUpdate {
     title?: string | null;
     description?: string | null;
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    genderId: string;
-    languageIds?: Array<string>;
     linkedIn?: string | null;
     faceBook?: string | null;
     gitHub?: string | null;
@@ -895,6 +890,15 @@ export interface UserInfosWithtokenResponse {
 export interface UserLogin {
     email: string;
     password: string;
+}
+
+export interface UserUpdate {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    genderId: string;
+    languagesIds?: Array<string>;
+    teacher?: TeacherUpdate;
 }
 
 /** Request Options for Angular HttpClient requests */

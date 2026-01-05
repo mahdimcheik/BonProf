@@ -7,7 +7,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { LanguageDetails, TeacherUpdate } from 'src/client';
+import { LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -171,20 +171,23 @@ export class PersonnalInfosEdition implements OnInit {
     async submit(event: FormGroup<any>) {
         console.log(event.value);
         const teacher = event.value;
-        const updatedTeacher: TeacherUpdate = {
+        const updatedTeacher: UserUpdate = {
             ...this.teacherProfile(),
-            title: teacher.optionalFields.title,
-            description: teacher.optionalFields.description,
-            linkedIn: teacher.socialLinks.linkedIn,
-            faceBook: teacher.socialLinks.faceBook,
-            gitHub: teacher.socialLinks.gitHub,
-            twitter: teacher.socialLinks.twitter,
-            priceIndicative: teacher.optionalFields.priceIndicative,
-            genderId: this.teacherProfile()?.gender?.id || '',
-
             firstName: teacher.personnalInfos.firstName,
             lastName: teacher.personnalInfos.lastName,
-            dateOfBirth: teacher.personnalInfos.dateOfBirth
+            dateOfBirth: teacher.personnalInfos.dateOfBirth,
+            genderId: this.teacherProfile()?.gender?.id || '',
+            languagesIds: teacher.optionalFields.languagesIds,
+            teacher: {
+                ...this.teacherProfile()?.teacher,
+                gitHub: teacher.socialLinks.gitHub,
+                twitter: teacher.socialLinks.twitter,
+                linkedIn: teacher.socialLinks.linkedIn,
+                faceBook: teacher.socialLinks.faceBook,
+                title: teacher.optionalFields.title,
+                description: teacher.optionalFields.description,
+                priceIndicative: teacher.optionalFields.priceIndicative
+            }
         };
         await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
         await this.router.navigate(['dashboard/teacher/profile/me']);
