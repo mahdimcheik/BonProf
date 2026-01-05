@@ -676,16 +676,21 @@ export interface Teacher {
     archivedAt?: Date | null;
     title?: string | null;
     description?: string | null;
-    userId?: string;
-    user?: UserApp;
+    userId: string;
+    user: UserApp;
     linkedIn?: string | null;
     faceBook?: string | null;
     gitHub?: string | null;
     twitter?: string | null;
-    priceIndicative?: number;
+    priceIndicative: number;
     cursuses?: Array<Cursus>;
     experiences?: Array<Experience>;
     slots?: Array<Slot>;
+}
+
+export interface TeacherCreate {
+    title?: string | null;
+    description?: string | null;
 }
 
 export interface TeacherDetails {
@@ -817,6 +822,10 @@ export interface UserApp {
     lockoutEnd?: Date | null;
     lockoutEnabled?: boolean;
     accessFailedCount?: number;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    imgUrl?: string | null;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
     updatedAt?: Date | null;
@@ -824,30 +833,27 @@ export interface UserApp {
     createdAt: Date;
     statusId: string;
     status?: StatusAccount;
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    imgUrl?: string | null;
-    addresses?: Array<Address>;
-    formations?: Array<Formation>;
-    languages?: Array<Language>;
     genderId: string;
     gender?: Gender;
     teacher?: Teacher;
     student?: Student;
     userRoles?: Array<GuidIdentityUserRole>;
+    addresses?: Array<Address>;
+    formations?: Array<Formation>;
+    languages?: Array<Language>;
 }
 
 export interface UserCreate {
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
     roleId: string;
-    firstName: string;
-    lastName: string;
     dateOfBirth: Date;
     genderId: string;
+    teacher?: TeacherCreate;
 }
 
 export interface UserDetails {
@@ -889,10 +895,6 @@ export interface UserInfosWithtokenResponse {
 export interface UserLogin {
     email: string;
     password: string;
-}
-
-export interface UserUpdate {
-    [key: string]: never;
 }
 
 /** Request Options for Angular HttpClient requests */

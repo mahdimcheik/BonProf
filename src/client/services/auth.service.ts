@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { UserCreate, RequestOptions, UserDetailsResponse, UserUpdate, UserLogin, LoginResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
+import { UserCreate, RequestOptions, UserDetailsResponse, UserLogin, LoginResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -39,22 +39,6 @@ export class AuthService {
         };
 
         return this.httpClient.post(url, userCreate, requestOptions);
-    }
-
-    authUpdatePatch(userUpdate?: UserUpdate, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
-    authUpdatePatch(userUpdate?: UserUpdate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
-    authUpdatePatch(userUpdate?: UserUpdate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
-    authUpdatePatch(userUpdate?: UserUpdate, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/auth/update`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.patch(url, userUpdate, requestOptions);
     }
 
     authLoginPost(userLogin?: UserLogin, observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginResponse>;
@@ -106,28 +90,6 @@ export class AuthService {
 
         const requestOptions: any = {
             observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.get(url, requestOptions);
-    }
-
-    authPublicInformationsGet(userId?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
-    authPublicInformationsGet(userId?: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
-    authPublicInformationsGet(userId?: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
-    authPublicInformationsGet(userId?: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/auth/public-informations`;
-
-        let params = new HttpParams();
-        if (userId != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, userId, 'userId');
-        }
-
-        const requestOptions: any = {
-            observe: observe as any,
-            params,
             reportProgress: options?.reportProgress,
             withCredentials: options?.withCredentials,
             context: this.createContextWithClientId(options?.context)

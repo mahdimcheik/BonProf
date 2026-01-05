@@ -1,5 +1,38 @@
 <div class="mt-12 flex flex-col items-center w-full">
     <bp-logo />
+    <div class="card">
+        <h2 class="text-2xl font-bold text-center mb-4">Je suis</h2>
+        <div class="flex flex-col lg:flex-row gap-4 justify-center">
+            <div
+                class="cursor-pointer border-2 rounded-lg p-4 transition-all hover:shadow-lg"
+                [class.border-primary]="selectedUserType() === '87a0a5ed-c7bb-4394-a163-7ed7560b3703'"
+                [class.border-gray-300]="selectedUserType() !== '87a0a5ed-c7bb-4394-a163-7ed7560b3703'"
+                (click)="selectRole('87a0a5ed-c7bb-4394-a163-7ed7560b3703')"
+            >
+                <div class="w-full flex flex-col items-center gap-2">
+                    <img src="assets/student.svg" alt="logo étudiant" class="w-[200px] h-[200px]" />
+                    <div class="text-center font-bold text-lg">Étudiant</div>
+                    <p class="text-center text-sm text-gray-600 w-[250px]">Inscrivez-vous pour accéder à des ressources éducatives</p>
+                    <!-- <p-radioButton name="role" value="student" [(ngModel)]="selectedUserType" inputId="student" /> -->
+                </div>
+            </div>
+
+            <div
+                class="cursor-pointer border-2 rounded-lg p-4 transition-all hover:shadow-lg"
+                [class.border-primary]="selectedUserType() === '87a0a5ed-c7bb-4394-a163-7ed7560b4a01'"
+                [class.border-gray-300]="selectedUserType() !== '87a0a5ed-c7bb-4394-a163-7ed7560b4a01'"
+                (click)="selectRole('87a0a5ed-c7bb-4394-a163-7ed7560b4a01')"
+            >
+                <div class="w-full flex flex-col items-center gap-2">
+                    <img src="assets/teacher.svg" alt="logo professeur" class="w-[200px] h-[200px]" />
+                    <div class="text-center font-bold text-lg">Professeur</div>
+                    <p class="text-center text-sm text-gray-600 w-[250px]">Inscrivez-vous pour gérer vos cours</p>
+                    <!-- <p-radioButton name="role" value="teacher" [(ngModel)]="selectedUserType" inputId="teacher" /> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <bp-configurable-form [structure]="inscriptionFormStructure()" #formComponent (onFormSubmit)="submit($event)" (onCancel)="router.navigate(['/auth/login'])" [verboseError]="false"> </bp-configurable-form>
     <div class="flex items-center justify-between mb-8 gap-8 mt-4">
         <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary" [routerLink]="'/auth/login'">Connexion</span>
