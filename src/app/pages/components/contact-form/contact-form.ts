@@ -61,8 +61,7 @@ export class ContactForm {
                         type: 'texteditor',
                         label: 'Message',
                         required: true,
-                        placeholder: 'Votre message',
-                        value: 'Initial value',
+                        value: "Bonjour, <br/>je souhaite vous contacter concernant vos services d'enseignement.",
                         fullWidth: true,
                         validation: [Validators.required]
                     }

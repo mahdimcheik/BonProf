@@ -4,10 +4,11 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'bp-profile-description',
-    imports: [Card, Button, Tag],
+    imports: [Card, Button, Tooltip],
     templateUrl: './profile-description.html'
 })
 export class ProfileDescription {
