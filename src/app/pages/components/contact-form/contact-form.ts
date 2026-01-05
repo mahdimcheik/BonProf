@@ -23,7 +23,7 @@ export class ContactForm {
         styleClass: 'w-full !p-0',
         hideCancelButton: true,
         hideSubmitButton: true,
-        formFieldGroups: [
+        sections: [
             {
                 id: 'contactForm',
                 name: 'contactForm',

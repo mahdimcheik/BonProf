@@ -33,7 +33,7 @@ export class Login {
         hideCancelButton: true,
 
         styleClass: 'md:min-w-[40rem] min-w-[90vw] !p-0',
-        formFieldGroups: [
+        sections: [
             {
                 id: 'login',
                 name: 'login',

@@ -38,7 +38,7 @@ export class AddressEdition implements OnInit {
             label: 'Address',
 
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'informations',
                     name: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',

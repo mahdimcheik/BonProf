@@ -15,7 +15,7 @@ import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
-    imports: [ConfigurableFormComponent, LogoComponent, RouterLink, ButtonModule, FormsModule],
+    imports: [ConfigurableFormComponent, RouterLink, ButtonModule, FormsModule],
     templateUrl: './inscription.html'
 })
 export class Inscription implements OnInit {
@@ -54,7 +54,7 @@ export class Inscription implements OnInit {
                 styleClass: 'max-w-[40rem] ',
                 hideCancelButton: true,
                 hideSubmitButton: true,
-                formFieldGroups: [
+                sections: [
                     {
                         id: 'inscriptionForm',
                         name: 'inscriptionForm',
@@ -183,7 +183,7 @@ export class Inscription implements OnInit {
             styleClass: 'max-w-[40rem] ',
             hideCancelButton: true,
             hideSubmitButton: true,
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'inscriptionForm',
                     name: 'inscriptionForm',

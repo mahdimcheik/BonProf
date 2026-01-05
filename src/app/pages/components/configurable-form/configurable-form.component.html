@@ -116,11 +116,20 @@
                                                 [formControlName]="element.name"
                                                 class="w-full configurable-form-input configurable-form-date-input"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                             />
                                         }
 
                                         @if (element.type === 'color') {
-                                            <p-colorpicker [id]="element.id" [formControlName]="element.name" class="configurable-form-input configurable-form-color-input" [class.p-invalid]="isDirectFieldInvalid(element.name)" />
+                                            <p-colorpicker
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
+                                                [id]="element.id"
+                                                [formControlName]="element.name"
+                                                class="configurable-form-input configurable-form-color-input"
+                                                [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                            />
                                         }
 
                                         @if (element.type === 'textarea') {
@@ -416,12 +425,21 @@
                                                         [formControlName]="field.name"
                                                         class="w-full configurable-form-input configurable-form-date-input"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                     />
                                                 }
 
                                                 <!-- Color Input -->
                                                 @if (field.type === 'color') {
-                                                    <p-colorpicker [id]="field.id" [formControlName]="field.name" class="configurable-form-input configurable-form-color-input" [class.p-invalid]="isFieldInvalid(element.id, field.name)" />
+                                                    <p-colorpicker
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
+                                                        [id]="field.id"
+                                                        [formControlName]="field.name"
+                                                        class="configurable-form-input configurable-form-color-input"
+                                                        [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                    />
                                                 }
 
                                                 <!-- Textarea -->

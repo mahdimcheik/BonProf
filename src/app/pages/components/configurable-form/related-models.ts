@@ -40,7 +40,7 @@ export interface FormField<T> {
     asyncAction?: (query: any) => Promise<any>;
 }
 
-export interface FormFieldGroup {
+export interface FormSection {
     id: string;
     name: string;
     label?: string;
@@ -60,8 +60,8 @@ export interface Structure {
     description?: string;
     icon?: string;
     imgUrl?: string;
-    formFieldGroups?: FormFieldGroup[];
-    formFields?: FormField<any>[];
+    sections?: FormSection[];
+    fields?: FormField<any>[];
     globalValidators?: ValidatorFn[];
     styleClass?: string;
     submitButtonLabel?: string;
