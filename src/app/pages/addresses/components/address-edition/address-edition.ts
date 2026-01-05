@@ -23,8 +23,9 @@ export class AddressEdition implements OnInit {
     clickCancel = output<void>();
     address = model<AddressDetails | AddressCreate | undefined>(undefined);
     types = this.addressWrapperService.typeAddresses;
+
     mainService = inject(MainService);
-    user = this.mainService.userConnected();
+    user = this.mainService.userConnected;
 
     // Cities for autocomplete
     cities = signal<CityDetails[]>([]);
@@ -44,10 +45,10 @@ export class AddressEdition implements OnInit {
                     name: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
                     label: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
                     fields: [
-                        { id: 'typeId', label: "Type d'adresse", name: 'typeId', type: 'radio', required: false, value: address ? address.typeId : '', compareKey: 'id', options: this.types(), fullWidth: true, displayKey: 'name' },
+                        { id: 'typeId', label: "Type d'adresse", name: 'typeId', type: 'radio', required: true, value: address ? address.typeId : null, compareKey: 'id', options: this.types(), fullWidth: true, displayKey: 'name' },
                         { id: 'city', label: 'Ville', name: 'city', type: 'text', required: true, value: address ? address.city : '', placeholder: 'Ville' },
-                        { id: 'street', label: 'Rue', name: 'street', type: 'text', required: false, value: address ? address.street : '', placeholder: 'Rue' },
-                        { id: 'zipCode', label: 'Code Postal', name: 'zipCode', type: 'text', required: false, value: address ? address.zipCode : '', placeholder: 'Code Postal' },
+                        { id: 'street', label: 'Rue', name: 'street', type: 'text', required: true, value: address ? address.street : '', placeholder: 'Rue' },
+                        { id: 'zipCode', label: 'Code Postal', name: 'zipCode', type: 'text', required: true, value: address ? address.zipCode : '', placeholder: 'Code Postal' },
                         { id: 'additionalInfo', label: 'Informations supplémentaires', name: 'additionalInfo', type: 'text', required: false, value: address ? address.additionalInfo : '', placeholder: 'Informations supplémentaires' }
                     ]
                 }
@@ -56,8 +57,6 @@ export class AddressEdition implements OnInit {
     });
 
     ngOnInit(): void {
-        console.log('address', this.address());
-
         this.loadData();
     }
 
@@ -66,6 +65,19 @@ export class AddressEdition implements OnInit {
     }
 
     cityToAddress(city: CityDetails): AddressCreate {
+        var titi = this.user();
+        const toto = {
+            city: city.properties.city,
+            zipCode: city.properties.postcode,
+            street: this.address()?.street || '',
+            country: this.address()?.country || 'France',
+            additionalInfo: this.address()?.additionalInfo || '',
+            userId: this.user()?.id || '',
+            typeId: this.address()?.typeId || '',
+            latitude: city.geometry.coordinates[1],
+            longitude: city.geometry.coordinates[0]
+        };
+
         return {
             city: city.properties.city,
             zipCode: city.properties.postcode,
@@ -118,7 +130,10 @@ export class AddressEdition implements OnInit {
 
     onCitySelect(event: any) {
         if (event.value) {
-            this.address.set(this.cityToAddress(event.value));
+            const newAddress = this.cityToAddress(event.value);
+            this.address.set(newAddress);
+            //
+            // this.address.set(this.cityToAddress(event.value));
         }
     }
 }
