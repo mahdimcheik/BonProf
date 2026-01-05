@@ -10,10 +10,11 @@ import { Address } from '../components/address/address';
 import { MapBasic } from '../components/address/map-basic';
 import { ProfileDescription } from '../components/profile-description/profile-description';
 import { ProfileInfos } from '../components/profile-infos/profile-infos';
+import { CursusesList } from '../components/cursuses-list/cursuses-list';
 
 @Component({
     selector: 'bp-profile-page',
-    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card],
+    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card, CursusesList],
     templateUrl: './profile-page.html'
 })
 export class ProfilePage implements OnInit {

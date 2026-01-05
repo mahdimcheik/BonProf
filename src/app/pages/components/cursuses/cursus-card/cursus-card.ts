@@ -20,6 +20,7 @@ export class CursusCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
+    showActions = model(true);
     cursus = model.required<CursusDetails>();
     showEditModal = signal(false);
     showDeleteConfirm = signal(false);

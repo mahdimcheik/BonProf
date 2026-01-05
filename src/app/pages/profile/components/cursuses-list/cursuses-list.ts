@@ -22,9 +22,10 @@ export class CursusesList {
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
 
-    title = 'Liste des Formations';
+    title = 'Liste des cours';
 
     editMode = model(true);
+    showActions = model(true);
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 

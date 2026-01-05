@@ -3,11 +3,9 @@
         @if (showEditBox()) {
         <div class="mt-4">
             <bp-cursus-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewCursus($event)"></bp-cursus-edition>
-            <!-- <bp-formations-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewFormation($event)" (clickCancel)="hideAddFormationBox()"></bp-formations-edition> -->
         </div>
         } @for (cursus of cursuses(); track cursus.id) {
-        <!-- <bp-cursus-card [cursus]="cursus" [editMode]="false" (needRefresh)="loadData()"></bp-cursus-card> -->
-        <bp-cursus-card [cursus]="cursus" [editMode]="false" (needRefresh)="loadData()"></bp-cursus-card>
+        <bp-cursus-card [cursus]="cursus" [editMode]="false" (needRefresh)="loadData()" [showActions]="showActions()"></bp-cursus-card>
         }@empty {
         <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
             <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
