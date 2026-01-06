@@ -51,7 +51,7 @@ export class MainService {
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         return [
             { label: 'Accueil', routerLink: '/' },
-            { label: 'Profil', routerLink: '/profile' },
+            { label: 'Dashboard', routerLink: '/dashboard' },
             { label: 'Mentions Légales', routerLink: '/mentions-legales' }
         ] as MenuItem[];
     });
@@ -62,9 +62,36 @@ export class MainService {
             return [{ label: 'Deconnexion', command: () => this.logout().subscribe() }];
         }
         return [
-            { label: 'Connexion', routerLink: '/auth/login' },
-            { label: 'Inscription', routerLink: '/auth/register' }
+            {
+                label: 'Home',
+                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+            },
+            {
+                label: 'UI Components',
+                items: [
+                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
+                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
+                ]
+            }
         ] as MenuItem[];
+    });
+
+    sidebarMenuItems = linkedSignal<MenuItem[]>(() => {
+        const user = this.userConnected();
+        const items: MenuItem[] = [
+            {
+                label: 'Home',
+                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+            },
+            {
+                label: 'UI Components',
+                items: [
+                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
+                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
+                ]
+            }
+        ];
+        return items;
     });
 
     /**

@@ -1,5 +1,6 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, inject } from '@angular/core';
 import { AppMenu } from './app.menu';
+import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'app-sidebar',
