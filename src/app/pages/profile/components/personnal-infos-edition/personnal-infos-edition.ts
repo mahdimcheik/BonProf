@@ -1,5 +1,6 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
@@ -8,7 +9,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
+import { GenderDetails, LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -19,9 +20,12 @@ export class PersonnalInfosEdition implements OnInit {
     teacherWarapperService = inject(TeacherWrapperService);
     mainService = inject(MainService);
     languagesWrapperService = inject(LanguagesWrapperService);
+    gendersWrapperService = inject(GenderWrapperService);
     router = inject(Router);
+
     teacherProfile = this.mainService.userConnected;
     languagesList = signal<LanguageDetails[]>([]);
+    genderOptions = signal<GenderDetails[]>([]);
 
     personnalInfosStructure = computed<Structure>(() => {
         const teacher = this.teacherProfile();
@@ -68,6 +72,17 @@ export class PersonnalInfosEdition implements OnInit {
                             required: true,
                             placeholder: 'Date de naissance',
                             validation: [Validators.required, ageValidator()]
+                        },
+                        {
+                            id: 'genderId',
+                            label: 'Genre',
+                            name: 'genderId',
+                            type: 'select',
+                            compareKey: 'id',
+                            displayKey: 'name',
+                            value: teacher?.gender?.id || null,
+                            fullWidth: true,
+                            options: this.genderOptions()
                         }
                     ]
                 },
@@ -178,7 +193,7 @@ export class PersonnalInfosEdition implements OnInit {
             firstName: teacher.personnalInfos.firstName,
             lastName: teacher.personnalInfos.lastName,
             dateOfBirth: teacher.personnalInfos.dateOfBirth,
-            genderId: this.teacherProfile()?.gender?.id || '',
+            genderId: teacher.personnalInfos.genderId,
             languagesIds: teacher.optionalFields.languagesIds,
             teacher: {
                 ...this.teacherProfile()?.teacher,
@@ -200,7 +215,8 @@ export class PersonnalInfosEdition implements OnInit {
     }
     async loadData() {
         const languagesData = await firstValueFrom(this.languagesWrapperService.getAvailableLanguages());
-        const toto = this.teacherProfile();
         this.languagesList.set(languagesData);
+        const gendersData = await firstValueFrom(this.gendersWrapperService.getGenders());
+        this.genderOptions.set(gendersData ?? []);
     }
 }
