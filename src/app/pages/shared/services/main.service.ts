@@ -81,15 +81,15 @@ export class MainService {
         const items: MenuItem[] = [
             {
                 label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                root: true
             },
+            { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
             {
                 label: 'UI Components',
-                items: [
-                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
-                ]
-            }
+                root: true
+            },
+            { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
+            { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
         ];
         return items;
     });
