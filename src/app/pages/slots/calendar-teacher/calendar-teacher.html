@@ -18,6 +18,9 @@
     (popupOpen)="onPopupOpen($event)"
     (eventClick)="clickEvent($event)"
     (eventRendered)="applyBgColor($event)"
+    (dataBound)="onDataBound($event)"
+    (navigating)="onNavigating($event)"
+    (actionComplete)="onActionComplete($event)"
 >
     <ng-template #eventSettingsTemplate let-data>
         @let slot = data.ExtendedProps?.['slot'];

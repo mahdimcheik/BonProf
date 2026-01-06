@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, SlotDetailsListResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -73,29 +73,20 @@ export class SlotsService {
         return this.httpClient.delete(url, requestOptions);
     }
 
-    slotsTeacherMySlotsGet(dateFrom?: Date, dateTo?: Date, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
-    slotsTeacherMySlotsGet(dateFrom?: Date, dateTo?: Date, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
-    slotsTeacherMySlotsGet(dateFrom?: Date, dateTo?: Date, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
-    slotsTeacherMySlotsGet(dateFrom?: Date, dateTo?: Date, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    slotsTeacherMySlotsPost(periodTime?: PeriodTime, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
+    slotsTeacherMySlotsPost(periodTime?: PeriodTime, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
+    slotsTeacherMySlotsPost(periodTime?: PeriodTime, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
+    slotsTeacherMySlotsPost(periodTime?: PeriodTime, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/slots/teacher/my-slots`;
-
-        let params = new HttpParams();
-        if (dateFrom != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, dateFrom, 'dateFrom');
-        }
-        if (dateTo != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, dateTo, 'dateTo');
-        }
 
         const requestOptions: any = {
             observe: observe as any,
-            params,
             reportProgress: options?.reportProgress,
             withCredentials: options?.withCredentials,
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.get(url, requestOptions);
+        return this.httpClient.post(url, periodTime, requestOptions);
     }
 
     slotsTeacherTeacherIdAvailableSlotsGet(teacherId: string, dateFrom?: Date, dateTo?: Date, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;

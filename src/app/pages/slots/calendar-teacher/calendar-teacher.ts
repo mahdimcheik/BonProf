@@ -3,12 +3,14 @@ import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import {
+    ActionEventArgs,
     CellClickEventArgs,
     DayService,
     DragAndDropService,
     EventClickArgs,
     EventRenderedArgs,
     MonthService,
+    NavigatingEventArgs,
     PopupOpenEventArgs,
     ResizeService,
     ScheduleComponent,
@@ -36,6 +38,8 @@ export class CalendarTeacher implements OnInit {
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
+    private isLoading = false;
+    private isInitialized = false;
     // Locale
     public locale = 'fr';
 
@@ -65,13 +69,62 @@ export class CalendarTeacher implements OnInit {
         slotCount: 2
     };
     ngOnInit(): void {
-        this.loadData();
+        // Initial load will be triggered after scheduler is rendered
     }
 
-    async loadData() {
-        const events = await firstValueFrom(this.slotWrapperService.getSlotsByTeacher(new Date(2025, 11, 1), new Date(2025, 11, 30)));
-        this.events.set(events?.map((e) => this.slotToEvent(e)) ?? []);
-        console.log(this.events());
+    async loadData(startTime: Date, endTime: Date) {
+        if (this.isLoading) return;
+
+        this.isLoading = true;
+        try {
+            const events = await firstValueFrom(this.slotWrapperService.getSlotsByTeacher(startTime, endTime));
+            this.events.set(events?.map((e) => this.slotToEvent(e)) ?? []);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+    // Called when scheduler is rendered or view changes
+    onDataBound(args: any): void {
+        // Only load data on first render
+        if (!this.isInitialized) {
+            this.isInitialized = true;
+            const schedule = this.scheduleRef();
+            if (schedule) {
+                const activeView = schedule.activeView;
+                const startDate = activeView.startDate();
+                const endDate = activeView.endDate();
+                this.loadData(startDate, endDate);
+            }
+        }
+    }
+
+    // Called when navigating to different dates - let onActionComplete handle the loading
+    onNavigating(args: NavigatingEventArgs): void {
+        // This event fires before navigation completes
+        // We'll let onActionComplete handle the actual data loading
+    }
+
+    // Called when action is completed (including view changes)
+    onActionComplete(args: ActionEventArgs): void {
+        if (args.requestType === 'viewNavigate' || args.requestType === 'dateNavigate') {
+            const schedule = this.scheduleRef();
+            if (schedule) {
+                const activeView = schedule.activeView;
+                const startDate = activeView.startDate();
+                const endDate = activeView.endDate();
+
+                this.loadData(startDate, endDate);
+            }
+        }
+    }
+
+    // Helper to get the start of the week (Sunday)
+    private getWeekStart(date: Date): Date {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day;
+        return new Date(d.setDate(diff));
     }
 
     // Method to control drag and drop permission
@@ -150,7 +203,7 @@ export class CalendarTeacher implements OnInit {
 
             try {
                 const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
-                await this.loadData();
+                await this.refreshCurrentView();
             } catch (ex) {
                 console.log('exception : ', ex);
             }
@@ -164,10 +217,21 @@ export class CalendarTeacher implements OnInit {
 
             try {
                 const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
-                await this.loadData();
+                await this.refreshCurrentView();
             } catch (ex) {
                 console.log('exception : ', ex);
             }
+        }
+    }
+
+    // Refresh data for the current view
+    private async refreshCurrentView() {
+        const schedule = this.scheduleRef();
+        if (schedule) {
+            const activeView = schedule.activeView;
+            const startDate = activeView.startDate();
+            const endDate = activeView.endDate();
+            await this.loadData(startDate, endDate);
         }
     }
 

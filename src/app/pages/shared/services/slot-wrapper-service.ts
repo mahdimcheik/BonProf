@@ -29,6 +29,6 @@ export class SlotWrapperService {
     }
 
     getSlotsByTeacher(dateFrom: Date, dateTo: Date) {
-        return this.slotsService.slotsTeacherMySlotsGet(dateFrom, dateTo).pipe(map((response) => response.data || []));
+        return this.slotsService.slotsTeacherMySlotsPost({ dateFrom, dateTo }).pipe(map((response) => response.data || []));
     }
 }

@@ -482,6 +482,11 @@ export interface PaymentMethod {
     icon?: string | null;
 }
 
+export interface PeriodTime {
+    dateFrom: Date;
+    dateTo: Date;
+}
+
 export interface Product {
     id?: string;
     createdAt: Date;
