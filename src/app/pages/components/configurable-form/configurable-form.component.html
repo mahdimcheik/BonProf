@@ -159,6 +159,8 @@
                                         @if (element.type === 'select') {
                                             <p-select
                                                 [id]="element.id"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -179,6 +181,8 @@
                                         @if (element.type === 'multiselect') {
                                             <p-multiselect
                                                 [id]="element.id"
+                                                appendTo="body"
+                                                [styleClass]="'z-[9999]'"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -471,6 +475,8 @@
                                                 @if (field.type === 'select') {
                                                     <p-select
                                                         [id]="field.id"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"
@@ -492,6 +498,8 @@
                                                 @if (field.type === 'multiselect') {
                                                     <p-multiselect
                                                         [id]="field.id"
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[9999]'"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"

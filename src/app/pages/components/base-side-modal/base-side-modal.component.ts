@@ -7,7 +7,7 @@ import { DividerModule } from 'primeng/divider';
 import { DrawerModule } from 'primeng/drawer';
 
 @Component({
-    selector: 'app-base-side-modal',
+    selector: 'bp-base-side-modal',
     imports: [DrawerModule, ButtonModule, DividerModule],
     templateUrl: './base-side-modal.component.html',
     styleUrl: './base-side-modal.component.scss'

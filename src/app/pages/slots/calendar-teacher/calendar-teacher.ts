@@ -1,7 +1,5 @@
-// import { CalendarEvent } from '@/pages/shared/models/calendarModels';
-import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { MainService } from '@/pages/shared/services/main.service';
-// import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import {
@@ -20,11 +18,12 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
 import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
-// import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
+import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
+import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
-    imports: [ScheduleModule, DatePipe], //ModalCreateSlot
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -32,7 +31,7 @@ declare const require: any;
 })
 export class CalendarTeacher implements OnInit {
     mainService = inject(MainService);
-    // slotWrapperService = inject(SlotWrapperService);
+    slotWrapperService = inject(SlotWrapperService);
     // Input for events data
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
@@ -70,9 +69,9 @@ export class CalendarTeacher implements OnInit {
     }
 
     async loadData() {
-        // const events = await firstValueFrom(this.slotWrapperService.getSlotsByTeacher(new Date(2025, 11, 1), new Date(2025, 11, 30)));
-        // this.events.set(events?.map((e) => this.slotToEvent(e)) ?? []);
-        // console.log(this.events());
+        const events = await firstValueFrom(this.slotWrapperService.getSlotsByTeacher(new Date(2025, 11, 1), new Date(2025, 11, 30)));
+        this.events.set(events?.map((e) => this.slotToEvent(e)) ?? []);
+        console.log(this.events());
     }
 
     // Method to control drag and drop permission
@@ -150,7 +149,7 @@ export class CalendarTeacher implements OnInit {
             const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
 
             try {
-                // const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
+                const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
                 await this.loadData();
             } catch (ex) {
                 console.log('exception : ', ex);
@@ -164,7 +163,7 @@ export class CalendarTeacher implements OnInit {
             };
 
             try {
-                // const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
+                const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
                 await this.loadData();
             } catch (ex) {
                 console.log('exception : ', ex);
