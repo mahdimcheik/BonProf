@@ -52,6 +52,10 @@ export const appRoutes: Routes = [
                         component: ProfileEditionPage
                     }
                 ]
+            },
+            {
+                path: 'settings',
+                loadComponent: () => import('./app/pages/settings/settings').then((m) => m.Settings)
             }
         ]
     },

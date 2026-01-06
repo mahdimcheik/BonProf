@@ -24,7 +24,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
                 }
             </ul>
             <div class="menu-separator">
-                <p-button variant="text" label="Déconnexion" icon="pi pi-fw pi-power-off" routerLink="/logout"></p-button>
+                <p-button variant="text" severity="info" label="Paramètres" icon="pi pi-fw pi-cog" routerLink="/dashboard/settings"></p-button>
+                <p-button variant="text" severity="danger" label="Déconnexion" icon="pi pi-fw pi-power-off" routerLink="/logout"></p-button>
             </div>
         </div>
     `
