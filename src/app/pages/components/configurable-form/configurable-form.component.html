@@ -19,7 +19,7 @@
 
         <!-- Form Content -->
         <div class="configurable-form-body">
-            <form [formGroup]="form()" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault(); onSubmit()" class="space-y-8 configurable-form-content">
+            <form [formGroup]="form()" (ngSubmit)="onSubmit()" (keydown.enter)="onFormKeydown($event)" class="space-y-8 configurable-form-content">
                 <!-- Global Validation Errors -->
                 @if (verboseError() && hasGlobalValidationErrors() && isFormTouched()) {
                     <div class="p-4 bg-red-50 border-l-4 border-red-400 rounded-r-lg shadow-sm configurable-form-global-errors">

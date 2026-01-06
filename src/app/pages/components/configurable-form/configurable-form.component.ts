@@ -219,6 +219,22 @@ export class ConfigurableFormComponent implements OnInit {
         }
     }
 
+    onFormKeydown(event: any) {
+        // Check if the Enter key was pressed
+        if (event.key === 'Enter') {
+            const target = event.target as HTMLElement;
+
+            // Allow Enter in text editors and textareas
+            if (target?.closest('.ql-editor') || target?.tagName === 'TEXTAREA') {
+                return; // Let the editor handle Enter naturally
+            }
+
+            // For other inputs, prevent default and submit
+            event.preventDefault();
+            this.onSubmit();
+        }
+    }
+
     onSubmit() {
         const formInstance = this.form();
         if (formInstance.valid) {
