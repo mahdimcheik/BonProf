@@ -117,14 +117,14 @@
                                                 class="w-full configurable-form-input configurable-form-date-input"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
                                                 appendTo="body"
-                                                [styleClass]="'z-[9999]'"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                             />
                                         }
 
                                         @if (element.type === 'color') {
                                             <p-colorpicker
                                                 appendTo="body"
-                                                [styleClass]="'z-[9999]'"
+                                                [styleClass]="'z-[998]'"
                                                 [id]="element.id"
                                                 [formControlName]="element.name"
                                                 class="configurable-form-input configurable-form-color-input"
@@ -160,7 +160,7 @@
                                             <p-select
                                                 [id]="element.id"
                                                 appendTo="body"
-                                                [styleClass]="'z-[9999]'"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -182,7 +182,7 @@
                                             <p-multiselect
                                                 [id]="element.id"
                                                 appendTo="body"
-                                                [styleClass]="'z-[9999]'"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -430,7 +430,7 @@
                                                         class="w-full configurable-form-input configurable-form-date-input"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
                                                         appendTo="body"
-                                                        [styleClass]="'z-[9999]'"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                     />
                                                 }
 
@@ -438,7 +438,7 @@
                                                 @if (field.type === 'color') {
                                                     <p-colorpicker
                                                         appendTo="body"
-                                                        [styleClass]="'z-[9999]'"
+                                                        [styleClass]="'z-[998]'"
                                                         [id]="field.id"
                                                         [formControlName]="field.name"
                                                         class="configurable-form-input configurable-form-color-input"
@@ -476,7 +476,7 @@
                                                     <p-select
                                                         [id]="field.id"
                                                         appendTo="body"
-                                                        [styleClass]="'z-[9999]'"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"
@@ -499,7 +499,7 @@
                                                     <p-multiselect
                                                         [id]="field.id"
                                                         appendTo="body"
-                                                        [styleClass]="'z-[9999]'"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"

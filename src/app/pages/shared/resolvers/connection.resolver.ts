@@ -3,6 +3,7 @@ import { ResolveFn } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Login } from 'src/client';
 import { MainService } from '../services/main.service';
+import { LayoutService } from '@/layout/service/layout.service';
 
 export const connectionResolver: ResolveFn<Login | null> = async (route, state) => {
     const mainService = inject(MainService);

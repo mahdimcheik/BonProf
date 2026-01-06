@@ -97,6 +97,9 @@ export class LayoutService {
             this.handleDarkModeTransition(config);
         });
     }
+    saveSettings() {
+        localStorage.setItem('layoutConfig', JSON.stringify(this.layoutConfig()));
+    }
 
     private handleDarkModeTransition(config: layoutConfig): void {
         if ((document as any).startViewTransition) {
@@ -126,6 +129,7 @@ export class LayoutService {
         } else {
             document.documentElement.classList.remove('app-dark');
         }
+        this.saveSettings();
     }
 
     private onTransitionEnd() {

@@ -10,7 +10,7 @@ import { AppConfigurator } from './app.configurator';
     selector: 'app-topbar',
     standalone: true,
     imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator],
-    template: ` <div class="layout-topbar">
+    template: ` <div class="layout-topbar z-999">
         <div class="layout-topbar-logo-container">
             <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
                 <i class="pi pi-bars"></i>

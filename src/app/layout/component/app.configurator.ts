@@ -51,14 +51,13 @@ declare type SurfacesType = {
                             [title]="primaryColor.name"
                             (click)="updateColors($event, 'primary', primaryColor)"
                             [ngClass]="{
-                                    'outline outline-primary': primaryColor.name === selectedPrimaryColor()
-                                }"
+                                'outline outline-primary': primaryColor.name === selectedPrimaryColor()
+                            }"
                             class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center outline-offset-1 shadow"
                             [style]="{
-                                    'background-color': primaryColor?.name === 'noir' ? 'var(--text-color)' : primaryColor?.palette?.['500']
-                                }"
-                        >
-                        </button>
+                                'background-color': primaryColor?.name === 'noir' ? 'var(--text-color)' : primaryColor?.palette?.['500']
+                            }"
+                        ></button>
                     }
                 </div>
             </div>
@@ -72,11 +71,11 @@ declare type SurfacesType = {
                             (click)="updateColors($event, 'surface', surface)"
                             class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center p-0 outline-offset-1"
                             [ngClass]="{
-                                    'outline outline-primary': selectedSurfaceColor() ? selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ? surface.name === 'zinc' : surface.name === 'slate'
-                                }"
+                                'outline outline-primary': selectedSurfaceColor() ? selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ? surface.name === 'zinc' : surface.name === 'slate'
+                            }"
                             [style]="{
-                                    'background-color': surface?.palette?.['500']
-                                }"
+                                'background-color': surface?.palette?.['500']
+                            }"
                         ></button>
                     }
                 </div>
@@ -85,10 +84,12 @@ declare type SurfacesType = {
                 <span class="text-sm text-muted-color font-semibold">Presets</span>
                 <p-selectbutton [options]="presets" [ngModel]="selectedPreset()" (ngModelChange)="onPresetChange($event)" [allowEmpty]="false" size="small" />
             </div>
-            <div *ngIf="showMenuModeButton()" class="flex flex-col gap-2">
-                <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
-                <p-selectbutton [ngModel]="menuMode()" (ngModelChange)="onMenuModeChange($event)" [options]="menuModeOptions" [allowEmpty]="false" size="small" />
-            </div>
+            @if (showMenuModeButton()) {
+                <div class="flex flex-col gap-2">
+                    <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
+                    <p-selectbutton [ngModel]="menuMode()" (ngModelChange)="onMenuModeChange($event)" [options]="menuModeOptions" [allowEmpty]="false" size="small" />
+                </div>
+            }
         </div>
     `,
     host: {
@@ -98,7 +99,7 @@ declare type SurfacesType = {
 export class AppConfigurator {
     router = inject(Router);
 
-    config: PrimeNG = inject(PrimeNG);
+    // config: PrimeNG = inject(PrimeNG);
 
     layoutService: LayoutService = inject(LayoutService);
 
@@ -116,6 +117,7 @@ export class AppConfigurator {
     ];
 
     ngOnInit() {
+        this.readSettings();
         if (isPlatformBrowser(this.platformId)) {
             this.onPresetChange(this.layoutService.layoutConfig().preset);
         }
@@ -431,6 +433,8 @@ export class AppConfigurator {
         } else if (type === 'surface') {
             updateSurfacePalette(color.palette);
         }
+
+        this.layoutService.saveSettings();
     }
 
     onPresetChange(event: any) {
@@ -442,5 +446,17 @@ export class AppConfigurator {
 
     onMenuModeChange(event: string) {
         this.layoutService.layoutConfig.update((prev) => ({ ...prev, menuMode: event }));
+        this.layoutService.saveSettings();
+    }
+
+    readSettings() {
+        // read visual settings
+        const config = localStorage.getItem('layoutConfig');
+        if (config) {
+            const layoutConfig = JSON.parse(config);
+            this.layoutService._config = layoutConfig;
+            this.layoutService.layoutConfig.update((prev) => ({ ...prev, ...layoutConfig }));
+            this.onPresetChange(this.layoutService.layoutConfig().preset);
+        }
     }
 }
