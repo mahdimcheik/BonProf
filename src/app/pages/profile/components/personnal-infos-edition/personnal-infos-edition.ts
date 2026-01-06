@@ -1,6 +1,7 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { ageValidator, socialMediaUrlValidator } from '@/pages/shared/validators/confirmPasswordValidator';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
@@ -16,9 +17,10 @@ import { LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
 })
 export class PersonnalInfosEdition implements OnInit {
     teacherWarapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     languagesWrapperService = inject(LanguagesWrapperService);
     router = inject(Router);
-    teacherProfile = this.teacherWarapperService.teacherProfile;
+    teacherProfile = this.mainService.userConnected;
     languagesList = signal<LanguageDetails[]>([]);
 
     personnalInfosStructure = computed<Structure>(() => {
@@ -198,6 +200,7 @@ export class PersonnalInfosEdition implements OnInit {
     }
     async loadData() {
         const languagesData = await firstValueFrom(this.languagesWrapperService.getAvailableLanguages());
+        const toto = this.teacherProfile();
         this.languagesList.set(languagesData);
     }
 }
