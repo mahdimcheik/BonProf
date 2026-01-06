@@ -153,12 +153,53 @@ export class CalendarTeacher implements OnInit {
         if (args.data.StartTime < new Date()) {
             args.cancel = true;
         }
+
+        const selectedEvent = args.data as any;
+        this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
+
+        // Handle Date objects properly - they're already Date instances, not strings
+        const startTime = selectedEvent?.StartTime;
+        const endTime = selectedEvent?.EndTime;
+
+        this.selectedDate = {
+            StartTime: startTime instanceof Date ? new Date(startTime) : new Date(),
+            EndTime: endTime instanceof Date ? new Date(endTime) : new Date(),
+            Subject: '',
+            ExtendedProps: { slot: this.selectedSlot() }
+        };
+        this.visibleCreateSlotModal.set(true);
     }
 
     onResizeStop(args: any): void {
+        const events = this.events();
         if (args.data.StartTime < new Date()) {
             args.cancel = true;
         }
+
+        events.forEach((event) => {
+            if (this.isOverlaping(args.data, event) && event.Id !== args.data.Id) {
+                args.cancel = true;
+            }
+        });
+
+        const selectedEvent = args.data as any;
+        this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
+
+        // Handle Date objects properly - they're already Date instances, not strings
+        const startTime = selectedEvent?.StartTime;
+        const endTime = selectedEvent?.EndTime;
+
+        this.selectedDate = {
+            StartTime: startTime instanceof Date ? new Date(startTime) : new Date(),
+            EndTime: endTime instanceof Date ? new Date(endTime) : new Date(),
+            Subject: '',
+            ExtendedProps: { slot: this.selectedSlot() }
+        };
+        this.visibleCreateSlotModal.set(true);
+    }
+
+    private isOverlaping(event1: CalendarEvent, event2: CalendarEvent): boolean {
+        return event1.StartTime < event2.EndTime && event2.StartTime < event1.EndTime;
     }
 
     // click on cell
@@ -222,6 +263,10 @@ export class CalendarTeacher implements OnInit {
                 console.log('exception : ', ex);
             }
         }
+    }
+
+    async cancel() {
+        await this.refreshCurrentView();
     }
 
     // Refresh data for the current view

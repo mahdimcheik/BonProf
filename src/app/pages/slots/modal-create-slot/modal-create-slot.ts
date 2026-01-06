@@ -19,6 +19,7 @@ export class ModalCreateSlot implements OnInit {
     event = model.required<CalendarEvent>();
     slot = computed<SlotCreate | SlotUpdate | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     submitClicked = output<SlotCreate | SlotUpdate>();
+    cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
 
     slotForm = computed<Structure>(() => {
@@ -93,5 +94,6 @@ export class ModalCreateSlot implements OnInit {
     }
     cancel() {
         this.visible.set(false);
+        this.cancelClicked.emit();
     }
 }
