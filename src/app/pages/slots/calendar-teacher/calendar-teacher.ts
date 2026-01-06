@@ -291,7 +291,6 @@ export class CalendarTeacher implements OnInit {
             await firstValueFrom(this.slotWrapperService.removeSlotById(slotId));
             this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Le créneau a été supprimé avec succès.' });
         } catch (ex) {
-            console.log('exception : ', ex);
             this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur est survenue lors de la suppression du créneau.' });
         } finally {
             await this.refreshCurrentView();
