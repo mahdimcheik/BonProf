@@ -1,8 +1,8 @@
 import { ProductCard } from '@/pages/components/products/product-card/product-card';
 import { ProductEdition } from '@/pages/components/products/product-edition/product-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
+import { MainService } from '@/pages/shared/services/main.service';
 import { ProductWrapperService } from '@/pages/shared/services/product-wrapper-service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -17,7 +17,7 @@ import { ProductCreate, ProductDetails } from 'src/client';
 })
 export class ProductsList {
     productWrapperService = inject(ProductWrapperService);
-    teacherWrapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
     destroyRef = inject(DestroyRef);
@@ -35,7 +35,7 @@ export class ProductsList {
     }
 
     async loadData() {
-        const productsData = await firstValueFrom(this.productWrapperService.getTeacherProducts(this.teacherWrapperService?.teacherProfile()?.id ?? ''));
+        const productsData = await firstValueFrom(this.productWrapperService.getTeacherProducts(this.mainService?.userConnected()?.id ?? ''));
         this.products.set(productsData.data || []);
     }
 

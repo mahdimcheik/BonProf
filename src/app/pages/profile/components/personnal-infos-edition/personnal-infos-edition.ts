@@ -3,7 +3,6 @@ import { Structure } from '@/pages/components/configurable-form/related-models';
 import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
 import { MainService } from '@/pages/shared/services/main.service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { ageValidator, socialMediaUrlValidator } from '@/pages/shared/validators/confirmPasswordValidator';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
@@ -17,7 +16,6 @@ import { GenderDetails, LanguageDetails, TeacherUpdate, UserUpdate } from 'src/c
     templateUrl: './personnal-infos-edition.html'
 })
 export class PersonnalInfosEdition implements OnInit {
-    teacherWarapperService = inject(TeacherWrapperService);
     mainService = inject(MainService);
     languagesWrapperService = inject(LanguagesWrapperService);
     gendersWrapperService = inject(GenderWrapperService);
@@ -29,6 +27,7 @@ export class PersonnalInfosEdition implements OnInit {
 
     personnalInfosStructure = computed<Structure>(() => {
         const teacher = this.teacherProfile();
+
         return {
             id: 'personnalInfos',
             name: 'personnalInfos',
@@ -206,7 +205,7 @@ export class PersonnalInfosEdition implements OnInit {
                 priceIndicative: teacher.optionalFields.priceIndicative
             }
         };
-        await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
+        await firstValueFrom(this.mainService.updateTeacherProfile(updatedTeacher));
         await this.router.navigate(['dashboard/teacher/profile/me']);
     }
 

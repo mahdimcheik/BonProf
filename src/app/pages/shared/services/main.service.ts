@@ -2,7 +2,23 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AddressDetails, AuthService, ForgotPassword, Login, LoginResponse, ObjectResponse, PasswordRecovery, PasswordResetResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
+import {
+    AddressDetails,
+    AuthService,
+    ForgotPassword,
+    Login,
+    LoginResponse,
+    ObjectResponse,
+    PasswordRecovery,
+    PasswordResetResponse,
+    StringResponse,
+    TeachersService,
+    UserCreate,
+    UserDetails,
+    UserDetailsResponse,
+    UserLogin,
+    UserUpdate
+} from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -14,6 +30,7 @@ export class MainService {
     authService = inject(AuthService);
     messageService = inject(MessageService);
     localStorageService = inject(LocalstorageService);
+    teacherService = inject(TeachersService);
 
     ApplicationName = 'BonProf';
     logoUrl = 'assets/bird.svg';
@@ -146,5 +163,20 @@ export class MainService {
                 });
             })
         );
+    }
+
+    // teacher
+    getTeacherFullProfile() {
+        return this.teacherService.teachersMyProfileGet().pipe(
+            tap((response) => {
+                if (response.data) {
+                    this.userConnected.set(response.data ?? null);
+                }
+            })
+        );
+    }
+
+    updateTeacherProfile(updatedProfile: UserUpdate) {
+        return this.teacherService.teachersUpdateProfilePut(updatedProfile);
     }
 }
