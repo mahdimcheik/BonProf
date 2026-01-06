@@ -22,10 +22,14 @@ import { firstValueFrom } from 'rxjs';
 import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
+import { Button } from 'primeng/button';
+import { Tooltip } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -34,9 +38,11 @@ declare const require: any;
 export class CalendarTeacher implements OnInit {
     mainService = inject(MainService);
     slotWrapperService = inject(SlotWrapperService);
+    messageService = inject(MessageService);
     // Input for events data
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
+    visibleConfirmDeleteModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
     private isLoading = false;
     private isInitialized = false;
@@ -267,6 +273,29 @@ export class CalendarTeacher implements OnInit {
 
     async cancel() {
         await this.refreshCurrentView();
+    }
+
+    openConfirmDeleteModal(event: Event, slot: SlotDetails) {
+        event.stopPropagation();
+        this.selectedSlot.set(slot);
+        this.visibleConfirmDeleteModal.set(true);
+    }
+
+    async removeSlot() {
+        try {
+            const slotId = this.selectedSlot()?.id;
+            if (!slotId) {
+                this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'ID du créneau manquant.' });
+                return;
+            }
+            await firstValueFrom(this.slotWrapperService.removeSlotById(slotId));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Le créneau a été supprimé avec succès.' });
+        } catch (ex) {
+            console.log('exception : ', ex);
+            this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur est survenue lors de la suppression du créneau.' });
+        } finally {
+            await this.refreshCurrentView();
+        }
     }
 
     // Refresh data for the current view

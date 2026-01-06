@@ -31,4 +31,14 @@ export class SlotWrapperService {
     getSlotsByTeacher(dateFrom: Date, dateTo: Date) {
         return this.slotsService.slotsTeacherMySlotsPost({ dateFrom, dateTo }).pipe(map((response) => response.data || []));
     }
+
+    removeSlotById(slotId: string) {
+        return this.slotsService.slotsTeacherRemoveSlotIdDelete(slotId).pipe(
+            catchError((res) => {
+                console.log('error res : ', res);
+                return of();
+            }),
+            map((response) => response.data)
+        );
+    }
 }
