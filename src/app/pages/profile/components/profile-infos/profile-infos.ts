@@ -13,6 +13,7 @@ import { TeacherDetails, UserDetails } from 'src/client';
 })
 export class ProfileInfos {
     teacher = input.required<UserDetails>();
+    showEditButton = input<boolean>(false);
     address = computed(() => {
         return this.teacher().addresses.length > 0 ? this.teacher().addresses[0] : null;
     });

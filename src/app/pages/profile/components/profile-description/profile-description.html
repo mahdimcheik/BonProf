@@ -58,9 +58,9 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1">
-        <p-card styleClass="shadow-md h-full" [header]="teacher()?.teacher?.title ?? 'Description'">
-            <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line" [innerHTML]="descriptionSafeHtml()"></div>
+    <div class="flex-1 min-w-0">
+        <p-card styleClass="shadow-md h-full w-full" [header]="teacher()?.teacher?.title ?? 'Description'">
+            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
     </div>
 </div>

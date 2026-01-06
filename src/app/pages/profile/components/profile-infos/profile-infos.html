@@ -12,7 +12,9 @@
                 <!-- Name and Profile Link -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                     <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacher().firstName }} {{ teacher().lastName }}</h2>
+                    @if(showEditButton()) {
                     <p-button label="Editer mon profil" [text]="true" icon="pi pi-pencil" iconPos="right" size="small" styleClass="text-primary" [routerLink]="['/dashboard/teacher/profile', 'me', 'edition']" />
+                    }
                 </div>
 
                 <!-- Info Items -->
@@ -47,7 +49,7 @@
                 </div>
                 }
 
-                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" />
+                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" [disabled]="showEditButton()" />
 
                 <p-tag value="Premier cours gratuit" severity="success" styleClass="text-sm font-semibold" icon="pi pi-gift" />
             </div>

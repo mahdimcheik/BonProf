@@ -1,6 +1,6 @@
 <div class="max-w-[1280px] mx-auto p-4 md:p-6">
     @if( teacherprofile() ) {
-    <bp-profile-infos [teacher]="teacherprofile()!"></bp-profile-infos>
+    <bp-profile-infos [teacher]="teacherprofile()!" [showEditButton]="isOwner"></bp-profile-infos>
     }
 
     <p-divider class="my-6"></p-divider>
@@ -18,7 +18,7 @@
 
     <p-divider class="my-6"></p-divider>
 
-    @if( teacherprofile() ) {
+    @if( teacherprofile() && !isOwner ) {
     <bp-contact-form [teacherprofile]="teacherprofile()!"></bp-contact-form>
     }
 </div>
