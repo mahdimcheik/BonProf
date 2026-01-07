@@ -11,8 +11,10 @@
             <div class="flex flex-col gap-4 flex-1">
                 <!-- Name and Profile Link -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                    <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacher().user.firstName }} {{ teacher().user.lastName }}</h2>
+                    <h2 class="text-3xl font-bold text-surface-900 dark:text-surface-0 m-0">{{ teacher().firstName }} {{ teacher().lastName }}</h2>
+                    @if(showEditButton()) {
                     <p-button label="Editer mon profil" [text]="true" icon="pi pi-pencil" iconPos="right" size="small" styleClass="text-primary" [routerLink]="['/dashboard/teacher/profile', 'me', 'edition']" />
+                    }
                 </div>
 
                 <!-- Info Items -->
@@ -25,17 +27,21 @@
                     }
                     <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-briefcase text-xl text-primary"></i>
-                        <span class="text-base">{{teacher().title}}</span>
+                        <span class="text-base">{{teacher().teacher?.title}}</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-at text-xl text-primary"></i>
+                        <span class="text-base">{{teacher().email}}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Pricing and Action -->
             <div class="flex flex-col justify-center items-center gap-4 lg:min-w-[250px] p-6 bg-primary-50 dark:bg-primary-900/20 rounded-xl">
-                @if(teacher().priceIndicative) {
+                @if(teacher().teacher?.priceIndicative) {
                 <div class="text-center">
                     <p class="text-sm text-surface-600 dark:text-surface-400 mb-1">Tarif indicatif</p>
-                    <span class="text-4xl font-bold text-primary">{{teacher().priceIndicative}}€/h</span>
+                    <span class="text-4xl font-bold text-primary">{{teacher().teacher?.priceIndicative}}€/h</span>
                 </div>
                 }@else {
                 <div class="text-center">
@@ -43,7 +49,7 @@
                 </div>
                 }
 
-                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" />
+                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" [disabled]="showEditButton()" />
 
                 <p-tag value="Premier cours gratuit" severity="success" styleClass="text-sm font-semibold" icon="pi pi-gift" />
             </div>

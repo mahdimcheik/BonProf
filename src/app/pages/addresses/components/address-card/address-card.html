@@ -30,15 +30,17 @@
             </div>
 
             <!-- Action Buttons -->
+            @if(showActions()){
             <div class="flex gap-2 flex-shrink-0">
                 <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="goEditMode()" pTooltip="Modifier" tooltipPosition="top" />
                 <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="showConfirmModal()" pTooltip="Supprimer" tooltipPosition="top" />
             </div>
+            }
         </div>
 
         <!-- Map Section -->
         <div class="border-t pt-4 border-surface-200 dark:border-surface-700">
-            <bp-map-basic [user]="teacher()!.user" [mainAddress]="address()"></bp-map-basic>
+            <bp-map-basic [user]="teacher()!" [mainAddress]="address()"></bp-map-basic>
         </div>
     </div>
 </p-card>

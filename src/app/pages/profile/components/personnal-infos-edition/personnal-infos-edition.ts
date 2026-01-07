@@ -1,13 +1,14 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
 import { ageValidator, socialMediaUrlValidator } from '@/pages/shared/validators/confirmPasswordValidator';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { LanguageDetails, TeacherProfileUpdate } from 'src/client';
+import { GenderDetails, LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -15,20 +16,24 @@ import { LanguageDetails, TeacherProfileUpdate } from 'src/client';
     templateUrl: './personnal-infos-edition.html'
 })
 export class PersonnalInfosEdition implements OnInit {
-    teacherWarapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     languagesWrapperService = inject(LanguagesWrapperService);
+    gendersWrapperService = inject(GenderWrapperService);
     router = inject(Router);
-    teacherProfile = this.teacherWarapperService.teacherProfile;
+
+    teacherProfile = this.mainService.userConnected;
     languagesList = signal<LanguageDetails[]>([]);
+    genderOptions = signal<GenderDetails[]>([]);
 
     personnalInfosStructure = computed<Structure>(() => {
         const teacher = this.teacherProfile();
+
         return {
             id: 'personnalInfos',
             name: 'personnalInfos',
             label: 'Informations personnelles',
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'personnalInfos',
                     name: 'personnalInfos',
@@ -41,7 +46,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'firstName',
                             label: 'Prénom',
                             type: 'text',
-                            value: teacher?.user.firstName || '',
+                            value: teacher?.firstName || '',
                             placeholder: 'Prénom',
                             required: true,
                             validation: [Validators.required]
@@ -51,7 +56,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'lastName',
                             label: 'Nom',
                             type: 'text',
-                            value: teacher?.user.lastName || '',
+                            value: teacher?.lastName || '',
                             placeholder: 'Nom',
                             required: true,
                             validation: [Validators.required, Validators.minLength(3)]
@@ -61,11 +66,22 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'dateOfBirth',
                             type: 'date',
                             label: 'Date de naissance',
-                            value: teacher?.user.dateOfBirth ? new Date(teacher.user.dateOfBirth) : new Date('2000-01-01'),
+                            value: teacher?.dateOfBirth ? new Date(teacher.dateOfBirth) : new Date('2000-01-01'),
                             fullWidth: true,
                             required: true,
                             placeholder: 'Date de naissance',
                             validation: [Validators.required, ageValidator()]
+                        },
+                        {
+                            id: 'genderId',
+                            label: 'Genre',
+                            name: 'genderId',
+                            type: 'select',
+                            compareKey: 'id',
+                            displayKey: 'name',
+                            value: teacher?.gender?.id || null,
+                            fullWidth: true,
+                            options: this.genderOptions()
                         }
                     ]
                 },
@@ -75,21 +91,11 @@ export class PersonnalInfosEdition implements OnInit {
                     label: 'Champs facultatifs',
                     fields: [
                         {
-                            id: 'phoneNumber',
-                            name: 'phoneNumber',
-                            type: 'text',
-                            label: 'Numéro de téléphone',
-                            value: teacher?.user.phoneNumber || '',
-                            fullWidth: true,
-                            required: false,
-                            placeholder: 'Numéro de téléphone'
-                        },
-                        {
                             id: 'title',
                             name: 'title',
                             type: 'text',
                             label: 'Titre',
-                            value: teacher?.title || '',
+                            value: teacher?.teacher?.title || '',
                             fullWidth: true,
                             required: false,
                             placeholder: 'Titre'
@@ -99,7 +105,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'description',
                             type: 'texteditor',
                             label: 'Description',
-                            value: teacher?.description || '',
+                            value: teacher?.teacher?.description || '',
                             fullWidth: true,
                             required: false,
                             placeholder: 'Description'
@@ -120,7 +126,7 @@ export class PersonnalInfosEdition implements OnInit {
                             name: 'priceIndicative',
                             type: 'number',
                             label: 'Tarif indicatif (€ par heure)',
-                            value: teacher?.priceIndicative || null,
+                            value: teacher?.teacher?.priceIndicative || null,
                             fullWidth: true,
                             required: false,
                             placeholder: 'Tarif indicatif'
@@ -139,7 +145,7 @@ export class PersonnalInfosEdition implements OnInit {
                             label: 'LinkedIn',
                             required: false,
                             placeholder: 'LinkedIn',
-                            value: teacher?.linkedIn || '',
+                            value: teacher?.teacher?.linkedIn || '',
                             validation: [socialMediaUrlValidator('linkedin')]
                         },
                         {
@@ -149,7 +155,7 @@ export class PersonnalInfosEdition implements OnInit {
                             label: 'FaceBook',
                             required: false,
                             placeholder: 'FaceBook',
-                            value: teacher?.faceBook || '',
+                            value: teacher?.teacher?.faceBook || '',
                             validation: [socialMediaUrlValidator('facebook')]
                         },
                         {
@@ -159,7 +165,7 @@ export class PersonnalInfosEdition implements OnInit {
                             label: 'GitHub',
                             required: false,
                             placeholder: 'GitHub',
-                            value: teacher?.gitHub || '',
+                            value: teacher?.teacher?.gitHub || '',
                             validation: [socialMediaUrlValidator('github')]
                         },
                         {
@@ -169,7 +175,7 @@ export class PersonnalInfosEdition implements OnInit {
                             label: 'Twitter',
                             required: false,
                             placeholder: 'Twitter',
-                            value: teacher?.twitter || '',
+                            value: teacher?.teacher?.twitter || '',
                             validation: [socialMediaUrlValidator('twitter')]
                         }
                     ]
@@ -181,24 +187,25 @@ export class PersonnalInfosEdition implements OnInit {
     async submit(event: FormGroup<any>) {
         console.log(event.value);
         const teacher = event.value;
-        const updatedTeacher: TeacherProfileUpdate = {
+        const updatedTeacher: UserUpdate = {
             ...this.teacherProfile(),
-            title: teacher.optionalFields.title,
-            description: teacher.optionalFields.description,
+            firstName: teacher.personnalInfos.firstName,
+            lastName: teacher.personnalInfos.lastName,
+            dateOfBirth: teacher.personnalInfos.dateOfBirth,
+            genderId: teacher.personnalInfos.genderId,
             languagesIds: teacher.optionalFields.languagesIds,
-            linkedIn: teacher.socialLinks.linkedIn,
-            faceBook: teacher.socialLinks.faceBook,
-            gitHub: teacher.socialLinks.gitHub,
-            twitter: teacher.socialLinks.twitter,
-            priceIndicative: teacher.optionalFields.priceIndicative,
-            id: this.teacherProfile()?.id!,
-            user: {
-                firstName: teacher.personnalInfos.firstName,
-                lastName: teacher.personnalInfos.lastName,
-                dateOfBirth: teacher.personnalInfos.dateOfBirth
+            teacher: {
+                ...this.teacherProfile()?.teacher,
+                gitHub: teacher.socialLinks.gitHub,
+                twitter: teacher.socialLinks.twitter,
+                linkedIn: teacher.socialLinks.linkedIn,
+                faceBook: teacher.socialLinks.faceBook,
+                title: teacher.optionalFields.title,
+                description: teacher.optionalFields.description,
+                priceIndicative: teacher.optionalFields.priceIndicative
             }
         };
-        await firstValueFrom(this.teacherWarapperService.updateTeacherProfile(updatedTeacher));
+        await firstValueFrom(this.mainService.updateTeacherProfile(updatedTeacher));
         await this.router.navigate(['dashboard/teacher/profile/me']);
     }
 
@@ -208,5 +215,7 @@ export class PersonnalInfosEdition implements OnInit {
     async loadData() {
         const languagesData = await firstValueFrom(this.languagesWrapperService.getAvailableLanguages());
         this.languagesList.set(languagesData);
+        const gendersData = await firstValueFrom(this.gendersWrapperService.getGenders());
+        this.genderOptions.set(gendersData ?? []);
     }
 }

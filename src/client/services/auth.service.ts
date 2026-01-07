@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { UserCreate, RequestOptions, UserDetailsResponse, UserUpdateInput, UserLogin, LoginOutputResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetOutputResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
+import { UserCreate, RequestOptions, UserDetailsResponse, UserLogin, LoginResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -41,25 +41,9 @@ export class AuthService {
         return this.httpClient.post(url, userCreate, requestOptions);
     }
 
-    authUpdatePatch(userUpdateInput?: UserUpdateInput, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
-    authUpdatePatch(userUpdateInput?: UserUpdateInput, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
-    authUpdatePatch(userUpdateInput?: UserUpdateInput, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
-    authUpdatePatch(userUpdateInput?: UserUpdateInput, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/auth/update`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.patch(url, userUpdateInput, requestOptions);
-    }
-
-    authLoginPost(userLogin?: UserLogin, observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginOutputResponse>;
-    authLoginPost(userLogin?: UserLogin, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LoginOutputResponse>>;
-    authLoginPost(userLogin?: UserLogin, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LoginOutputResponse>>;
+    authLoginPost(userLogin?: UserLogin, observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginResponse>;
+    authLoginPost(userLogin?: UserLogin, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LoginResponse>>;
+    authLoginPost(userLogin?: UserLogin, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LoginResponse>>;
     authLoginPost(userLogin?: UserLogin, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/auth/login`;
 
@@ -114,31 +98,9 @@ export class AuthService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    authPublicInformationsGet(userId?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
-    authPublicInformationsGet(userId?: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
-    authPublicInformationsGet(userId?: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
-    authPublicInformationsGet(userId?: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/auth/public-informations`;
-
-        let params = new HttpParams();
-        if (userId != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, userId, 'userId');
-        }
-
-        const requestOptions: any = {
-            observe: observe as any,
-            params,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.get(url, requestOptions);
-    }
-
-    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'body', options?: RequestOptions<'json'>): Observable<PasswordResetOutputResponse>;
-    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PasswordResetOutputResponse>>;
-    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PasswordResetOutputResponse>>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'body', options?: RequestOptions<'json'>): Observable<PasswordResetResponse>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PasswordResetResponse>>;
+    authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PasswordResetResponse>>;
     authForgotPasswordPost(forgotPassword?: ForgotPassword, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/auth/forgot-password`;
 
@@ -168,9 +130,9 @@ export class AuthService {
         return this.httpClient.post(url, passwordRecovery, requestOptions);
     }
 
-    authRefreshTokenGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginOutputResponse>;
-    authRefreshTokenGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LoginOutputResponse>>;
-    authRefreshTokenGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LoginOutputResponse>>;
+    authRefreshTokenGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<LoginResponse>;
+    authRefreshTokenGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LoginResponse>>;
+    authRefreshTokenGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LoginResponse>>;
     authRefreshTokenGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/auth/refresh-token`;
 

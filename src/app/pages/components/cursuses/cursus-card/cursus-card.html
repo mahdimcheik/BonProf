@@ -52,10 +52,12 @@
             </div>
 
             <!-- Action Buttons -->
+            @if(showActions()){
             <div class="flex gap-2 flex-shrink-0">
                 <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(true)" pTooltip="Modifier" tooltipPosition="top" />
                 <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="showConfirmModal()" pTooltip="Supprimer" tooltipPosition="top" />
             </div>
+            }
         </div>
     </div>
 </p-card>

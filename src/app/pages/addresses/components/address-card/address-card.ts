@@ -2,7 +2,6 @@ import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-
 import { MapBasic } from '@/pages/profile/components/address/map-basic';
 import { AddressTypePipe } from '@/pages/shared/pipes/address-type-pipe';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, computed, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
@@ -11,6 +10,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client';
 import { AddressEdition } from '../address-edition/address-edition';
+import { MainService } from '@/pages/shared/services/main.service';
 @Component({
     selector: 'bp-address-card',
     imports: [AddressEdition, MapBasic, Card, Button, Tooltip, ConfirmModalComponent],
@@ -19,13 +19,14 @@ import { AddressEdition } from '../address-edition/address-edition';
 })
 export class AddressCard {
     addressWrapperService = inject(AddressWrapperService);
-    teacherWrapperService = inject(TeacherWrapperService);
+    mainService = inject(MainService);
     messageService = inject(MessageService);
 
     editMode = model(true);
+    showActions = model(true);
     address = model.required<AddressDetails>();
     showDeleteConfirm = signal(false);
-    teacher = this.teacherWrapperService.teacherProfile;
+    teacher = this.mainService.userConnected;
     addressTypePipe = inject(AddressTypePipe);
 
     iconclass = computed(() => {

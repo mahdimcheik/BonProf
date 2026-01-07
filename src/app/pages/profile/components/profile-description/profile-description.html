@@ -22,28 +22,6 @@
                 </div>
             </p-card>
 
-            <!-- Subjects Card -->
-            <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
-                <div class="flex flex-col gap-4">
-                    <div class="flex items-center gap-3">
-                        <i class="pi pi-share-alt text-2xl text-primary"></i>
-                        <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
-                    </div>
-                    @let cursuses = teacher()?.cursuses || []; @if(cursuses.length > 0) {
-                    <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
-                        @for(cursus of cursuses; track cursus.id) {
-                        <li>
-                            <p-tag [value]="cursus.name" styleClass="text-sm" [style]="{backgroundColor: cursus?.color ?? 'lightGreen', color: '#fff' }" />
-                        </li>
-
-                        }
-                    </ul>
-                    } @else {
-                    <div class="text-surface-600 dark:text-surface-400 text-sm italic">Aucun cours renseigné.</div>
-                    }
-                </div>
-            </p-card>
-
             <!-- Social Networks Card -->
             <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div class="flex flex-col gap-4">
@@ -51,21 +29,21 @@
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
                         <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
-                    @if(teacher()?.linkedIn || teacher()?.faceBook || teacher()?.twitter || teacher()?.gitHub) {
-                    <ul class="list-none p-0 m-0 flex flex-wrap gap-2">
-                        @if(teacher()?.linkedIn) {
+                    @if(teacher().teacher?.linkedIn || teacher().teacher?.faceBook || teacher().teacher?.twitter || teacher().teacher?.gitHub) {
+                    <ul class="list-none p-0 m-0 flex flex-wrap">
+                        @if(teacher().teacher?.linkedIn) {
                         <li>
                             <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="LinkedIn" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.faceBook) {
+                        } @if(teacher().teacher?.faceBook) {
                         <li>
                             <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Facebook" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.twitter) {
+                        } @if(teacher().teacher?.twitter) {
                         <li>
                             <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Twitter" tooltipPosition="top" />
                         </li>
-                        } @if(teacher()?.gitHub) {
+                        } @if(teacher().teacher?.gitHub) {
                         <li>
                             <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="GitHub" tooltipPosition="top" />
                         </li>
@@ -80,9 +58,9 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1">
-        <p-card styleClass="shadow-md h-full" [header]="teacher()?.title ?? 'Description'">
-            <div class="text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line" [innerHTML]="descriptionSafeHtml()"></div>
+    <div class="flex-1 min-w-0">
+        <p-card styleClass="shadow-md h-full w-full" [header]="teacher().teacher?.title ?? 'Description'">
+            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
     </div>
 </div>

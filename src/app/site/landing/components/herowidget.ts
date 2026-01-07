@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
     selector: 'hero-widget',
     imports: [ButtonModule, RippleModule, InputTextModule, AutoCompleteModule, CommonModule, FormsModule],
     template: `
-        <div id="hero" class="flex flex-col pt-6 px-6 pb-12 lg:px-20 overflow-hidden bg-green-200 md:flex-row md:items-center md:justify-between rounded-border">
+        <div id="hero" class="flex flex-col pt-6 px-6 pb-12 lg:px-20 overflow-hidden bg-primary-100 md:flex-row md:items-center md:justify-between rounded-border">
             <div class="mx-6 md:mx-20 mt-0 md:mt-6">
                 <h1 class="text-6xl font-bold text-gray-900 leading-tight dark:!text-gray-700"><span class="font-light block">Vos cours</span>à votre portée</h1>
                 <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">Reserver, payer, consulter et suivre vos cours facilement.</p>
@@ -25,7 +25,7 @@ import { firstValueFrom } from 'rxjs';
                         optionLabel="displayLabel"
                         styleClass="flex-1"
                         [inputStyleClass]="'w-full h-[45px]'"
-                        [panelStyle]="{ 'z-index': '9999' }"
+                        [panelStyle]="{ 'z-index': '998' }"
                         appendTo="body"
                         placeholder="Entrez votre ville ou code postal"
                     >

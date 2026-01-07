@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
 import { Button, ButtonModule } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
-import { AddressCreate, AddressDetails } from 'src/client/models';
+import { AddressCreate, AddressDetails, AddressUpdate } from 'src/client/models';
 
 @Component({
     selector: 'bp-addresses-list',
@@ -40,7 +40,7 @@ export class AddressesList {
             this.addresses.set([]);
             return;
         }
-        const addressesData = await firstValueFrom(this.addressWrapperService.getAddressesByUser(this.mainService?.userConnected()?.id ?? ''));
+        const addressesData = await firstValueFrom(this.addressWrapperService.getAddresses());
         this.addresses.set(addressesData.data || []);
     }
 
@@ -56,7 +56,7 @@ export class AddressesList {
         this.showEditBox.set(false);
     }
 
-    async addNewAddress(event: AddressCreate | AddressDetails) {
+    async addNewAddress(event: AddressCreate | AddressDetails | AddressUpdate) {
         await firstValueFrom(this.addressWrapperService.addAddress(event as AddressCreate));
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Adresse ajoutée avec succès' });
         this.showEditBox.set(false);

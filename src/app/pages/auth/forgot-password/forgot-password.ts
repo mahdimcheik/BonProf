@@ -24,7 +24,7 @@ export class ForgotPassword {
         styleClass: 'md:min-w-[40rem] min-w-[90vw] !p-0',
         hideSubmitButton: true,
         hideCancelButton: true,
-        formFields: [
+        fields: [
             {
                 id: 'email',
                 name: 'email',

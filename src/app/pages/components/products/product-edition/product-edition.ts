@@ -30,7 +30,7 @@ export class ProductEdition {
             name: 'Cursus',
             label: 'Cursus',
             styleClass: 'md:min-w-full min-w-full !p-0',
-            formFieldGroups: [
+            sections: [
                 {
                     id: 'informations',
                     name: product ? `Editer le produit: ${product.name}` : 'Ajouter un produit',

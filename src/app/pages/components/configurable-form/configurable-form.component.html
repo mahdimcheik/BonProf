@@ -19,7 +19,7 @@
 
         <!-- Form Content -->
         <div class="configurable-form-body">
-            <form [formGroup]="form()" (ngSubmit)="onSubmit()" class="space-y-8 configurable-form-content">
+            <form [formGroup]="form()" (ngSubmit)="onSubmit()" (keydown.enter)="onFormKeydown($event)" class="space-y-8 configurable-form-content">
                 <!-- Global Validation Errors -->
                 @if (verboseError() && hasGlobalValidationErrors() && isFormTouched()) {
                     <div class="p-4 bg-red-50 border-l-4 border-red-400 rounded-r-lg shadow-sm configurable-form-global-errors">
@@ -116,11 +116,20 @@
                                                 [formControlName]="element.name"
                                                 class="w-full configurable-form-input configurable-form-date-input"
                                                 [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                                appendTo="body"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                             />
                                         }
 
                                         @if (element.type === 'color') {
-                                            <p-colorpicker [id]="element.id" [formControlName]="element.name" class="configurable-form-input configurable-form-color-input" [class.p-invalid]="isDirectFieldInvalid(element.name)" />
+                                            <p-colorpicker
+                                                appendTo="body"
+                                                [styleClass]="'z-[998]'"
+                                                [id]="element.id"
+                                                [formControlName]="element.name"
+                                                class="configurable-form-input configurable-form-color-input"
+                                                [class.p-invalid]="isDirectFieldInvalid(element.name)"
+                                            />
                                         }
 
                                         @if (element.type === 'textarea') {
@@ -150,6 +159,8 @@
                                         @if (element.type === 'select') {
                                             <p-select
                                                 [id]="element.id"
+                                                appendTo="body"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -170,6 +181,8 @@
                                         @if (element.type === 'multiselect') {
                                             <p-multiselect
                                                 [id]="element.id"
+                                                appendTo="body"
+                                                [panelStyle]="{ 'z-index': '998' }"
                                                 [formControlName]="element.name"
                                                 [options]="getSelectOptions(element)"
                                                 [optionLabel]="element.displayKey || 'label'"
@@ -416,12 +429,21 @@
                                                         [formControlName]="field.name"
                                                         class="w-full configurable-form-input configurable-form-date-input"
                                                         [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                        appendTo="body"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                     />
                                                 }
 
                                                 <!-- Color Input -->
                                                 @if (field.type === 'color') {
-                                                    <p-colorpicker [id]="field.id" [formControlName]="field.name" class="configurable-form-input configurable-form-color-input" [class.p-invalid]="isFieldInvalid(element.id, field.name)" />
+                                                    <p-colorpicker
+                                                        appendTo="body"
+                                                        [styleClass]="'z-[998]'"
+                                                        [id]="field.id"
+                                                        [formControlName]="field.name"
+                                                        class="configurable-form-input configurable-form-color-input"
+                                                        [class.p-invalid]="isFieldInvalid(element.id, field.name)"
+                                                    />
                                                 }
 
                                                 <!-- Textarea -->
@@ -453,6 +475,8 @@
                                                 @if (field.type === 'select') {
                                                     <p-select
                                                         [id]="field.id"
+                                                        appendTo="body"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"
@@ -474,6 +498,8 @@
                                                 @if (field.type === 'multiselect') {
                                                     <p-multiselect
                                                         [id]="field.id"
+                                                        appendTo="body"
+                                                        [panelStyle]="{ 'z-index': '998' }"
                                                         [formControlName]="field.name"
                                                         [options]="getSelectOptions(field)"
                                                         [optionLabel]="field.displayKey || 'label'"

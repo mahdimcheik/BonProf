@@ -2,7 +2,23 @@ import { computed, inject, Injectable, linkedSignal, signal } from '@angular/cor
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { AddressDetails, AuthService, ForgotPassword, LoginOutput, LoginOutputResponse, ObjectResponse, PasswordRecovery, PasswordResetOutputResponse, StringResponse, UserCreate, UserDetails, UserDetailsResponse, UserLogin } from 'src/client';
+import {
+    AddressDetails,
+    AuthService,
+    ForgotPassword,
+    Login,
+    LoginResponse,
+    ObjectResponse,
+    PasswordRecovery,
+    PasswordResetResponse,
+    StringResponse,
+    TeachersService,
+    UserCreate,
+    UserDetails,
+    UserDetailsResponse,
+    UserLogin,
+    UserUpdate
+} from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
 
@@ -14,6 +30,7 @@ export class MainService {
     authService = inject(AuthService);
     messageService = inject(MessageService);
     localStorageService = inject(LocalstorageService);
+    teacherService = inject(TeachersService);
 
     ApplicationName = 'BonProf';
     logoUrl = 'assets/bird.svg';
@@ -24,7 +41,7 @@ export class MainService {
     AddressesList = signal<AddressDetails[]>([]);
 
     // pour la page profile
-    userConnected = signal({} as any);
+    userConnected = signal({} as UserDetails);
 
     isAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Admin'));
     isSuperAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'SuperAdmin'));
@@ -34,7 +51,7 @@ export class MainService {
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         return [
             { label: 'Accueil', routerLink: '/' },
-            { label: 'Profil', routerLink: '/profile' },
+            { label: 'Dashboard', routerLink: '/dashboard' },
             { label: 'Mentions Légales', routerLink: '/mentions-legales' }
         ] as MenuItem[];
     });
@@ -45,9 +62,36 @@ export class MainService {
             return [{ label: 'Deconnexion', command: () => this.logout().subscribe() }];
         }
         return [
-            { label: 'Connexion', routerLink: '/auth/login' },
-            { label: 'Inscription', routerLink: '/auth/register' }
+            {
+                label: 'Home',
+                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+            },
+            {
+                label: 'UI Components',
+                items: [
+                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
+                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
+                ]
+            }
         ] as MenuItem[];
+    });
+
+    sidebarMenuItems = linkedSignal<MenuItem[]>(() => {
+        const user = this.userConnected();
+        const items: MenuItem[] = [
+            {
+                label: 'Général',
+                root: true
+            },
+            { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+            {
+                label: 'Administration',
+                root: true
+            },
+            { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
+            { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] }
+        ];
+        return items;
     });
 
     /**
@@ -73,13 +117,13 @@ export class MainService {
      * @param userLoginDTO les données de connexion de l'utilisateur
      * @returns Un observable contenant la réponse de l'API
      */
-    login(userLoginDTO: UserLogin): Observable<LoginOutputResponse> {
+    login(userLoginDTO: UserLogin): Observable<LoginResponse> {
         return this.authService.authLoginPost(userLoginDTO).pipe(
             map((response) => {
                 return {
                     message: response.message ?? '',
                     status: response.status!,
-                    data: response.data as LoginOutput
+                    data: response.data as Login
                 };
             }),
             tap((res) => {
@@ -93,7 +137,7 @@ export class MainService {
      * Rafraîchit le token d'authentification.
      * @returns Un observable contenant la réponse de l'API
      */
-    refreshToken(): Observable<LoginOutputResponse> {
+    refreshToken(): Observable<LoginResponse> {
         return this.authService.authRefreshTokenGet().pipe(
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
@@ -106,7 +150,7 @@ export class MainService {
      * @param input les données pour réinitialiser le mot de passe (email)
      * @returns Un observable contenant la réponse de l'API
      */
-    forgotPassword(input: { email: string }): Observable<PasswordResetOutputResponse> {
+    forgotPassword(input: { email: string }): Observable<PasswordResetResponse> {
         const forgotPasswordInput: ForgotPassword = {
             email: input.email
         };
@@ -146,5 +190,20 @@ export class MainService {
                 });
             })
         );
+    }
+
+    // teacher
+    getTeacherFullProfile() {
+        return this.teacherService.teachersMyProfileGet().pipe(
+            tap((response) => {
+                if (response.data) {
+                    this.userConnected.set(response.data ?? null);
+                }
+            })
+        );
+    }
+
+    updateTeacherProfile(updatedProfile: UserUpdate) {
+        return this.teacherService.teachersUpdateProfilePut(updatedProfile);
     }
 }

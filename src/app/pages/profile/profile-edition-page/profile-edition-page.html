@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card h-[calc(100vh-115px)] overflow-auto">
     <p-tabs value="personnalInfos" lazy [value]="tab" (valueChange)="onTabChange($event)">
         <p-tablist>
             <p-tab value="personnalInfos">Infos personnelles</p-tab>
@@ -6,6 +6,7 @@
             <p-tab value="addresses">Addresses</p-tab>
             <p-tab value="cours">Cours</p-tab>
             <p-tab value="produits">Produits</p-tab>
+            <p-tab value="slots">Créneaux</p-tab>
         </p-tablist>
         <p-tabpanels>
             <p-tabpanel value="personnalInfos">
@@ -31,6 +32,11 @@
             <p-tabpanel value="produits">
                 <ng-template #content>
                     <bp-products-list></bp-products-list>
+                </ng-template>
+            </p-tabpanel>
+            <p-tabpanel value="slots">
+                <ng-template #content>
+                    <bp-calendar-teacher></bp-calendar-teacher>
                 </ng-template>
             </p-tabpanel>
         </p-tabpanels>

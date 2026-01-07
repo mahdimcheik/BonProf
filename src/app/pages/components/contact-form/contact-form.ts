@@ -4,7 +4,7 @@ import { Avatar } from 'primeng/avatar';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
-import { TeacherDetails } from 'src/client';
+import { TeacherDetails, UserDetails } from 'src/client';
 import { ConfigurableFormComponent } from '../configurable-form/configurable-form.component';
 import { Structure } from '../configurable-form/related-models';
 
@@ -15,7 +15,7 @@ import { Structure } from '../configurable-form/related-models';
     styleUrls: ['./contact-form.scss']
 })
 export class ContactForm {
-    teacherprofile = input.required<TeacherDetails>();
+    teacherprofile = input.required<UserDetails>();
     contactStructure: Structure = {
         id: 'contactForm',
         name: 'contactForm',
@@ -23,7 +23,7 @@ export class ContactForm {
         styleClass: 'w-full !p-0',
         hideCancelButton: true,
         hideSubmitButton: true,
-        formFieldGroups: [
+        sections: [
             {
                 id: 'contactForm',
                 name: 'contactForm',
@@ -61,8 +61,7 @@ export class ContactForm {
                         type: 'texteditor',
                         label: 'Message',
                         required: true,
-                        placeholder: 'Votre message',
-                        value: 'Initial value',
+                        value: "Bonjour, <br/>je souhaite vous contacter concernant vos services d'enseignement.",
                         fullWidth: true,
                         validation: [Validators.required]
                     }
