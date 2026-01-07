@@ -22,10 +22,10 @@ export class ProfilePage implements OnInit {
     mainservice = inject(MainService);
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
-    teacherprofile = signal<UserDetails | null>(null);
+    user = signal<UserDetails | null>(null);
     destroyRef = inject(DestroyRef);
     mainAddress = computed(() => {
-        return this.teacherprofile()?.addresses[0] || null;
+        return this.user()?.addresses[0] || null;
     });
     isOwner = false;
 
@@ -45,7 +45,7 @@ export class ProfilePage implements OnInit {
         if (teacherId === 'me') {
             const teacherData = await firstValueFrom(this.mainservice.getTeacherFullProfile());
             if (teacherData.data) {
-                this.teacherprofile.set(teacherData.data);
+                this.user.set(teacherData.data);
             }
         }
     }
