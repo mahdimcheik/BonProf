@@ -712,20 +712,6 @@ export interface TeacherDetails {
     priceIndicative?: number;
 }
 
-export interface TeacherDetailsListResponse {
-    message: string;
-    status: number;
-    data?: Array<TeacherDetails>;
-    count?: number | null;
-}
-
-export interface TeacherDetailsResponse {
-    message: string;
-    status: number;
-    data?: TeacherDetails;
-    count?: number | null;
-}
-
 export interface TeacherUpdate {
     title?: string | null;
     description?: string | null;
@@ -871,6 +857,13 @@ export interface UserDetails {
     languages: Array<LanguageDetails>;
     teacher?: TeacherDetails;
     student?: StudentDetails;
+}
+
+export interface UserDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<UserDetails>;
+    count?: number | null;
 }
 
 export interface UserDetailsResponse {

@@ -5,9 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
-import { TeacherDetails, UserDetails } from 'src/client';
-import { Address } from '../components/address/address';
-import { MapBasic } from '../components/address/map-basic';
+import { UserDetails } from 'src/client';
 import { ProfileDescription } from '../components/profile-description/profile-description';
 import { ProfileInfos } from '../components/profile-infos/profile-infos';
 import { CursusesList } from '../components/cursuses-list/cursuses-list';
@@ -17,7 +15,7 @@ import { AddressCard } from '@/pages/addresses/components/address-card/address-c
 
 @Component({
     selector: 'bp-profile-page',
-    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card, CursusesList, AddressCard],
+    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Card, CursusesList, AddressCard],
     templateUrl: './profile-page.html'
 })
 export class ProfilePage implements OnInit {

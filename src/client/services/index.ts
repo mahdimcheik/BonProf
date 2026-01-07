@@ -11,6 +11,7 @@ export { AddressesService } from "./addresses.service";
 export { AuthService } from "./auth.service";
 export { CategoryCursusService } from "./categoryCursus.service";
 export { CursusService } from "./cursus.service";
+export { FilesService } from "./files.service";
 export { FormationsService } from "./formations.service";
 export { GendersService } from "./genders.service";
 export { LanguagesService } from "./languages.service";

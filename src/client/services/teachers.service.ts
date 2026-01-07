@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, TeacherDetailsListResponse, UserDetailsResponse, TeacherDetailsResponse, UserUpdate } from "../models";
+import { RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeachersService {
@@ -25,9 +25,9 @@ export class TeachersService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    teachersAllGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsListResponse>;
-    teachersAllGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsListResponse>>;
-    teachersAllGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsListResponse>>;
+    teachersAllGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsListResponse>;
+    teachersAllGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsListResponse>>;
+    teachersAllGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsListResponse>>;
     teachersAllGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teachers/all`;
 
@@ -57,9 +57,9 @@ export class TeachersService {
         return this.httpClient.get(url, requestOptions);
     }
 
-    teachersUserUserIdGet(userId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<TeacherDetailsResponse>;
-    teachersUserUserIdGet(userId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<TeacherDetailsResponse>>;
-    teachersUserUserIdGet(userId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<TeacherDetailsResponse>>;
+    teachersUserUserIdGet(userId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;
+    teachersUserUserIdGet(userId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsResponse>>;
+    teachersUserUserIdGet(userId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsResponse>>;
     teachersUserUserIdGet(userId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teachers/user/${userId}`;
 
