@@ -1,5 +1,3 @@
-import { CursusCard } from '@/pages/components/cursuses/cursus-card/cursus-card';
-import { CursusEdition } from '@/pages/components/cursuses/cursus-edition/cursus-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
@@ -9,6 +7,8 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails } from 'src/client';
+import { CursusEdition } from '../cursus-edition/cursus-edition';
+import { CursusCard } from '../cursus-card/cursus-card';
 
 @Component({
     selector: 'bp-cursuses-list',

@@ -7,8 +7,8 @@ import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 import { CursusEdition } from '../cursus-edition/cursus-edition';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 
 @Component({
     selector: 'bp-cursus-card',

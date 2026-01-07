@@ -1,5 +1,5 @@
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
-import { FormationsEdition } from '@/pages/formations/components/formations-edition/formations-edition';
+import { FormationsEdition } from '@/pages/profile/components/formations-edition/formations-edition';
 import { FormationWrapperService } from '@/pages/shared/services/formation-wrapper-service';
 import { DatePipe } from '@angular/common';
 import { Component, inject, model, output, signal } from '@angular/core';

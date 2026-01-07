@@ -1,11 +1,11 @@
+import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
+import { Structure } from '@/pages/components/configurable-form/related-models';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
-import { ConfigurableFormComponent } from '../../configurable-form/configurable-form.component';
-import { Structure } from '../../configurable-form/related-models';
 
 @Component({
     selector: 'bp-cursus-edition',

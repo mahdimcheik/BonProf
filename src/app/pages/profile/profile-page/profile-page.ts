@@ -11,7 +11,7 @@ import { ProfileInfos } from '../components/profile-infos/profile-infos';
 import { CursusesList } from '../components/cursuses-list/cursuses-list';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MainService } from '@/pages/shared/services/main.service';
-import { AddressCard } from '@/pages/addresses/components/address-card/address-card';
+import { AddressCard } from '@/pages/profile/components/address-card/address-card';
 
 @Component({
     selector: 'bp-profile-page',
