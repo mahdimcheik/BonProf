@@ -63,15 +63,12 @@ export class MainService {
         }
         return [
             {
-                label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                label: 'Connexion',
+                command: () => this.router.navigate(['/auth/login'])
             },
             {
-                label: 'UI Components',
-                items: [
-                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
-                ]
+                label: 'Inscription',
+                command: () => this.router.navigate(['/auth/register'])
             }
         ] as MenuItem[];
     });
