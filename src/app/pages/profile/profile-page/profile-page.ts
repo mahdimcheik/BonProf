@@ -13,10 +13,11 @@ import { ProfileInfos } from '../components/profile-infos/profile-infos';
 import { CursusesList } from '../components/cursuses-list/cursuses-list';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MainService } from '@/pages/shared/services/main.service';
+import { AddressCard } from '@/pages/addresses/components/address-card/address-card';
 
 @Component({
     selector: 'bp-profile-page',
-    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card, CursusesList],
+    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Address, MapBasic, Card, CursusesList, AddressCard],
     templateUrl: './profile-page.html'
 })
 export class ProfilePage implements OnInit {

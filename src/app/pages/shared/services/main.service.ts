@@ -89,7 +89,7 @@ export class MainService {
                 root: true
             },
             { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
-            { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/'] }
+            { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] }
         ];
         return items;
     });

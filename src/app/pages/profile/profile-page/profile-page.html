@@ -10,9 +10,9 @@
 
     @if(mainAddress()) {
 
-    <p-card class="my-4">
-        <bp-address [address]="mainAddress()!"></bp-address>
-        <bp-map-basic [mainAddress]="mainAddress()!" [user]="teacherprofile()!"></bp-map-basic>
+    <h2 class="text-lg font-semibold flex-1 !m-0 p-3">Où se déroule l'enseignement ?</h2>
+    <p-card>
+        <bp-address-card [address]="mainAddress()!" [editMode]="false" [showActions]="false"></bp-address-card>
     </p-card>
     }
 

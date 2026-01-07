@@ -23,6 +23,7 @@ export class AddressCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
+    showActions = model(true);
     address = model.required<AddressDetails>();
     showDeleteConfirm = signal(false);
     teacher = this.mainService.userConnected;
