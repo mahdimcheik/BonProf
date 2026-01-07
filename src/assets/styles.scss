@@ -14,3 +14,9 @@
     background-color: #333 !important;
     border-color: #444 !important;
 }
+
+.active-link {
+    font-weight: bold;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: 4px;
+}

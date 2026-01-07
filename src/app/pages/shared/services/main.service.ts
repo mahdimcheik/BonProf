@@ -80,16 +80,16 @@ export class MainService {
         const user = this.userConnected();
         const items: MenuItem[] = [
             {
-                label: 'Home',
+                label: 'Général',
                 root: true
             },
-            { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+            { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
             {
-                label: 'UI Components',
+                label: 'Administration',
                 root: true
             },
             { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
-            { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
+            { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/'] }
         ];
         return items;
     });

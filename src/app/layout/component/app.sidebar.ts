@@ -16,9 +16,11 @@ import { CommonModule } from '@angular/common';
                 @for (item of model(); track item.label; let i = $index) {
                     @if (!item.separator) {
                         @if (item['root']) {
-                            <li class="layout-menuitem-root-text">{{ item.label }}</li>
+                            <li class="layout-menuitem-root-text mb-2">{{ item.label }}</li>
                         } @else {
-                            <li><p-button variant="text" severity="primary" [label]="item.label" [icon]="item.icon" [routerLink]="item.routerLink"></p-button></li>
+                            <li routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true, matrixParams: 'subset', queryParams: 'subset' }">
+                                <p-button variant="text" severity="primary" [label]="item.label" [icon]="item.icon" [routerLink]="item.routerLink"></p-button>
+                            </li>
                         }
                     } @else {
                         <li class="menu-separator"></li>
