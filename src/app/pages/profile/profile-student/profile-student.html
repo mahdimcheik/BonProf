@@ -1,0 +1,15 @@
+<div class="max-w-[1280px] mx-auto p-4 md:p-6">
+    <!-- @if( teacherprofile() ) {
+    <bp-profile-infos [teacher]="teacherprofile()!" [showEditButton]="isOwner"></bp-profile-infos>
+    } -->
+
+    <p-divider class="my-6"></p-divider>
+
+    <bp-profile-description [user]="student()!"></bp-profile-description> -->
+
+    <p-divider class="my-6"></p-divider>
+
+    @if( student() && !isOwner ) {
+    <bp-contact-form [teacherprofile]="student()!"></bp-contact-form>
+    }
+</div>

@@ -5,7 +5,7 @@
 
     <p-divider class="my-6"></p-divider>
 
-    <bp-profile-description></bp-profile-description>
+    <bp-profile-description [user]="teacherprofile()!"></bp-profile-description>
     <bp-cursuses-list [editMode]="false" [showActions]="false" [showActions]="false"></bp-cursuses-list>
 
     @if(mainAddress()) {
