@@ -20,8 +20,9 @@ export class CursusCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
-    showActions = model(true);
+    showActions = signal(false);
     cursus = model.required<CursusDetails>();
+
     showEditModal = signal(false);
     showDeleteConfirm = signal(false);
     needRefresh = output<boolean>();
@@ -42,7 +43,7 @@ export class CursusCard {
                 this.cursus.set(newFormation.data);
             }
         } finally {
-            this.editMode.set(false);
+            this.showActions.set(false);
         }
     }
     showConfirmModal() {

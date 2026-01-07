@@ -5,7 +5,7 @@
             <bp-cursus-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewCursus($event)"></bp-cursus-edition>
         </div>
         } @for (cursus of cursuses(); track cursus.id) {
-        <bp-cursus-card [cursus]="cursus" [editMode]="false" (needRefresh)="loadData()" [showActions]="showActions()"></bp-cursus-card>
+        <bp-cursus-card [cursus]="cursus" [editMode]="editMode()" (needRefresh)="loadData()"></bp-cursus-card>
         }@empty {
         <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
             <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>
