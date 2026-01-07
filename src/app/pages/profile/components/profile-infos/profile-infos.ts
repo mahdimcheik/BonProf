@@ -12,9 +12,9 @@ import { TeacherDetails, UserDetails } from 'src/client';
     templateUrl: './profile-infos.html'
 })
 export class ProfileInfos {
-    teacher = input.required<UserDetails>();
+    user = input.required<UserDetails>();
     showEditButton = input<boolean>(false);
     address = computed(() => {
-        return this.teacher().addresses.length > 0 ? this.teacher().addresses[0] : null;
+        return this.user().addresses.length > 0 ? this.user().addresses[0] : null;
     });
 }

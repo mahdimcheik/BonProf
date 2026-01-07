@@ -186,27 +186,45 @@ export class PersonnalInfosEdition implements OnInit {
 
     async submit(event: FormGroup<any>) {
         console.log(event.value);
-        const teacher = event.value;
-        const updatedTeacher: UserUpdate = {
-            ...this.teacherProfile(),
-            firstName: teacher.personnalInfos.firstName,
-            lastName: teacher.personnalInfos.lastName,
-            dateOfBirth: teacher.personnalInfos.dateOfBirth,
-            genderId: teacher.personnalInfos.genderId,
-            languagesIds: teacher.optionalFields.languagesIds,
-            teacher: {
-                ...this.teacherProfile()?.teacher,
-                gitHub: teacher.socialLinks.gitHub,
-                twitter: teacher.socialLinks.twitter,
-                linkedIn: teacher.socialLinks.linkedIn,
-                faceBook: teacher.socialLinks.faceBook,
-                title: teacher.optionalFields.title,
-                description: teacher.optionalFields.description,
-                priceIndicative: teacher.optionalFields.priceIndicative
-            }
-        };
-        await firstValueFrom(this.mainService.updateTeacherProfile(updatedTeacher));
-        await this.router.navigate(['dashboard/teacher/profile/me']);
+        const user = event.value;
+        if (this.mainService.isTeacher()) {
+            const updatedUser: UserUpdate = {
+                ...this.teacherProfile(),
+                firstName: user.personnalInfos.firstName,
+                lastName: user.personnalInfos.lastName,
+                dateOfBirth: user.personnalInfos.dateOfBirth,
+                genderId: user.personnalInfos.genderId,
+                languagesIds: user.optionalFields.languagesIds,
+                teacher: {
+                    ...this.teacherProfile()?.teacher,
+                    gitHub: user.socialLinks.gitHub,
+                    twitter: user.socialLinks.twitter,
+                    linkedIn: user.socialLinks.linkedIn,
+                    faceBook: user.socialLinks.faceBook,
+                    title: user.optionalFields.title,
+                    description: user.optionalFields.description,
+                    priceIndicative: user.optionalFields.priceIndicative
+                },
+                student: undefined
+            };
+            await firstValueFrom(this.mainService.updateTeacherProfile(updatedUser));
+            await this.router.navigate(['dashboard/teacher/profile/me']);
+        } else if (this.mainService.isStudent()) {
+            const updatedUser: UserUpdate = {
+                ...this.teacherProfile(),
+                firstName: user.personnalInfos.firstName,
+                lastName: user.personnalInfos.lastName,
+                dateOfBirth: user.personnalInfos.dateOfBirth,
+                genderId: user.personnalInfos.genderId,
+                languagesIds: user.optionalFields.languagesIds,
+                student: {
+                    // ...this.teacherProfile()?.student,
+                },
+                teacher: undefined
+            };
+            await firstValueFrom(this.mainService.updateTeacherProfile(updatedUser));
+            await this.router.navigate(['dashboard/teacher/profile/me']);
+        }
     }
 
     ngOnInit() {

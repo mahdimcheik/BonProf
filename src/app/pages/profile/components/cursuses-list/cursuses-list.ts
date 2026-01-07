@@ -25,7 +25,6 @@ export class CursusesList {
     title = 'Liste des cours';
 
     editMode = model(true);
-    showActions = model(true);
     buttonIcon = model('pi pi-plus');
     showEditBox = signal(false);
 

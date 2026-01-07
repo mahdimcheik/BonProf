@@ -667,11 +667,16 @@ export interface Student {
     orders?: Array<Order>;
 }
 
+export interface StudentCreate {
+    [key: string]: never;
+}
+
 export interface StudentDetails {
-    createdAt: Date;
-    updatedAt?: Date | null;
-    archivedAt?: Date | null;
     id: string;
+}
+
+export interface StudentUpdate {
+    [key: string]: never;
 }
 
 export interface Teacher {
@@ -840,6 +845,7 @@ export interface UserCreate {
     dateOfBirth: Date;
     genderId: string;
     teacher?: TeacherCreate;
+    student?: StudentCreate;
 }
 
 export interface UserDetails {
@@ -897,6 +903,7 @@ export interface UserUpdate {
     genderId: string;
     languagesIds?: Array<string>;
     teacher?: TeacherUpdate;
+    student?: StudentUpdate;
 }
 
 /** Request Options for Angular HttpClient requests */

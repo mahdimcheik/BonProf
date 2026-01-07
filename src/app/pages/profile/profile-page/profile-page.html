@@ -1,12 +1,12 @@
 <div class="max-w-[1280px] mx-auto p-4 md:p-6">
     @if( user() ) {
-    <bp-profile-infos [teacher]="user()!" [showEditButton]="isOwner"></bp-profile-infos>
+    <bp-profile-infos [user]="user()!" [showEditButton]="isOwner"></bp-profile-infos>
     }
 
     <p-divider class="my-6"></p-divider>
 
     <bp-profile-description [user]="user()!"></bp-profile-description>
-    <bp-cursuses-list [editMode]="false" [showActions]="false"></bp-cursuses-list>
+    <bp-cursuses-list [editMode]="false"></bp-cursuses-list>
 
     @if(mainAddress()) {
 
