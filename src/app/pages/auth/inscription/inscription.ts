@@ -113,7 +113,7 @@ export class Inscription implements OnInit {
                             label: 'Date de naissance',
                             required: true,
                             placeholder: 'Date de naissance',
-                            value: new Date('2000-01-01'),
+                            value: new Date(2000, 0, 1),
                             validation: [Validators.required, ageValidator()]
                         },
                         {
@@ -129,18 +129,7 @@ export class Inscription implements OnInit {
                             compareKey: 'id',
                             valueFormatter: (gender: any) => {
                                 if (!gender || !gender.name) return '';
-
-                                // Translate gender names from English to French
-                                switch (gender.name.toLowerCase()) {
-                                    case 'male':
-                                        return 'Homme';
-                                    case 'female':
-                                        return 'Femme';
-                                    case 'other':
-                                        return 'Préfère ne pas dire';
-                                    default:
-                                        return gender.name;
-                                }
+                                return gender.name;
                             }
                         }
                     ],

@@ -236,8 +236,8 @@ export interface Formation {
     description: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId: string;
-    teacher?: Teacher;
+    userId: string;
+    user?: UserApp;
 }
 
 export interface FormationCreate {
@@ -246,7 +246,6 @@ export interface FormationCreate {
     institute: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
 }
 
 export interface FormationDetails {
@@ -281,7 +280,6 @@ export interface FormationUpdate {
     institute: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
 }
 
 export interface Gender {

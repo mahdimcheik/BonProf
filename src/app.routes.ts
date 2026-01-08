@@ -8,6 +8,7 @@ import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
+import { isStudentOnlyGuard, isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
 
 export const appRoutes: Routes = [
     {
@@ -42,6 +43,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: 'teacher',
+                canActivate: [isConnectedGuard, isTeacherOnlyGuard],
                 children: [
                     {
                         path: 'profile/:id',
@@ -63,6 +65,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'student',
+                canActivate: [isConnectedGuard, isStudentOnlyGuard],
                 children: [
                     {
                         path: 'profile/:id',
