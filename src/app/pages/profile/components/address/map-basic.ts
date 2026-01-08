@@ -40,10 +40,11 @@ export class MapBasic implements AfterViewInit, OnDestroy {
     });
 
     private map!: L.Map;
-    private markersLayer = L.markerClusterGroup();
+    private markersLayer!: L.MarkerClusterGroup;
     private mapInitialized = false;
 
     ngAfterViewInit(): void {
+        this.markersLayer = L.markerClusterGroup();
         this.initMap();
         this.mapInitialized = true;
         this.loadMarkers();
