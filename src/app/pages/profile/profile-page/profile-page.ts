@@ -15,7 +15,7 @@ import { AddressCard } from '@/pages/profile/components/address-card/address-car
 
 @Component({
     selector: 'bp-profile-page',
-    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, Card, CursusesList, AddressCard],
+    imports: [ProfileInfos, Divider, ProfileDescription, ContactForm, CursusesList, AddressCard],
     templateUrl: './profile-page.html'
 })
 export class ProfilePage implements OnInit {

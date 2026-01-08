@@ -17,8 +17,7 @@ export class Catalog {
     tab: string = 'cursuses';
 
     ngOnInit() {
-        this.mainService.getTeacherFullProfile();
-        // .subscribe();
+        this.mainService.getTeacherFullProfile().subscribe();
         this.activatedRoute.queryParams.subscribe((params) => {
             const tabParam = params['tab'];
             if (tabParam) {
