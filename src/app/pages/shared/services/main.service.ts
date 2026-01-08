@@ -51,11 +51,18 @@ export class MainService {
     isStudent = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Student'));
 
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
-        return [
-            { label: 'Accueil', routerLink: '/' },
-            { label: 'Dashboard', routerLink: '/dashboard' },
-            { label: 'Mentions Légales', routerLink: '/mentions-legales' }
-        ] as MenuItem[];
+        const user = this.userConnected();
+        if (user && user.email) {
+            return [
+                { label: 'Accueil', routerLink: '/' },
+                { label: 'Dashboard', routerLink: '/dashboard' },
+                { label: 'Mentions Légales', routerLink: '/mentions-legales' }
+            ] as MenuItem[];
+        } else
+            return [
+                { label: 'Accueil', routerLink: '/' },
+                { label: 'Mentions Légales', routerLink: '/mentions-legales' }
+            ] as MenuItem[];
     });
 
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
