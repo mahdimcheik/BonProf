@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { UserDetails } from 'src/client';
 import { ProfileDescription } from '../components/profile-description/profile-description';
 import { ProfileInfos } from '../components/profile-infos/profile-infos';
-import { CursusesList } from '../components/cursuses-list/cursuses-list';
+import { CursusesList } from '../../cursuses/cursuses-list/cursuses-list';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MainService } from '@/pages/shared/services/main.service';
 import { AddressCard } from '@/pages/profile/components/address-card/address-card';
