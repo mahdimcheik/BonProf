@@ -5,7 +5,12 @@ import { MainService } from '../services/main.service';
 export const isAdminOnlyGuard: CanActivateFn = async (route, state) => {
     var auth = inject(MainService);
     if (auth.userConnected().email) {
-        if (auth.userConnected().roles?.includes('Admin')) {
+        if (
+            auth
+                .userConnected()
+                .roles?.map((r) => r.name)
+                .includes('Admin')
+        ) {
             return true;
         } else {
             return false;
@@ -17,7 +22,12 @@ export const isAdminOnlyGuard: CanActivateFn = async (route, state) => {
 export const isTeacherOnlyGuard: CanActivateFn = async (route, state) => {
     var auth = inject(MainService);
     if (auth.userConnected().email) {
-        if (auth.userConnected().roles?.includes('Teacher')) {
+        if (
+            auth
+                .userConnected()
+                .roles?.map((r) => r.name)
+                .includes('Teacher')
+        ) {
             return true;
         } else {
             return false;
@@ -29,7 +39,12 @@ export const isTeacherOnlyGuard: CanActivateFn = async (route, state) => {
 export const isStudentOnlyGuard: CanActivateFn = async (route, state) => {
     var auth = inject(MainService);
     if (auth.userConnected().email) {
-        if (auth.userConnected().roles?.includes('Student')) {
+        if (
+            auth
+                .userConnected()
+                .roles?.map((r) => r.name)
+                .includes('Student')
+        ) {
             return true;
         } else {
             return false;

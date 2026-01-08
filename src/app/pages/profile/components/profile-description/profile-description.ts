@@ -16,7 +16,7 @@ export class ProfileDescription {
     user = input.required<UserDetails>();
     sanitizer = inject(DomSanitizer);
     descriptionSafeHtml = computed<SafeHtml>(() => {
-        const description = this.user()?.teacher?.description || 'Pas de description fournie';
+        const description = this.user()?.description || 'Pas de description fournie';
         return this.sanitizer.bypassSecurityTrustHtml(description.replace(/\n/g, '<br>'));
     });
     languages = computed(() => {

@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
+import { GenderDetails, RoleDetails, TeacherCreate, UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
@@ -45,136 +45,7 @@ export class Inscription implements OnInit {
 
     inscriptionFormStructure = computed<Structure>(() => {
         const roleId = this.selectedUserType();
-        if (roleId == '87a0a5ed-c7bb-4394-a163-7ed7560b4a01') {
-            return {
-                id: 'inscriptionForm',
-                name: 'inscriptionForm',
-                label: 'Inscription',
-                globalValidators: [Validators.required],
-                styleClass: 'max-w-[40rem] ',
-                hideCancelButton: true,
-                hideSubmitButton: true,
-                sections: [
-                    {
-                        id: 'inscriptionForm',
-                        name: 'inscriptionForm',
-                        label: 'Inscription',
-                        fields: [
-                            {
-                                id: 'firstName',
-                                name: 'firstName',
-                                type: 'text',
-                                label: 'Prénom',
-                                required: true,
-                                placeholder: 'Prénom',
-                                validation: [Validators.required]
-                            },
-                            {
-                                id: 'lastName',
-                                name: 'lastName',
-                                type: 'text',
-                                label: 'Nom',
-                                required: true,
-                                placeholder: 'Nom',
-                                validation: [Validators.required]
-                            },
-                            {
-                                id: 'email',
-                                name: 'email',
-                                type: 'email',
-                                label: 'Email',
-                                required: true,
-                                placeholder: 'Email',
-                                fullWidth: true,
 
-                                validation: [Validators.email, Validators.required]
-                            },
-                            {
-                                id: 'password',
-                                name: 'password',
-                                type: 'password',
-                                label: 'Mot de passe',
-                                required: true,
-                                placeholder: 'Mot de passe',
-                                validation: [Validators.required, passwordStrengthValidator()]
-                            },
-                            {
-                                id: 'confirmPassword',
-                                name: 'confirmPassword',
-                                type: 'password',
-                                label: 'Confirmer le mot de passe',
-                                placeholder: 'Confirmer le mot de passe',
-                                validation: [Validators.required]
-                            },
-                            {
-                                id: 'dateOfBirth',
-                                name: 'dateOfBirth',
-                                type: 'date',
-                                label: 'Date de naissance',
-                                required: true,
-                                placeholder: 'Date de naissance',
-                                value: new Date('2000-01-01'),
-                                validation: [Validators.required, ageValidator()]
-                            },
-                            {
-                                id: 'genderId',
-                                name: 'genderId',
-                                label: 'Genre',
-                                type: 'select',
-                                placeholder: 'Genre',
-                                required: true,
-                                options: this.genderOptions(),
-                                value: this.selectedGender()?.id,
-                                displayKey: 'name',
-                                compareKey: 'id',
-                                valueFormatter: (gender: any) => {
-                                    if (!gender || !gender.name) return '';
-
-                                    // Translate gender names from English to French
-                                    switch (gender.name.toLowerCase()) {
-                                        case 'male':
-                                            return 'Homme';
-                                        case 'female':
-                                            return 'Femme';
-                                        case 'other':
-                                            return 'Préfère ne pas dire';
-                                        default:
-                                            return gender.name;
-                                    }
-                                }
-                            }
-                        ],
-                        groupValidators: [passwordValidator('password', 'confirmPassword')]
-                    },
-
-                    {
-                        id: 'privacy',
-                        name: 'privacy',
-                        label: 'Consentements et confidentialité',
-                        fields: [
-                            {
-                                id: 'privacyPolicyConsent',
-                                name: 'privacyPolicyConsent',
-                                type: 'checkbox',
-                                label: "J'ai lu et j'accepte la politique de confidentialité",
-                                required: true,
-                                fullWidth: true,
-                                validation: [Validators.requiredTrue]
-                            },
-                            {
-                                id: 'dataProcessingConsent',
-                                name: 'dataProcessingConsent',
-                                type: 'checkbox',
-                                label: "J'accepte que mes données personnelles soient traitées conformément au RGPD pour la création et la gestion de mon compte, ainsi que pour la fourniture des services de la plateforme.",
-                                required: true,
-                                fullWidth: true,
-                                validation: [Validators.requiredTrue]
-                            }
-                        ]
-                    }
-                ]
-            };
-        }
         return {
             id: 'inscriptionForm',
             name: 'inscriptionForm',
@@ -242,7 +113,7 @@ export class Inscription implements OnInit {
                             label: 'Date de naissance',
                             required: true,
                             placeholder: 'Date de naissance',
-                            value: new Date('2000-01-01'),
+                            value: new Date(2000, 0, 1),
                             validation: [Validators.required, ageValidator()]
                         },
                         {
@@ -258,18 +129,7 @@ export class Inscription implements OnInit {
                             compareKey: 'id',
                             valueFormatter: (gender: any) => {
                                 if (!gender || !gender.name) return '';
-
-                                // Translate gender names from English to French
-                                switch (gender.name.toLowerCase()) {
-                                    case 'male':
-                                        return 'Homme';
-                                    case 'female':
-                                        return 'Femme';
-                                    case 'other':
-                                        return 'Préfère ne pas dire';
-                                    default:
-                                        return gender.name;
-                                }
+                                return gender.name;
                             }
                         }
                     ],
@@ -348,12 +208,11 @@ export class Inscription implements OnInit {
         const userCreationData: UserCreate = {
             ...value.inscriptionForm,
             ...value.privacy,
+            ...value.optionalFields,
             roleId: this.selectedUserType(),
-            teacher: {
-                ...value.optionalFields
-            }
+            teacher: {},
+            student: {}
         };
-        console.log(userCreationData);
 
         try {
             const res = await firstValueFrom(this.mainService.register(userCreationData));

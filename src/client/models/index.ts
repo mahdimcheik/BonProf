@@ -76,7 +76,6 @@ export interface AddressUpdate {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    profileId: string;
     typeId: string;
 }
 
@@ -236,8 +235,8 @@ export interface Formation {
     description: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId: string;
-    teacher?: Teacher;
+    userId: string;
+    user?: UserApp;
 }
 
 export interface FormationCreate {
@@ -246,7 +245,6 @@ export interface FormationCreate {
     institute: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
 }
 
 export interface FormationDetails {
@@ -281,7 +279,6 @@ export interface FormationUpdate {
     institute: string;
     dateFrom: Date;
     dateTo?: Date | null;
-    teacherId?: string;
 }
 
 export interface Gender {
@@ -684,8 +681,6 @@ export interface Teacher {
     createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
-    title?: string | null;
-    description?: string | null;
     userId: string;
     user: UserApp;
     linkedIn?: string | null;
@@ -699,14 +694,11 @@ export interface Teacher {
 }
 
 export interface TeacherCreate {
-    title?: string | null;
-    description?: string | null;
+    [key: string]: never;
 }
 
 export interface TeacherDetails {
     id: string;
-    title?: string | null;
-    description?: string | null;
     createdAt: Date;
     updatedAt?: Date | null;
     cursuses?: Array<CursusDetails>;
@@ -718,8 +710,6 @@ export interface TeacherDetails {
 }
 
 export interface TeacherUpdate {
-    title?: string | null;
-    description?: string | null;
     linkedIn?: string | null;
     faceBook?: string | null;
     gitHub?: string | null;
@@ -817,6 +807,8 @@ export interface UserApp {
     lastName: string;
     dateOfBirth: Date;
     imgUrl?: string | null;
+    title?: string | null;
+    description?: string | null;
     dataProcessingConsent: boolean;
     privacyPolicyConsent: boolean;
     updatedAt?: Date | null;
@@ -837,6 +829,8 @@ export interface UserApp {
 export interface UserCreate {
     firstName: string;
     lastName: string;
+    title?: string | null;
+    description?: string | null;
     email: string;
     password: string;
     dataProcessingConsent: boolean;
@@ -854,6 +848,8 @@ export interface UserDetails {
     dateOfBirth: Date;
     firstName: string | null;
     lastName: string | null;
+    title?: string | null;
+    description?: string | null;
     imgUrl?: string | null;
     status?: StatusAccountDetails;
     gender?: GenderDetails;
@@ -899,6 +895,8 @@ export interface UserLogin {
 export interface UserUpdate {
     firstName: string;
     lastName: string;
+    title?: string | null;
+    description?: string | null;
     dateOfBirth: Date;
     genderId: string;
     languagesIds?: Array<string>;
