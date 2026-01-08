@@ -58,6 +58,15 @@ export const appRoutes: Routes = [
                 ]
             },
             {
+                path: 'student',
+                children: [
+                    {
+                        path: 'profile/:id',
+                        loadComponent: () => import('./app/pages/profile/profile-student/profile-student').then((m) => m.ProfileStudent)
+                    }
+                ]
+            },
+            {
                 path: 'settings',
                 loadComponent: () => import('./app/pages/settings/settings').then((m) => m.Settings)
             }

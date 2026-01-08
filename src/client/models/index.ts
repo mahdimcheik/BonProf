@@ -667,11 +667,16 @@ export interface Student {
     orders?: Array<Order>;
 }
 
+export interface StudentCreate {
+    [key: string]: never;
+}
+
 export interface StudentDetails {
-    createdAt: Date;
-    updatedAt?: Date | null;
-    archivedAt?: Date | null;
     id: string;
+}
+
+export interface StudentUpdate {
+    [key: string]: never;
 }
 
 export interface Teacher {
@@ -710,20 +715,6 @@ export interface TeacherDetails {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative?: number;
-}
-
-export interface TeacherDetailsListResponse {
-    message: string;
-    status: number;
-    data?: Array<TeacherDetails>;
-    count?: number | null;
-}
-
-export interface TeacherDetailsResponse {
-    message: string;
-    status: number;
-    data?: TeacherDetails;
-    count?: number | null;
 }
 
 export interface TeacherUpdate {
@@ -854,6 +845,7 @@ export interface UserCreate {
     dateOfBirth: Date;
     genderId: string;
     teacher?: TeacherCreate;
+    student?: StudentCreate;
 }
 
 export interface UserDetails {
@@ -871,6 +863,13 @@ export interface UserDetails {
     languages: Array<LanguageDetails>;
     teacher?: TeacherDetails;
     student?: StudentDetails;
+}
+
+export interface UserDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<UserDetails>;
+    count?: number | null;
 }
 
 export interface UserDetailsResponse {
@@ -904,6 +903,7 @@ export interface UserUpdate {
     genderId: string;
     languagesIds?: Array<string>;
     teacher?: TeacherUpdate;
+    student?: StudentUpdate;
 }
 
 /** Request Options for Angular HttpClient requests */

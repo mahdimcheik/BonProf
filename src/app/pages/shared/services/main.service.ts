@@ -12,6 +12,7 @@ import {
     PasswordRecovery,
     PasswordResetResponse,
     StringResponse,
+    StudentsService,
     TeachersService,
     UserCreate,
     UserDetails,
@@ -31,6 +32,7 @@ export class MainService {
     messageService = inject(MessageService);
     localStorageService = inject(LocalstorageService);
     teacherService = inject(TeachersService);
+    studentService = inject(StudentsService);
 
     ApplicationName = 'BonProf';
     logoUrl = 'assets/bird.svg';
@@ -63,35 +65,47 @@ export class MainService {
         }
         return [
             {
-                label: 'Home',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                label: 'Connexion',
+                command: () => this.router.navigate(['/auth/login'])
             },
             {
-                label: 'UI Components',
-                items: [
-                    { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/profile'] },
-                    { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
-                ]
+                label: 'Inscription',
+                command: () => this.router.navigate(['/auth/register'])
             }
         ] as MenuItem[];
     });
 
     sidebarMenuItems = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
-        const items: MenuItem[] = [
-            {
-                label: 'Général',
-                root: true
-            },
-            { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
-            {
-                label: 'Administration',
-                root: true
-            },
-            { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
-            { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] }
-        ];
-        return items;
+        if (this.isTeacher()) {
+            return [
+                {
+                    label: 'Général',
+                    root: true
+                },
+                { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                {
+                    label: 'Administration',
+                    root: true
+                },
+                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
+                { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] }
+            ];
+        } else if (this.isStudent()) {
+            return [
+                {
+                    label: 'Général',
+                    root: true
+                },
+                { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                {
+                    label: 'Administration',
+                    root: true
+                },
+                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me'] },
+                { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] }
+            ];
+        } else return [];
     });
 
     /**
@@ -205,5 +219,21 @@ export class MainService {
 
     updateTeacherProfile(updatedProfile: UserUpdate) {
         return this.teacherService.teachersUpdateProfilePut(updatedProfile);
+    }
+
+    // student
+
+    getStudentFullProfile() {
+        return this.studentService.studentsMyProfileGet().pipe(
+            tap((response) => {
+                if (response.data) {
+                    this.userConnected.set(response.data ?? null);
+                }
+            })
+        );
+    }
+
+    updateStudentProfile(updatedProfile: UserUpdate) {
+        return this.studentService.studentsUpdateProfilePut(updatedProfile);
     }
 }

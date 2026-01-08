@@ -49,5 +49,8 @@ export class AppSidebar {
             .subscribe((result) => {
                 this.height = result.matches ? (window.innerHeight - 20).toString() + 'px' : (window.innerHeight - 130).toString() + 'px';
             });
+        window.addEventListener('resize', () => {
+            this.height = this.breakpointObserver.isMatched('(max-width: 991px)') ? (window.innerHeight - 20).toString() + 'px' : (window.innerHeight - 130).toString() + 'px';
+        });
     }
 }

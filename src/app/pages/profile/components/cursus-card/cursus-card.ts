@@ -7,8 +7,8 @@ import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 import { CursusEdition } from '../cursus-edition/cursus-edition';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 
 @Component({
     selector: 'bp-cursus-card',
@@ -20,8 +20,9 @@ export class CursusCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
-    showActions = model(true);
+    showActions = signal(false);
     cursus = model.required<CursusDetails>();
+
     showEditModal = signal(false);
     showDeleteConfirm = signal(false);
     needRefresh = output<boolean>();
@@ -42,7 +43,7 @@ export class CursusCard {
                 this.cursus.set(newFormation.data);
             }
         } finally {
-            this.editMode.set(false);
+            this.showActions.set(false);
         }
     }
     showConfirmModal() {

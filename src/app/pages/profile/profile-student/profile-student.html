@@ -6,15 +6,6 @@
     <p-divider class="my-6"></p-divider>
 
     <bp-profile-description [user]="user()!"></bp-profile-description>
-    <bp-cursuses-list [editMode]="false"></bp-cursuses-list>
-
-    @if(mainAddress()) {
-
-    <h2 class="text-lg font-semibold flex-1 !m-0 p-3">Où se déroule l'enseignement ?</h2>
-    <p-card>
-        <bp-address-card [address]="mainAddress()!" [editMode]="false"></bp-address-card>
-    </p-card>
-    }
 
     <p-divider class="my-6"></p-divider>
 

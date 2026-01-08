@@ -23,7 +23,7 @@ export class AddressCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
-    showActions = model(true);
+    showEditBox = signal(false);
     address = model.required<AddressDetails>();
     showDeleteConfirm = signal(false);
     teacher = this.mainService.userConnected;
@@ -37,11 +37,11 @@ export class AddressCard {
     needRefresh = output<boolean>();
 
     cancel() {
-        this.editMode.set(false);
+        this.showEditBox.set(false);
     }
 
     goEditMode() {
-        this.editMode.set(true);
+        this.showEditBox.set(true);
     }
 
     async editAddress(address: AddressDetails | AddressCreate | AddressUpdate) {
@@ -51,7 +51,7 @@ export class AddressCard {
                 this.address.set(newAddress.data);
             }
         } finally {
-            this.editMode.set(false);
+            this.showEditBox.set(false);
         }
     }
     showConfirmModal() {

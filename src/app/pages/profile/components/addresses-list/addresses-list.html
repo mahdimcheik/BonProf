@@ -11,7 +11,7 @@
             </div>
         </p-card>
         } @for (address of addresses(); track address.id) {
-        <bp-address-card [address]="address" [editMode]="false" (needRefresh)="loadData()"></bp-address-card>
+        <bp-address-card [address]="address" [editMode]="editMode()" (needRefresh)="loadData()"></bp-address-card>
         }@empty {
         <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
             <i class="pi pi-graduation-cap text-gray-400 text-4xl mb-4"></i>

@@ -29,21 +29,21 @@
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
                         <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
-                    @if(teacher().teacher?.linkedIn || teacher().teacher?.faceBook || teacher().teacher?.twitter || teacher().teacher?.gitHub) {
+                    @if(user()?.teacher?.linkedIn || user()?.teacher?.faceBook || user()?.teacher?.twitter || user()?.teacher?.gitHub) {
                     <ul class="list-none p-0 m-0 flex flex-wrap">
-                        @if(teacher().teacher?.linkedIn) {
+                        @if(user().teacher?.linkedIn) {
                         <li>
                             <p-button icon="pi pi-linkedin" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="LinkedIn" tooltipPosition="top" />
                         </li>
-                        } @if(teacher().teacher?.faceBook) {
+                        } @if(user().teacher?.faceBook) {
                         <li>
                             <p-button icon="pi pi-facebook" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Facebook" tooltipPosition="top" />
                         </li>
-                        } @if(teacher().teacher?.twitter) {
+                        } @if(user().teacher?.twitter) {
                         <li>
                             <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="Twitter" tooltipPosition="top" />
                         </li>
-                        } @if(teacher().teacher?.gitHub) {
+                        } @if(user().teacher?.gitHub) {
                         <li>
                             <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="info" size="large" pTooltip="GitHub" tooltipPosition="top" />
                         </li>
@@ -59,7 +59,7 @@
 
     <!-- Main Content -->
     <div class="flex-1 min-w-0">
-        <p-card styleClass="shadow-md h-full w-full" [header]="teacher().teacher?.title ?? 'Description'">
+        <p-card styleClass="shadow-md h-full w-full" [header]="user()?.teacher?.title ?? 'Description'">
             <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
     </div>

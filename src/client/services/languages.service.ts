@@ -105,9 +105,9 @@ export class LanguagesService {
         return this.httpClient.delete(url, requestOptions);
     }
 
-    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
-    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
-    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
+    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'body', options?: RequestOptions<'json'>): Observable<LanguageDetailsListResponse>;
+    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<LanguageDetailsListResponse>>;
+    languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<LanguageDetailsListResponse>>;
     languagesTeacherUpdateLanguagesPost(requestBody?: Array<string>, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/languages/teacher/update-languages`;
 

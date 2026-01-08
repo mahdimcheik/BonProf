@@ -1,5 +1,3 @@
-import { ProductCard } from '@/pages/components/products/product-card/product-card';
-import { ProductEdition } from '@/pages/components/products/product-edition/product-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { MainService } from '@/pages/shared/services/main.service';
 import { ProductWrapperService } from '@/pages/shared/services/product-wrapper-service';
@@ -9,6 +7,8 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
 import { ProductCreate, ProductDetails } from 'src/client';
+import { ProductEdition } from '../product-edition/product-edition';
+import { ProductCard } from '../product-card/product-card';
 
 @Component({
     selector: 'bp-products-list',

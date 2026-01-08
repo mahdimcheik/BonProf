@@ -1,5 +1,5 @@
-import { AddressCard } from '@/pages/addresses/components/address-card/address-card';
-import { AddressEdition } from '@/pages/addresses/components/address-edition/address-edition';
+import { AddressCard } from '@/pages/profile/components/address-card/address-card';
+import { AddressEdition } from '@/pages/profile/components/address-edition/address-edition';
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { AddressWrapperService } from '@/pages/shared/services/address-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
