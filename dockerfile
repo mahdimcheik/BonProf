@@ -1,7 +1,7 @@
 FROM node:20 AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm i
 
 FROM build AS production
 COPY . .
