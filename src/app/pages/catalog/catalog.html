@@ -1,1 +1,20 @@
-<p>catalog works!</p>
+<div class="card h-[calc(100vh-115px)] overflow-auto">
+    <p-tabs value="cursuses" lazy [value]="tab" (valueChange)="onTabChange($event)">
+        <p-tablist>
+            <p-tab value="cursuses">Cours</p-tab>
+            <p-tab value="products">Produits</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="cursuses">
+                <ng-template #content>
+                    <bp-cursuses-list></bp-cursuses-list>
+                </ng-template>
+            </p-tabpanel>
+            <p-tabpanel value="products">
+                <ng-template #content>
+                    <bp-products-list></bp-products-list>
+                </ng-template>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+</div>
