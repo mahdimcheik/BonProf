@@ -65,19 +65,6 @@ export class AddressEdition implements OnInit {
     }
 
     cityToAddress(city: CityDetails): AddressCreate {
-        var titi = this.user();
-        const toto = {
-            city: city.properties.city,
-            zipCode: city.properties.postcode,
-            street: this.address()?.street || '',
-            country: this.address()?.country || 'France',
-            additionalInfo: this.address()?.additionalInfo || '',
-            userId: this.user()?.id || '',
-            typeId: this.address()?.typeId || '',
-            latitude: city.geometry.coordinates[1],
-            longitude: city.geometry.coordinates[0]
-        };
-
         return {
             city: city.properties.city,
             zipCode: city.properties.postcode,
@@ -131,7 +118,7 @@ export class AddressEdition implements OnInit {
     onCitySelect(event: any) {
         if (event.value) {
             const newAddress = this.cityToAddress(event.value);
-            this.address.set(newAddress);
+            this.address.set({ ...this.address(), ...newAddress });
             //
             // this.address.set(this.cityToAddress(event.value));
         }
