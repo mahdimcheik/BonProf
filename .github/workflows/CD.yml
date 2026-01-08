@@ -18,6 +18,11 @@ jobs:
             username: ${{ secrets.DOCKER_HUB_USERNAME }}
             password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Install dependencies & build
+        run: |
+          npm ci
+          npm run build:prod
+          
       # Step 2: build the docker image 
       - name: Build the docker image
         run: docker build --target prod-runtime -t mahdimcheik/bonprof-client:latest .
