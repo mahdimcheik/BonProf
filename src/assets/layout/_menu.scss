@@ -34,6 +34,10 @@
         > a {
             display: none;
         }
+
+        &:hover {
+            background-color: red;
+        }
     }
 
     a {
