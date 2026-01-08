@@ -1,7 +1,19 @@
 import { AfterViewInit, Component, computed, input, OnDestroy } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet.markercluster';
 import { AddressDetails, UserDetails } from 'src/client';
+import * as L from 'leaflet';
+
+// 1. On importe le CSS du plugin (si ce n'est pas fait dans angular.json)
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+// 2. L'astuce cruciale :
+// Certains plugins (comme markercluster) dépendent de l'existence de "window.L".
+// On attache manuellement notre instance importée à l'objet window.
+// (Il faut parfois caster window en 'any' pour TypeScript)
+(window as any).L = L;
+
+// 3. On importe le JS du plugin APRÈS avoir défini window.L
+import 'leaflet.markercluster';
 
 @Component({
     selector: 'bp-map-basic',
