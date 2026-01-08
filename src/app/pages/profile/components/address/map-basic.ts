@@ -3,16 +3,6 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { AddressDetails, UserDetails } from 'src/client';
 
-// Extend Leaflet types to include markerClusterGroup
-declare module 'leaflet' {
-    function markerClusterGroup(options?: any): L.MarkerClusterGroup;
-    interface MarkerClusterGroup extends L.LayerGroup {
-        addLayer(layer: L.Layer): this;
-        clearLayers(): this;
-        getBounds(): L.LatLngBounds;
-    }
-}
-
 @Component({
     selector: 'bp-map-basic',
     imports: [],
