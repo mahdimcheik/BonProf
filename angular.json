@@ -41,7 +41,9 @@
                             "node_modules/@syncfusion/ej2-dropdowns/styles/material.css",
                             "node_modules/@syncfusion/ej2-angular-schedule/styles/material-dark.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
