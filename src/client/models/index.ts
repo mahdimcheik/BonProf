@@ -76,7 +76,6 @@ export interface AddressUpdate {
     additionalInfo?: string | null;
     longitude?: number | null;
     latitude?: number | null;
-    profileId: string;
     typeId: string;
 }
 

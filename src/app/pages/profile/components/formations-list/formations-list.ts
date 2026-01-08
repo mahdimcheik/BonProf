@@ -7,7 +7,7 @@ import { Component, DestroyRef, inject, model, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, of } from 'rxjs';
 import { FormationCreate, FormationDetails } from 'src/client';
 
 @Component({
@@ -56,7 +56,14 @@ export class FormationsList {
     }
 
     async addNewFormation(event: FormationCreate) {
-        const res = await firstValueFrom(this.formationWrapperService.addFormation(event));
+        const res = await firstValueFrom(
+            this.formationWrapperService.addFormation(event).pipe(
+                catchError((err) => {
+                    this.messageService.add({ severity: 'error', summary: 'Erreur', detail: err.error.message || "Une erreur est survenue lors de l'ajout de la formation" });
+                    return of();
+                })
+            )
+        );
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Formation ajoutée avec succès' });
         this.showEditBox.set(false);
         await this.loadData();
