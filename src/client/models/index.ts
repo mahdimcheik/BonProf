@@ -221,6 +221,18 @@ export interface FileUrlResponse {
     count?: number | null;
 }
 
+export interface FilterTeacher {
+    city?: string | null;
+    postalCode?: string | null;
+    dateFrom?: Date | null;
+    dateTo?: Date | null;
+    fullName?: string | null;
+    categoryIds?: Array<string>;
+    levelIds?: Array<string>;
+    first?: number;
+    row?: number | null;
+}
+
 export interface ForgotPassword {
     email: string;
 }

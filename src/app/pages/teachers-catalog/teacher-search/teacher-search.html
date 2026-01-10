@@ -1,0 +1,10 @@
+<div class="flex flex-col lg:flex-row">
+    <div class="search control w-full lg:w-[400px] bg-red-500">search</div>
+    <div class="list flex justify-center flex-1 bg-blue-500">
+        <div class="flex flex-wrap justify-center gap-2">
+            @for (teacher of teachers(); track teacher.id) {
+            <bp-teacher-card [teacher]="teacher"></bp-teacher-card>
+            }
+        </div>
+    </div>
+</div>
