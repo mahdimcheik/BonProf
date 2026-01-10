@@ -5,7 +5,7 @@
     </div>
 
     <!-- Right side: Content -->
-    <div class="flex-grow flex flex-col gap-3">
+    <div class="flex-grow flex flex-col gap-3 min-w-0 overflow-hidden">
         <!-- Name and Gender -->
         <div>
             <h3 class="text-xl font-semibold m-0">{{ teacher().firstName }} {{ teacher().lastName }}</h3>
@@ -14,8 +14,8 @@
 
         <!-- Title/Description -->
         @if(teacher().title) {
-        <div>
-            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
+        <div class="w-full max-w-full overflow-hidden">
+            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere w-full" style="word-break: break-word" [innerHTML]="descriptionSafeHtml()"></div>
         </div>
         }
 
