@@ -3,10 +3,11 @@ import { FilterTeacher, UserDetails } from 'src/client';
 import { TeacherCard } from '../teacher-card/teacher-card';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { firstValueFrom } from 'rxjs';
+import { Card } from 'primeng/card';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard],
+    imports: [TeacherCard, Card],
     templateUrl: './teacher-search.html'
 })
 export class TeacherSearch implements OnInit {

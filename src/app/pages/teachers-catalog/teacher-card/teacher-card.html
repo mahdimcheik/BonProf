@@ -1,29 +1,52 @@
-<p-card class="w-[300px] h-[450px] max-h-[450px] flex flex-col justify-between shadow-md">
-    <ng-template pTemplate="header">
-        <div class="w-full flex justify-center p-1 pt-2">{{ teacher().firstName }} {{ teacher().lastName }}</div>
-        <div class="w-full flex justify-center p-1 pt-2">{{ teacher().title }}</div>
-    </ng-template>
+<div class="flex gap-4 w-full border border-surface-300 dark:border-surface-700 p-4 rounded-xl shadow-sm">
+    <!-- Left side: Image -->
+    <div class="flex-shrink-0">
+        <p-image [src]="teacher().imgUrl ?? 'assets/user.svg'" alt="{{ teacher().firstName }} {{ teacher().lastName }}" [imageClass]="'w-[200px] h-[200px] rounded-xl object-cover shadow-sm'" preview="true"></p-image>
+    </div>
 
-    <ng-template pTemplate="content">
-        <div class="flex flex-col gap-2 justify-between">
-            <div>
-                <p-image [src]="teacher().imgUrl ?? 'assets/user.svg'" alt="{{ teacher().firstName }} {{ teacher().lastName }}" [imageClass]="'w-full h-auto rounded-xl object-cover shadow-sm'" preview="true"></p-image>
-                <div class="flex flex-wrap gap-1">
-                    @for(language of teacher().languages; track language.name){
-                    <p-tag [value]="language.name ?? ''" [style]="{ 'background-color': language.color, 'color': '#fff' }" tagClass="text-xs"> </p-tag>
-                    }
-                </div>
-                <div class="flex flex-wrap gap-1 mt-2">
-                    @for(cursus of cursuses(); track cursus.name){
-                    <p-tag [value]="cursus.name" tagClass="text-xs" [style]="{ 'background-color': cursus.color, 'color': '#fff' }"> </p-tag>
-                    }
-                </div>
-            </div>
+    <!-- Right side: Content -->
+    <div class="flex-grow flex flex-col gap-3">
+        <!-- Name and Gender -->
+        <div>
+            <h3 class="text-xl font-semibold m-0">{{ teacher().firstName }} {{ teacher().lastName }}</h3>
+            <p>{{ teacher().gender?.name }}</p>
+        </div>
 
-            <div class="flex flex-wrap gap-1 mt-2 justify-center">
-                <p-button label="Voir profil" [icon]="'pi pi-info'" severity="info"></p-button>
-                <p-button label="Réserver" [icon]="'pi pi-calendar'"></p-button>
+        <!-- Title/Description -->
+        @if(teacher().title) {
+        <div>
+            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
+        </div>
+        }
+
+        <!-- Spoken Languages -->
+        @if(teacher().languages && teacher().languages.length > 0) {
+        <div>
+            <p class="text-sm font-medium mb-1">Langues parlées:</p>
+            <div class="flex flex-wrap gap-1">
+                @for(language of teacher().languages; track language.name){
+                <p-tag [value]="language.name ?? ''" [style]="{ 'background-color': language.color, 'color': '#fff' }" tagClass="text-xs"> </p-tag>
+                }
             </div>
         </div>
-    </ng-template>
-</p-card>
+        }
+
+        <!-- Cursuses -->
+        @if(cursuses().length > 0) {
+        <div>
+            <p class="text-sm font-medium mb-1">Cours:</p>
+            <div class="flex flex-wrap gap-1">
+                @for(cursus of cursuses(); track cursus.name){
+                <p-tag [value]="cursus.name" tagClass="text-xs" [style]="{ 'background-color': cursus.color, 'color': '#fff' }"> </p-tag>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-2 mt-auto">
+            <p-button label="Voir profil" [icon]="'pi pi-info'" severity="info"></p-button>
+            <p-button label="Réserver" [icon]="'pi pi-calendar'"></p-button>
+        </div>
+    </div>
+</div>
