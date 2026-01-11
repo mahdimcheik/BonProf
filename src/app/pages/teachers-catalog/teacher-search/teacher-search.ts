@@ -1,4 +1,4 @@
-import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { FilterTeacher, UserDetails, CategoryCursus, LevelCursus } from 'src/client';
 import { TeacherCard } from '../teacher-card/teacher-card';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
@@ -7,12 +7,15 @@ import { Card } from 'primeng/card';
 import { InputText } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { MultiSelect } from 'primeng/multiselect';
-import { Button } from 'primeng/button';
+import { Button, ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { LuxonModule } from 'luxon-angular';
+import { DateTime } from 'luxon';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, Button, FormsModule],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, Button, FormsModule, ButtonModule, LuxonModule, DatePipe],
     styleUrls: ['./teacher-search.scss'],
     templateUrl: './teacher-search.html'
 })
@@ -24,11 +27,27 @@ export class TeacherSearch implements OnInit {
     fullName = signal<string | null>(null);
     city = signal<string | null>(null);
     postalCode = signal<string | null>(null);
-    dateFrom = signal<Date | null>(null);
-    dateTo = signal<Date | null>(null);
     selectedCategories = signal<string[]>([]);
     selectedLevels = signal<string[]>([]);
 
+    SelectedDate = signal<DateTime>(DateTime.now());
+    weekNumber = computed(() => this.SelectedDate().weekNumber);
+    dateFrom = computed<Date | null>(() => {
+        if (this.SelectedDate() == DateTime.now()) {
+            return this.SelectedDate().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toJSDate();
+        }
+        const weekStart = this.SelectedDate().set({ weekday: 1 }).startOf('day');
+        return weekStart.toJSDate();
+    });
+    dateTo = computed<Date | null>(() => {
+        const weekEnd = this.SelectedDate().set({ weekday: 7 }).endOf('day');
+        return weekEnd.toJSDate();
+    });
+
+    canClick = computed(() => {
+        console.log(this.SelectedDate() > DateTime.now());
+        return this.SelectedDate() > DateTime.now();
+    });
     // Mock data - Replace with actual service calls
     categories = signal<CategoryCursus[]>([
         { id: '1', name: 'Mathématiques', color: '#3b82f6', createdAt: new Date(), updatedAt: null, archivedAt: null },
@@ -71,10 +90,15 @@ export class TeacherSearch implements OnInit {
         this.fullName.set(null);
         this.city.set(null);
         this.postalCode.set(null);
-        this.dateFrom.set(null);
-        this.dateTo.set(null);
         this.selectedCategories.set([]);
         this.selectedLevels.set([]);
         this.loadData();
+    }
+
+    nextWeek() {
+        this.SelectedDate.set(this.SelectedDate().plus({ weeks: 1 }));
+    }
+    previousWeek() {
+        this.SelectedDate.set(this.SelectedDate().minus({ weeks: 1 }));
     }
 }

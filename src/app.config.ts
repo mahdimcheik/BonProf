@@ -4,7 +4,7 @@ import { exceptionLoaderInterceptor } from '@/pages/shared/interceptors/exceptio
 import { loaderInterceptor } from '@/pages/shared/interceptors/loader.interceptor';
 import { TokenInterceptor } from '@/pages/shared/interceptors/token.interceptor';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { registerLicense } from '@syncfusion/ej2-base';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
@@ -14,12 +14,16 @@ import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 import { provideDefaultClient } from './client/providers';
 import { environment } from './environments/environment';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 
 const basePath = environment.API_URL;
 registerLicense(environment.SYNCFUSION_LICENSE_KEY);
+registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        { provide: LOCALE_ID, useValue: 'fr-FR' },
         provideDefaultClient({ basePath: environment.API_URL }),
         provideRouter(appRoutes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }), withEnabledBlockingInitialNavigation()),
         provideHttpClient(withInterceptors([TokenInterceptor, cookiesInterceptor, errorHandlerInterceptor, exceptionLoaderInterceptor, loaderInterceptor])),
