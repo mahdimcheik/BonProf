@@ -32,6 +32,14 @@ export class SlotWrapperService {
         return this.slotsService.slotsTeacherMySlotsPost({ dateFrom, dateTo }).pipe(map((response) => response.data || []));
     }
 
+    getSlotsByStudent(dateFrom: Date, dateTo: Date, teacherId?: string) {
+        if (teacherId) {
+            return this.slotsService.slotsTeacherTeacherIdAvailableSlotsPost(teacherId, { dateFrom, dateTo }).pipe(map((response) => response.data || []));
+        } else {
+            return this.slotsService.slotsStudentPost({ dateFrom, dateTo }).pipe(map((response) => response.data || []));
+        }
+    }
+
     removeSlotById(slotId: string) {
         return this.slotsService.slotsTeacherRemoveSlotIdDelete(slotId).pipe(
             catchError((res) => {

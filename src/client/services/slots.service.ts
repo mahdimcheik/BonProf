@@ -89,28 +89,35 @@ export class SlotsService {
         return this.httpClient.post(url, periodTime, requestOptions);
     }
 
-    slotsTeacherTeacherIdAvailableSlotsGet(teacherId: string, dateFrom?: Date, dateTo?: Date, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
-    slotsTeacherTeacherIdAvailableSlotsGet(teacherId: string, dateFrom?: Date, dateTo?: Date, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
-    slotsTeacherTeacherIdAvailableSlotsGet(teacherId: string, dateFrom?: Date, dateTo?: Date, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
-    slotsTeacherTeacherIdAvailableSlotsGet(teacherId: string, dateFrom?: Date, dateTo?: Date, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    slotsTeacherTeacherIdAvailableSlotsPost(teacherId: string, periodTime?: PeriodTime, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
+    slotsTeacherTeacherIdAvailableSlotsPost(teacherId: string, periodTime?: PeriodTime, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
+    slotsTeacherTeacherIdAvailableSlotsPost(teacherId: string, periodTime?: PeriodTime, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
+    slotsTeacherTeacherIdAvailableSlotsPost(teacherId: string, periodTime?: PeriodTime, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/slots/teacher/${teacherId}/available-slots`;
-
-        let params = new HttpParams();
-        if (dateFrom != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, dateFrom, 'dateFrom');
-        }
-        if (dateTo != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, dateTo, 'dateTo');
-        }
 
         const requestOptions: any = {
             observe: observe as any,
-            params,
             reportProgress: options?.reportProgress,
             withCredentials: options?.withCredentials,
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.get(url, requestOptions);
+        return this.httpClient.post(url, periodTime, requestOptions);
+    }
+
+    slotsStudentPost(periodTime?: PeriodTime, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
+    slotsStudentPost(periodTime?: PeriodTime, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
+    slotsStudentPost(periodTime?: PeriodTime, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
+    slotsStudentPost(periodTime?: PeriodTime, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/student`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, periodTime, requestOptions);
     }
 }

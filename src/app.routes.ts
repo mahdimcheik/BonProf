@@ -72,11 +72,15 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'student',
-                canActivate: [isConnectedGuard, isStudentOnlyGuard],
+                canActivate: [isConnectedGuard],
                 children: [
                     {
                         path: 'profile/:id',
                         loadComponent: () => import('./app/pages/profile/profile-student/profile-student').then((m) => m.ProfileStudent)
+                    },
+                    {
+                        path: 'planning',
+                        loadComponent: () => import('./app/pages/slots/calendar-student/calendar-student').then((m) => m.CalendarStudent)
                     }
                 ]
             },
