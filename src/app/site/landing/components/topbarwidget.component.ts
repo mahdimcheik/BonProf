@@ -15,12 +15,12 @@ import { StyleClassModule } from 'primeng/styleclass';
     selector: 'topbar-widget',
     imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule, Menu],
     template: `<a class="flex items-center" href="#">
-            <img src="assets/bird.svg" alt="SAKAI Logo" class="mr-3" width="40" height="40" />
+            <img src="assets/bird.svg" alt="bon prof Logo" class="mr-3" width="40" height="40" />
 
-            <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">{{ mainService.ApplicationName }}</span>
+            <span class="text-surface-950 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">{{ mainService.ApplicationName }}</span>
         </a>
 
-        <div class="items-center bg-surface-0 dark:bg-surface-900 grow justify-between hidden lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
+        <div class="items-center bg-surface-0 dark:bg-surface-950 grow justify-between hidden lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
             <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col lg:flex-row cursor-pointer gap-8">
                 @for (link of mainService.mainTopbarLinks(); track link.label) {
                     <li>
