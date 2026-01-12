@@ -5,6 +5,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Button } from 'primeng/button';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-sidebar',
@@ -59,6 +60,5 @@ export class AppSidebar {
 
     logout() {
         this.mainService.logout().subscribe();
-        this.router.navigate(['/']);
     }
 }
