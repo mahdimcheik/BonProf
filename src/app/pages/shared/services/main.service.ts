@@ -22,6 +22,7 @@ import {
 } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from './localstorage.service';
+import { CityDetails } from '../models/geolocalisation';
 
 @Injectable({
     providedIn: 'root'
@@ -40,7 +41,7 @@ export class MainService {
     token = signal<string>('');
 
     // addresses
-    AddressesList = signal<AddressDetails[]>([]);
+    selectedCity = signal<CityDetails | null>(null);
 
     // pour la page profile
     userConnected = signal({} as UserDetails);
@@ -223,6 +224,10 @@ export class MainService {
                 }
             })
         );
+    }
+
+    getTeacherpublicProfile(id: string) {
+        return this.teacherService.teachersUserUserIdGet(id);
     }
 
     updateTeacherProfile(updatedProfile: UserUpdate) {

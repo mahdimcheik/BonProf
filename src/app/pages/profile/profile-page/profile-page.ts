@@ -47,6 +47,11 @@ export class ProfilePage implements OnInit {
             if (teacherData.data) {
                 this.user.set(teacherData.data);
             }
+        } else {
+            const teacherData = await firstValueFrom(this.mainservice.getTeacherpublicProfile(teacherId));
+            if (teacherData.data) {
+                this.user.set(teacherData.data);
+            }
         }
     }
 }

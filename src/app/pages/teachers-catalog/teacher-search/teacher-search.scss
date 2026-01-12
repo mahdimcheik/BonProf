@@ -1,0 +1,13 @@
+:host ::ng-deep {
+    .configurable-form-date-input {
+        width: 100% !important;
+
+        .p-datepicker {
+            width: 100% !important;
+        }
+
+        .p-datepicker-input {
+            width: 100% !important;
+        }
+    }
+}

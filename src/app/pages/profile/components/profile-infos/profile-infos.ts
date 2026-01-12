@@ -5,10 +5,11 @@ import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
 import { Tag } from 'primeng/tag';
 import { TeacherDetails, UserDetails } from 'src/client';
+import { TeacherCard } from '@/pages/teachers-catalog/teacher-card/teacher-card';
 
 @Component({
     selector: 'bp-profile-infos',
-    imports: [Image, Button, Card, Tag, RouterLink],
+    imports: [Image, Button, Card, Tag, RouterLink, TeacherCard],
     templateUrl: './profile-infos.html'
 })
 export class ProfileInfos {

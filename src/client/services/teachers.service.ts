@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate } from "../models";
+import { FilterTeacher, RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeachersService {
@@ -25,10 +25,10 @@ export class TeachersService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    teachersAllGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsListResponse>;
-    teachersAllGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsListResponse>>;
-    teachersAllGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsListResponse>>;
-    teachersAllGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    teachersAllPost(filterTeacher?: FilterTeacher, observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsListResponse>;
+    teachersAllPost(filterTeacher?: FilterTeacher, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<UserDetailsListResponse>>;
+    teachersAllPost(filterTeacher?: FilterTeacher, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<UserDetailsListResponse>>;
+    teachersAllPost(filterTeacher?: FilterTeacher, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/teachers/all`;
 
         const requestOptions: any = {
@@ -38,7 +38,7 @@ export class TeachersService {
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.get(url, requestOptions);
+        return this.httpClient.post(url, filterTeacher, requestOptions);
     }
 
     teachersMyProfileGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<UserDetailsResponse>;

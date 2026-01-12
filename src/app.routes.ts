@@ -30,10 +30,17 @@ export const appRoutes: Routes = [
                 path: 'auth',
                 canActivate: [isNotConnectedGuard],
                 loadChildren: () => import('./app/pages/auth/auth.routes')
+            },
+            {
+                path: 'fast-search',
+                loadComponent: () => import('./app/pages/teachers-catalog/teacher-search/teacher-search').then((m) => m.TeacherSearch)
+            },
+            {
+                path: 'profile/:id',
+                component: ProfilePage
             }
         ]
     },
-    //
 
     // Dashboard routes (protected)
     {

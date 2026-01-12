@@ -9,6 +9,7 @@ import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails } from 'src/client';
 import { CursusEdition } from '../cursus-edition/cursus-edition';
 import { CursusCard } from '../cursus-card/cursus-card';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'bp-cursuses-list',
@@ -35,12 +36,15 @@ export class CursusesList {
     }
 
     async loadData() {
-        if (this.mainService?.userConnected()?.id == null) {
-            this.cursuses.set([]);
-            return;
+        const teacherId = this.activatedRoute.snapshot.params['id'] || null;
+
+        if (teacherId == 'me') {
+            const cursusesData = await firstValueFrom(this.cursusWrapperService.getCursusByTeacher(this.mainService?.userConnected()?.id ?? ''));
+            this.cursuses.set(cursusesData || []);
+        } else {
+            const cursusesData = await firstValueFrom(this.cursusWrapperService.getCursusByTeacher(teacherId));
+            this.cursuses.set(cursusesData || []);
         }
-        const cursusesData = await firstValueFrom(this.cursusWrapperService.getCursusByTeacher(this.mainService?.userConnected()?.id ?? ''));
-        this.cursuses.set(cursusesData || []);
     }
 
     async showAddCursusBox() {

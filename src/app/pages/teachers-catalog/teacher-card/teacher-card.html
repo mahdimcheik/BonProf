@@ -1,0 +1,52 @@
+<div class="flex gap-4 w-full border border-surface-300 dark:border-surface-700 p-4 rounded-xl shadow-sm">
+    <!-- Left side: Image -->
+    <div class="flex-shrink-0">
+        <p-image [src]="teacher().imgUrl ?? 'assets/user.svg'" alt="{{ teacher().firstName }} {{ teacher().lastName }}" [imageClass]="'w-[150px] h-[150px] rounded-xl object-cover shadow-sm'" preview="true"></p-image>
+    </div>
+
+    <!-- Right side: Content -->
+    <div class="flex-grow flex flex-col gap-3 min-w-0 overflow-hidden">
+        <!-- Name and Gender -->
+        <div>
+            <h3 class="text-xl font-semibold m-0">{{ teacher().firstName }} {{ teacher().lastName }}</h3>
+            <p>{{ teacher().gender?.name }}</p>
+        </div>
+
+        <!-- Title/Description -->
+        @if(teacher().title) {
+        <span class="w-full max-w-full overflow-hidden max-h-[50px] line-clamp-2">
+            <span class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere w-full" style="word-break: break-word" [innerHTML]="descriptionSafeHtml()"></span>
+        </span>
+        }
+
+        <!-- Spoken Languages -->
+        @if(teacher().languages && teacher().languages.length > 0) {
+        <div>
+            <p class="text-sm font-medium mb-1">Langues parlées:</p>
+            <div class="flex flex-wrap gap-1">
+                @for(language of teacher().languages; track language.name){
+                <p-tag [value]="language.name ?? ''" [style]="{ 'background-color': language.color, 'color': '#fff' }" tagClass="text-xs"> </p-tag>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Cursuses -->
+        @if(cursuses().length > 0) {
+        <div>
+            <p class="text-sm font-medium mb-1">Cours:</p>
+            <div class="flex flex-wrap gap-1">
+                @for(cursus of cursuses(); track cursus.name){
+                <p-tag [value]="cursus.name" tagClass="text-xs" [style]="{ 'background-color': cursus.color, 'color': '#fff' }"> </p-tag>
+                }
+            </div>
+        </div>
+        }
+
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-2 mt-auto">
+            <p-button label="Voir profil" [icon]="'pi pi-info'" severity="info" (onClick)="goToProfile()"></p-button>
+            <p-button label="Réserver" [icon]="'pi pi-calendar'"></p-button>
+        </div>
+    </div>
+</div>
