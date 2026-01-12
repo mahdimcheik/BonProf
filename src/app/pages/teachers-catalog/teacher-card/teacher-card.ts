@@ -29,4 +29,12 @@ export class TeacherCard {
     goToProfile() {
         this.router.navigate(['/profile', this.teacher().id]);
     }
+    goToReservation() {
+        try {
+            const toto = this.teacher();
+            this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.teacher().id } });
+        } catch (e) {
+            console.error('Navigation error:', e);
+        }
+    }
 }
