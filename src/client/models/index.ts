@@ -227,10 +227,14 @@ export interface FilterTeacher {
     dateFrom?: Date | null;
     dateTo?: Date | null;
     fullName?: string | null;
+    cursusName?: string | null;
     categoryIds?: Array<string>;
     levelIds?: Array<string>;
     first?: number;
     row?: number | null;
+    long?: number | null;
+    lat?: number | null;
+    radius?: number;
 }
 
 export interface ForgotPassword {

@@ -31,11 +31,15 @@ export class TeacherSearch implements OnInit {
     teachers = signal<UserDetails[]>([]);
 
     // Filter properties
-    fullName = signal<string | null>(null);
     selectedCity = this.mainService.selectedCity;
     cities = signal<CityDetails[]>([]);
-    material = signal<string | null>(null);
     postalCode = signal<string | null>(null);
+    long = signal<number | null>(null);
+    lat = signal<number | null>(null);
+    radius = signal<number>(10);
+
+    fullName = signal<string | null>(null);
+    cursusName = signal<string | null>(null);
     selectedCategories = signal<string[]>([]);
     selectedLevels = signal<string[]>([]);
 
@@ -82,14 +86,18 @@ export class TeacherSearch implements OnInit {
     async loadData() {
         const filters: FilterTeacher = {
             fullName: this.fullName(),
-            city: this.selectedCity()?.properties.city || null,
+            city: this.selectedCity()?.properties?.city || null,
             postalCode: this.postalCode(),
             dateFrom: this.dateFrom(),
             dateTo: this.dateTo(),
+            cursusName: this.cursusName(),
             categoryIds: this.selectedCategories(),
             levelIds: this.selectedLevels(),
             first: this.first(),
-            row: this.rows()
+            row: this.rows(),
+            long: this.long(),
+            lat: this.lat(),
+            radius: this.radius()
         };
         const data = await firstValueFrom(this.teacherService.getTeachers(filters));
         this.teachers.set(data?.data ?? []);
@@ -144,6 +152,16 @@ export class TeacherSearch implements OnInit {
         if (event.value) {
             this.postalCode.set(event.value.properties.postcode);
             this.selectedCity.set(event.value);
+            this.lat.set(event.value.geometry.coordinates[1]);
+            this.long.set(event.value.geometry.coordinates[0]);
+        } else {
+            this.postalCode.set(null);
+            this.selectedCity.set(null);
         }
+    }
+    onclear() {
+        this.postalCode.set(null);
+        this.lat.set(null);
+        this.long.set(null);
     }
 }
