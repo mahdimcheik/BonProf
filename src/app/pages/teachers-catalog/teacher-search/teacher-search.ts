@@ -16,6 +16,7 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocompl
 import { CityDetails } from '@/pages/shared/models/geolocalisation';
 import { HttpClient } from '@angular/common/http';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'bp-teacher-search',
@@ -24,13 +25,14 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
     templateUrl: './teacher-search.html'
 })
 export class TeacherSearch implements OnInit {
+    mainService = inject(MainService);
     teacherService = inject(TeacherWrapperService);
     http = inject(HttpClient);
     teachers = signal<UserDetails[]>([]);
 
     // Filter properties
     fullName = signal<string | null>(null);
-    selectedCity = signal<string | null>(null);
+    selectedCity = this.mainService.selectedCity;
     cities = signal<CityDetails[]>([]);
     material = signal<string | null>(null);
     postalCode = signal<string | null>(null);
@@ -38,7 +40,7 @@ export class TeacherSearch implements OnInit {
     selectedLevels = signal<string[]>([]);
 
     first = signal<number>(0);
-    rows = signal<number>(10);
+    rows = signal<number>(5);
     totalRecords = signal<number>(0);
 
     SelectedDate = signal<DateTime>(DateTime.now());
@@ -80,7 +82,7 @@ export class TeacherSearch implements OnInit {
     async loadData() {
         const filters: FilterTeacher = {
             fullName: this.fullName(),
-            city: this.selectedCity(),
+            city: this.selectedCity()?.properties.city || null,
             postalCode: this.postalCode(),
             dateFrom: this.dateFrom(),
             dateTo: this.dateTo(),
@@ -96,7 +98,7 @@ export class TeacherSearch implements OnInit {
 
     async onSearch() {
         this.first.set(0);
-        this.rows.set(10);
+        this.rows.set(5);
         await this.loadData();
     }
 
@@ -107,13 +109,13 @@ export class TeacherSearch implements OnInit {
         this.selectedCategories.set([]);
         this.selectedLevels.set([]);
         this.first.set(0);
-        this.rows.set(10);
+        this.rows.set(5);
         this.loadData();
     }
 
     onPageChange($event: PaginatorState) {
         this.first.set($event.first ?? 0);
-        this.rows.set($event.rows ?? 10);
+        this.rows.set($event.rows ?? 5);
         this.loadData();
     }
 
@@ -141,7 +143,7 @@ export class TeacherSearch implements OnInit {
     onCitySelect(event: any) {
         if (event.value) {
             this.postalCode.set(event.value.properties.postcode);
-            this.selectedCity.set(event.value.properties.city);
+            this.selectedCity.set(event.value);
         }
     }
 }

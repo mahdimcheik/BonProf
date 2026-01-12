@@ -1,8 +1,10 @@
 import { CityDetails } from '@/pages/shared/models/geolocalisation';
+import { MainService } from '@/pages/shared/services/main.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,6 +24,7 @@ import { firstValueFrom } from 'rxjs';
                         [(ngModel)]="selectedCity"
                         (completeMethod)="search($event)"
                         [suggestions]="cities()"
+                        (onSelect)="onCitySelect($event)"
                         optionLabel="displayLabel"
                         styleClass="flex-1"
                         [inputStyleClass]="'w-full h-[45px]'"
@@ -38,7 +41,7 @@ import { firstValueFrom } from 'rxjs';
                             <div class="font-medium px-3 py-2">Villes et codes postaux</div>
                         </ng-template>
                     </p-autocomplete>
-                    <button pButton pRipple type="button" label="Réserver" class="text-xl! "></button>
+                    <button pButton pRipple type="button" label="Réserver" class="text-xl! " (click)="goToCatalog()"></button>
                 </div>
             </div>
             <div class="flex justify-center md:justify-end  mt-6 md:mt-0">
@@ -50,6 +53,8 @@ import { firstValueFrom } from 'rxjs';
 export class HeroWidget {
     destroyRef = inject(DestroyRef);
     httpclient = inject(HttpClient);
+    mainService = inject(MainService);
+    router = inject(Router);
 
     cities = signal<CityDetails[]>([]);
     selectedCity: CityDetails | null = null;
@@ -67,5 +72,16 @@ export class HeroWidget {
 
     getCityLabel(city: CityDetails): string {
         return `${city.properties.postcode} ${city.properties.city}`;
+    }
+
+    onCitySelect(event: any) {
+        if (event.value) {
+            this.selectedCity = event.value;
+            this.mainService.selectedCity.set(event.value);
+        }
+    }
+
+    goToCatalog() {
+        this.router.navigate(['/fast-search']);
     }
 }

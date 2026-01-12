@@ -71,13 +71,13 @@
         <!-- Results Panel -->
         <div class="w-full flex flex-col gap-4">
             @if (teachers().length > 0) {
-            <p-paginator (onPageChange)="onPageChange($event)" [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()" />
-            <div class="flex flex-col justify-between min-h-[70dvh]">
-                <div>
+            <div class="flex flex-col justify-between h-[78dvh] overflow-auto">
+                <div class="flex flex-col gap-2">
                     @for (teacher of teachers(); track teacher.id) {
                     <bp-teacher-card [teacher]="teacher"></bp-teacher-card>
                     }
                 </div>
+                <p-paginator (onPageChange)="onPageChange($event)" [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()" />
             </div>
             } @else {
             <p-card>
