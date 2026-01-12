@@ -226,6 +226,10 @@ export class MainService {
         );
     }
 
+    getTeacherpublicProfile(id: string) {
+        return this.teacherService.teachersUserUserIdGet(id);
+    }
+
     updateTeacherProfile(updatedProfile: UserUpdate) {
         return this.teacherService.teachersUpdateProfilePut(updatedProfile);
     }
