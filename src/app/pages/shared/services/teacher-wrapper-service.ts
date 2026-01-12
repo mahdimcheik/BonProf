@@ -9,6 +9,6 @@ export class TeacherWrapperService {
     teacherService = inject(TeachersService);
 
     getTeachers(filters: FilterTeacher) {
-        return this.teacherService.teachersAllPost(filters).pipe(map((response) => response.data ?? []));
+        return this.teacherService.teachersAllPost(filters);
     }
 }

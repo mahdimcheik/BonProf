@@ -1,48 +1,67 @@
 <div class="p-2 lg:p-4">
-    <div class="p-6">
-        <h2 class="text-2xl font-bold m-0">Catalogue des professeurs</h2>
-        <div class="flex gap-2 items-center">
-            <button pButton type="button" icon="pi pi-arrow-left" class="p-button-text p-button-plain" (click)="previousWeek()" [disabled]="!canClick()"></button>
-            <p class="!m-0 font-semibold">Semaine {{ weekNumber() }}</p>
-            <button pButton type="button" icon="pi pi-arrow-right" class="p-button-text p-button-plain" (click)="nextWeek()"></button>
-        </div>
-
-        <span>De {{dateFrom() | date:'dd MMM yyyy' : 'fr-FR' }} à {{dateTo() | date:'dd MMM yyyy' : 'fr-FR'}}</span>
-    </div>
     <div class="flex flex-col lg:flex-row gap-4">
         <!-- Search Panel -->
         <div class="search-control w-full lg:w-[400px]">
             <p-card>
                 <ng-template pTemplate="content">
+                    <div class="p-6">
+                        <div class="flex gap-2 items-center">
+                            <button pButton type="button" icon="pi pi-arrow-left" class="p-button-text p-button-plain" (click)="previousWeek()" [disabled]="!canClick()"></button>
+                            <p class="!m-0 font-semibold">Semaine {{ weekNumber() }}</p>
+                            <button pButton type="button" icon="pi pi-arrow-right" class="p-button-text p-button-plain" (click)="nextWeek()"></button>
+                        </div>
+
+                        <span>De {{dateFrom() | date:'dd MMM yyyy' : 'fr-FR' }} à {{dateTo() | date:'dd MMM yyyy' : 'fr-FR'}}</span>
+                    </div>
                     <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-2">
+                            <h2>Où ?</h2>
+                            <label for="fullName" class="font-medium text-sm">Ville ou code postal</label>
+                            <p-autocomplete
+                                [(ngModel)]="selectedCity"
+                                (completeMethod)="search($event)"
+                                (onSelect)="onCitySelect($event)"
+                                [suggestions]="cities()"
+                                optionLabel="displayLabel"
+                                class="flex-1"
+                                [inputStyleClass]="'w-full h-[35px] my-2' "
+                                [panelStyle]="{ 'z-index': '998' }"
+                                appendTo="body"
+                                placeholder="Entrez votre ville ou code postal"
+                            >
+                                <ng-template let-cityDetails #item>
+                                    <div class="flex items-center gap-2">
+                                        <div>{{ cityDetails.displayLabel }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #header>
+                                    <div class="font-medium px-3 py-2">Villes et codes postaux</div>
+                                </ng-template>
+                            </p-autocomplete>
+                        </div>
                         <!-- Full Name -->
                         <div class="flex flex-col gap-2">
+                            <h2>Avec qui ?</h2>
                             <label for="fullName" class="font-medium text-sm">Nom complet</label>
-                            <input pInputText id="fullName" [(ngModel)]="fullName" placeholder="Rechercher par nom..." class="w-full" (ngModelChange)="onSearch()" />
+                            <input pInputText id="fullName" [(ngModel)]="fullName" placeholder="Rechercher par nom..." class="w-full" />
                         </div>
 
                         <!-- City -->
                         <div class="flex flex-col gap-2">
-                            <label for="city" class="font-medium text-sm">Ville</label>
-                            <input pInputText id="city" [(ngModel)]="city" placeholder="Ville..." class="w-full" />
-                        </div>
+                            <h2>Quelle matière?</h2>
 
-                        <!-- Postal Code -->
-                        <div class="flex flex-col gap-2">
-                            <label for="postalCode" class="font-medium text-sm">Code postal</label>
-                            <input pInputText id="postalCode" [(ngModel)]="postalCode" placeholder="Code postal..." class="w-full" />
+                            <label for="city" class="font-medium text-sm">Matière</label>
+                            <input pInputText id="material" [(ngModel)]="material" placeholder="Matière..." class="w-full" />
                         </div>
-
-                        <!-- Categories -->
-                        <div class="flex flex-col gap-2">
-                            <label for="categories" class="font-medium text-sm">Catégories</label>
-                            <p-multiSelect [(ngModel)]="selectedCategories" [options]="categories()" optionLabel="name" optionValue="id" placeholder="Sélectionner des catégories" [showHeader]="false" class="w-full"> </p-multiSelect>
-                        </div>
-
                         <!-- Levels -->
                         <div class="flex flex-col gap-2">
                             <label for="levels" class="font-medium text-sm">Niveaux</label>
                             <p-multiSelect [(ngModel)]="selectedLevels" [options]="levels()" optionLabel="name" optionValue="id" placeholder="Sélectionner des niveaux" [showHeader]="false" class="w-full"> </p-multiSelect>
+                        </div>
+
+                        <div class="flex gap-2 items-center">
+                            <button pButton type="button" class="p-button-text p-button-plain" (click)="clearFilters()">Vider</button>
+                            <button pButton type="button" class="p-button-text p-button-plain" (click)="onSearch()">Chercher</button>
                         </div>
                     </div>
                 </ng-template>
@@ -51,9 +70,16 @@
 
         <!-- Results Panel -->
         <div class="w-full flex flex-col gap-4">
-            @if (teachers().length > 0) { @for (teacher of teachers(); track teacher.id) {
-            <bp-teacher-card [teacher]="teacher"></bp-teacher-card>
-            } } @else {
+            @if (teachers().length > 0) {
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="first()" [rows]="rows()" [totalRecords]="totalRecords()" />
+            <div class="flex flex-col justify-between min-h-[70dvh]">
+                <div>
+                    @for (teacher of teachers(); track teacher.id) {
+                    <bp-teacher-card [teacher]="teacher"></bp-teacher-card>
+                    }
+                </div>
+            </div>
+            } @else {
             <p-card>
                 <ng-template pTemplate="content">
                     <div class="text-center text-gray-500 p-4">

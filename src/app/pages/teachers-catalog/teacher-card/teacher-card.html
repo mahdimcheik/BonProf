@@ -1,7 +1,7 @@
 <div class="flex gap-4 w-full border border-surface-300 dark:border-surface-700 p-4 rounded-xl shadow-sm">
     <!-- Left side: Image -->
     <div class="flex-shrink-0">
-        <p-image [src]="teacher().imgUrl ?? 'assets/user.svg'" alt="{{ teacher().firstName }} {{ teacher().lastName }}" [imageClass]="'w-[200px] h-[200px] rounded-xl object-cover shadow-sm'" preview="true"></p-image>
+        <p-image [src]="teacher().imgUrl ?? 'assets/user.svg'" alt="{{ teacher().firstName }} {{ teacher().lastName }}" [imageClass]="'w-[150px] h-[150px] rounded-xl object-cover shadow-sm'" preview="true"></p-image>
     </div>
 
     <!-- Right side: Content -->
@@ -14,9 +14,9 @@
 
         <!-- Title/Description -->
         @if(teacher().title) {
-        <div class="w-full max-w-full overflow-hidden">
-            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere w-full" style="word-break: break-word" [innerHTML]="descriptionSafeHtml()"></div>
-        </div>
+        <span class="w-full max-w-full overflow-hidden max-h-[50px] line-clamp-2">
+            <span class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere w-full" style="word-break: break-word" [innerHTML]="descriptionSafeHtml()"></span>
+        </span>
         }
 
         <!-- Spoken Languages -->
