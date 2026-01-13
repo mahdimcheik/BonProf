@@ -446,7 +446,7 @@ export interface Order {
     reductionPercentage?: number;
     reductionAmount?: number;
     studentId: string;
-    student?: Student;
+    student?: UserApp;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
@@ -568,6 +568,22 @@ export interface Reservation {
     student?: Student;
 }
 
+export interface ReservationCreate {
+    title: string;
+    description: string;
+    slotId: string;
+    studentId: string;
+    productId: string;
+}
+
+export interface ReservationDetails {
+    readonly id?: string;
+    readonly title?: string | null;
+    readonly description?: string | null;
+    status?: StatusReservationOutput;
+    product?: ProductDetails;
+}
+
 export interface RoleDetails {
     id: string;
     name: string | null;
@@ -611,6 +627,7 @@ export interface SlotDetails {
     teacher?: TeacherDetails;
     typeId: string;
     type?: TypeSlotDetails;
+    reservation?: ReservationDetails;
 }
 
 export interface SlotDetailsListResponse {
@@ -660,6 +677,13 @@ export interface StatusReservation {
     name: string;
     color: string;
     icon?: string | null;
+}
+
+export interface StatusReservationOutput {
+    readonly id: string;
+    readonly name: string;
+    readonly color: string;
+    readonly icon?: string | null;
 }
 
 export interface StringResponse {

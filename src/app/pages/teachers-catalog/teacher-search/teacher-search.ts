@@ -17,6 +17,7 @@ import { CityDetails } from '@/pages/shared/models/geolocalisation';
 import { HttpClient } from '@angular/common/http';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MainService } from '@/pages/shared/services/main.service';
+import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 
 @Component({
     selector: 'bp-teacher-search',
@@ -27,7 +28,9 @@ import { MainService } from '@/pages/shared/services/main.service';
 export class TeacherSearch implements OnInit {
     mainService = inject(MainService);
     teacherService = inject(TeacherWrapperService);
+    cursusWrapperService = inject(CursusWrapperService);
     http = inject(HttpClient);
+
     teachers = signal<UserDetails[]>([]);
 
     // Filter properties
@@ -65,19 +68,8 @@ export class TeacherSearch implements OnInit {
         console.log(this.SelectedDate() > DateTime.now());
         return this.SelectedDate() > DateTime.now();
     });
-    // Mock data - Replace with actual service calls
-    categories = signal<CategoryCursus[]>([
-        { id: '1', name: 'Mathématiques', color: '#3b82f6', createdAt: new Date(), updatedAt: null, archivedAt: null },
-        { id: '2', name: 'Physique', color: '#10b981', createdAt: new Date(), updatedAt: null, archivedAt: null },
-        { id: '3', name: 'Chimie', color: '#f59e0b', createdAt: new Date(), updatedAt: null, archivedAt: null },
-        { id: '4', name: 'Informatique', color: '#8b5cf6', createdAt: new Date(), updatedAt: null, archivedAt: null }
-    ]);
 
-    levels = signal<LevelCursus[]>([
-        { id: '1', name: 'Débutant', color: '#22c55e', createdAt: new Date(), updatedAt: null, archivedAt: null },
-        { id: '2', name: 'Intermédiaire', color: '#eab308', createdAt: new Date(), updatedAt: null, archivedAt: null },
-        { id: '3', name: 'Avancé', color: '#ef4444', createdAt: new Date(), updatedAt: null, archivedAt: null }
-    ]);
+    levels = this.cursusWrapperService.levelCursuses;
 
     ngOnInit(): void {
         this.loadData();
@@ -99,6 +91,8 @@ export class TeacherSearch implements OnInit {
             lat: this.lat(),
             radius: this.radius()
         };
+        await firstValueFrom(this.cursusWrapperService.getCursusLevels());
+
         const data = await firstValueFrom(this.teacherService.getTeachers(filters));
         this.teachers.set(data?.data ?? []);
         this.totalRecords.set(data?.count ?? 0);

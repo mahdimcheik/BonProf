@@ -65,7 +65,7 @@ export const appRoutes: Routes = [
                         loadComponent: () => import('./app/pages/slots/calendar-teacher/calendar-teacher').then((m) => m.CalendarTeacher)
                     },
                     {
-                        path: 'catalog',
+                        path: 'catalog/:id',
                         loadComponent: () => import('./app/pages/catalog/catalog').then((m) => m.Catalog)
                     }
                 ]

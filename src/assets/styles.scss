@@ -20,3 +20,23 @@
     border: 2px solid var(--primary-color) !important;
     border-radius: 4px;
 }
+
+.waiting {
+    opacity: 0.6;
+    position: relative;
+    &::after {
+        content: 'En attente...';
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+}

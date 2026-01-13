@@ -11,10 +11,7 @@
     [allowResizing]="true"
     currentView="Week"
     (dragStart)="onDragStart($event)"
-    (dragStop)="onDragStop($event)"
     (resizeStart)="onResizeStart($event)"
-    (resizeStop)="onResizeStop($event)"
-    (cellClick)="onCellClick($event)"
     (popupOpen)="onPopupOpen($event)"
     (eventClick)="clickEvent($event)"
     (eventRendered)="applyBgColor($event)"
@@ -24,32 +21,20 @@
 >
     <ng-template #eventSettingsTemplate let-data>
         @let slot = data.ExtendedProps?.['slot'];
-        <header class="w-full flex justify-end px-2 py-1">
-            <p-button variant="text" severity="danger" pTooltip="Supprimer" (onClick)="openConfirmDeleteModal($event, slot)" tooltipPosition="top">
-                <ng-template #icon>
-                    <i class="pi pi-times" size="small"></i>
-                </ng-template>
-
-                <ng-template #buttonContent (click)="clickEvent({event: data})"></ng-template>
-            </p-button>
-        </header>
         <div class="template-wrap" class="h-full w-full">
             <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
+            @if(slot?.reservation){
+            <p-divider></p-divider>
+            <div class="flex flex-col gap-2" [class.waiting]="slot.reservation?.status?.id === '2ec60a91-aab8-4753-a5d8-b131b9441e77'">
+                <div class="student">Réservé par : {{ myUser().firstName }} {{ myUser().lastName }}</div>
+                <p>Title : {{ slot?.reservation?.title }}</p>
+                <p>Produit : {{ slot?.reservation?.product?.name }}</p>
+            </div>
+            }
         </div>
     </ng-template>
 </ejs-schedule>
 
-@if(visibleCreateSlotModal()) {
-<bp-modal-create-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-create-slot>
-} @if(visibleConfirmDeleteModal()) {
-<bp-confirm-modal
-    [(visible)]="visibleConfirmDeleteModal"
-    title="Confirmer la suppression"
-    message="Êtes-vous sûr de vouloir supprimer ce créneau ?"
-    confirmButtonLabel="Supprimer"
-    cancelButtonLabel="Annuler"
-    severity="danger"
-    (onConfirm)="removeSlot()"
-    (cancelClicked)="visibleConfirmDeleteModal.set(false)"
-></bp-confirm-modal>
+@if(visibleBookSlotModal()) {
+<bp-modal-book-slot [(visible)]="visibleBookSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-book-slot>
 }
