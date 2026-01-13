@@ -58,7 +58,7 @@ export class CursusEdition implements OnInit {
                             value: cursus ? cursus.categories?.map((category) => category.id) : [],
                             compareKey: 'id'
                         },
-                        { id: 'color', label: 'Couleur', name: 'color', type: 'color', required: true, value: cursus ? cursus.color : '', fullWidth: true },
+                        { id: 'color', label: 'Couleur', name: 'color', type: 'color', required: true, value: cursus ? cursus.color : '#000000', fullWidth: true },
                         { id: 'description', label: 'Description', name: 'description', type: 'textarea', required: true, value: cursus ? cursus.description : '', fullWidth: true, placeholder: 'Description' }
                     ]
                 }

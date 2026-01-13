@@ -27,6 +27,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { MessageService } from 'primeng/api';
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { ActivatedRoute } from '@angular/router';
+import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
@@ -41,6 +42,7 @@ export class CalendarStudent implements OnInit {
     slotWrapperService = inject(SlotWrapperService);
     messageService = inject(MessageService);
     activatedRoute = inject(ActivatedRoute);
+
     // Input for events data
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
@@ -50,6 +52,7 @@ export class CalendarStudent implements OnInit {
     private isInitialized = false;
 
     teacherId = signal<string | null>(null);
+
     // Locale
     public locale = 'fr';
 
@@ -81,7 +84,6 @@ export class CalendarStudent implements OnInit {
 
     async loadData(startTime: Date, endTime: Date) {
         if (this.isLoading) return;
-
         this.isLoading = true;
         try {
             const slots = await firstValueFrom(this.slotWrapperService.getSlotsByStudent(startTime, endTime, this.teacherId() ?? undefined));
