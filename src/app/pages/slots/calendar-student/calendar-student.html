@@ -40,7 +40,7 @@
 </ejs-schedule>
 
 @if(visibleCreateSlotModal()) {
-<bp-modal-create-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-create-slot>
+<bp-modal-book-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-book-slot>
 } @if(visibleConfirmDeleteModal()) {
 <bp-confirm-modal
     [(visible)]="visibleConfirmDeleteModal"

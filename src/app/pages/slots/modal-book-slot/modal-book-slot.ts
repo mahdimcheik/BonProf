@@ -2,10 +2,12 @@ import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.com
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
+import { ProductWrapperService } from '@/pages/shared/services/product-wrapper-service';
 import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
-import { Component, computed, inject, model, output } from '@angular/core';
+import { Component, computed, inject, model, output, signal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SlotDetails } from 'src/client';
+import { firstValueFrom } from 'rxjs';
+import { ProductDetails, SlotDetails } from 'src/client';
 
 @Component({
     selector: 'bp-modal-book-slot',
@@ -14,71 +16,76 @@ import { SlotDetails } from 'src/client';
 })
 export class ModalBookSlot {
     typeSlotsService = inject(TypeSlotWrapperService);
+    productWrapperService = inject(ProductWrapperService);
+
     visible = model(false);
-    title = model('Créer un créneau');
+    title = model('Réserver ce créneau');
     event = model.required<CalendarEvent>();
     slot = computed<SlotDetails>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     submitClicked = output<SlotDetails>();
     cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
+    products = signal<ProductDetails[]>([]);
 
     slotForm = computed<Structure>(() => {
-        const event = this.event();
+        const slot = this.slot();
         const options = this.typeSlots();
         return {
             id: 'slotForm',
             name: 'slotForm',
-            label: 'Créer un créneau',
+            label: 'Réserver ce créneau',
             styleClass: '!w-full min-w-full',
             sections: [
                 {
                     id: 'slotDetails',
                     name: 'slotDetails',
-                    label: 'Détails du créneau',
                     styleClass: '!w-full',
                     fields: [
                         {
-                            id: 'typeId',
-                            name: 'typeId',
+                            id: 'title',
+                            name: 'title',
+                            type: 'text',
+                            label: 'Titre de la réservation',
+                            required: true,
+                            fullWidth: true,
+                            placeholder: 'Entrer le titre de la réservation'
+                        },
+                        {
+                            id: 'ProductId',
+                            name: 'ProductId',
                             type: 'select',
-                            options: options,
-                            label: 'Type de créneau',
+                            label: 'Cours associé',
+                            required: true,
+                            fullWidth: true,
+                            placeholder: 'Sélectionner le cours associé',
+                            options: this.products(),
                             compareKey: 'id',
-                            displayKey: 'name',
-                            required: true,
-                            placeholder: 'Sélectionner le type de créneau',
-                            fullWidth: true,
-                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null
+                            displayKey: 'name'
                         },
                         {
-                            id: 'dateFrom',
-                            name: 'dateFrom',
-                            type: 'date',
-                            showTime: true,
-                            timeOnly: true,
-                            fullWidth: true,
-                            label: 'Date de début',
-                            required: true,
-                            placeholder: 'Sélectionner la date de début',
-                            value: event?.StartTime ?? new Date()
-                        },
-                        {
-                            id: 'dateTo',
-                            name: 'dateTo',
-                            type: 'date',
-                            showTime: true,
-                            timeOnly: true,
-                            label: 'Date de fin',
+                            id: 'description',
+                            name: 'description',
+                            type: 'textarea',
+                            label: 'Objectif de la réservation',
                             required: true,
                             fullWidth: true,
-                            placeholder: 'Sélectionner la date de fin',
-                            value: event?.EndTime ?? new Date()
+                            placeholder: 'Décrivez la raison de la réservation'
                         }
                     ]
                 }
             ]
         };
     });
+
+    async ngOnInit() {
+        await this.loadData();
+    }
+
+    async loadData() {
+        const toto = this.slot();
+        const productsData = await firstValueFrom(this.productWrapperService.getTeacherProducts(this.slot()?.teacher?.id || ''));
+        this.products.set(productsData.data || []);
+    }
 
     submit(form: FormGroup<any>) {
         // this.submitClicked.emit(slotDetails);

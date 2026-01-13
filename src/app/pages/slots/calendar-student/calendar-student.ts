@@ -28,10 +28,11 @@ import { MessageService } from 'primeng/api';
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
+import { ModalBookSlot } from '../modal-book-slot/modal-book-slot';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalBookSlot],
     standalone: true,
     selector: 'bp-calendar-student',
     templateUrl: './calendar-student.html',
@@ -175,33 +176,31 @@ export class CalendarStudent implements OnInit {
         this.visibleCreateSlotModal.set(true);
     }
 
-    async handleEvent(event: SlotCreate | SlotUpdate) {
-        const id = event && 'id' in event ? event.id : undefined;
-        if (id) {
-            teacherId: this.mainService.userConnected().id;
-            const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
-
-            try {
-                const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
-                await this.refreshCurrentView();
-            } catch (ex) {
-                console.log('exception : ', ex);
-            }
-        } else {
-            const newEvent: SlotCreate = {
-                dateFrom: event.dateFrom,
-                dateTo: event.dateTo,
-                typeId: event.typeId,
-                teacherId: this.mainService.userConnected().id
-            };
-
-            try {
-                const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
-                await this.refreshCurrentView();
-            } catch (ex) {
-                console.log('exception : ', ex);
-            }
-        }
+    async handleEvent(event: SlotDetails) {
+        // const id = event && 'id' in event ? event.id : undefined;
+        // if (id) {
+        //     teacherId: this.mainService.userConnected().id;
+        //     const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
+        //     try {
+        //         const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
+        //         await this.refreshCurrentView();
+        //     } catch (ex) {
+        //         console.log('exception : ', ex);
+        //     }
+        // } else {
+        //     const newEvent: SlotCreate = {
+        //         dateFrom: event.dateFrom,
+        //         dateTo: event.dateTo,
+        //         typeId: event.typeId,
+        //         teacherId: this.mainService.userConnected().id
+        //     };
+        //     try {
+        //         const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
+        //         await this.refreshCurrentView();
+        //     } catch (ex) {
+        //         console.log('exception : ', ex);
+        //     }
+        // }
     }
 
     async cancel() {
