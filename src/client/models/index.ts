@@ -446,7 +446,7 @@ export interface Order {
     reductionPercentage?: number;
     reductionAmount?: number;
     studentId: string;
-    student?: Student;
+    student?: UserApp;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
@@ -581,8 +581,6 @@ export interface ReservationDetails {
     readonly title?: string | null;
     readonly description?: string | null;
     status?: StatusReservationOutput;
-    student?: StudentDetails;
-    slot?: SlotDetails;
     product?: ProductDetails;
 }
 

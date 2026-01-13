@@ -25,7 +25,7 @@
             <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
             @if(slot?.reservation){
             <p-divider></p-divider>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2" [class.waiting]="slot.reservation?.status?.id === '2ec60a91-aab8-4753-a5d8-b131b9441e77'">
                 <div class="student">Réservé par : {{ myUser().firstName }} {{ myUser().lastName }}</div>
                 <p>Title : {{ slot?.reservation?.title }}</p>
                 <p>Produit : {{ slot?.reservation?.product?.name }}</p>
