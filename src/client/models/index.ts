@@ -568,6 +568,15 @@ export interface Reservation {
     student?: Student;
 }
 
+export interface ReservationCreate {
+    title: string;
+    description: string;
+    student?: UserDetails;
+    slotId: string;
+    studentId: string;
+    productId: string;
+}
+
 export interface RoleDetails {
     id: string;
     name: string | null;
