@@ -19,7 +19,7 @@ import {
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
-import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
+import { ReservationCreate, SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { Button } from 'primeng/button';
@@ -29,10 +29,11 @@ import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-
 import { ActivatedRoute } from '@angular/router';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { ModalBookSlot } from '../modal-book-slot/modal-book-slot';
+import { Divider } from 'primeng/divider';
 // Fallback require for CLDR JSON to avoid TS type resolution issues
 declare const require: any;
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalBookSlot],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalBookSlot, Divider],
     standalone: true,
     selector: 'bp-calendar-student',
     templateUrl: './calendar-student.html',
@@ -46,13 +47,13 @@ export class CalendarStudent implements OnInit {
 
     // Input for events data
     events = model<CalendarEvent[]>([]);
-    visibleCreateSlotModal = signal(false);
-    visibleConfirmDeleteModal = signal(false);
+    visibleBookSlotModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
     private isLoading = false;
     private isInitialized = false;
 
     teacherId = signal<string | null>(null);
+    myUser = computed(() => this.mainService.userConnected());
 
     // Locale
     public locale = 'fr';
@@ -138,10 +139,14 @@ export class CalendarStudent implements OnInit {
     }
 
     // Method to control drag and drop permission
-    onDragStart(args: any): void {}
+    onDragStart(args: any): void {
+        args.cancel = true;
+    }
 
     // Method to control resize permission
-    onResizeStart(args: any): void {}
+    onResizeStart(args: any): void {
+        args.cancel = true;
+    }
 
     onDragStop(args: any): void {}
 
@@ -173,60 +178,24 @@ export class CalendarStudent implements OnInit {
             Subject: '',
             ExtendedProps: { slot: this.selectedSlot() }
         };
-        this.visibleCreateSlotModal.set(true);
+        this.visibleBookSlotModal.set(true);
     }
 
-    async handleEvent(event: SlotDetails) {
-        // const id = event && 'id' in event ? event.id : undefined;
-        // if (id) {
-        //     teacherId: this.mainService.userConnected().id;
-        //     const updatedEvent: SlotUpdate = { ...event, teacherId: this.mainService.userConnected().id } as SlotUpdate;
-        //     try {
-        //         const res = await firstValueFrom(this.slotWrapperService.updateSlot(updatedEvent));
-        //         await this.refreshCurrentView();
-        //     } catch (ex) {
-        //         console.log('exception : ', ex);
-        //     }
-        // } else {
-        //     const newEvent: SlotCreate = {
-        //         dateFrom: event.dateFrom,
-        //         dateTo: event.dateTo,
-        //         typeId: event.typeId,
-        //         teacherId: this.mainService.userConnected().id
-        //     };
-        //     try {
-        //         const res = await firstValueFrom(this.slotWrapperService.addSlot(newEvent));
-        //         await this.refreshCurrentView();
-        //     } catch (ex) {
-        //         console.log('exception : ', ex);
-        //     }
-        // }
+    async handleEvent(event: ReservationCreate) {
+        try {
+            const res = await firstValueFrom(this.slotWrapperService.bookSlot(event));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Créneau réservé avec succès.' });
+            await this.refreshCurrentView();
+        } catch (ex) {
+            console.log('exception : ', ex);
+        } finally {
+            this.visibleBookSlotModal.set(false);
+        }
     }
 
     async cancel() {
+        this.visibleBookSlotModal.set(false);
         await this.refreshCurrentView();
-    }
-
-    openConfirmDeleteModal(event: Event, slot: SlotDetails) {
-        event.stopPropagation();
-        this.selectedSlot.set(slot);
-        this.visibleConfirmDeleteModal.set(true);
-    }
-
-    async removeSlot() {
-        try {
-            const slotId = this.selectedSlot()?.id;
-            if (!slotId) {
-                this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'ID du créneau manquant.' });
-                return;
-            }
-            await firstValueFrom(this.slotWrapperService.removeSlotById(slotId));
-            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Le créneau a été supprimé avec succès.' });
-        } catch (ex) {
-            this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur est survenue lors de la suppression du créneau.' });
-        } finally {
-            await this.refreshCurrentView();
-        }
     }
 
     // Refresh data for the current view

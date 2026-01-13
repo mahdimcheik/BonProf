@@ -571,10 +571,19 @@ export interface Reservation {
 export interface ReservationCreate {
     title: string;
     description: string;
-    student?: UserDetails;
     slotId: string;
     studentId: string;
     productId: string;
+}
+
+export interface ReservationDetails {
+    readonly id?: string;
+    readonly title?: string | null;
+    readonly description?: string | null;
+    status?: StatusReservationOutput;
+    student?: StudentDetails;
+    slot?: SlotDetails;
+    product?: ProductDetails;
 }
 
 export interface RoleDetails {
@@ -620,6 +629,7 @@ export interface SlotDetails {
     teacher?: TeacherDetails;
     typeId: string;
     type?: TypeSlotDetails;
+    reservation?: ReservationDetails;
 }
 
 export interface SlotDetailsListResponse {
@@ -669,6 +679,13 @@ export interface StatusReservation {
     name: string;
     color: string;
     icon?: string | null;
+}
+
+export interface StatusReservationOutput {
+    readonly id: string;
+    readonly name: string;
+    readonly color: string;
+    readonly icon?: string | null;
 }
 
 export interface StringResponse {
