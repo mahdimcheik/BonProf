@@ -7,79 +7,84 @@ import { RippleModule } from 'primeng/ripple';
     selector: 'pricing-widget',
     imports: [DividerModule, ButtonModule, RippleModule],
     template: `
-        <div id="pricing" class="py-6 px-6 lg:px-20">
-            <div class="text-center ">
-                <div class="text-surface-900 dark:text-surface-0 font-normal  text-4xl">Contacter vos profs</div>
-                <span class="text-muted-color text-2xl">Prix adaptés et flexibles en fonction de vos besoins</span>
+        <div id="pricing" class="py-6 px-6 lg:px-20 my-8">
+            <div class="text-center mb-12">
+                <h2 class="text-surface-900 dark:text-surface-0 font-bold mb-4 text-4xl">Des tarifs simples et transparents</h2>
+                <span class="text-muted-color text-2xl">Inscription gratuite, sans engagement. Vous ne payez que les cours réservés.</span>
             </div>
 
-            <div class="grid grid-cols-12 gap-4 justify-between  ">
-                <div class="col-span-12 lg:col-span-4 p-0 md:p-4">
-                    <div class="p-4 flex flex-col border-surface-200 dark:border-surface-600 pricing-card cursor-pointer border-2 hover:border-primary duration-300 transition-all" style="border-radius: 10px">
-                        <div class="text-surface-900 dark:text-surface-0 text-center my-8 text-3xl">Pour renseignements</div>
-                        <img src="https://primefaces.org/cdn/templates/sakai/landing/free.svg" class="w-10/12 mx-auto" alt="free" />
+            <div class="grid grid-cols-12 gap-6 justify-center">
+                <div class="col-span-12 lg:col-span-6 p-0 md:p-4">
+                    <div class="p-6 flex flex-col border-primary dark:border-primary border-2 hover:border-primary duration-300 transition-all h-full" style="border-radius: 12px">
+                        <div class="text-center mb-6">
+                            <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold mb-2">Élève</div>
+                            <div class="text-primary text-4xl font-bold">Gratuit</div>
+                            <span class="text-muted-color">Sans abonnement</span>
+                        </div>
 
-                        <p-divider class="w-full bg-surface-200"></p-divider>
-                        <ul class="my-8 list-none p-0 flex text-surface-900 dark:text-surface-0 flex-col px-8">
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Demander des renseignements</span>
+                        <p-divider class="w-full"></p-divider>
+
+                        <ul class="my-6 list-none p-0 flex flex-col gap-3 flex-grow">
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Inscription et navigation gratuites</span>
                             </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Négocier les prix</span>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Accès à tous les profils professeurs</span>
                             </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Propositions</span>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Réservation de cours à l'unité</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Chat avec les professeurs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Historique et suivi des cours</span>
                             </li>
                         </ul>
+
+                        <p-button label="S'inscrire gratuitement" styleClass="w-full" outlined />
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-4 p-0 md:p-4">
-                    <div class="p-4 flex flex-col border-surface-200 dark:border-surface-600 pricing-card cursor-pointer border-2 hover:border-primary duration-300 transition-all" style="border-radius: 10px">
-                        <div class="text-surface-900 dark:text-surface-0 text-center my-8 text-3xl">Suivi de cours</div>
-                        <img src="https://primefaces.org/cdn/templates/sakai/landing/free.svg" class="w-10/12 mx-auto" alt="free" />
+                <div class="col-span-12 lg:col-span-6 p-0 md:p-4">
+                    <div class="p-6 flex flex-col border-primary border-2 h-full relative" style="border-radius: 12px">
+                        <div class="text-center mb-6">
+                            <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold mb-2">Professeur</div>
+                            <div class="text-primary text-4xl font-bold">Gratuit</div>
+                            <span class="text-muted-color">Commission sur les cours effectués</span>
+                        </div>
 
-                        <p-divider class="w-full bg-surface-200"></p-divider>
-                        <ul class="my-8 list-none p-0 flex text-surface-900 dark:text-surface-0 flex-col px-8">
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Demander des conseils</span>
+                        <p-divider class="w-full"></p-divider>
+
+                        <ul class="my-6 list-none p-0 flex flex-col gap-3 flex-grow">
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Création de profil professeur</span>
                             </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Anticiper les futures évolutions</span>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Gestion libre de vos créneaux</span>
                             </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Envoyer des feedbacks</span>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Paiements sécurisés sur votre compte</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Partage de documents avec vos élèves</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="pi pi-check-circle text-xl text-green-500 mr-3"></i>
+                                <span class="text-surface-700 dark:text-surface-200">Visibilité auprès de milliers d'élèves</span>
                             </li>
                         </ul>
-                    </div>
-                </div>
 
-                <div class="col-span-12 lg:col-span-4 p-0 md:p-4">
-                    <div class="p-4 flex flex-col border-surface-200 dark:border-surface-600 pricing-card cursor-pointer border-2 hover:border-primary duration-300 transition-all" style="border-radius: 10px">
-                        <div class="text-surface-900 dark:text-surface-0 text-center my-8 text-3xl">Annulation</div>
-                        <img src="https://primefaces.org/cdn/templates/sakai/landing/free.svg" class="w-10/12 mx-auto" alt="free" />
-
-                        <p-divider class="w-full bg-surface-200"></p-divider>
-                        <ul class="my-8 list-none p-0 flex text-surface-900 dark:text-surface-0 flex-col px-8">
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Annuler une session</span>
-                            </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Demander une modification</span>
-                            </li>
-                            <li class="py-2">
-                                <i class="pi pi-fw pi-check text-xl text-cyan-500 mr-2"></i>
-                                <span class="text-xl leading-normal">Demander un remboursement</span>
-                            </li>
-                        </ul>
+                        <p-button label="Devenir professeur" styleClass="w-full" />
                     </div>
                 </div>
             </div>

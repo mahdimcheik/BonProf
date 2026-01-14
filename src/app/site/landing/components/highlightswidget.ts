@@ -1,42 +1,61 @@
 import { Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
     selector: 'highlights-widget',
+    imports: [ButtonModule, RippleModule],
     template: `
         <div id="highlights" class="py-6 px-6 lg:px-20 mx-0 my-12 lg:mx-20">
-            <div class="text-center">
-                <div class="text-surface-900 dark:text-surface-0 font-normal mb-2 text-4xl">A vos besoins</div>
-                <span class="text-muted-color text-2xl">Adapté à vous</span>
+            <div class="text-center mb-12">
+                <h1 class="text-surface-900 dark:text-surface-0 font-bold mb-4 text-5xl">Réussissez avec les meilleurs professeurs</h1>
+                <span class="text-muted-color text-2xl">La plateforme qui connecte élèves et professeurs pour un apprentissage sur mesure</span>
             </div>
 
-            <div class="grid grid-cols-12 gap-4 mt-20 pb-2 md:pb-20">
-                <div class="flex justify-center col-span-12 lg:col-span-6 bg-purple-100 p-0 order-1 lg:order-0" style="border-radius: 8px">
-                    <img src="https://primefaces.org/cdn/templates/sakai/landing/mockup.png" class="w-11/12" alt="mockup mobile" />
+            <div class="grid grid-cols-12 gap-6 mt-12">
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
+                    <div class="p-6 bg-surface-0 dark:bg-surface-800 rounded-xl shadow-sm h-full text-center">
+                        <div class="flex items-center justify-center bg-green-100 dark:bg-green-900 mx-auto mb-4" style="width: 4rem; height: 4rem; border-radius: 12px">
+                            <i class="pi pi-verified text-3xl text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <h3 class="text-surface-900 dark:text-surface-0 text-xl font-semibold mb-2">Professeurs qualifiés</h3>
+                        <p class="text-surface-600 dark:text-surface-300 text-base leading-relaxed">Des enseignants sélectionnés pour leur expertise et leur pédagogie</p>
+                    </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-6 my-auto flex flex-col lg:items-end text-center lg:text-right gap-4">
-                    <div class="flex items-center justify-center bg-purple-200 self-center lg:self-end" style="width: 4.2rem; height: 4.2rem; border-radius: 10px">
-                        <i class="pi pi-fw pi-mobile text-4xl! text-purple-700"></i>
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
+                    <div class="p-6 bg-surface-0 dark:bg-surface-800 rounded-xl shadow-sm h-full text-center">
+                        <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-900 mx-auto mb-4" style="width: 4rem; height: 4rem; border-radius: 12px">
+                            <i class="pi pi-calendar text-3xl text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <h3 class="text-surface-900 dark:text-surface-0 text-xl font-semibold mb-2">Réservation simple</h3>
+                        <p class="text-surface-600 dark:text-surface-300 text-base leading-relaxed">Choisissez un créneau et réservez votre cours en quelques clics</p>
                     </div>
-                    <div class="leading-none text-surface-900 dark:text-surface-0 text-3xl font-normal">Cours pour entreprises</div>
-                    <span class="text-surface-700 dark:text-surface-100 text-2xl leading-normal ml-0 md:ml-2" style="max-width: 650px">Des solutions de formation pour entreprises et indépendants, éligibles à des aides ou à des financements.</span>
+                </div>
+
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
+                    <div class="p-6 bg-surface-0 dark:bg-surface-800 rounded-xl shadow-sm h-full text-center">
+                        <div class="flex items-center justify-center bg-purple-100 dark:bg-purple-900 mx-auto mb-4" style="width: 4rem; height: 4rem; border-radius: 12px">
+                            <i class="pi pi-shield text-3xl text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                        <h3 class="text-surface-900 dark:text-surface-0 text-xl font-semibold mb-2">Paiement 100% sécurisé</h3>
+                        <p class="text-surface-600 dark:text-surface-300 text-base leading-relaxed">Transactions protégées par Stripe, sans frais cachés</p>
+                    </div>
+                </div>
+
+                <div class="col-span-12 md:col-span-6 lg:col-span-3">
+                    <div class="p-6 bg-surface-0 dark:bg-surface-800 rounded-xl shadow-sm h-full text-center">
+                        <div class="flex items-center justify-center bg-orange-100 dark:bg-orange-900 mx-auto mb-4" style="width: 4rem; height: 4rem; border-radius: 12px">
+                            <i class="pi pi-chart-line text-3xl text-orange-600 dark:text-orange-400"></i>
+                        </div>
+                        <h3 class="text-surface-900 dark:text-surface-0 text-xl font-semibold mb-2">Progression suivie</h3>
+                        <p class="text-surface-600 dark:text-surface-300 text-base leading-relaxed">Historique complet et suivi de votre parcours d'apprentissage</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 gap-4 my-20 pt-2 md:pt-20">
-                <div class="col-span-12 lg:col-span-6 my-auto flex flex-col text-center lg:text-left lg:items-start gap-4">
-                    <div class="flex items-center justify-center bg-yellow-200 self-center lg:self-start" style="width: 4.2rem; height: 4.2rem; border-radius: 10px">
-                        <i class="pi pi-fw pi-desktop text-3xl! text-yellow-700"></i>
-                    </div>
-                    <div class="leading-none text-surface-900 dark:text-surface-0 text-3xl font-normal">Cours à domicile</div>
-                    <span class="text-surface-700 dark:text-surface-100 text-2xl leading-normal mr-0 md:mr-2" style="max-width: 650px"
-                        >Trouvez un professeur particulier pour suivre des cours particuliers à domicile, en tout confort, sans sortir de chez vous.</span
-                    >
-                </div>
-
-                <div class="flex justify-end order-1 sm:order-2 col-span-12 lg:col-span-6 bg-yellow-100 p-0" style="border-radius: 8px">
-                    <img src="https://primefaces.org/cdn/templates/sakai/landing/mockup-desktop.png" class="w-11/12" alt="mockup" />
-                </div>
+            <div class="text-center mt-12">
+                <p-button label="Commencer gratuitement" icon="pi pi-arrow-right" iconPos="right" size="large" />
             </div>
         </div>
     `
