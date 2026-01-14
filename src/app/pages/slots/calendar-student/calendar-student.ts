@@ -28,10 +28,81 @@ import { MessageService } from 'primeng/api';
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
+import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
 import { ModalBookSlot } from '../modal-book-slot/modal-book-slot';
 import { Divider } from 'primeng/divider';
-// Fallback require for CLDR JSON to avoid TS type resolution issues
-declare const require: any;
+
+// Load CLDR data for French locale
+import * as numberingSystems from 'cldr-data/supplemental/numberingSystems.json';
+import * as gregorian from 'cldr-data/main/fr/ca-gregorian.json';
+import * as numbers from 'cldr-data/main/fr/numbers.json';
+import * as timeZoneNames from 'cldr-data/main/fr/timeZoneNames.json';
+
+loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
+
+// Set French translations for Schedule
+L10n.load({
+    fr: {
+        schedule: {
+            day: 'Jour',
+            week: 'Semaine',
+            workWeek: 'Semaine de travail',
+            month: 'Mois',
+            today: "Aujourd'hui",
+            noEvents: 'Aucun événement',
+            allDay: 'Toute la journée',
+            start: 'Début',
+            end: 'Fin',
+            more: 'Plus',
+            close: 'Fermer',
+            cancel: 'Annuler',
+            noTitle: '(Sans titre)',
+            delete: 'Supprimer',
+            deleteEvent: "Supprimer l'événement",
+            deleteMultipleEvent: 'Supprimer plusieurs événements',
+            selectedItems: 'Éléments sélectionnés',
+            deleteSeries: 'Supprimer la série',
+            edit: 'Modifier',
+            editSeries: 'Modifier la série',
+            editEvent: "Modifier l'événement",
+            createEvent: 'Créer',
+            subject: 'Sujet',
+            addTitle: 'Ajouter un titre',
+            moreDetails: 'Plus de détails',
+            save: 'Enregistrer',
+            editContent: 'Voulez-vous modifier uniquement cet événement ou la série entière?',
+            deleteContent: 'Êtes-vous sûr de vouloir supprimer cet événement?',
+            deleteMultipleContent: 'Êtes-vous sûr de vouloir supprimer les événements sélectionnés?',
+            newEvent: 'Nouvel événement',
+            title: 'Titre',
+            location: 'Lieu',
+            description: 'Description',
+            timezone: 'Fuseau horaire',
+            startTimezone: 'Fuseau horaire de début',
+            endTimezone: 'Fuseau horaire de fin',
+            repeat: 'Répéter',
+            saveButton: 'Enregistrer',
+            cancelButton: 'Annuler',
+            deleteButton: 'Supprimer',
+            recurrence: 'Récurrence',
+            wrongPattern: 'Le modèle de récurrence est invalide.',
+            seriesChangeAlert: 'Les modifications apportées à des instances spécifiques de cette série seront annulées.',
+            createError: "La durée de l'événement doit être inférieure à sa fréquence.",
+            sameDayAlert: 'Deux occurrences du même événement ne peuvent pas avoir lieu le même jour.',
+            occurrence: 'Occurrence',
+            series: 'Série',
+            previous: 'Précédent',
+            next: 'Suivant',
+            timelineDay: 'Jour (Timeline)',
+            timelineWeek: 'Semaine (Timeline)',
+            timelineWorkWeek: 'Semaine de travail (Timeline)',
+            timelineMonth: 'Mois (Timeline)'
+        }
+    }
+});
+
+setCulture('fr');
+
 @Component({
     imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalBookSlot, Divider],
     standalone: true,
