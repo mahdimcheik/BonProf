@@ -23,12 +23,14 @@
             </p-card>
 
             <!-- Social Networks Card -->
+            @if(!!user()?.teacher ){
             <p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
                         <i class="pi pi-share-alt text-2xl text-primary"></i>
                         <p class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">Mes réseaux</p>
                     </div>
+
                     @if(user().teacher?.linkedIn || user().teacher?.faceBook || user().teacher?.twitter || user().teacher?.gitHub) {
                     <ul class="list-none p-0 m-0 flex flex-wrap">
                         @if(user().teacher?.linkedIn) {
@@ -54,12 +56,13 @@
                     }
                 </div>
             </p-card>
+            }
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="flex-1 min-w-0">
-        <p-card styleClass="shadow-md h-full w-full" [header]="user().title ?? 'Description'">
+        <p-card styleClass="shadow-md h-full w-full" [header]="user()?.title ?? 'Description'">
             <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="descriptionSafeHtml()"></div>
         </p-card>
     </div>
