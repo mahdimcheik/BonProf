@@ -81,6 +81,35 @@ export class PersonnalInfosEdition implements OnInit {
             ]
         };
 
+        const avatarSection: FormSection = {
+            id: 'avatar',
+            name: 'avatar',
+            label: 'Avatar',
+            description: 'Veuillez remplir votre avatar',
+            fields: [
+                {
+                    id: 'profilePicture',
+                    name: 'profilePicture',
+                    label: 'Image de profil',
+                    type: 'file',
+                    placeholder: 'Choisir votre image de profil',
+                    accept: 'image/*',
+                    maxFileSize: 1000000,
+                    showCancelButton: true,
+                    multiple: false,
+                    mode: 'advanced',
+                    chooseLabel: 'Choisir votre image',
+                    uploadLabel: 'Téléverser',
+                    cancelLabel: 'Annuler',
+                    emptyMessage: 'Glissez et déposez votre image ici',
+                    order: 1,
+                    showUploadButton: true,
+                    fullWidth: true,
+                    url: this.user()?.imgUrl ? this.user()?.imgUrl! : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/250px-User_icon_2.svg.png'
+                }
+            ]
+        };
+
         const socialLinks: FormSection = {
             id: 'socialLinks',
             name: 'socialLinks',
@@ -224,14 +253,14 @@ export class PersonnalInfosEdition implements OnInit {
                   name: 'personnalInfos',
                   label: 'Informations personnelles',
                   styleClass: 'md:min-w-full min-w-full !p-0',
-                  sections: [personnalInfos, optionalFields, socialLinks]
+                  sections: [personnalInfos, avatarSection, optionalFields, socialLinks]
               }
             : {
                   id: 'personnalInfos',
                   name: 'personnalInfos',
                   label: 'Informations personnelles',
                   styleClass: 'md:min-w-full min-w-full !p-0',
-                  sections: [personnalInfos, optionalFields]
+                  sections: [personnalInfos, avatarSection, optionalFields]
               };
     });
 
@@ -259,6 +288,10 @@ export class PersonnalInfosEdition implements OnInit {
                 student: undefined
             };
             await firstValueFrom(this.mainService.updateTeacherProfile(updatedUser));
+            // gérer l'upload de l'image de profil
+            if (event.value.avatar) {
+                await firstValueFrom(this.mainService.updateAvatar(event.value.avatar.profilePicture));
+            }
             await this.router.navigate(['dashboard/teacher/profile/me']);
         } else if (this.mainService.isStudent()) {
             const updatedUser: UserUpdate = {

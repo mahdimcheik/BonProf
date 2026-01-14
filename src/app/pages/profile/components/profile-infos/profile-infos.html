@@ -2,7 +2,12 @@
     <div class="flex gap-6 flex-col md:flex-row">
         <!-- Profile Image -->
         <div class="flex-shrink-0">
-            <p-image src="assets/user.svg" alt="Profile Image" [imageClass]="'w-full md:w-[260px] h-auto rounded-xl object-cover shadow-sm'" preview="true" />
+            <p-image
+                [src]="user().imgUrl || 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/250px-User_icon_2.svg.png'"
+                alt="Profile Image"
+                [imageClass]="'w-full md:w-[260px] h-auto rounded-xl object-cover shadow-sm'"
+                preview="true"
+            />
         </div>
 
         <!-- Profile Content -->
