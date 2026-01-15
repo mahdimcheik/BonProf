@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'pricing-widget',
-    imports: [DividerModule, ButtonModule, RippleModule],
+    imports: [DividerModule, ButtonModule, RippleModule, RouterLink],
     template: `
         <div id="pricing" class="py-6 px-6 lg:px-20 my-8">
             <div class="text-center mb-12">
@@ -47,7 +48,7 @@ import { RippleModule } from 'primeng/ripple';
                             </li>
                         </ul>
 
-                        <p-button label="S'inscrire gratuitement" styleClass="w-full" outlined />
+                        <p-button label="S'inscrire gratuitement" styleClass="w-full" outlined [routerLink]="'/auth/register'" />
                     </div>
                 </div>
 
@@ -84,7 +85,7 @@ import { RippleModule } from 'primeng/ripple';
                             </li>
                         </ul>
 
-                        <p-button label="Devenir professeur" styleClass="w-full" />
+                        <p-button label="Devenir professeur" styleClass="w-full" [routerLink]="'/auth/register'" />
                     </div>
                 </div>
             </div>

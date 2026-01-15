@@ -7,10 +7,11 @@ import { Divider } from 'primeng/divider';
 import { TeacherDetails, UserDetails } from 'src/client';
 import { ConfigurableFormComponent } from '../configurable-form/configurable-form.component';
 import { Structure } from '../configurable-form/related-models';
+import { Image } from 'primeng/image';
 
 @Component({
     selector: 'bp-contact-form',
-    imports: [ConfigurableFormComponent, Button, Card, Avatar, Divider],
+    imports: [ConfigurableFormComponent, Button, Card, Avatar, Divider, Image],
     templateUrl: './contact-form.html',
     styleUrls: ['./contact-form.scss']
 })

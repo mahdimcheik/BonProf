@@ -10,10 +10,11 @@ import { Menu } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
+import { Image } from 'primeng/image';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule, Menu],
+    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, OverlayBadgeModule, AvatarModule, DrawerModule, DividerModule, Menu, Image],
     template: `<a class="flex items-center" href="#">
             <img src="assets/bird.svg" alt="bon prof Logo" class="mr-3" width="40" height="40" />
 
@@ -33,7 +34,8 @@ import { StyleClassModule } from 'primeng/styleclass';
             <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-1">
                 <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
                 <p-menu #menu [model]="authItems()" [popup]="true" />
-                <p-avatar (click)="menu.toggle($event)" [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                <p-image [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')" alt="User Image" imageClass="w-[35px] h-[35px] rounded-full" (click)="menu.toggle($event)"></p-image>
+                <!-- <p-avatar (click)="menu.toggle($event)" [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" /> -->
             </div>
         </div>
         @if (!mobileMenuVisible()) {
@@ -54,7 +56,9 @@ import { StyleClassModule } from 'primeng/styleclass';
                     <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
                     @if (mainService.userConnected().email) {
                         <li>
-                            <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" />
+                            <p-image [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')" alt="User Image" imageClass="w-[35px] h-[35px] rounded-full" (click)="menu.toggle($event)"></p-image>
+
+                            <!-- <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" /> -->
                         </li>
                     }
                     @for (item of authItems(); track $index) {

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 
 @Component({
     selector: 'highlights-widget',
-    imports: [ButtonModule, RippleModule],
+    imports: [ButtonModule, RippleModule, RouterLink],
     template: `
         <div id="highlights" class="py-6 px-6 lg:px-20 mx-0 my-12 lg:mx-20">
             <div class="text-center mb-12">
@@ -55,7 +56,7 @@ import { RippleModule } from 'primeng/ripple';
             </div>
 
             <div class="text-center mt-12">
-                <p-button label="Commencer gratuitement" icon="pi pi-arrow-right" iconPos="right" size="large" />
+                <p-button label="Chercher un bon prof" icon="pi pi-arrow-right" iconPos="right" size="large" [routerLink]="'/fast-search'" />
             </div>
         </div>
     `

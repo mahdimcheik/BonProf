@@ -7,6 +7,7 @@ import { Image } from 'primeng/image';
 import { Button } from 'primeng/button';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'bp-teacher-card',
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class TeacherCard {
     sanitizer = inject(DomSanitizer);
+    mainService = inject(MainService);
     router = inject(Router);
 
     teacher = input.required<UserDetails>();
@@ -31,8 +33,11 @@ export class TeacherCard {
     }
     goToReservation() {
         try {
-            const toto = this.teacher();
-            this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.teacher().id } });
+            if (this.mainService.userConnected() && this.mainService.userConnected().id && this.mainService.userConnected().id != this.teacher().id) {
+                this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.teacher().id } });
+            } else {
+                this.router.navigate(['/auth/login']);
+            }
         } catch (e) {
             console.error('Navigation error:', e);
         }
