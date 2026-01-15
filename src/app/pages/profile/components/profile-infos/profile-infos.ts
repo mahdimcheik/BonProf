@@ -29,4 +29,13 @@ export class ProfileInfos {
             this.router.navigate(['/auth/login']);
         }
     }
+    goToEditProfile() {
+        if (this.mainService.isTeacher()) {
+            this.router.navigate(['/dashboard/teacher/profile', 'me', 'edition']);
+        } else {
+            if (this.mainService.isStudent()) {
+                this.router.navigate(['/dashboard/student/profile', 'me', 'edition']);
+            }
+        }
+    }
 }

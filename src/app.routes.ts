@@ -81,6 +81,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'planning',
                         loadComponent: () => import('./app/pages/slots/calendar-student/calendar-student').then((m) => m.CalendarStudent)
+                    },
+                    {
+                        path: 'profile/:id/edition',
+                        component: ProfileEditionPage
                     }
                 ]
             },
