@@ -20,14 +20,9 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
 import { ReservationCreate, SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
-import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { Button } from 'primeng/button';
-import { Tooltip } from 'primeng/tooltip';
 import { MessageService } from 'primeng/api';
-import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { ActivatedRoute } from '@angular/router';
-import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
 import { ModalBookSlot } from '../modal-book-slot/modal-book-slot';
 import { Divider } from 'primeng/divider';
@@ -104,7 +99,7 @@ L10n.load({
 setCulture('fr');
 
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalBookSlot, Divider],
+    imports: [ScheduleModule, DatePipe, ModalBookSlot, Divider],
     standalone: true,
     selector: 'bp-calendar-student',
     templateUrl: './calendar-student.html',

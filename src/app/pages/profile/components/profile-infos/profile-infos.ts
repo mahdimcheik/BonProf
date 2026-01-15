@@ -4,13 +4,12 @@ import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
 import { Tag } from 'primeng/tag';
-import { TeacherDetails, UserDetails } from 'src/client';
-import { TeacherCard } from '@/pages/teachers-catalog/teacher-card/teacher-card';
+import { UserDetails } from 'src/client';
 import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'bp-profile-infos',
-    imports: [Image, Button, Card, Tag, RouterLink, TeacherCard],
+    imports: [Image, Button, Card, Tag, RouterLink],
     templateUrl: './profile-infos.html'
 })
 export class ProfileInfos {
