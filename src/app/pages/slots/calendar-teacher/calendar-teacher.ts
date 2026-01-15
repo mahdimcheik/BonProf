@@ -33,73 +33,74 @@ import * as numberingSystems from 'cldr-data/supplemental/numberingSystems.json'
 import * as gregorian from 'cldr-data/main/fr/ca-gregorian.json';
 import * as numbers from 'cldr-data/main/fr/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/fr/timeZoneNames.json';
+import { ModalReservation } from '../modal-reservation/modal-reservation';
 
 loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
 
 // Set French translations for Schedule
 L10n.load({
-    'fr': {
-        'schedule': {
-            'day': 'Jour',
-            'week': 'Semaine',
-            'workWeek': 'Semaine de travail',
-            'month': 'Mois',
-            'today': "Aujourd'hui",
-            'noEvents': 'Aucun événement',
-            'allDay': 'Toute la journée',
-            'start': 'Début',
-            'end': 'Fin',
-            'more': 'Plus',
-            'close': 'Fermer',
-            'cancel': 'Annuler',
-            'noTitle': '(Sans titre)',
-            'delete': 'Supprimer',
-            'deleteEvent': "Supprimer l'événement",
-            'deleteMultipleEvent': 'Supprimer plusieurs événements',
-            'selectedItems': 'Éléments sélectionnés',
-            'deleteSeries': 'Supprimer la série',
-            'edit': 'Modifier',
-            'editSeries': 'Modifier la série',
-            'editEvent': "Modifier l'événement",
-            'createEvent': 'Créer',
-            'subject': 'Sujet',
-            'addTitle': 'Ajouter un titre',
-            'moreDetails': 'Plus de détails',
-            'save': 'Enregistrer',
-            'editContent': 'Voulez-vous modifier uniquement cet événement ou la série entière?',
-            'deleteContent': 'Êtes-vous sûr de vouloir supprimer cet événement?',
-            'deleteMultipleContent': 'Êtes-vous sûr de vouloir supprimer les événements sélectionnés?',
-            'newEvent': 'Nouvel événement',
-            'title': 'Titre',
-            'location': 'Lieu',
-            'description': 'Description',
-            'timezone': 'Fuseau horaire',
-            'startTimezone': 'Fuseau horaire de début',
-            'endTimezone': 'Fuseau horaire de fin',
-            'repeat': 'Répéter',
-            'saveButton': 'Enregistrer',
-            'cancelButton': 'Annuler',
-            'deleteButton': 'Supprimer',
-            'recurrence': 'Récurrence',
-            'wrongPattern': 'Le modèle de récurrence est invalide.',
-            'seriesChangeAlert': 'Les modifications apportées à des instances spécifiques de cette série seront annulées.',
-            'createError': 'La durée de l\'événement doit être inférieure à sa fréquence.',
-            'sameDayAlert': 'Deux occurrences du même événement ne peuvent pas avoir lieu le même jour.',
-            'occurrence': 'Occurrence',
-            'series': 'Série',
-            'previous': 'Précédent',
-            'next': 'Suivant',
-            'timelineDay': 'Jour (Timeline)',
-            'timelineWeek': 'Semaine (Timeline)',
-            'timelineWorkWeek': 'Semaine de travail (Timeline)',
-            'timelineMonth': 'Mois (Timeline)'
+    fr: {
+        schedule: {
+            day: 'Jour',
+            week: 'Semaine',
+            workWeek: 'Semaine de travail',
+            month: 'Mois',
+            today: "Aujourd'hui",
+            noEvents: 'Aucun événement',
+            allDay: 'Toute la journée',
+            start: 'Début',
+            end: 'Fin',
+            more: 'Plus',
+            close: 'Fermer',
+            cancel: 'Annuler',
+            noTitle: '(Sans titre)',
+            delete: 'Supprimer',
+            deleteEvent: "Supprimer l'événement",
+            deleteMultipleEvent: 'Supprimer plusieurs événements',
+            selectedItems: 'Éléments sélectionnés',
+            deleteSeries: 'Supprimer la série',
+            edit: 'Modifier',
+            editSeries: 'Modifier la série',
+            editEvent: "Modifier l'événement",
+            createEvent: 'Créer',
+            subject: 'Sujet',
+            addTitle: 'Ajouter un titre',
+            moreDetails: 'Plus de détails',
+            save: 'Enregistrer',
+            editContent: 'Voulez-vous modifier uniquement cet événement ou la série entière?',
+            deleteContent: 'Êtes-vous sûr de vouloir supprimer cet événement?',
+            deleteMultipleContent: 'Êtes-vous sûr de vouloir supprimer les événements sélectionnés?',
+            newEvent: 'Nouvel événement',
+            title: 'Titre',
+            location: 'Lieu',
+            description: 'Description',
+            timezone: 'Fuseau horaire',
+            startTimezone: 'Fuseau horaire de début',
+            endTimezone: 'Fuseau horaire de fin',
+            repeat: 'Répéter',
+            saveButton: 'Enregistrer',
+            cancelButton: 'Annuler',
+            deleteButton: 'Supprimer',
+            recurrence: 'Récurrence',
+            wrongPattern: 'Le modèle de récurrence est invalide.',
+            seriesChangeAlert: 'Les modifications apportées à des instances spécifiques de cette série seront annulées.',
+            createError: "La durée de l'événement doit être inférieure à sa fréquence.",
+            sameDayAlert: 'Deux occurrences du même événement ne peuvent pas avoir lieu le même jour.',
+            occurrence: 'Occurrence',
+            series: 'Série',
+            previous: 'Précédent',
+            next: 'Suivant',
+            timelineDay: 'Jour (Timeline)',
+            timelineWeek: 'Semaine (Timeline)',
+            timelineWorkWeek: 'Semaine de travail (Timeline)',
+            timelineMonth: 'Mois (Timeline)'
         }
     }
 });
 
 setCulture('fr');
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalReservation],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -113,6 +114,7 @@ export class CalendarTeacher implements OnInit {
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
     visibleConfirmDeleteModal = signal(false);
+    visibleReservationDetailsModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
     private isLoading = false;
     private isInitialized = false;
@@ -144,9 +146,7 @@ export class CalendarTeacher implements OnInit {
         interval: 60,
         slotCount: 2
     };
-    ngOnInit(): void {
-        // Initial load will be triggered after scheduler is rendered
-    }
+    ngOnInit(): void {}
 
     async loadData(startTime: Date, endTime: Date) {
         if (this.isLoading) return;
@@ -175,13 +175,8 @@ export class CalendarTeacher implements OnInit {
         }
     }
 
-    // Called when navigating to different dates - let onActionComplete handle the loading
-    onNavigating(args: NavigatingEventArgs): void {
-        // This event fires before navigation completes
-        // We'll let onActionComplete handle the actual data loading
-    }
+    onNavigating(args: NavigatingEventArgs): void {}
 
-    // Called when action is completed (including view changes)
     onActionComplete(args: ActionEventArgs): void {
         if (args.requestType === 'viewNavigate' || args.requestType === 'dateNavigate') {
             const schedule = this.scheduleRef();
@@ -193,14 +188,6 @@ export class CalendarTeacher implements OnInit {
                 this.loadData(startDate, endDate);
             }
         }
-    }
-
-    // Helper to get the start of the week (Sunday)
-    private getWeekStart(date: Date): Date {
-        const d = new Date(date);
-        const day = d.getDay();
-        const diff = d.getDate() - day;
-        return new Date(d.setDate(diff));
     }
 
     // Method to control drag and drop permission
@@ -298,6 +285,11 @@ export class CalendarTeacher implements OnInit {
     clickEvent(event: EventClickArgs) {
         const selectedEvent = event.event as any;
         this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
+
+        if (this.selectedSlot()?.reservation) {
+            this.visibleReservationDetailsModal.set(true);
+            return;
+        }
 
         // Handle Date objects properly - they're already Date instances, not strings
         const startTime = selectedEvent?.StartTime;
