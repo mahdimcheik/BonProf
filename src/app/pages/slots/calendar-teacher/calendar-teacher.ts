@@ -285,6 +285,7 @@ export class CalendarTeacher implements OnInit {
     clickEvent(event: EventClickArgs) {
         const selectedEvent = event.event as any;
         this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
+        this.selectedDate = event.event as CalendarEvent;
 
         if (this.selectedSlot()?.reservation) {
             this.visibleReservationDetailsModal.set(true);

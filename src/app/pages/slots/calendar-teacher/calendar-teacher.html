@@ -42,7 +42,7 @@
 @if(visibleCreateSlotModal()) {
 <bp-modal-create-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-create-slot>
 } @if(visibleReservationDetailsModal()) {
-<bp-modal-reservation [(visible)]="visibleReservationDetailsModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-reservation>
+<bp-modal-reservation [(visible)]="visibleReservationDetailsModal" [event]="selectedDate" (cancelClicked)="cancel()"></bp-modal-reservation>
 } @if(visibleConfirmDeleteModal()) {
 <bp-confirm-modal
     [(visible)]="visibleConfirmDeleteModal"

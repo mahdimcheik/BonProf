@@ -1,3 +1,81 @@
-<bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-plus'">
-    <div content class="w-full"></div>
+<bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-clock'">
+    <div content class="w-full flex flex-col gap-4">
+        @if (reservation(); as res) {
+            <!-- Student Info -->
+            <div class="flex items-center gap-3">
+                <p-avatar
+                    [image]="res.student?.user?.imgUrl ?? undefined"
+                    [label]="!res.student?.user?.imgUrl ? (res.student?.user?.firstName?.charAt(0) ?? '?') : undefined"
+                    size="large"
+                    shape="circle"
+                />
+                <div class="flex flex-col">
+                    <span class="font-semibold text-gray-800 dark:text-white">
+                        {{ res.student?.user?.firstName }} {{ res.student?.user?.lastName }}
+                    </span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ res.student?.user?.email }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Status -->
+            @if (res.status; as status) {
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-600 dark:text-gray-300">Statut:</span>
+                    <p-tag [value]="status.name" [style]="{ backgroundColor: status.color }">
+                        @if (status.icon) {
+                            <i [class]="status.icon" class="mr-1"></i>
+                        }
+                    </p-tag>
+                </div>
+            }
+
+            <!-- Product -->
+            @if (res.product; as product) {
+                <div class="flex flex-col gap-1">
+                    <span class="text-gray-600 dark:text-gray-300">Produit:</span>
+                    <div class="flex items-center justify-between bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+                        <div class="flex flex-col">
+                            <span class="font-medium text-gray-800 dark:text-white">{{ product.name }}</span>
+                            @if (product.description) {
+                                <span class="text-sm text-gray-500 dark:text-gray-400">{{ product.description }}</span>
+                            }
+                        </div>
+                        <span class="font-semibold text-primary">{{ product.price }} €</span>
+                    </div>
+                </div>
+            }
+
+            <!-- Slot Time -->
+            @if (slot(); as slotData) {
+                <div class="flex flex-col gap-1">
+                    <span class="text-gray-600 dark:text-gray-300">Créneau:</span>
+                    <div class="flex items-center gap-2 text-gray-800 dark:text-white">
+                        <i class="pi pi-clock"></i>
+                        <span>{{ slotData.dateFrom | date:'dd/MM/yyyy HH:mm' }} - {{ slotData.dateTo | date:'HH:mm' }}</span>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div footer-end class="flex gap-2">
+        <p-button
+            label="Modifier"
+            icon="pi pi-pencil"
+            severity="info"
+            [outlined]="true"
+            [disabled]="isPast()"
+            (onClick)="onUpdate()"
+        />
+        <p-button
+            label="Supprimer"
+            icon="pi pi-trash"
+            severity="danger"
+            [outlined]="true"
+            [disabled]="isPast()"
+            (onClick)="onRemove()"
+        />
+    </div>
 </bp-base-modal>

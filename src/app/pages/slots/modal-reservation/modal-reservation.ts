@@ -1,38 +1,46 @@
 import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.component';
-import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
-import { Structure } from '@/pages/components/configurable-form/related-models';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
-import { Component, computed, inject, model, OnInit, output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
+import { Component, computed, model, OnInit, output } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { TagModule } from 'primeng/tag';
+import { SlotDetails } from 'src/client';
 
 @Component({
     selector: 'bp-modal-reservation',
-    imports: [BaseModalComponent, ConfigurableFormComponent],
+    imports: [BaseModalComponent, ButtonModule, AvatarModule, TagModule, DatePipe],
     templateUrl: './modal-reservation.html'
 })
-export class ModalReservation {
-    typeSlotsService = inject(TypeSlotWrapperService);
+export class ModalReservation implements OnInit {
     visible = model(false);
-    title = model('Créer un créneau');
+    title = model('Détails de la réservation');
     event = model.required<CalendarEvent>();
     slot = computed<SlotDetails>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     reservation = computed(() => this.slot()?.reservation ?? null);
 
-    submitClicked = output<SlotCreate | SlotUpdate>();
-    cancelClicked = output<void>();
+    isPast = computed(() => {
+        const slot = this.slot();
+        if (!slot?.dateTo) return false;
+        return new Date(slot.dateTo) < new Date();
+    });
 
-    submit(formData: FormGroup<any>) {
-        const newEvent = {
-            ...formData.value.slotDetails,
-            id: (this.slot() as any)?.id ?? undefined
-        };
-        this.submitClicked.emit(newEvent);
-        this.visible.set(false);
+    ngOnInit(): void {
+        const toto = this.event;
     }
+
+    updateClicked = output<void>();
+    removeClicked = output<void>();
+
+    onUpdate() {
+        this.updateClicked.emit();
+    }
+
+    onRemove() {
+        this.removeClicked.emit();
+    }
+
     cancel() {
         this.visible.set(false);
-        this.cancelClicked.emit();
     }
 }
