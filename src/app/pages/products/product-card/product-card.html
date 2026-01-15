@@ -43,7 +43,7 @@
             <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier la formation</h3>
             <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(false)" pTooltip="Annuler" tooltipPosition="top" />
         </div>
-        <!-- <bp-product-edition [product]="product()" (clickSubmit)="editProduct($event)" (clickCancel)="editMode.set(false)"></bp-product-edition> -->
+        <bp-product-edition [product]="product()" (clickSubmit)="editProduct($event)" (clickCancel)="editMode.set(false)"></bp-product-edition>
     </div>
 </p-card>
 } @if(showDeleteConfirm()){

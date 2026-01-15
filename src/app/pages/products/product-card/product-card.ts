@@ -6,10 +6,11 @@ import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { ProductCreate, ProductDetails, ProductUpdate } from 'src/client';
+import { ProductEdition } from '../product-edition/product-edition';
 
 @Component({
     selector: 'bp-product-card',
-    imports: [Card, Button, ConfirmModalComponent],
+    imports: [Card, Button, ConfirmModalComponent, ProductEdition],
     templateUrl: './product-card.html'
 })
 export class ProductCard {
