@@ -26,7 +26,8 @@ export class ModalReservation implements OnInit {
     });
 
     ngOnInit(): void {
-        const toto = this.event;
+        const toto = this.event();
+        var titi = this.slot();
     }
 
     updateClicked = output<void>();
