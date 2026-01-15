@@ -19,7 +19,7 @@ import { firstValueFrom } from 'rxjs';
                         @if (item['root']) {
                             <li class="layout-menuitem-root-text my-2">{{ item.label }}</li>
                         } @else {
-                            <li routerLinkActive="active-link " class="hover:bg-[var(--surface-hover)]" [routerLinkActiveOptions]="{ exact: true, matrixParams: 'subset', queryParams: 'subset' }">
+                            <li routerLinkActive="active-link " class="hover:bg-[var(--surface-hover)]" [routerLinkActiveOptions]="{ exact: false, matrixParams: 'ignored', queryParams: 'ignored' }">
                                 <button pButton variant="text" severity="primary" [routerLink]="item.routerLink" class="w-full flex justify-start gap-3 p-2">
                                     <i class="{{ item.icon }}"></i> <span>{{ item.label }}</span>
                                 </button>
@@ -30,9 +30,9 @@ import { firstValueFrom } from 'rxjs';
                     }
                 }
             </ul>
-            <div class="menu-separator">
-                <p-button variant="text" severity="info" label="Paramètres" icon="pi pi-fw pi-cog" routerLink="/dashboard/settings"></p-button>
-                <p-button variant="text" severity="danger" label="Déconnexion" icon="pi pi-fw pi-power-off" (onClick)="logout()"></p-button>
+            <div class="menu-separator flex flex-col gap-1">
+                <p-button variant="text" severity="info" label="Paramètres" icon="pi pi-fw pi-cog " routerLink="/dashboard/settings" styleClass="!p-1"></p-button>
+                <p-button variant="text" severity="danger" label="Déconnexion" icon="pi pi-fw pi-power-off" (onClick)="logout()" styleClass="!p-1"></p-button>
             </div>
         </div>
     </div>`
