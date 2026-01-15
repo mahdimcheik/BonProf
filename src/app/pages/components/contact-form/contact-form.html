@@ -1,9 +1,9 @@
 <div class="flex flex-col lg:flex-row w-full gap-6 mt-4 bg-white dark:bg-transparent rounded-md shadow-md p-4">
     <div class="w-full lg:w-[280px] flex-shrink-0">
-        <p-card>
+        <div>
             <div class="flex flex-col items-center text-center gap-4">
                 <!-- Teacher Image -->
-                <p-avatar [image]="teacherprofile().imgUrl || 'assets/user.svg'" size="xlarge" shape="square" style="width: 250px; height: 250px" />
+                <p-image [src]="teacherprofile().imgUrl || 'assets/user.svg'" alt="Profile Image" [imageClass]="'w-full md:w-[260px] h-auto rounded-xl object-cover shadow-sm'" preview="false" />
 
                 <!-- Teacher Name -->
                 <div class="flex flex-col gap-2">
@@ -21,7 +21,7 @@
 
                 <p class="text-surface-700 dark:text-surface-300 text-sm m-0">Remplissez le formulaire pour contacter votre professeur</p>
             </div>
-        </p-card>
+        </div>
     </div>
     <div class="flex-1">
         <bp-configurable-form [structure]="contactStructure" #configurableForm></bp-configurable-form>

@@ -18,10 +18,11 @@ import { HttpClient } from '@angular/common/http';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MainService } from '@/pages/shared/services/main.service';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
+import { Slider } from 'primeng/slider';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider],
     styleUrls: ['./teacher-search.scss'],
     templateUrl: './teacher-search.html'
 })
@@ -72,6 +73,11 @@ export class TeacherSearch implements OnInit {
     levels = this.cursusWrapperService.levelCursuses;
 
     ngOnInit(): void {
+        if (this.selectedCity()) {
+            this.postalCode.set(this.selectedCity()?.properties?.postcode || null);
+            this.lat.set(this.selectedCity()?.geometry.coordinates[1] || null);
+            this.long.set(this.selectedCity()?.geometry.coordinates[0] || null);
+        }
         this.loadData();
     }
 
@@ -157,5 +163,15 @@ export class TeacherSearch implements OnInit {
         this.postalCode.set(null);
         this.lat.set(null);
         this.long.set(null);
+    }
+
+    // distance input handler to prevent letters
+    setInput(event: any) {
+        const input = event.target.value;
+        const numericValue = input.replace(/[^0-9]/g, '');
+        this.radius.set(numericValue ? parseInt(numericValue, 10) : 10);
+        if (this.radius() < 10 || this.radius() > 100) {
+            this.radius.set(10);
+        }
     }
 }
