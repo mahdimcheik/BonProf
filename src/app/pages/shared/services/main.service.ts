@@ -167,6 +167,7 @@ export class MainService {
             tap((res) => {
                 this.token.set(res.data?.token ?? '');
                 this.userConnected.set(res.data?.user as UserDetails);
+                this.localStorageService.setUser(res.data?.user ?? '');
             })
         );
     }

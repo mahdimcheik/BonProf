@@ -55,7 +55,7 @@
                 </div>
                 }
 
-                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" [disabled]="showEditButton()" />
+                <p-button label="Réserver un cours" icon="pi pi-calendar-plus" styleClass="w-full" [raised]="true" size="large" [disabled]="showEditButton()" (onClick)="goToReservation()" />
 
                 <p-tag value="Premier cours gratuit" severity="success" styleClass="text-sm font-semibold" icon="pi pi-gift" />
             </div>
