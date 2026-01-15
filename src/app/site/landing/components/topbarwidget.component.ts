@@ -34,7 +34,12 @@ import { Image } from 'primeng/image';
             <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-1">
                 <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
                 <p-menu #menu [model]="authItems()" [popup]="true" />
-                <p-image [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')" alt="User Image" imageClass="w-[35px] h-[35px] rounded-full" (click)="menu.toggle($event)"></p-image>
+                <p-image
+                    [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')"
+                    alt="User Image"
+                    imageClass="w-[35px] h-[35px] rounded-full object-cover object-center"
+                    (click)="menu.toggle($event)"
+                ></p-image>
                 <!-- <p-avatar (click)="menu.toggle($event)" [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" /> -->
             </div>
         </div>
@@ -56,7 +61,12 @@ import { Image } from 'primeng/image';
                     <p-button type="button" (onClick)="toggleDarkMode()" [rounded]="true" [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
                     @if (mainService.userConnected().email) {
                         <li>
-                            <p-image [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')" alt="User Image" imageClass="w-[35px] h-[35px] rounded-full" (click)="menu.toggle($event)"></p-image>
+                            <p-image
+                                [src]="mainService.userConnected().imgUrl ?? (!isDarkTheme() ? 'assets/user.svg' : 'assets/user-dark.svg')"
+                                alt="User Image"
+                                imageClass="w-[35px] h-[35px] rounded-full object-cover object-center"
+                                (click)="menu.toggle($event)"
+                            ></p-image>
 
                             <!-- <p-avatar [image]="(mainService.userConnected().imgUrl ?? !isDarkTheme()) ? 'assets/user.svg' : 'assets/user-dark.svg'" size="normal" shape="circle" [style]="{ width: '35px', height: '35px' }" /> -->
                         </li>
