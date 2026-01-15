@@ -35,12 +35,27 @@
         </header>
         <div class="template-wrap" class="h-full w-full">
             <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
+            @let reservation = slot?.['reservation']; @if (reservation) {
+            <div class="reservation-details mt-2">
+                <div class="student-name font-bold">{{ reservation?.student?.user?.firstName }} {{ reservation?.student?.user?.lastName }}</div>
+            </div>
+            <div class="title">
+                @if (reservation?.title) {
+                <div>
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Titre</span>
+                    <div class="text-gray-900 dark:text-white font-medium mt-1">{{ reservation.title }}</div>
+                </div>
+                }
+            </div>
+            }
         </div>
     </ng-template>
 </ejs-schedule>
 
 @if(visibleCreateSlotModal()) {
 <bp-modal-create-slot [(visible)]="visibleCreateSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-create-slot>
+} @if(visibleReservationDetailsModal()) {
+<bp-modal-reservation [(visible)]="visibleReservationDetailsModal" [event]="selectedDate" (cancelClicked)="cancel()"></bp-modal-reservation>
 } @if(visibleConfirmDeleteModal()) {
 <bp-confirm-modal
     [(visible)]="visibleConfirmDeleteModal"

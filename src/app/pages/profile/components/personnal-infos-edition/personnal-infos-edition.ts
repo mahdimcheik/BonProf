@@ -309,6 +309,9 @@ export class PersonnalInfosEdition implements OnInit {
                 teacher: undefined
             };
             await firstValueFrom(this.mainService.updateStudentProfile(updatedUser));
+            if (event.value.avatar) {
+                await firstValueFrom(this.mainService.updateAvatar(event.value.avatar.profilePicture));
+            }
             await this.router.navigate(['dashboard/student/profile/me']);
         }
     }

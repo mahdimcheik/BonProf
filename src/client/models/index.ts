@@ -582,6 +582,7 @@ export interface ReservationDetails {
     readonly description?: string | null;
     status?: StatusReservationOutput;
     product?: ProductDetails;
+    student?: StudentDetails;
 }
 
 export interface RoleDetails {
@@ -710,6 +711,7 @@ export interface StudentCreate {
 
 export interface StudentDetails {
     id: string;
+    user?: UserMinimalDetails;
 }
 
 export interface StudentUpdate {
@@ -930,6 +932,14 @@ export interface UserInfosWithtokenResponse {
 export interface UserLogin {
     email: string;
     password: string;
+}
+
+export interface UserMinimalDetails {
+    id: string;
+    email: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    imgUrl?: string | null;
 }
 
 export interface UserUpdate {

@@ -1,0 +1,93 @@
+<bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-clock'">
+    @if (reservation(); as res) {
+    <div content class="w-full flex flex-col gap-4 border-l-4" [style.borderLeftColor]="res.status?.color || 'var(--primary-color)'">
+        <!-- Student Section -->
+        <div class="dark:bg-surface-900 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="pi pi-user text-lg" [style]="{ color: res.status?.color || '#3b82f6' }"></i>
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Étudiant</h3>
+            </div>
+            <div class="flex items-center gap-3">
+                <p-avatar [image]="res.student?.user?.imgUrl ?? undefined" [label]="!res.student?.user?.imgUrl ? (res.student?.user?.firstName?.charAt(0) ?? '?') : undefined" size="xlarge" shape="circle" />
+                <div class="flex flex-col">
+                    <span class="font-semibold text-lg text-gray-900 dark:text-white"> {{ res.student?.user?.firstName }} {{ res.student?.user?.lastName }} </span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                        <i class="pi pi-envelope text-xs"></i>
+                        {{ res.student?.user?.email }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservation Details Section -->
+        <div class="dark:bg-surface-900 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="pi pi-file-edit text-lg text-gray-600 dark:text-gray-300"></i>
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Détails de la réservation</h3>
+            </div>
+            <div class="space-y-3">
+                @if (res.title) {
+                <div>
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Titre</span>
+                    <p class="text-gray-900 dark:text-white font-medium mt-1">{{ res.title }}</p>
+                </div>
+                } @if (res.description) {
+                <div>
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Description</span>
+                    <p class="text-gray-700 dark:text-gray-300 mt-1">{{ res.description }}</p>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Slot Time Section -->
+        @if (slot(); as slotData) {
+        <div class="dark:bg-surface-900 rounded-lg p-4">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="pi pi-clock text-lg text-amber-600 dark:text-amber-400"></i>
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Horaire</h3>
+            </div>
+            <div class="flex items-center gap-3 text-gray-900 dark:text-white">
+                <div class="flex flex-col">
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Début</span>
+                    <span class="font-semibold text-lg">{{ slotData.dateFrom | date:'dd/MM/yyyy' }}</span>
+                    <span class="text-amber-600 dark:text-amber-400 font-medium">{{ slotData.dateFrom | date:'HH:mm' }}</span>
+                </div>
+                <i class="pi pi-arrow-right text-gray-400"></i>
+                <div class="flex flex-col">
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Fin</span>
+                    <span class="font-semibold text-lg">{{ slotData.dateTo | date:'dd/MM/yyyy' }}</span>
+                    <span class="text-amber-600 dark:text-amber-400 font-medium">{{ slotData.dateTo | date:'HH:mm' }}</span>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Product Section -->
+        @if (res.product; as product) {
+        <div class="bg-green-50 dark:bg-gray-800 rounded-lg p-4 border-l-4 border-green-500 dark:border-green-400">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="pi pi-shopping-cart text-lg text-green-600 dark:text-green-400"></i>
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Produit</h3>
+            </div>
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col gap-1 flex-1">
+                    <span class="font-semibold text-lg text-gray-900 dark:text-white">{{ product.name }}</span>
+                    @if (product.description) {
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ product.description }}</span>
+                    }
+                </div>
+                <div class="flex flex-col items-end ml-4">
+                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Prix</span>
+                    <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ product.price }} €</span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+    <div footer-end class="flex gap-2 w-full justify-end">
+        <p-button label="Modifier" icon="pi pi-pencil" severity="info" [outlined]="true" [disabled]="isPast()" (onClick)="onUpdate()" />
+        <p-button label="Supprimer" icon="pi pi-trash" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
+    </div>
+</bp-base-modal>
