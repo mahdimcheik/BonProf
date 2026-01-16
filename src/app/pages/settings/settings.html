@@ -1,5 +1,18 @@
-<div>
-    <div class="visual">
-        <app-configurator />
-    </div>
+<div class="card h-[calc(100vh-115px)] overflow-auto">
+    <p-tabs value="personnalInfos" lazy [value]="tab">
+        <p-tablist>
+            <p-tab value="visualAspect">Aspect visuel</p-tab>
+            <p-tab value="formations">Autres</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="visualAspect">
+                <ng-template #content>
+                    <app-configurator />
+                </ng-template>
+            </p-tabpanel>
+            <p-tabpanel value="formations">
+                <ng-template #content> autres </ng-template>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
 </div>

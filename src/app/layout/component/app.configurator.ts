@@ -39,7 +39,7 @@ declare type SurfacesType = {
     selector: 'app-configurator',
     imports: [CommonModule, FormsModule, SelectButtonModule],
     template: `
-        <div class="flex flex-col gap-5 p-4 bg-white dark:bg-surface-900  overflow-y-auto  h-[850px] ">
+        <div class="flex flex-col gap-5 p-4 bg-white dark:bg-surface-900  overflow-y-auto  h-[700px] ">
             <!-- Primary Colors Section -->
             <div class="border border-surface rounded-lg p-4 bg-surface-50/50">
                 <div class="flex items-center gap-2 mb-3">
