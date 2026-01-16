@@ -39,19 +39,23 @@ declare type SurfacesType = {
     selector: 'app-configurator',
     imports: [CommonModule, FormsModule, SelectButtonModule],
     template: `
-        <div class="flex flex-col gap-4">
-            <div>
-                <span class="text-sm text-muted-color font-semibold">Primary</span>
-                <div class="pt-2 flex gap-2 flex-wrap justify-start">
+        <div class="flex flex-col gap-5 p-4 bg-white dark:bg-surface-900  overflow-y-auto  h-[850px] ">
+            <!-- Primary Colors Section -->
+            <div class="border border-surface rounded-lg p-4 bg-surface-50/50">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="pi pi-palette text-primary"></i>
+                    <span class="text-base font-semibold text-color">Couleur principale</span>
+                </div>
+                <div class="flex gap-2 flex-wrap justify-start">
                     @for (primaryColor of primaryColors(); track primaryColor.name) {
                         <button
                             type="button"
                             [title]="primaryColor.name"
                             (click)="updateColors($event, 'primary', primaryColor)"
                             [ngClass]="{
-                                'outline outline-primary': primaryColor.name === selectedPrimaryColor()
+                                'outline outline-2 outline-primary scale-110': primaryColor.name === selectedPrimaryColor()
                             }"
-                            class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center outline-offset-1 shadow"
+                            class="cursor-pointer w-7 h-7 rounded-full flex shrink-0 items-center justify-center outline-offset-2 shadow-md hover:scale-105 transition-all duration-200"
                             [style]="{
                                 'background-color': primaryColor?.name === 'noir' ? 'var(--text-color)' : primaryColor?.palette?.['500']
                             }"
@@ -59,17 +63,22 @@ declare type SurfacesType = {
                     }
                 </div>
             </div>
-            <div>
-                <span class="text-sm text-muted-color font-semibold">Surface</span>
-                <div class="pt-2 flex gap-2 flex-wrap justify-start">
+
+            <!-- Surface Colors Section -->
+            <div class="border border-surface rounded-lg p-4 bg-surface-50/50">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="pi pi-th-large text-primary"></i>
+                    <span class="text-base font-semibold text-color">Couleur de surface</span>
+                </div>
+                <div class="flex gap-2 flex-wrap justify-start">
                     @for (surface of surfaces; track surface.name) {
                         <button
                             type="button"
                             [title]="surface.name"
                             (click)="updateColors($event, 'surface', surface)"
-                            class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center p-0 outline-offset-1"
+                            class="cursor-pointer w-7 h-7 rounded-full flex shrink-0 items-center justify-center p-0 outline-offset-2 shadow-md hover:scale-105 transition-all duration-200"
                             [ngClass]="{
-                                'outline outline-primary': selectedSurfaceColor() ? selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ? surface.name === 'zinc' : surface.name === 'slate'
+                                'outline outline-2 outline-primary scale-110': selectedSurfaceColor() ? selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ? surface.name === 'zinc' : surface.name === 'slate'
                             }"
                             [style]="{
                                 'background-color': surface?.palette?.['500']
@@ -78,23 +87,43 @@ declare type SurfacesType = {
                     }
                 </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <span class="text-sm text-muted-color font-semibold">Presets</span>
-                <p-selectbutton [options]="presets" [ngModel]="selectedPreset()" (ngModelChange)="onPresetChange($event)" [allowEmpty]="false" size="small" />
+
+            <!-- Presets Section -->
+            <div class="border border-surface rounded-lg p-4 bg-surface-50/50">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="pi pi-sparkles text-primary"></i>
+                    <span class="text-base font-semibold text-color">Préréglages de thème</span>
+                </div>
+                <p-selectbutton [options]="presets" [ngModel]="selectedPreset()" (ngModelChange)="onPresetChange($event)" [allowEmpty]="false" size="small" styleClass="w-full" />
             </div>
-            <!-- @if (showMenuModeButton()) { -->
-            <div class="flex flex-col gap-2">
-                <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
-                <p-selectbutton [ngModel]="menuMode()" (ngModelChange)="onMenuModeChange($event)" [options]="menuModeOptions" [allowEmpty]="false" size="small" />
+
+            <!-- Menu Mode Section -->
+            <div class="border border-surface rounded-lg p-4 bg-surface-50/50">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="pi pi-bars text-primary"></i>
+                    <span class="text-base font-semibold text-color">Mode du menu</span>
+                </div>
+                <p-selectbutton [ngModel]="menuMode()" (ngModelChange)="onMenuModeChange($event)" [options]="menuModeOptions" [allowEmpty]="false" size="small" styleClass="w-full" />
             </div>
-            <!-- } -->
         </div>
-    `
+    `,
+    styles: [
+        `
+            :host ::ng-deep {
+                .p-selectbutton {
+                    display: flex;
+                    width: 100%;
+                }
+
+                .p-selectbutton .p-button {
+                    flex: 1;
+                }
+            }
+        `
+    ]
 })
 export class AppConfigurator {
     router = inject(Router);
-
-    // config: PrimeNG = inject(PrimeNG);
 
     layoutService: LayoutService = inject(LayoutService);
 
@@ -105,8 +134,8 @@ export class AppConfigurator {
     showMenuModeButton = signal(!this.router.url.includes('auth'));
 
     menuModeOptions = [
-        { label: 'Static', value: 'static' },
-        { label: 'Overlay', value: 'overlay' }
+        { label: 'Statique', value: 'static' },
+        { label: 'Superposition', value: 'overlay' }
     ];
 
     ngOnInit() {

@@ -31,8 +31,8 @@ import { firstValueFrom } from 'rxjs';
                 }
             </ul>
             <div class="menu-separator flex flex-col gap-1">
-                <p-button variant="text" severity="info" label="Paramètres" icon="pi pi-fw pi-cog " routerLink="/dashboard/settings" styleClass="!p-1"></p-button>
-                <p-button variant="text" severity="danger" label="Déconnexion" icon="pi pi-fw pi-power-off" (onClick)="logout()" styleClass="!p-1"></p-button>
+                <p-button variant="text" severity="info" label="Paramètres" icon="pi pi-fw pi-cog " routerLink="/dashboard/settings" styleClass="!p-1" routerLinkActive="active-link "></p-button>
+                <p-button variant="text" severity="danger" label="Déconnexion" icon="pi pi-fw pi-power-off" (onClick)="logout()" styleClass="!p-1" routerLinkActive="active-link "></p-button>
             </div>
         </div>
     </div>`
