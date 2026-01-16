@@ -2,7 +2,7 @@
 
 > **Statut:** 🚧 En construction
 
-BonProf est une plateforme moderne de soutien scolaire conçue pour connecter professeurs et élèves dans un environnement d'apprentissage intégré et efficace.
+BonProf est une plateforme moderne de soutien scolaire conçue pour connecter professeurs et élèves dans un environnement d'apprentissage intégré et efficace. [Bonprof.fr](https://bonprof.fr)
 
 ## 🎯 À propos
 
