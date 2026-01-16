@@ -138,7 +138,7 @@ export class Inscription implements OnInit {
                 {
                     id: 'optionalFields',
                     name: 'optionalFields',
-                    label: 'Champs recommandés pour les enseignants',
+                    label: 'Champs recommandés',
                     fields: [
                         {
                             id: 'title',
