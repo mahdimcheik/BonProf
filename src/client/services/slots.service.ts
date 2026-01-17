@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, ReservationCreate } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -135,5 +135,21 @@ export class SlotsService {
         };
 
         return this.httpClient.post(url, reservationCreate, requestOptions);
+    }
+
+    slotsTeacherConfirmReservationPost(reservationUpdateStatus?: ReservationUpdateStatus, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    slotsTeacherConfirmReservationPost(reservationUpdateStatus?: ReservationUpdateStatus, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    slotsTeacherConfirmReservationPost(reservationUpdateStatus?: ReservationUpdateStatus, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
+    slotsTeacherConfirmReservationPost(reservationUpdateStatus?: ReservationUpdateStatus, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/teacher/confirm-reservation`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, reservationUpdateStatus, requestOptions);
     }
 }

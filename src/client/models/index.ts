@@ -589,6 +589,11 @@ export interface ReservationDetails {
     student?: StudentDetails;
 }
 
+export interface ReservationUpdateStatus {
+    reservationId: string;
+    statusCode: StatusReservationCode;
+}
+
 export interface RoleDetails {
     id: string;
     name: string | null;

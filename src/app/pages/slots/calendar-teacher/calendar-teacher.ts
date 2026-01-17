@@ -20,7 +20,7 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
 import { firstValueFrom } from 'rxjs';
-import { SlotCreate, SlotDetails, SlotUpdate, StatusReservationCode, StatusReservationDetails } from 'src/client';
+import { ReservationDetails, SlotCreate, SlotDetails, SlotUpdate, StatusReservationCode, StatusReservationDetails } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { MessageService } from 'primeng/api';
@@ -394,6 +394,42 @@ export class CalendarTeacher implements OnInit {
                 BgColor: slot.type?.color
             }
         };
+    }
+    // reservations
+    async validateReservation(reservation: ReservationDetails | null) {
+        if (!reservation || !reservation.id) {
+            this.messageService.add({ severity: 'danger', summary: 'Echec', detail: 'La réservation est invalide.' });
+            return;
+        }
+
+        try {
+            await firstValueFrom(this.slotWrapperService.confirmReservation(reservation.id));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'La réservation a été confirmée avec succès.' });
+        } catch (ex: any) {
+            this.messageService.add({ severity: 'danger', summary: 'Echec', detail: ex?.error?.message || 'Une erreur est survenue lors de la confirmation de la réservation.' });
+            console.log('exception : ', ex);
+        } finally {
+            await this.refreshCurrentView();
+            this.visibleReservationDetailsModal.set(false);
+        }
+    }
+
+    async removeReservation(reservation: ReservationDetails) {
+        if (!reservation || !reservation.id) {
+            this.messageService.add({ severity: 'danger', summary: 'Echec', detail: 'La réservation est invalide.' });
+            return;
+        }
+
+        try {
+            // await firstValueFrom(this.slotWrapperService.removeReservation(reservation.id));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'La réservation a été annulée avec succès.' });
+        } catch (ex: any) {
+            this.messageService.add({ severity: 'danger', summary: 'Echec', detail: ex?.error?.message || "Une erreur est survenue lors de l'annulation de la réservation." });
+            console.log('exception : ', ex);
+        } finally {
+            await this.refreshCurrentView();
+            this.visibleReservationDetailsModal.set(false);
+        }
     }
 
     // styles signals

@@ -1,11 +1,12 @@
 import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.component';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { Component, computed, model, OnInit, output } from '@angular/core';
+import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
-import { SlotDetails } from 'src/client';
+import { ReservationDetails, SlotDetails, StatusReservationCode } from 'src/client';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 
 @Component({
     selector: 'bp-modal-reservation',
@@ -19,26 +20,32 @@ export class ModalReservation implements OnInit {
     slot = computed<SlotDetails>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     reservation = computed(() => this.slot()?.reservation ?? null);
 
+    public pending = StatusReservationCode.Pending;
+    public accepted = StatusReservationCode.Accepted;
+    public rejected = StatusReservationCode.Rejected;
+    public done = StatusReservationCode.Done;
+
     isPast = computed(() => {
         const slot = this.slot();
         if (!slot?.dateTo) return false;
         return new Date(slot.dateTo) < new Date();
     });
 
-    ngOnInit(): void {
-        const titi = this.slot();
-        const toto = this.reservation();
-    }
+    ngOnInit(): void {}
 
-    updateClicked = output<void>();
-    removeClicked = output<void>();
+    updateClicked = output<ReservationDetails | null>();
+    removeClicked = output<ReservationDetails>();
 
     onUpdate() {
-        this.updateClicked.emit();
+        this.updateClicked.emit(this.reservation());
     }
 
     onRemove() {
-        this.removeClicked.emit();
+        if (!this.reservation()) {
+            this.visible.set(false);
+            return;
+        }
+        this.removeClicked.emit(this.reservation()!);
     }
 
     cancel() {
