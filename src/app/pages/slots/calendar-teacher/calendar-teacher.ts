@@ -204,6 +204,12 @@ export class CalendarTeacher implements OnInit {
         if (eventStartTime < now) {
             args.cancel = true;
         }
+        const reservation = args.data.ExtendedProps?.slot?.reservation;
+
+        if (reservation) {
+            args.cancel = true;
+            return;
+        }
     }
 
     // Method to control resize permission
