@@ -24,7 +24,7 @@
 >
     <ng-template #eventSettingsTemplate let-data>
         @let slot = data.ExtendedProps?.['slot']; @let reservation = slot?.['reservation'];
-        <div class="template-wrap" class="h-full w-full" [class.waiting]="slot.reservation?.status?.id === '2ec60a91-aab8-4753-a5d8-b131b9441e77'">
+        <div class="template-wrap" class="h-full w-full" [ngClass]="reservation?.status.code">
             <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
             @if (reservation) {
             <div class="reservation-details mt-2">

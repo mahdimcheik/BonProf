@@ -692,6 +692,14 @@ export interface StatusReservation {
     name: string;
     color: string;
     icon?: string | null;
+    code: StatusReservationCode;
+}
+
+export enum StatusReservationCode {
+    Pending = "Pending",
+    Accepted = "Accepted",
+    Rejected = "Rejected",
+    Done = "Done"
 }
 
 export interface StatusReservationDetails {
@@ -699,6 +707,7 @@ export interface StatusReservationDetails {
     readonly name: string;
     readonly color: string;
     readonly icon?: string | null;
+    code: StatusReservationCode;
 }
 
 export interface StatusReservationDetailsListResponse {

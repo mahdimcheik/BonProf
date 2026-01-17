@@ -1,6 +1,6 @@
 import { MainService } from '@/pages/shared/services/main.service';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, computed, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import {
     ActionEventArgs,
@@ -20,7 +20,7 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
 import { firstValueFrom } from 'rxjs';
-import { SlotCreate, SlotDetails, SlotUpdate, StatusReservationDetails } from 'src/client';
+import { SlotCreate, SlotDetails, SlotUpdate, StatusReservationCode, StatusReservationDetails } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { MessageService } from 'primeng/api';
@@ -99,7 +99,7 @@ L10n.load({
 
 setCulture('fr');
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, ConfirmModalComponent, ModalReservation],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, ConfirmModalComponent, ModalReservation, CommonModule],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -120,6 +120,12 @@ export class CalendarTeacher implements OnInit {
     private isInitialized = false;
     // Locale
     public locale = 'fr';
+
+    // type enums
+    public pending = StatusReservationCode.Pending;
+    public accepted = StatusReservationCode.Accepted;
+    public rejected = StatusReservationCode.Rejected;
+    public done = StatusReservationCode.Done;
 
     // status reservations options
     statusReservations = this.statusReservationService.statusReservations;
