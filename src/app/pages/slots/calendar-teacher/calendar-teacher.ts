@@ -421,7 +421,7 @@ export class CalendarTeacher implements OnInit {
         }
 
         try {
-            // await firstValueFrom(this.slotWrapperService.removeReservation(reservation.id));
+            await firstValueFrom(this.slotWrapperService.removeReservation(reservation.id));
             this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'La réservation a été annulée avec succès.' });
         } catch (ex: any) {
             this.messageService.add({ severity: 'danger', summary: 'Echec', detail: ex?.error?.message || "Une erreur est survenue lors de l'annulation de la réservation." });

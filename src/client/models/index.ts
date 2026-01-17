@@ -620,7 +620,7 @@ export interface Slot {
     teacher?: Teacher;
     typeId?: string;
     type?: TypeSlot;
-    reservation?: Reservation;
+    reservations?: Array<Reservation>;
 }
 
 export interface SlotCreate {

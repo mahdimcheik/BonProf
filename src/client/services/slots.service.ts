@@ -152,4 +152,26 @@ export class SlotsService {
 
         return this.httpClient.post(url, reservationUpdateStatus, requestOptions);
     }
+
+    slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
+    slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/teacher/remove-reservation`;
+
+        let params = new HttpParams();
+        if (reservationId != null) {
+            params = HttpParamsBuilder.addToHttpParams(params, reservationId, 'reservationId');
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            params,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.delete(url, requestOptions);
+    }
 }

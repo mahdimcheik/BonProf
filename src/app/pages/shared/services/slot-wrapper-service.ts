@@ -64,4 +64,8 @@ export class SlotWrapperService {
     confirmReservation(reservationId: string) {
         return this.slotsService.slotsTeacherConfirmReservationPost({ reservationId, statusCode: StatusReservationCode.Accepted });
     }
+
+    removeReservation(reservationId: string) {
+        return this.slotsService.slotsTeacherRemoveReservationDelete(reservationId);
+    }
 }
