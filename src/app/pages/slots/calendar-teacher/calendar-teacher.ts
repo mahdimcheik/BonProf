@@ -20,11 +20,9 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
 import { firstValueFrom } from 'rxjs';
-import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
+import { SlotCreate, SlotDetails, SlotUpdate, StatusReservationDetails } from 'src/client';
 import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { Button } from 'primeng/button';
-import { Tooltip } from 'primeng/tooltip';
 import { MessageService } from 'primeng/api';
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 
@@ -34,6 +32,7 @@ import * as gregorian from 'cldr-data/main/fr/ca-gregorian.json';
 import * as numbers from 'cldr-data/main/fr/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/fr/timeZoneNames.json';
 import { ModalReservation } from '../modal-reservation/modal-reservation';
+import { StatusReservationWrapperService } from '@/pages/shared/services/status-reservation-wrapper-service';
 
 loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
 
@@ -100,7 +99,7 @@ L10n.load({
 
 setCulture('fr');
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalCreateSlot, Button, Tooltip, ConfirmModalComponent, ModalReservation],
+    imports: [ScheduleModule, DatePipe, ModalCreateSlot, ConfirmModalComponent, ModalReservation],
     standalone: true,
     selector: 'bp-calendar-teacher',
     templateUrl: './calendar-teacher.html',
@@ -110,6 +109,7 @@ export class CalendarTeacher implements OnInit {
     mainService = inject(MainService);
     slotWrapperService = inject(SlotWrapperService);
     messageService = inject(MessageService);
+    statusReservationService = inject(StatusReservationWrapperService);
     // Input for events data
     events = model<CalendarEvent[]>([]);
     visibleCreateSlotModal = signal(false);
@@ -121,12 +121,11 @@ export class CalendarTeacher implements OnInit {
     // Locale
     public locale = 'fr';
 
+    // status reservations options
+    statusReservations = this.statusReservationService.statusReservations;
+
     // Calendar configuration
-    public selectedDate: CalendarEvent = {
-        StartTime: new Date(2025, 11, 15, 21, 0),
-        EndTime: new Date(2025, 11, 15, 21, 30),
-        Subject: ''
-    };
+    public selectedDate!: CalendarEvent;
 
     selectedSlot = model<SlotDetails | null>(null);
 
@@ -149,6 +148,7 @@ export class CalendarTeacher implements OnInit {
     ngOnInit(): void {}
 
     async loadData(startTime: Date, endTime: Date) {
+        this.statusReservationService.getAllStatusReservations();
         if (this.isLoading) return;
 
         this.isLoading = true;
@@ -206,6 +206,12 @@ export class CalendarTeacher implements OnInit {
         // Example: Prevent resizing events in the past
         const eventStartTime = new Date(args.data.StartTime);
         const now = new Date();
+        const reservation = args.data.ExtendedProps?.slot?.reservation;
+
+        if (reservation) {
+            args.cancel = true;
+            return;
+        }
 
         if (eventStartTime < now) {
             args.cancel = true;

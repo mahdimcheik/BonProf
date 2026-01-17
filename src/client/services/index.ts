@@ -19,6 +19,7 @@ export { LevelCursusService } from "./levelCursus.service";
 export { ProductService } from "./product.service";
 export { RolesService } from "./roles.service";
 export { SlotsService } from "./slots.service";
+export { StatusReservationsService } from "./statusReservations.service";
 export { StudentsService } from "./students.service";
 export { TeachersService } from "./teachers.service";
 export { TypeAddressesService } from "./typeAddresses.service";

@@ -23,19 +23,10 @@
     (actionComplete)="onActionComplete($event)"
 >
     <ng-template #eventSettingsTemplate let-data>
-        @let slot = data.ExtendedProps?.['slot'];
-        <header class="w-full flex justify-end px-2 py-1">
-            <p-button variant="text" severity="danger" pTooltip="Supprimer" (onClick)="openConfirmDeleteModal($event, slot)" tooltipPosition="top">
-                <ng-template #icon>
-                    <i class="pi pi-times" size="small"></i>
-                </ng-template>
-
-                <ng-template #buttonContent (click)="clickEvent({event: data})"></ng-template>
-            </p-button>
-        </header>
-        <div class="template-wrap" class="h-full w-full">
+        @let slot = data.ExtendedProps?.['slot']; @let reservation = slot?.['reservation'];
+        <div class="template-wrap" class="h-full w-full" [class.waiting]="slot.reservation?.status?.id === '2ec60a91-aab8-4753-a5d8-b131b9441e77'">
             <div class="time">Creneau : {{ slot?.dateFrom | date:'shortTime' }} - {{ slot?.dateTo | date:'shortTime' }}</div>
-            @let reservation = slot?.['reservation']; @if (reservation) {
+            @if (reservation) {
             <div class="reservation-details mt-2">
                 <div class="student-name font-bold">{{ reservation?.student?.user?.firstName }} {{ reservation?.student?.user?.lastName }}</div>
             </div>
