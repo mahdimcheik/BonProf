@@ -1,5 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
@@ -9,7 +9,7 @@ import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'bp-profile-infos',
-    imports: [Image, Button, Card, Tag, RouterLink],
+    imports: [Image, Button, Card, Tag],
     templateUrl: './profile-infos.html'
 })
 export class ProfileInfos {

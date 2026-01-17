@@ -21,7 +21,8 @@
     border-radius: 4px;
 }
 
-.waiting {
+.waiting,
+.Pending {
     opacity: 0.6;
     position: relative;
     &::after {

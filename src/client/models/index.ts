@@ -445,8 +445,12 @@ export interface Order {
     totalAmount: number;
     reductionPercentage?: number;
     reductionAmount?: number;
+    statusId: string;
+    status?: StatusOrder;
     studentId: string;
-    student?: UserApp;
+    student?: Student;
+    teacherId: string;
+    teacher?: Teacher;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
@@ -580,9 +584,14 @@ export interface ReservationDetails {
     readonly id?: string;
     readonly title?: string | null;
     readonly description?: string | null;
-    status?: StatusReservationOutput;
+    status?: StatusReservationDetails;
     product?: ProductDetails;
     student?: StudentDetails;
+}
+
+export interface ReservationUpdateStatus {
+    reservationId: string;
+    statusCode: StatusReservationCode;
 }
 
 export interface RoleDetails {
@@ -611,7 +620,7 @@ export interface Slot {
     teacher?: Teacher;
     typeId?: string;
     type?: TypeSlot;
-    reservation?: Reservation;
+    reservations?: Array<Reservation>;
 }
 
 export interface SlotCreate {
@@ -670,7 +679,7 @@ export interface StatusAccountDetails {
     readonly icon?: string | null;
 }
 
-export interface StatusReservation {
+export interface StatusOrder {
     id?: string;
     createdAt: Date;
     updatedAt?: Date | null;
@@ -680,11 +689,37 @@ export interface StatusReservation {
     icon?: string | null;
 }
 
-export interface StatusReservationOutput {
+export interface StatusReservation {
+    id?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    name: string;
+    color: string;
+    icon?: string | null;
+    code: StatusReservationCode;
+}
+
+export enum StatusReservationCode {
+    Pending = "Pending",
+    Accepted = "Accepted",
+    Rejected = "Rejected",
+    Done = "Done"
+}
+
+export interface StatusReservationDetails {
     readonly id: string;
     readonly name: string;
     readonly color: string;
     readonly icon?: string | null;
+    code: StatusReservationCode;
+}
+
+export interface StatusReservationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<StatusReservationDetails>;
+    count?: number | null;
 }
 
 export interface StringResponse {

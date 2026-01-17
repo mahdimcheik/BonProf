@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
-import { Reservation, ReservationCreate, SlotCreate, SlotsService, SlotUpdate } from 'src/client';
+import { Reservation, ReservationCreate, SlotCreate, SlotsService, SlotUpdate, StatusReservationCode } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -59,5 +59,13 @@ export class SlotWrapperService {
             }),
             map((response) => response.data)
         );
+    }
+
+    confirmReservation(reservationId: string) {
+        return this.slotsService.slotsTeacherConfirmReservationPost({ reservationId, statusCode: StatusReservationCode.Accepted });
+    }
+
+    removeReservation(reservationId: string) {
+        return this.slotsService.slotsTeacherRemoveReservationDelete(reservationId);
     }
 }
