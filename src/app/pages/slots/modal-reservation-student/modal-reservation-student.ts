@@ -44,7 +44,6 @@ export class ModalReservationStudent implements OnInit {
 
     ngOnInit(): void {}
 
-    updateClicked = output<ReservationDetails | null>();
     removeClicked = output<ReservationDetails>();
 
     onUpdate() {
@@ -64,14 +63,6 @@ export class ModalReservationStudent implements OnInit {
     // Confirmation modal actions
     confirm() {
         this.showConfirmModal.set(false);
-        if (this.isConfirmModal()) {
-            this.updateClicked.emit(this.reservation());
-        } else {
-            if (!this.reservation()) {
-                this.visible.set(false);
-                return;
-            }
-            this.removeClicked.emit(this.reservation()!);
-        }
+        this.removeClicked.emit(this.reservation()!);
     }
 }
