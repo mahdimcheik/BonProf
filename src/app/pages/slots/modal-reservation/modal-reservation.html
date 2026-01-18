@@ -97,3 +97,5 @@
         }
     </div>
 </bp-base-modal>
+
+<bp-confirm-modal [question]="question()" [title]="titleModal()" (onConfirm)="confirm()" (onCancel)="showConfirmModal.set(false)" (onClose)="cancel()" [(visible)]="showConfirmModal"></bp-confirm-modal>
