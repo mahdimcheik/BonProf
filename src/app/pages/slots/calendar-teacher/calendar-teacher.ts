@@ -231,8 +231,9 @@ export class CalendarTeacher implements OnInit {
     }
 
     onDragStop(args: any): void {
-        if (args.data.StartTime < new Date()) {
+        if (args.data.StartTime < new Date() || this.isOverlapingEvents(args.data, this.events())) {
             args.cancel = true;
+            return;
         }
 
         const selectedEvent = args.data as any;
@@ -249,6 +250,18 @@ export class CalendarTeacher implements OnInit {
             ExtendedProps: { slot: this.selectedSlot() }
         };
         this.visibleCreateSlotModal.set(true);
+    }
+
+    isOverlapingEvents(eventTest: CalendarEvent, events: CalendarEvent[]): boolean {
+        let returnValue = false;
+
+        for (let event of events) {
+            if (this.isOverlaping(eventTest, event) && event.Id !== eventTest.Id) {
+                returnValue = true;
+                break;
+            }
+        }
+        return returnValue;
     }
 
     onResizeStop(args: any): void {

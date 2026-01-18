@@ -5,19 +5,26 @@ import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SlotCreate, SlotUpdate } from 'src/client';
+import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
+import { Button } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { firstValueFrom } from 'rxjs';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 
 @Component({
     selector: 'bp-modal-create-slot',
-    imports: [BaseModalComponent, ConfigurableFormComponent],
+    imports: [BaseModalComponent, ConfigurableFormComponent, Button],
     templateUrl: './modal-create-slot.html'
 })
 export class ModalCreateSlot implements OnInit {
     typeSlotsService = inject(TypeSlotWrapperService);
+    messageService = inject(MessageService);
+    slotWrapperService = inject(SlotWrapperService);
+
     visible = model(false);
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
-    slot = computed<SlotCreate | SlotUpdate | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
+    slot = computed<SlotCreate | SlotUpdate | SlotDetails | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
     submitClicked = output<SlotCreate | SlotUpdate>();
     cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
@@ -30,6 +37,8 @@ export class ModalCreateSlot implements OnInit {
             name: 'slotForm',
             label: 'Créer un créneau',
             styleClass: '!w-full min-w-full',
+            hideCancelButton: true,
+            hideSubmitButton: true,
             sections: [
                 {
                     id: 'slotDetails',
@@ -92,6 +101,24 @@ export class ModalCreateSlot implements OnInit {
         this.submitClicked.emit(newEvent);
         this.visible.set(false);
     }
+
+    async removeSlot() {
+        try {
+            const slotId = (this.slot() as SlotDetails | null)?.id;
+            if (!slotId) {
+                this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'ID du créneau manquant.' });
+                return;
+            }
+
+            await firstValueFrom(this.slotWrapperService.removeSlotById(slotId));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Le créneau a été supprimé avec succès.' });
+            this.cancel();
+        } catch (ex: any) {
+            console.log('Erreur lors de la suppression du créneau : ', ex?.error);
+            this.messageService.add({ severity: 'error', summary: 'Erreur', detail: (ex as any).error?.message ?? 'Une erreur est survenue lors de la suppression du créneau.' });
+        }
+    }
+
     cancel() {
         this.visible.set(false);
         this.cancelClicked.emit();

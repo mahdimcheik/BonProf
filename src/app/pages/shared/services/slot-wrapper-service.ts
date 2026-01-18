@@ -41,13 +41,7 @@ export class SlotWrapperService {
     }
 
     removeSlotById(slotId: string) {
-        return this.slotsService.slotsTeacherRemoveSlotIdDelete(slotId).pipe(
-            catchError((res) => {
-                console.log('error res : ', res);
-                return of();
-            }),
-            map((response) => response.data)
-        );
+        return this.slotsService.slotsTeacherRemoveSlotIdDelete(slotId).pipe(map((response) => response.data));
     }
 
     // reservation

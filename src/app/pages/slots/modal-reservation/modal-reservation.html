@@ -88,11 +88,11 @@
     }
     <div footer-end class="flex gap-2 w-full justify-end">
         @if(reservation() && reservation()?.status?.code === pending) {
-        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="cancel()" />
+        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
         <p-button label="Refuser" icon="pi pi-trash" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
         <p-button label="Valider" icon="pi pi-pencil" severity="primary" [outlined]="true" [disabled]="isPast()" (onClick)="onUpdate()" />
         }@else{
-        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="cancel()" />
+        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
         <p-button label="Annuler" icon="pi pi-pencil" severity="primary" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
         }
     </div>
