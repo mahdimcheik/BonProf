@@ -32,6 +32,7 @@ import * as numberingSystems from 'cldr-data/supplemental/numberingSystems.json'
 import * as gregorian from 'cldr-data/main/fr/ca-gregorian.json';
 import * as numbers from 'cldr-data/main/fr/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/fr/timeZoneNames.json';
+import { ModalReservationStudent } from '../modal-reservation-student/modal-reservation-student';
 
 loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
 
@@ -99,7 +100,7 @@ L10n.load({
 setCulture('fr');
 
 @Component({
-    imports: [ScheduleModule, DatePipe, ModalBookSlot, Divider],
+    imports: [ScheduleModule, DatePipe, ModalBookSlot, Divider, ModalReservationStudent],
     standalone: true,
     selector: 'bp-calendar-student',
     templateUrl: './calendar-student.html',
@@ -114,6 +115,7 @@ export class CalendarStudent implements OnInit {
     // Input for events data
     events = model<CalendarEvent[]>([]);
     visibleBookSlotModal = signal(false);
+    visibleReservationModal = signal(false);
     scheduleRef = viewChild<ScheduleComponent>('scheduleRef');
     private isLoading = false;
     private isInitialized = false;
@@ -128,6 +130,7 @@ export class CalendarStudent implements OnInit {
     public selectedDate!: CalendarEvent;
 
     selectedSlot = model<SlotDetails | null>(null);
+    reservation = computed(() => this.selectedSlot()?.reservation ?? null);
 
     public eventSettings = computed(() => {
         return {
@@ -139,12 +142,12 @@ export class CalendarStudent implements OnInit {
     public startHour = '09:00';
     public endHour = '22:00';
 
-    // Time scale configuration (30-minute intervals)
     public timeScale = {
         enable: true,
         interval: 60,
         slotCount: 2
     };
+
     ngOnInit(): void {
         const teacherId = this.activatedRoute.snapshot.queryParams['teacherId'];
         this.teacherId.set(teacherId ?? null);
@@ -161,9 +164,7 @@ export class CalendarStudent implements OnInit {
         }
     }
 
-    // Called when scheduler is rendered or view changes
     onDataBound(args: any): void {
-        // Only load data on first render
         if (!this.isInitialized) {
             this.isInitialized = true;
             const schedule = this.scheduleRef();
@@ -176,13 +177,8 @@ export class CalendarStudent implements OnInit {
         }
     }
 
-    // Called when navigating to different dates - let onActionComplete handle the loading
-    onNavigating(args: NavigatingEventArgs): void {
-        // This event fires before navigation completes
-        // We'll let onActionComplete handle the actual data loading
-    }
+    onNavigating(args: NavigatingEventArgs): void {}
 
-    // Called when action is completed (including view changes)
     onActionComplete(args: ActionEventArgs): void {
         if (args.requestType === 'viewNavigate' || args.requestType === 'dateNavigate') {
             const schedule = this.scheduleRef();
@@ -194,14 +190,6 @@ export class CalendarStudent implements OnInit {
                 this.loadData(startDate, endDate);
             }
         }
-    }
-
-    // Helper to get the start of the week (Sunday)
-    private getWeekStart(date: Date): Date {
-        const d = new Date(date);
-        const day = d.getDay();
-        const diff = d.getDate() - day;
-        return new Date(d.setDate(diff));
     }
 
     // Method to control drag and drop permission
@@ -218,14 +206,8 @@ export class CalendarStudent implements OnInit {
 
     onResizeStop(args: any): void {}
 
-    private isOverlaping(event1: CalendarEvent, event2: CalendarEvent): boolean {
-        return event1.StartTime < event2.EndTime && event2.StartTime < event1.EndTime;
-    }
-
-    // click on cell
     onCellClick(event: CellClickEventArgs) {}
 
-    // open  create modal
     public onPopupOpen(args: PopupOpenEventArgs): void {
         args.cancel = true;
     }
@@ -244,6 +226,10 @@ export class CalendarStudent implements OnInit {
             Subject: '',
             ExtendedProps: { slot: this.selectedSlot() }
         };
+        if (this.reservation()) {
+            this.visibleReservationModal.set(true);
+            return;
+        }
         this.visibleBookSlotModal.set(true);
     }
 
