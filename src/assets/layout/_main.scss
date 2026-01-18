@@ -6,6 +6,11 @@
     padding: 6rem 2rem 0 2rem;
     transition: margin-left var(--layout-section-transition-duration);
 }
+@media screen and (max-width: 640px) {
+    .layout-main-container {
+        padding: 4rem 1rem 0 1rem !important;
+    }
+}
 
 .layout-main {
     flex: 1 1 auto;

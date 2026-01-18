@@ -21,6 +21,7 @@
     border-radius: 4px;
 }
 
+// style pour les template des appointments
 .waiting,
 .Pending {
     opacity: 0.6;
@@ -40,4 +41,9 @@
         font-weight: bold;
         border-radius: 4px;
     }
+}
+
+// tab panel
+.p-tabpanels {
+    padding: 0 !important;
 }
