@@ -10,11 +10,11 @@ import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 
 @Component({
-    selector: 'bp-modal-reservation',
+    selector: 'bp-modal-reservation-student',
     imports: [BaseModalComponent, ButtonModule, AvatarModule, TagModule, DatePipe, ConfirmModalComponent],
-    templateUrl: './modal-reservation.html'
+    templateUrl: './modal-reservation-student.html'
 })
-export class ModalReservation implements OnInit {
+export class ModalReservationStudent implements OnInit {
     visible = model(false);
     title = model('Détails de la réservation');
     event = model.required<CalendarEvent>();
@@ -44,7 +44,6 @@ export class ModalReservation implements OnInit {
 
     ngOnInit(): void {}
 
-    updateClicked = output<ReservationDetails | null>();
     removeClicked = output<ReservationDetails>();
 
     onUpdate() {
@@ -64,14 +63,6 @@ export class ModalReservation implements OnInit {
     // Confirmation modal actions
     confirm() {
         this.showConfirmModal.set(false);
-        if (this.isConfirmModal()) {
-            this.updateClicked.emit(this.reservation());
-        } else {
-            if (!this.reservation()) {
-                this.visible.set(false);
-                return;
-            }
-            this.removeClicked.emit(this.reservation()!);
-        }
+        this.removeClicked.emit(this.reservation()!);
     }
 }

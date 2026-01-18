@@ -566,7 +566,7 @@ export interface Reservation {
     product?: Product;
     statusId: string;
     status?: StatusReservation;
-    orderId: string;
+    orderId?: string;
     order?: Order;
     studentId: string;
     student?: Student;
@@ -784,6 +784,7 @@ export interface TeacherDetails {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative?: number;
+    user?: UserMinimalDetails;
 }
 
 export interface TeacherUpdate {

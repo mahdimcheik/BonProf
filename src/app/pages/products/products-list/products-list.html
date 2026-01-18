@@ -3,7 +3,6 @@
         @if (showEditBox()) {
         <div class="mt-4">
             <bp-product-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewProduct($event)"></bp-product-edition>
-            <!-- <bp-formations-edition (clickCancel)="showEditBox.set(false)" (clickSubmit)="showEditBox.set(false)" (clickSubmit)="addNewFormation($event)" (clickCancel)="hideAddFormationBox()"></bp-formations-edition> -->
         </div>
         } @for (product of products(); track product.id) {
         <!-- <bp-product-card [product]="product" [editMode]="false" (needRefresh)="loadData()"></bp-product-card> -->

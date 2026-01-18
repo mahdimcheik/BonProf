@@ -262,11 +262,7 @@
 
                         <!-- Handle form field groups -->
                         @if (isFormFieldGroup(element)) {
-                            <div
-                                class="rounded-xl p-6 border border-gray-200 hover:shadow-md transition-shadow duration-200 configurable-form-section configurable-form-field-group lg:col-span-2"
-                                [class]="element.styleClass || ''"
-                                [formGroupName]="element.id"
-                            >
+                            <div class="p-6 border-b hover:shadow-md transition-shadow duration-200 configurable-form-section configurable-form-field-group lg:col-span-2" [class]="element.styleClass || ''" [formGroupName]="element.id">
                                 <!-- Group Header -->
                                 <div class="mb-4 configurable-form-section-header configurable-form-field-group-header">
                                     <div class="flex flex-col configurable-form-section-title-container">
@@ -593,21 +589,15 @@
                 <!-- Form Actions -->
                 @if (!structureData.hideSubmitButton || !structureData.hideCancelButton) {
                     <div class="sticky bottom-0 px-6 py-4 mt-8 -mx-6 -mb-6 rounded-b-xl configurable-form-actions">
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 configurable-form-actions-content">
-                            <!-- Form Status Summary -->
-                            <div class="flex items-center gap-2 configurable-form-status"></div>
-
-                            <!-- Action Buttons -->
-                            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto configurable-form-buttons">
-                                @if (!structureData.hideCancelButton) {
-                                    <p-button type="button" label="Annuler" severity="secondary" class="w-full sm:w-auto configurable-form-button configurable-form-button-cancel" (onClick)="onCancelClick()" />
-                                }
-                                <ng-content select="[slot=more-controls]"></ng-content>
-                                @if (!structureData.hideSubmitButton) {
-                                    <p-button type="submit" [label]="structureData.submitButtonLabel || 'Soumettre'" class="w-full sm:w-auto configurable-form-button configurable-form-button-submit" />
-                                    <!-- [disabled]="!isFormValid()" -->
-                                }
-                            </div>
+                        <div class="flex flex-col sm:flex-row sm:justify-end gap-3 w-full sm:w-auto configurable-form-buttons px-6">
+                            @if (!structureData.hideCancelButton) {
+                                <p-button type="button" label="Annuler" severity="secondary" class="w-full sm:w-auto configurable-form-button configurable-form-button-cancel" [styleClass]="'w-full'" (onClick)="onCancelClick()" />
+                            }
+                            <ng-content select="[slot=more-controls]"></ng-content>
+                            @if (!structureData.hideSubmitButton) {
+                                <p-button type="submit" [label]="structureData.submitButtonLabel || 'Soumettre'" class="w-full sm:w-auto configurable-form-button configurable-form-button-submit" [styleClass]="'w-full'" />
+                                <!-- [disabled]="!isFormValid()" -->
+                            }
                         </div>
                     </div>
                 }

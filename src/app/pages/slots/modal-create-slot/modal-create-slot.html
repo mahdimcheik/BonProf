@@ -1,5 +1,10 @@
 <bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-plus'">
     <div content class="w-full">
-        <bp-configurable-form [structure]="slotForm()" class="[&_.configurable-form-container]:max-w-none [&_.configurable-form-container]:mx-0" (onCancel)="cancel()" (onFormSubmit)="submit($event)"></bp-configurable-form>
+        <bp-configurable-form [structure]="slotForm()" class="[&_.configurable-form-container]:max-w-none [&_.configurable-form-container]:mx-0" (onCancel)="cancel()" (onFormSubmit)="submit($event)" #formComponent></bp-configurable-form>
+    </div>
+    <div footer-end class="flex gap-2 w-full justify-end">
+        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
+        <p-button label="Supprimer" icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="removeSlot()" />
+        <p-button label="Editer" icon="pi pi-pencil" severity="primary" [outlined]="true" (onClick)="formComponent.onSubmit()" />
     </div>
 </bp-base-modal>

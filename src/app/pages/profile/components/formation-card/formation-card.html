@@ -1,5 +1,5 @@
 @if(!editMode()){
-<p-card styleClass="shadow-md hover:shadow-lg transition-shadow duration-200">
+<div class="shadow-md hover:shadow-lg transition-shadow duration-200 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6">
     <div class="flex flex-col gap-4">
         <!-- Formation Header -->
         <div class="flex justify-between items-start">
@@ -36,9 +36,9 @@
             </div>
         </div>
     </div>
-</p-card>
+</div>
 } @else {
-<p-card styleClass="shadow-md">
+<div class="shadow-md p-4 md:p-6">
     <div class="flex flex-col gap-4">
         <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
             <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier la formation</h3>
@@ -47,7 +47,7 @@
 
         <bp-formations-edition [formation]="formation()" (clickSubmit)="editFormation($event)" (clickCancel)="editMode.set(false)"></bp-formations-edition>
     </div>
-</p-card>
+</div>
 } @if(showDeleteConfirm()){
 <bp-confirm-modal
     [(visible)]="showDeleteConfirm"

@@ -37,4 +37,6 @@
 
 @if(visibleBookSlotModal()) {
 <bp-modal-book-slot [(visible)]="visibleBookSlotModal" [event]="selectedDate" (submitClicked)="handleEvent($event)" (cancelClicked)="cancel()"></bp-modal-book-slot>
+} @if(visibleReservationModal()) {
+<bp-modal-reservation-student [(visible)]="visibleReservationModal" [event]="selectedDate" (closeClicked)="cancel()"></bp-modal-reservation-student>
 }

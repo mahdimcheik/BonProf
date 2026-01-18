@@ -1,19 +1,19 @@
 <bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-clock'">
     @if (reservation(); as res) {
     <div content class="w-full flex flex-col gap-4 border-l-4" [style.borderLeftColor]="res.status?.color || 'var(--primary-color)'">
-        <!-- Student Section -->
+        <!-- Teacher Section -->
         <div class="dark:bg-surface-900 rounded-lg p-4">
             <div class="flex items-center gap-2 mb-3">
                 <i class="pi pi-user text-lg" [style]="{ color: res.status?.color || '#3b82f6' }"></i>
-                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Étudiant</h3>
+                <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Professeur</h3>
             </div>
             <div class="flex items-center gap-3">
-                <p-avatar [image]="res.student?.user?.imgUrl ?? undefined" [label]="!res.student?.user?.imgUrl ? (res.student?.user?.firstName?.charAt(0) ?? '?') : undefined" size="xlarge" shape="circle" />
+                <p-avatar [image]="slot()?.teacher?.user?.imgUrl ?? undefined" [label]="!slot()?.teacher?.user?.imgUrl ? (slot()?.teacher?.user?.firstName?.charAt(0) ?? '?') : undefined" size="xlarge" shape="circle" />
                 <div class="flex flex-col">
-                    <span class="font-semibold text-lg text-gray-900 dark:text-white"> {{ res.student?.user?.firstName }} {{ res.student?.user?.lastName }} </span>
+                    <span class="font-semibold text-lg text-gray-900 dark:text-white"> {{ slot()?.teacher?.user?.firstName }} {{ slot()?.teacher?.user?.lastName }} </span>
                     <span class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
                         <i class="pi pi-envelope text-xs"></i>
-                        {{ res.student?.user?.email }}
+                        {{ slot()?.teacher?.user?.email }}
                     </span>
                 </div>
             </div>
@@ -87,14 +87,8 @@
     </div>
     }
     <div footer-end class="flex gap-2 w-full justify-end">
-        @if(reservation() && reservation()?.status?.code === pending) {
         <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
-        <p-button label="Refuser" icon="pi pi-trash" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
-        <p-button label="Valider" icon="pi pi-pencil" severity="primary" [outlined]="true" [disabled]="isPast()" (onClick)="onUpdate()" />
-        }@else{
-        <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
-        <p-button label="Annuler" icon="pi pi-pencil" severity="primary" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
-        }
+        <p-button label="Annuler" icon="pi pi-trash" severity="danger" [outlined]="true" [disabled]="isPast()" (onClick)="onRemove()" />
     </div>
 </bp-base-modal>
 

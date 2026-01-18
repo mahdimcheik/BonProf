@@ -30,6 +30,8 @@ export class ProductEdition {
             name: 'Cursus',
             label: 'Cursus',
             styleClass: 'md:min-w-full min-w-full !p-0',
+            cancelButtonLabel: 'Annuler',
+            submitButtonLabel: product ? 'Modifier le produit' : 'Ajouter le produit',
             sections: [
                 {
                     id: 'informations',
