@@ -62,4 +62,8 @@ export class SlotWrapperService {
     removeReservation(reservationId: string) {
         return this.slotsService.slotsTeacherRemoveReservationDelete(reservationId);
     }
+
+    removeReservationByStudent(reservationId: string) {
+        return this.slotsService.slotsStudentRemoveReservationDelete(reservationId);
+    }
 }
