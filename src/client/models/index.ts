@@ -196,6 +196,14 @@ export interface CursusUpdate {
     categoryIds?: Array<string>;
 }
 
+export interface CustomTableState {
+    first?: number;
+    rows?: number;
+    sorts?: Array<SortCriterion>;
+    filters?: Record<string, Filter>;
+    search?: string | null;
+}
+
 export interface Experience {
     id?: string;
     createdAt: Date;
@@ -219,6 +227,12 @@ export interface FileUrlResponse {
     status: number;
     data?: FileUrl;
     count?: number | null;
+}
+
+export interface Filter {
+    value?: any | null;
+    matchMode?: string | null;
+    specialFilter?: boolean;
 }
 
 export interface FilterTeacher {
@@ -660,6 +674,11 @@ export interface SlotUpdate {
     dateTo: Date;
     teacherId: string;
     typeId: string;
+}
+
+export interface SortCriterion {
+    field?: string | null;
+    order?: number;
 }
 
 export interface StatusAccount {

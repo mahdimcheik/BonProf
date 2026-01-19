@@ -1,3 +1,4 @@
+import { CustomTableState } from '@/pages/components/smart-grid';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { Reservation, ReservationCreate, SlotCreate, SlotsService, SlotUpdate, StatusReservationCode } from 'src/client';
@@ -65,5 +66,10 @@ export class SlotWrapperService {
 
     removeReservationByStudent(reservationId: string) {
         return this.slotsService.slotsStudentRemoveReservationDelete(reservationId);
+    }
+
+    // reservations list paginated
+    GetReservationsByStudent(tableState: CustomTableState) {
+        return this.slotsService.slotsStudentReservationsPost(tableState).pipe(map((response) => response.data || []));
     }
 }
