@@ -581,9 +581,9 @@ export interface ReservationCreate {
 }
 
 export interface ReservationDetails {
-    readonly id?: string;
-    readonly title?: string | null;
-    readonly description?: string | null;
+    readonly id: string;
+    readonly title: string;
+    readonly description: string;
     status?: StatusReservationDetails;
     product?: ProductDetails;
     student?: StudentDetails;
@@ -704,7 +704,8 @@ export enum StatusReservationCode {
     Pending = "Pending",
     Accepted = "Accepted",
     Rejected = "Rejected",
-    Done = "Done"
+    Done = "Done",
+    Cancelled = "Cancelled"
 }
 
 export interface StatusReservationDetails {

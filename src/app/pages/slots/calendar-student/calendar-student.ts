@@ -19,7 +19,7 @@ import {
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import { firstValueFrom } from 'rxjs';
-import { ReservationCreate, SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
+import { ReservationCreate, ReservationDetails, SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
@@ -281,5 +281,18 @@ export class CalendarStudent implements OnInit {
         args.element.style.borderRadius = '4px';
         args.element.style.border = ' 1px solid #ccc';
         args.element.style.padding = '8px';
+    }
+
+    //  reservations
+    async RemoveReservation(reservation: ReservationDetails) {
+        try {
+            await firstValueFrom(this.slotWrapperService.removeReservationByStudent(reservation.id));
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Réservation annulée avec succès.' });
+            await this.refreshCurrentView();
+        } catch (ex: any) {
+            this.messageService.add({ severity: 'success', summary: 'Succès', detail: ex.error?.message ?? 'Réservation annulée avec succès.' });
+
+            console.log('exception : ', ex);
+        }
     }
 }
