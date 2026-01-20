@@ -14,7 +14,7 @@ import { CustomSortComponent } from '../smart-grid/custom-sort/custom-sort.compo
 import { ActionButtonRendererComponent } from '../smart-grid/default-component';
 
 @Component({
-    selector: 'app-smart-grid-modernized',
+    selector: 'bp-smart-grid-modernized',
     imports: [TableModule, InputTextModule, CustomSortComponent, PaginatorModule, PopoverModule, SelectModule, MultiSelectModule, ButtonModule, DatePickerModule, CommonModule, FormsModule, NgComponentOutlet],
     templateUrl: './smart-grid-modernized.component.html',
     styleUrl: './smart-grid-modernized.component.scss'
