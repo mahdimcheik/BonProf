@@ -99,14 +99,14 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <input pInputText type="text" placeholder="Saisir..." [value]="searchValue()" (input)="onSearchChange($event)" />
+                <input pInputText type="text" placeholder="Saisir..." [(value)]="globalSearch" (input)="onSearchChange($event)" />
             </div>
         </div>
 
         <div class="lg:hidden justify-self-end flex flex-row justify-between items-center gap-2">
             <button type="button" pButton icon="pi pi-bars" class="p-button-sm p-button-text" (click)="menuPopover.toggle($event)"></button>
             <div class="flex flex-col gap-2 justify-self-end">
-                <input pInputText type="text" placeholder="Saisir..." [value]="searchValue()" (input)="onSearchChange($event)" />
+                <input pInputText type="text" placeholder="Saisir..." [(value)]="globalSearch" (input)="onSearchChange($event)" />
             </div>
             <p-popover #menuPopover>
                 <ng-template pTemplate="content">

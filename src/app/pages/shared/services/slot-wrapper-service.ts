@@ -73,7 +73,7 @@ export class SlotWrapperService {
     //     return this.slotsService.slotsStudentReservationsPost(tableState).pipe(map((response) => response.data || []));
     // }
 
-    GetReservationsByStudentGrid(tableState: GridifyQuery) {
-        return this.slotsService.slotsStudentReservationsPost(tableState).pipe(map((response) => response.data || []));
+    GetReservationsByStudentGrid(tableState: GridifyQuery, globalSearch?: string) {
+        return this.slotsService.slotsStudentReservationsPost(tableState, globalSearch).pipe(map((response) => response.data || []));
     }
 }

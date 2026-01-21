@@ -15,6 +15,7 @@ export class ReservationsPage {
     slotService = inject(SlotWrapperService);
 
     tableState = signal<GridifyQuery>({ page: 1, pageSize: 10, orderBy: null, filter: null });
+    globalSearch = signal<string>('');
 
     columnsDef = computed<DynamicColDef[]>(() => [
         { field: 'studentName', header: 'First Name', type: 'text', filterable: true, filterField: 'studentName' },
@@ -22,14 +23,20 @@ export class ReservationsPage {
     ]);
 
     constructor() {
+        let firstLoad = true;
+
         effect(() => {
             const query = this.tableState();
+            if (firstLoad) {
+                firstLoad = false;
+                return;
+            }
             this.loadData(query);
         });
     }
 
     async loadData(query: GridifyQuery) {
-        const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query));
+        const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query, this.globalSearch()));
         console.log('Loaded reservations:', result);
     }
 }

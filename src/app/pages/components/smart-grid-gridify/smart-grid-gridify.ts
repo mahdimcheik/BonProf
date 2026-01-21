@@ -25,13 +25,13 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     data = model<T[]>([]);
     columns = model.required<DynamicColDef[]>();
     tableState = model<GridifyQuery>(INITIAL_STATE_GRIDIFY);
+    globalSearch = model<string>('');
     totalRecords = model<number>(0);
     loading = model(false);
     height = input<string>('1000px');
     heightNumber = computed(() => parseInt(this.height().replace('px', ''), 10));
     title = input<string>('');
     storageName = input<string>('');
-    searchValue = signal<string>('');
     customComponents = model<{ [key: string]: Type<ICellRendererAngularComp> }>({});
     itemRendererComponent = input<Type<ICellRendererAngularComp>>();
     itemRendererComponentParams = input<any>();
@@ -48,7 +48,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     private internalFilters = signal<{ [key: string]: { value: any; matchMode: string; specialFilter?: boolean } }>({});
     private internalPage = signal<number>(1);
     private internalPageSize = signal<number>(10);
-    private internalSearch = signal<string>('');
 
     // Internal signals
     private componentMap = signal<{ [key: string]: Type<ICellRendererAngularComp> }>({
@@ -179,102 +178,94 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     // global search
     onSearchChange($event: Event): void {
         const value = ($event.target as HTMLInputElement).value;
-        this.searchValue.set(value);
-        this.internalSearch.set(value);
+        this.globalSearch.set(value);
         this.internalPage.set(1);
         this.saveStateToLocalStorage();
     }
 
     // ========== GridifyQuery Builder ==========
     private buildGridifyQuery(): GridifyQuery {
-        const orderBy = this.buildOrderByString();
-        const filter = this.buildFilterString();
+        const builder = new GridifyQueryBuilder();
+
+        // Apply sorting
+        const sorts = this.internalSorts();
+        sorts.forEach((sort) => {
+            const isAsc = sort.order === 1;
+            builder.addOrderBy(sort.field, isAsc);
+        });
+
+        // Apply filters
+        const filters = this.internalFilters();
+        Object.entries(filters).forEach(([field, filterData]) => {
+            this.applyFilter(builder, field, filterData);
+        });
+
+        // Set pagination
+        builder.setPage(this.internalPage());
+        builder.setPageSize(this.internalPageSize());
+
+        // Build and return the query
+        const query = builder.build();
 
         return {
-            page: this.internalPage(),
-            pageSize: this.internalPageSize(),
-            orderBy: orderBy || null,
-            filter: filter || null
+            page: query.page,
+            pageSize: query.pageSize,
+            orderBy: query.orderBy || null,
+            filter: query.filter || null
         };
     }
 
-    private buildOrderByString(): string {
-        const sorts = this.internalSorts();
-        if (sorts.length === 0) return '';
+    private applyFilter(builder: GridifyQueryBuilder, field: string, filterData: { value: any; matchMode: string; specialFilter?: boolean }): void {
+        const { value, matchMode } = filterData;
 
-        return sorts
-            .map((sort) => {
-                const direction = sort.order === 1 ? 'asc' : 'desc';
-                return `${sort.field} ${direction}`;
-            })
-            .join(', ');
-    }
-
-    private buildFilterString(): string {
-        const filters = this.internalFilters();
-        const search = this.internalSearch();
-        const filterParts: string[] = [];
-
-        // Build filters from columns
-        Object.entries(filters).forEach(([field, filterData]) => {
-            const { value, matchMode } = filterData;
-
-            switch (matchMode) {
-                case 'contains':
-                    // Text contains (case-insensitive with wildcards)
-                    if (typeof value === 'string' && value.trim()) {
-                        filterParts.push(`${field}=*${value}`);
+        switch (matchMode) {
+            case 'contains':
+                // Text contains (case-insensitive)
+                if (typeof value === 'string' && value.trim()) {
+                    builder.addCondition(field, op.Contains, value.toLocaleLowerCase());
+                }
+                break;
+            case 'equals':
+                // Exact match
+                if (value !== null && value !== undefined) {
+                    if (value instanceof Date) {
+                        builder.addCondition(field, op.Equal, value.toISOString().toLocaleLowerCase());
+                    } else {
+                        builder.addCondition(field, op.Equal, value);
                     }
-                    break;
-                case 'equals':
-                    // Exact match (for selects, dates, etc.)
-                    if (value !== null && value !== undefined) {
-                        if (value instanceof Date) {
-                            filterParts.push(`${field}=${value.toISOString()}`);
+                }
+                break;
+            case 'in':
+                // Array contains (multiselect with OR conditions)
+                if (Array.isArray(value) && value.length > 0) {
+                    // Create OR group for multiple values
+                    value.forEach((v, index) => {
+                        if (index === 0) {
+                            builder.addCondition(field, op.Equal, v);
                         } else {
-                            filterParts.push(`${field}=${value}`);
+                            builder.or().addCondition(field, op.Equal, v);
                         }
-                    }
-                    break;
-                case 'in':
-                    // Array contains (for multiselect)
-                    if (Array.isArray(value) && value.length > 0) {
-                        // Gridify uses OR conditions for array: field=value1|value2|value3
-                        const orConditions = value.map((v) => `${field}=${v}`).join('|');
-                        filterParts.push(`(${orConditions})`);
-                    }
-                    break;
-                case 'before':
-                    // Date before
-                    if (value instanceof Date) {
-                        filterParts.push(`${field}<${value.toISOString()}`);
-                    }
-                    break;
-                case 'after':
-                    // Date after
-                    if (value instanceof Date) {
-                        filterParts.push(`${field}>${value.toISOString()}`);
-                    }
-                    break;
-                default:
-                    // Default equals
-                    if (value !== null && value !== undefined) {
-                        filterParts.push(`${field}=${value}`);
-                    }
-            }
-        });
-
-        // Add global search if present
-        if (search && search.trim()) {
-            // Global search across all searchable columns
-            const searchableColumns = this.columns().filter((col) => col.filterable !== false);
-            if (searchableColumns.length > 0) {
-                const searchConditions = searchableColumns.map((col) => `${col.field}=*${search}*`).join('|');
-                filterParts.push(`(${searchConditions})`);
-            }
+                    });
+                }
+                break;
+            case 'before':
+                // Date before (less than)
+                if (value instanceof Date) {
+                    builder.addCondition(field, op.LessThan, value.toISOString());
+                }
+                break;
+            case 'after':
+                // Date after (greater than)
+                if (value instanceof Date) {
+                    builder.addCondition(field, op.GreaterThan, value.toISOString());
+                }
+                break;
+            default:
+                // Default to equals
+                if (value !== null && value !== undefined) {
+                    builder.addCondition(field, op.Equal, value);
+                }
         }
-
-        return filterParts.join(',');
     }
 
     // ========== LocalStorage Methods ==========
@@ -285,7 +276,7 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
                 filters: this.internalFilters(),
                 page: this.internalPage(),
                 pageSize: this.internalPageSize(),
-                search: this.internalSearch()
+                search: this.globalSearch()
             };
             localStorage.setItem(this.storageName(), JSON.stringify(state));
         }
@@ -301,8 +292,7 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
                     this.internalFilters.set(state.filters || {});
                     this.internalPage.set(state.page || 1);
                     this.internalPageSize.set(state.pageSize || 10);
-                    this.internalSearch.set(state.search || '');
-                    this.searchValue.set(state.search || '');
+                    this.globalSearch.set(state.search || '');
                 } catch (error) {
                     console.error('Error parsing localStorage state:', error);
                     this.resetToDefaults();
@@ -320,33 +310,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
         this.internalFilters.set({});
         this.internalPage.set(INITIAL_STATE_GRIDIFY.page || 1);
         this.internalPageSize.set(INITIAL_STATE_GRIDIFY.pageSize || 10);
-        this.internalSearch.set('');
-        this.searchValue.set('');
-    }
-
-    // Helper method to create inputs for the dynamic component
-    getComponentInputs(item: T): Record<string, any> {
-        // If itemPropertyName is explicitly provided, use it
-        if (this.itemPropertyName()) {
-            return { [this.itemPropertyName()!]: item };
-        }
-
-        // Otherwise, try to infer the property name from the component name
-        // For CardUserComponent, it expects a 'user' input
-        const componentName = this.itemRendererComponent()?.name.toLowerCase() || '';
-
-        // Try to infer the property name from the component name
-        // e.g., CardUserComponent -> user, CardProductComponent -> product
-        let propertyName = 'data'; // default fallback
-
-        if (componentName.includes('user')) {
-            propertyName = 'user';
-        } else if (componentName.includes('product')) {
-            propertyName = 'product';
-        } else if (componentName.includes('item')) {
-            propertyName = 'item';
-        }
-
-        return { [propertyName]: item };
+        this.globalSearch.set('');
     }
 }
