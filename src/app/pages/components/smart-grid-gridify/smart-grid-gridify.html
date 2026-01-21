@@ -221,6 +221,6 @@
         }
     </div>
     <div class="flex justify-center p-4 rounded-md">
-        <p-paginator (onPageChange)="onPageChange($event)" [first]="tableState().page ?? 1" [rows]="tableState().pageSize ?? 10" [totalRecords]="totalRecords()" />
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="(tableState().page! - 1) * tableState().pageSize!" [rows]="tableState().pageSize ?? 10" [totalRecords]="totalRecords()" />
     </div>
 </div>

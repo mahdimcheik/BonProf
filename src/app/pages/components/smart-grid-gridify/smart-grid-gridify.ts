@@ -1,5 +1,5 @@
 import { CommonModule, NgComponentOutlet } from '@angular/common';
-import { Component, computed, input, model, OnInit, output, signal, Type } from '@angular/core';
+import { Component, computed, effect, input, model, OnInit, output, signal, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -43,13 +43,17 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     // output
     onRowClick = output<T | T[] | undefined>();
 
+    // Internal signals for building the query
+    private internalSorts = signal<SortCriterion[]>([]);
+    private internalFilters = signal<{ [key: string]: { value: any; matchMode: string; specialFilter?: boolean } }>({});
+    private internalPage = signal<number>(1);
+    private internalPageSize = signal<number>(10);
+    private internalSearch = signal<string>('');
+
     // Internal signals
     private componentMap = signal<{ [key: string]: Type<ICellRendererAngularComp> }>({
         default: ActionButtonRendererComponent
     });
-
-    //  query builder for gridify
-    private queryBuilder = new GridifyQueryBuilder();
 
     constructor() {
         this.getStateFromLocalStorage();
@@ -57,6 +61,12 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
         this.componentMap.set({
             ...customComps,
             default: ActionButtonRendererComponent
+        });
+
+        // Effect to rebuild GridifyQuery whenever internal state changes
+        effect(() => {
+            const gridifyQuery = this.buildGridifyQuery();
+            this.tableState.set(gridifyQuery);
         });
     }
 
@@ -70,13 +80,13 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     }
 
     getSortOrderForField(field: string): SortOrder {
-        const sortCriterion = this.tableState().sorts.find((s) => s.field === field);
+        const sortCriterion = this.internalSorts().find((s) => s.field === field);
         return sortCriterion?.order ?? 0;
     }
 
     sortChange(order: SortOrder, column: DynamicColDef): void {
         const sortField = column.sortField ?? column.field;
-        const currentSorts = [...this.tableState().sorts];
+        const currentSorts = [...this.internalSorts()];
         const sortMap = new Map<string, SortCriterion>(currentSorts.map((s) => [s.field, s]));
 
         if (order === 0) {
@@ -85,21 +95,18 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
             sortMap.set(sortField, { field: sortField, order });
         }
 
-        this.tableState.update((state) => ({
-            ...state,
-            sorts: Array.from(sortMap.values()),
-            first: 0
-        }));
+        this.internalSorts.set(Array.from(sortMap.values()));
+        this.internalPage.set(1);
         this.saveStateToLocalStorage();
     }
 
     // ========== Filtering Methods ==========
     getFilterValue(field: string): any {
-        return this.tableState().filters?.[field]?.value ?? null;
+        return this.internalFilters()[field]?.value ?? null;
     }
 
     getDateFilterMatchMode(field: string): string {
-        return this.tableState().filters?.[field]?.matchMode ?? 'dateIs';
+        return this.internalFilters()[field]?.matchMode ?? 'equals';
     }
 
     onTextFilterChange(value: string, column: DynamicColDef): void {
@@ -125,7 +132,7 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
 
     onDateFilterMatchModeChange(matchMode: string, column: DynamicColDef): void {
         const filterField = column.filterField ?? column.field;
-        const currentFilter = this.tableState().filters?.[filterField];
+        const currentFilter = this.internalFilters()[filterField];
         if (currentFilter) {
             this.updateFilter(filterField, currentFilter.value, matchMode, column.field, currentFilter.specialFilter);
         }
@@ -133,29 +140,22 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
 
     clearFilter(column: DynamicColDef): void {
         const filterField = column.filterField ?? column.field;
-        const filters = { ...this.tableState().filters };
+        const filters = { ...this.internalFilters() };
         delete filters[filterField];
 
-        this.tableState.update((state) => ({
-            ...state,
-            filters,
-            first: 0
-        }));
+        this.internalFilters.set(filters);
+        this.internalPage.set(1);
+        this.saveStateToLocalStorage();
     }
 
     resetFilter(): void {
-        console.log('Clear Filter:');
-
-        this.tableState.update((state) => ({
-            ...state,
-            filters: {},
-            first: 0
-        }));
+        this.internalFilters.set({});
+        this.internalPage.set(1);
+        this.saveStateToLocalStorage();
     }
 
     private updateFilter(filterField: string, value: any, matchMode: string, displayField?: string, specialFilter?: boolean): void {
-        const filters = { ...this.tableState().filters };
-        const fieldKey = displayField ?? filterField;
+        const filters = { ...this.internalFilters() };
 
         if (value === null || value === undefined || value === '' || (Array.isArray(value) && value.length === 0)) {
             delete filters[filterField];
@@ -163,47 +163,165 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
             filters[filterField] = { value, matchMode, specialFilter };
         }
 
-        this.tableState.update((state) => ({
-            ...state,
-            filters,
-            first: 0
-        }));
+        this.internalFilters.set(filters);
+        this.internalPage.set(1);
         this.saveStateToLocalStorage();
     }
 
     // ========== Pagination Methods ==========
     onPageChange(event: any): void {
-        this.tableState.update((state) => ({
-            ...state,
-            first: event.first,
-            rows: event.rows
-        }));
+        const page = Math.floor(event.first / event.rows) + 1;
+        this.internalPage.set(page);
+        this.internalPageSize.set(event.rows);
+        this.saveStateToLocalStorage();
     }
 
     // global search
     onSearchChange($event: Event): void {
         const value = ($event.target as HTMLInputElement).value;
         this.searchValue.set(value);
-        this.tableState.update((state) => ({
-            ...state,
-            search: value
-        }));
+        this.internalSearch.set(value);
+        this.internalPage.set(1);
+        this.saveStateToLocalStorage();
     }
 
-    // save state to localStorage
+    // ========== GridifyQuery Builder ==========
+    private buildGridifyQuery(): GridifyQuery {
+        const orderBy = this.buildOrderByString();
+        const filter = this.buildFilterString();
+
+        return {
+            page: this.internalPage(),
+            pageSize: this.internalPageSize(),
+            orderBy: orderBy || null,
+            filter: filter || null
+        };
+    }
+
+    private buildOrderByString(): string {
+        const sorts = this.internalSorts();
+        if (sorts.length === 0) return '';
+
+        return sorts
+            .map((sort) => {
+                const direction = sort.order === 1 ? 'asc' : 'desc';
+                return `${sort.field} ${direction}`;
+            })
+            .join(', ');
+    }
+
+    private buildFilterString(): string {
+        const filters = this.internalFilters();
+        const search = this.internalSearch();
+        const filterParts: string[] = [];
+
+        // Build filters from columns
+        Object.entries(filters).forEach(([field, filterData]) => {
+            const { value, matchMode } = filterData;
+
+            switch (matchMode) {
+                case 'contains':
+                    // Text contains (case-insensitive with wildcards)
+                    if (typeof value === 'string' && value.trim()) {
+                        filterParts.push(`${field}=*${value}`);
+                    }
+                    break;
+                case 'equals':
+                    // Exact match (for selects, dates, etc.)
+                    if (value !== null && value !== undefined) {
+                        if (value instanceof Date) {
+                            filterParts.push(`${field}=${value.toISOString()}`);
+                        } else {
+                            filterParts.push(`${field}=${value}`);
+                        }
+                    }
+                    break;
+                case 'in':
+                    // Array contains (for multiselect)
+                    if (Array.isArray(value) && value.length > 0) {
+                        // Gridify uses OR conditions for array: field=value1|value2|value3
+                        const orConditions = value.map((v) => `${field}=${v}`).join('|');
+                        filterParts.push(`(${orConditions})`);
+                    }
+                    break;
+                case 'before':
+                    // Date before
+                    if (value instanceof Date) {
+                        filterParts.push(`${field}<${value.toISOString()}`);
+                    }
+                    break;
+                case 'after':
+                    // Date after
+                    if (value instanceof Date) {
+                        filterParts.push(`${field}>${value.toISOString()}`);
+                    }
+                    break;
+                default:
+                    // Default equals
+                    if (value !== null && value !== undefined) {
+                        filterParts.push(`${field}=${value}`);
+                    }
+            }
+        });
+
+        // Add global search if present
+        if (search && search.trim()) {
+            // Global search across all searchable columns
+            const searchableColumns = this.columns().filter((col) => col.filterable !== false);
+            if (searchableColumns.length > 0) {
+                const searchConditions = searchableColumns.map((col) => `${col.field}=*${search}*`).join('|');
+                filterParts.push(`(${searchConditions})`);
+            }
+        }
+
+        return filterParts.join(',');
+    }
+
+    // ========== LocalStorage Methods ==========
     saveStateToLocalStorage(): void {
         if (this.storageName()) {
-            localStorage.setItem(this.storageName(), JSON.stringify(this.tableState()));
+            const state = {
+                sorts: this.internalSorts(),
+                filters: this.internalFilters(),
+                page: this.internalPage(),
+                pageSize: this.internalPageSize(),
+                search: this.internalSearch()
+            };
+            localStorage.setItem(this.storageName(), JSON.stringify(state));
         }
     }
 
     getStateFromLocalStorage(): void {
         if (this.storageName()) {
-            const state = localStorage.getItem(this.storageName());
-            if (state) {
-                this.tableState.set(JSON.parse(state));
+            const stateStr = localStorage.getItem(this.storageName());
+            if (stateStr) {
+                try {
+                    const state = JSON.parse(stateStr);
+                    this.internalSorts.set(state.sorts || []);
+                    this.internalFilters.set(state.filters || {});
+                    this.internalPage.set(state.page || 1);
+                    this.internalPageSize.set(state.pageSize || 10);
+                    this.internalSearch.set(state.search || '');
+                    this.searchValue.set(state.search || '');
+                } catch (error) {
+                    console.error('Error parsing localStorage state:', error);
+                    this.resetToDefaults();
+                }
+            } else {
+                this.resetToDefaults();
             }
+        } else {
+            this.resetToDefaults();
         }
+    }
+
+    private resetToDefaults(): void {
+        this.internalSorts.set([]);
+        this.internalFilters.set({});
+        this.internalPage.set(INITIAL_STATE_GRIDIFY.page || 1);
+        this.internalPageSize.set(INITIAL_STATE_GRIDIFY.pageSize || 10);
+        this.internalSearch.set('');
+        this.searchValue.set('');
     }
 
     // Helper method to create inputs for the dynamic component
