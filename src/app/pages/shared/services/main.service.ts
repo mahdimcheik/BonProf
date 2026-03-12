@@ -114,7 +114,8 @@ export class MainService {
                     root: true
                 },
                 { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me'] },
-                { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] }
+                { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] },
+                { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/reservations'] }
             ];
         } else return [];
     });

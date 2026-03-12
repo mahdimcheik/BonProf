@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, GridifyQuery, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -119,6 +119,28 @@ export class SlotsService {
         };
 
         return this.httpClient.post(url, periodTime, requestOptions);
+    }
+
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, globalSearch?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, globalSearch?: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, globalSearch?: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, globalSearch?: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/student/reservations`;
+
+        let params = new HttpParams();
+        if (globalSearch != null) {
+            params = HttpParamsBuilder.addToHttpParams(params, globalSearch, 'globalSearch');
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            params,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, gridifyQuery, requestOptions);
     }
 
     slotsStudentBookPost(reservationCreate?: ReservationCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;

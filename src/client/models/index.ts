@@ -321,6 +321,13 @@ export interface GenderDetailsListResponse {
     count?: number | null;
 }
 
+export interface GridifyQuery {
+    page?: number;
+    pageSize?: number;
+    orderBy?: string | null;
+    filter?: string | null;
+}
+
 export interface GuidIdentityUserRole {
     userId?: string;
     roleId?: string;

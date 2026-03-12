@@ -9,6 +9,7 @@ import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
 import { isStudentOnlyGuard, isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
+import { ReservationsPage } from '@/pages/reservations/reservations-page/reservations-page';
 
 export const appRoutes: Routes = [
     {
@@ -85,6 +86,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'profile/:id/edition',
                         component: ProfileEditionPage
+                    },
+                    {
+                        path: 'reservations',
+                        component: ReservationsPage
                     }
                 ]
             },
