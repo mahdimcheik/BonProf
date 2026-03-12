@@ -903,6 +903,7 @@ export interface TypeAddress {
     name: string;
     color: string;
     icon?: string | null;
+    displayName?: string | null;
 }
 
 export interface TypeAddressDetails {
@@ -910,6 +911,7 @@ export interface TypeAddressDetails {
     name: string;
     color: string;
     icon?: string | null;
+    displayName?: string | null;
 }
 
 export interface TypeAddressDetailsListResponse {

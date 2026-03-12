@@ -45,7 +45,7 @@ export class AddressEdition implements OnInit {
                     name: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
                     label: address ? `Editer l'adresse: ${address.city}` : 'Nouvelle adresse',
                     fields: [
-                        { id: 'typeId', label: "Type d'adresse", name: 'typeId', type: 'radio', required: true, value: address ? address.typeId : null, compareKey: 'id', options: this.types(), fullWidth: true, displayKey: 'name' },
+                        { id: 'typeId', label: "Type d'adresse", name: 'typeId', type: 'radio', required: true, value: address ? address.typeId : null, compareKey: 'id', options: this.types(), fullWidth: true, displayKey: 'displayName' },
                         { id: 'city', label: 'Ville', name: 'city', type: 'text', required: true, value: address ? address.city : '', placeholder: 'Ville' },
                         { id: 'street', label: 'Rue', name: 'street', type: 'text', required: true, value: address ? address.street : '', placeholder: 'Rue' },
                         { id: 'zipCode', label: 'Code Postal', name: 'zipCode', type: 'text', required: true, value: address ? address.zipCode : '', placeholder: 'Code Postal' },

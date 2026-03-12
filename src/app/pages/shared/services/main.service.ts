@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
-    AddressDetails,
     AuthService,
     FileUrl,
     FileUrlResponse,
@@ -13,6 +12,7 @@ import {
     ObjectResponse,
     PasswordRecovery,
     PasswordResetResponse,
+    RoleEnum,
     StringResponse,
     StudentsService,
     TeachersService,
@@ -23,8 +23,8 @@ import {
     UserUpdate
 } from 'src/client';
 import { environment } from 'src/environments/environment';
-import { LocalstorageService } from './localstorage.service';
 import { CityDetails } from '../models/geolocalisation';
+import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -48,10 +48,10 @@ export class MainService {
     // pour la page profile
     userConnected = signal({} as UserDetails);
 
-    isAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Admin'));
-    isSuperAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'SuperAdmin'));
-    isTeacher = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Teacher'));
-    isStudent = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === 'Student'));
+    isAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === RoleEnum.Admin));
+    isSuperAdmin = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === RoleEnum.SuperAdmin));
+    isTeacher = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === RoleEnum.Teacher));
+    isStudent = computed(() => this.userConnected()?.roles?.some((role: any) => role.name === RoleEnum.Student));
 
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();

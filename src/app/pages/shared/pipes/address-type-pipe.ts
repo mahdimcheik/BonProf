@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { AddressTypeEnum } from 'src/client';
 
 @Pipe({
     name: 'addressType'
@@ -14,5 +15,22 @@ export class AddressTypePipe implements PipeTransform {
             }
         }
         return 'pi-map-marker';
+    }
+}
+
+@Pipe({
+    name: 'addressTypeName'
+})
+export class AddressTypeNamePipe implements PipeTransform {
+    transform(value: unknown, ...args: unknown[]): string {
+        if (typeof value === 'string') {
+            if (value.trim() === AddressTypeEnum.Billing) {
+                return 'Facturation';
+            }
+            if (value.trim() === AddressTypeEnum.Main) {
+                return 'Principale';
+            }
+        }
+        return 'Générique';
     }
 }
