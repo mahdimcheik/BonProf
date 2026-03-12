@@ -1,3 +1,5 @@
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
+import { CalendarEvent } from '@/pages/shared/models/calendar-models';
 import { MainService } from '@/pages/shared/services/main.service';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -18,21 +20,19 @@ import {
     WeekService,
     WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
-import { loadCldr, L10n, setCulture } from '@syncfusion/ej2-base';
-import { firstValueFrom } from 'rxjs';
-import { ReservationDetails, SlotCreate, SlotDetails, SlotUpdate, StatusReservationCode, StatusReservationDetails } from 'src/client';
-import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
-import { CalendarEvent } from '@/pages/shared/models/calendar-models';
+import { L10n, loadCldr, setCulture } from '@syncfusion/ej2-base';
 import { MessageService } from 'primeng/api';
-import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
+import { firstValueFrom } from 'rxjs';
+import { ReservationDetails, SlotCreate, SlotDetails, SlotUpdate, StatusReservationCode } from 'src/client';
+import { ModalCreateSlot } from '../modal-create-slot/modal-create-slot';
 
 // Load CLDR data for French locale
-import * as numberingSystems from 'cldr-data/supplemental/numberingSystems.json';
+import { StatusReservationWrapperService } from '@/pages/shared/services/status-reservation-wrapper-service';
 import * as gregorian from 'cldr-data/main/fr/ca-gregorian.json';
 import * as numbers from 'cldr-data/main/fr/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/fr/timeZoneNames.json';
+import * as numberingSystems from 'cldr-data/supplemental/numberingSystems.json';
 import { ModalReservation } from '../modal-reservation/modal-reservation';
-import { StatusReservationWrapperService } from '@/pages/shared/services/status-reservation-wrapper-service';
 
 loadCldr(numberingSystems, gregorian, numbers, timeZoneNames);
 
@@ -305,7 +305,9 @@ export class CalendarTeacher implements OnInit {
             Subject: '',
             ExtendedProps: { slot: null }
         };
-        this.visibleCreateSlotModal.set(true);
+        if (event.startTime > new Date()) {
+            this.visibleCreateSlotModal.set(true);
+        }
     }
 
     // open  create modal
