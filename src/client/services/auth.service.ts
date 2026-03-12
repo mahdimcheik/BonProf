@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { UserCreate, RequestOptions, UserDetailsResponse, UserLogin, LoginResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetResponse, PasswordRecovery, ObjectResponse, FileUrlResponse } from "../models";
+import { UserCreate, RequestOptions, UserDetailsResponse, UserLogin, LoginResponse, StringResponse, UserInfosWithtokenResponse, ForgotPassword, PasswordResetResponse, PasswordRecovery, ObjectResponse, FileUrlResponse, GenApi } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -191,5 +191,21 @@ export class AuthService {
         };
 
         return this.httpClient.post(url, formData, requestOptions);
+    }
+
+    authDevPost(genApi?: GenApi, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
+    authDevPost(genApi?: GenApi, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
+    authDevPost(genApi?: GenApi, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    authDevPost(genApi?: GenApi, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/auth/dev`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, genApi, requestOptions);
     }
 }

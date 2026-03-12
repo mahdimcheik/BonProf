@@ -1,9 +1,8 @@
-import { CustomTableState, DynamicColDef } from '@/pages/components/smart-grid';
-import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { SmartGridModernizedComponent } from '@/pages/components/smart-grid-modernized/smart-grid-modernized.component';
+import { DynamicColDef } from '@/pages/components/smart-grid';
 import { SmartGridGridifyComponent } from '@/pages/components/smart-grid-gridify/smart-grid-gridify';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { GridifyQuery } from 'src/client';
 
 @Component({
@@ -36,7 +35,7 @@ export class ReservationsPage {
     }
 
     async loadData(query: GridifyQuery) {
-        const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query, this.globalSearch()));
+        const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query));
         console.log('Loaded reservations:', result);
     }
 }
