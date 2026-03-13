@@ -100,7 +100,8 @@ export class MainService {
                 },
                 { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] },
-                { label: 'Catalog', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/catalog/me'] }
+                { label: 'Catalog', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/catalog/me'] },
+                { label: 'Documents', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/documents'] }
             ];
         } else if (this.isStudent()) {
             return [

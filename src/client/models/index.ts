@@ -221,6 +221,13 @@ export interface CursusUpdate {
     categoryIds?: Array<string>;
 }
 
+export enum DocumentTypeEnum {
+    Identification = "Identification",
+    Diploma = "Diploma",
+    CompanyRegistration = "CompanyRegistration",
+    Other = "Other"
+}
+
 export interface Experience {
     id?: string;
     createdAt: Date;
@@ -336,6 +343,7 @@ export interface GenApi {
     languageEnum?: LanguageEnum;
     cursusCategoryEnum?: CursusCategoryEnum;
     slotTypeEnum?: SlotTypeEnum;
+    documentTypeEnum?: DocumentTypeEnum;
 }
 
 export interface Gender {
