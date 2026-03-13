@@ -854,13 +854,16 @@ export interface Teacher {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative: number;
+    isProfessionnal: boolean;
+    siret?: number | null;
     cursuses?: Array<Cursus>;
     experiences?: Array<Experience>;
     slots?: Array<Slot>;
 }
 
 export interface TeacherCreate {
-    [key: string]: never;
+    isProfessionnal: boolean;
+    siret?: number | null;
 }
 
 export interface TeacherDetails {
@@ -873,6 +876,8 @@ export interface TeacherDetails {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative?: number;
+    isProfessionnal?: boolean;
+    siret?: number | null;
     user?: UserMinimalDetails;
 }
 

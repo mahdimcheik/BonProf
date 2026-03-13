@@ -1,17 +1,16 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
-import { LogoComponent } from '@/pages/components/logo/logo.component';
 import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { RoleWrapperService } from '@/pages/shared/services/role-wrapper-service';
 import { ageValidator, passwordStrengthValidator, passwordValidator } from '@/pages/shared/validators/confirmPasswordValidator';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, OnInit, signal } from '@angular/core';
 import { FormGroup, FormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { GenderDetails, RoleDetails, TeacherCreate, UserCreate } from 'src/client';
+import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
@@ -43,10 +42,9 @@ export class Inscription implements OnInit {
         return null;
     });
 
-    inscriptionFormStructure = computed<Structure>(() => {
+    inscriptionFormStructure = linkedSignal<Structure>(() => {
         const roleId = this.selectedUserType();
-
-        return {
+        const returnStructure = {
             id: 'inscriptionForm',
             name: 'inscriptionForm',
             label: 'Inscription',
@@ -136,6 +134,29 @@ export class Inscription implements OnInit {
                     groupValidators: [passwordValidator('password', 'confirmPassword')]
                 },
                 {
+                    id: 'isProfessional',
+                    name: 'isProfessional',
+                    label: 'Type de compte',
+                    fields: [
+                        {
+                            id: 'isProfessional',
+                            name: 'isProfessional',
+                            type: 'checkbox',
+                            label: 'Je suis un professionnel',
+                            value: false,
+                            fullWidth: true
+                        },
+                        {
+                            id: 'siret',
+                            name: 'siret',
+                            type: 'number',
+                            label: 'Numéro de SIRET',
+                            placeholder: 'Numéro de SIRET',
+                            fullWidth: true
+                        }
+                    ]
+                },
+                {
                     id: 'optionalFields',
                     name: 'optionalFields',
                     label: 'Champs recommandés',
@@ -186,6 +207,11 @@ export class Inscription implements OnInit {
                 }
             ]
         };
+        if (roleId === '87a0a5ed-c7bb-4394-a163-7ed7560b4a01') {
+            returnStructure.sections = returnStructure.sections?.filter((section) => section.id !== 'isProfessional');
+        }
+
+        return returnStructure as Structure;
     });
 
     ngOnInit(): void {
@@ -210,7 +236,10 @@ export class Inscription implements OnInit {
             ...value.privacy,
             ...value.optionalFields,
             roleId: this.selectedUserType(),
-            teacher: {},
+            teacher: {
+                isProfessionnal: value.isProfessional?.isProfessional ?? false,
+                siret: value.isProfessional?.siret ?? null
+            },
             student: {}
         };
 

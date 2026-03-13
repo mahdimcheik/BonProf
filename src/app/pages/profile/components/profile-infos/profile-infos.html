@@ -38,6 +38,12 @@
                         <i class="pi pi-at text-xl text-primary"></i>
                         <span class="text-base">{{user().email}}</span>
                     </div>
+                    @if(user().teacher && user().teacher?.isProfessionnal && user().teacher?.siret) {
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        <i class="pi pi-verified text-xl text-primary"></i>
+                        <span class="text-base">SIRET : {{user().teacher?.siret}}</span>
+                    </div>
+                    }
                 </div>
             </div>
 
