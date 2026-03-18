@@ -579,6 +579,36 @@ export interface PeriodTime {
     dateTo: Date;
 }
 
+export interface PrivacyDocumentDetails {
+    fileName: string;
+    filePath: string;
+    mimeType: string;
+    size?: number;
+    title: string;
+    description?: string | null;
+    type?: PrivacyDocumentTypeDetails;
+}
+
+export interface PrivacyDocumentDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<PrivacyDocumentDetails>;
+    count?: number | null;
+}
+
+export interface PrivacyDocumentDetailsResponse {
+    message: string;
+    status: number;
+    data?: PrivacyDocumentDetails;
+    count?: number | null;
+}
+
+export interface PrivacyDocumentTypeDetails {
+    id: string;
+    name: string;
+    displayName: string | null;
+}
+
 export interface Product {
     id?: string;
     createdAt: Date;
