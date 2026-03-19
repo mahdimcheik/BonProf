@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { FilterTeacher, RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate } from "../models";
+import { FilterTeacher, RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate, PrivacyDocumentDetailsListResponse, PrivacyDocumentDetailsResponse, PrivacyDocumentTypeDetailsListResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeachersService {
@@ -87,5 +87,77 @@ export class TeachersService {
         };
 
         return this.httpClient.put(url, userUpdate, requestOptions);
+    }
+
+    teachersGetDocumentsGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<PrivacyDocumentDetailsListResponse>;
+    teachersGetDocumentsGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PrivacyDocumentDetailsListResponse>>;
+    teachersGetDocumentsGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PrivacyDocumentDetailsListResponse>>;
+    teachersGetDocumentsGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/teachers/get-documents`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
+    }
+
+    teachersUploadDocumentPost(Title: string, TypeId: string, File: Blob, Description?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<PrivacyDocumentDetailsResponse>;
+    teachersUploadDocumentPost(Title: string, TypeId: string, File: Blob, Description?: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PrivacyDocumentDetailsResponse>>;
+    teachersUploadDocumentPost(Title: string, TypeId: string, File: Blob, Description?: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PrivacyDocumentDetailsResponse>>;
+    teachersUploadDocumentPost(Title: string, TypeId: string, File: Blob, Description?: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/teachers/upload-document`;
+
+        let headers: HttpHeaders;
+        if (options?.headers instanceof HttpHeaders) {
+            headers = options.headers;
+        } else {
+            headers = new HttpHeaders(options?.headers);
+        }
+        // Remove Content-Type for multipart (browser will set it with boundary)
+        headers = headers.delete('Content-Type');
+
+        const formData = new FormData();
+        if (Title !== undefined) {
+            formData.append('Title', String(Title));
+        }
+        if (Description !== undefined) {
+            formData.append('Description', String(Description));
+        }
+        if (TypeId !== undefined) {
+            formData.append('TypeId', String(TypeId));
+        }
+        if (File !== undefined) {
+            formData.append('File', File);
+        }
+
+        const requestOptions: any = {
+            observe: observe as any,
+            headers,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, formData, requestOptions);
+    }
+
+    teachersDocumentTypesGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<PrivacyDocumentTypeDetailsListResponse>;
+    teachersDocumentTypesGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PrivacyDocumentTypeDetailsListResponse>>;
+    teachersDocumentTypesGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PrivacyDocumentTypeDetailsListResponse>>;
+    teachersDocumentTypesGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/teachers/document-types`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 }

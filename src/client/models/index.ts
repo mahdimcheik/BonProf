@@ -221,6 +221,13 @@ export interface CursusUpdate {
     categoryIds?: Array<string>;
 }
 
+export enum DocumentTypeEnum {
+    Identification = "Identification",
+    Diploma = "Diploma",
+    CompanyRegistration = "CompanyRegistration",
+    Other = "Other"
+}
+
 export interface Experience {
     id?: string;
     createdAt: Date;
@@ -336,6 +343,7 @@ export interface GenApi {
     languageEnum?: LanguageEnum;
     cursusCategoryEnum?: CursusCategoryEnum;
     slotTypeEnum?: SlotTypeEnum;
+    documentTypeEnum?: DocumentTypeEnum;
 }
 
 export interface Gender {
@@ -569,6 +577,43 @@ export interface PaymentMethod {
 export interface PeriodTime {
     dateFrom: Date;
     dateTo: Date;
+}
+
+export interface PrivacyDocumentDetails {
+    fileName: string;
+    filePath: string;
+    mimeType: string;
+    size?: number;
+    title: string;
+    description?: string | null;
+    type?: PrivacyDocumentTypeDetails;
+}
+
+export interface PrivacyDocumentDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<PrivacyDocumentDetails>;
+    count?: number | null;
+}
+
+export interface PrivacyDocumentDetailsResponse {
+    message: string;
+    status: number;
+    data?: PrivacyDocumentDetails;
+    count?: number | null;
+}
+
+export interface PrivacyDocumentTypeDetails {
+    id: string;
+    name: string;
+    displayName: string | null;
+}
+
+export interface PrivacyDocumentTypeDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<PrivacyDocumentTypeDetails>;
+    count?: number | null;
 }
 
 export interface Product {

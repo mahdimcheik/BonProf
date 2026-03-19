@@ -1,0 +1,42 @@
+<app-smart-section [title]="relatedType()?.displayName ?? 'Documents'" [editMode]="true" buttonIcon="pi pi-plus" (onAddClick)="onAddDocument()">
+    <ng-template #main>
+        @if (relatedDocuments().length === 0) {
+        <p class="text-center text-gray-400 py-4">Aucun document</p>
+        } @for (document of relatedDocuments(); track $index) {
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors" (click)="onDocumentClick(document)">
+            <i [class]="fileIcon(document) + ' text-2xl text-primary'"></i>
+            <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm truncate">{{ document.title }}</p>
+                <p class="text-xs text-gray-500 truncate">{{ document.fileName }}</p>
+                @if (document.description) {
+                <p class="text-xs text-gray-400 truncate">{{ document.description }}</p>
+                }
+            </div>
+            <span class="text-xs text-gray-400 shrink-0">{{ formatSize(document.size) }}</span>
+        </div>
+        }
+    </ng-template>
+</app-smart-section>
+
+@if (modalVisible()) {
+<bp-modal-add-edit-document [type]="privacyDocumentTypeEnum.Diploma" [(visible)]="modalVisible" (cancelClicked)="modalVisible.set(false)" (submitClicked)="needRefresh.emit()"></bp-modal-add-edit-document>
+}
+
+<p-dialog [(visible)]="previewVisible" [modal]="true" [dismissableMask]="true" [header]="selectedDocument()?.title ?? ''" [style]="{ 'max-width': '90vw', 'max-height': '90vh' }" [contentStyle]="{ padding: '1rem' }">
+    @if (selectedDocument(); as doc) {
+    <div class="flex flex-col gap-3">
+        @if (isImage(doc)) {
+        <img [src]="doc.filePath" [alt]="doc.title" class="max-w-full max-h-[70vh] object-contain rounded-lg mx-auto" />
+        } @else {
+        <div class="flex flex-col items-center gap-3 py-8 text-gray-500">
+            <i class="pi pi-file text-5xl"></i>
+            <p class="text-sm">{{ doc.fileName }}</p>
+        </div>
+        }
+        <div class="text-xs text-gray-400 flex gap-4 border-t pt-2">
+            <span>{{ doc.fileName }}</span>
+            @if (doc.size) { <span>{{ formatSize(doc.size) }}</span> } @if (doc.description) { <span>{{ doc.description }}</span> }
+        </div>
+    </div>
+    }
+</p-dialog>

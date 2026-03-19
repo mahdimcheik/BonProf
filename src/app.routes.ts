@@ -1,6 +1,8 @@
 import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
+import { ReservationsPage } from '@/pages/reservations/reservations-page/reservations-page';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
+import { isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
 import { Landing } from '@/site/landing/landing';
 import { MainPage } from '@/site/landing/pages/main-page/main-page';
@@ -8,8 +10,6 @@ import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
-import { isStudentOnlyGuard, isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
-import { ReservationsPage } from '@/pages/reservations/reservations-page/reservations-page';
 
 export const appRoutes: Routes = [
     {
@@ -68,6 +68,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'catalog/:id',
                         loadComponent: () => import('./app/pages/catalog/catalog').then((m) => m.Catalog)
+                    },
+                    {
+                        path: 'documents',
+                        loadComponent: () => import('./app/pages/documents/documents-list/documents-list').then((m) => m.DocumentsList)
                     }
                 ]
             },

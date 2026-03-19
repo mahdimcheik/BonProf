@@ -38,6 +38,9 @@ import { TooltipModule } from 'primeng/tooltip';
             (onClear)="onClear($event)"
             class="w-full"
             [class.p-invalid]="invalid()"
+            customUpload="true"
+            invalidFileTypeMessageSummary="Type de fichier non autorisé"
+            invalidFileSizeMessageSummary="Le fichier dépasse la taille maximale autorisée"
             #uploader
         >
             <ng-template pTemplate="empty">
@@ -45,7 +48,7 @@ import { TooltipModule } from 'primeng/tooltip';
                     <span class="flex-1  text-center flex items-center justify-center ">
                         {{ emptyMessage() }}
                     </span>
-                    @if (url()) {
+                    @if (url() && 'jpg,jpeg,png,webp'.includes(extension())) {
                         <div class="flex flex-col items-center ml-4 flex-1 justify-center">
                             <span>Votre avatar</span>
                             <img [src]="url()" alt="" class=" mx-auto mt-2 max-h-24 object-contain border rounded-2" />
@@ -53,13 +56,17 @@ import { TooltipModule } from 'primeng/tooltip';
                     }
                 </div>
             </ng-template>
+
             <ng-template pTemplate="content" let-files>
                 <div class="space-y-2">
                     @if (files && files.length > 0) {
                         @for (file of files; track file.name) {
                             <div class="flex items-center justify-between p-2 bg-gray-50 rounded border">
-                                <span class="text-sm truncate">{{ file.name }}</span>
-                                <span class="text-xs text-gray-500">{{ file.size | number }} bytes</span>
+                                <div class="flex items-center space-x-4 w-[80%]">
+                                    <span class="text-sm truncate">{{ file.name }}</span>
+                                    <span class="text-xs text-gray-500">{{ file.size | number }} bytes</span>
+                                </div>
+                                <i class="pi pi-times" [pTooltip]="'Annuler'" (click)="remove(file); uploader.clear()"></i>
                             </div>
                         }
                     }
@@ -67,10 +74,13 @@ import { TooltipModule } from 'primeng/tooltip';
                         @for (file of files; track file.name) {
                             <div class="flex flex-col items-center mt-4">
                                 <div class="flex justify-between w-full">
-                                    <span class="mb-2">Aperçu:</span>
-                                    <i class="pi pi-times" [pTooltip]="'Annuler'" (click)="remove(file); uploader.clear()"></i>
+                                    @if ('jpg,jpeg,png,webp'.includes(extension())) {
+                                        <span class="mb-2">Aperçu:</span>
+                                    }
                                 </div>
-                                <img [src]="url()" alt="Preview" class="max-h-48 object-contain border rounded" />
+                                @if ('jpg,jpeg,png,webp'.includes(extension())) {
+                                    <img [src]="url()" alt="Preview" class="max-h-48 object-contain border rounded" />
+                                }
                             </div>
                         }
                     }
@@ -100,6 +110,7 @@ export class CustomUploadFileComponent implements ControlValueAccessor, OnInit {
     emptyMessage = input<string>('Sélectionnez et glissez vos fichiers ici');
     mode = input<'basic' | 'advanced'>('advanced');
     url = model<string>('');
+    extension = signal<string>('');
     showUploadButton = input<boolean>(true);
     showCancelButton = input<boolean>(true);
     auto = input<boolean>(false);
@@ -176,6 +187,7 @@ export class CustomUploadFileComponent implements ControlValueAccessor, OnInit {
             this.onChange(files.length > 0 ? files : null);
         } else {
             this.onChange(files.length > 0 ? files[0] : null);
+            this.extension.set(files[0] ? files[0].name.split('.').pop()!.toLowerCase() : '');
             this.url.set(files[0] ? URL.createObjectURL(files[0]) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/250px-User_icon_2.svg.png');
         }
     }

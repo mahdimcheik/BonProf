@@ -1,0 +1,5 @@
+<h2>Mes documents</h2>
+<bp-documents-by-type [type]="DocumentType.Diploma" [documents]="documents()" (needRefresh)="loadDocuments()"></bp-documents-by-type>
+<bp-documents-by-type [type]="DocumentType.CompanyRegistration" [documents]="documents()" (needRefresh)="loadDocuments()"></bp-documents-by-type>
+<bp-documents-by-type [type]="DocumentType.Identification" [documents]="documents()" (needRefresh)="loadDocuments()"></bp-documents-by-type>
+<bp-documents-by-type [type]="DocumentType.Other" [documents]="documents()" (needRefresh)="loadDocuments()"></bp-documents-by-type>
