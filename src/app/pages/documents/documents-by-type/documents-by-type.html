@@ -1,11 +1,11 @@
-<app-smart-section [title]="`Documents (${type()})`" [editMode]="true" buttonIcon="pi pi-plus" (onAddClick)="onAddDocument()">
-    <div>
+<app-smart-section [title]="relatedType()?.displayName ?? 'Documents'" [editMode]="true" buttonIcon="pi pi-plus" (onAddClick)="onAddDocument()">
+    <ng-template #main>
         @for (document of relatedDocuments(); track $index) {
-        <h2>{{ document.title }}</h2>
+        <p>{{ document.title }} / {{ document.fileName }} / {{ document.size }} bytes</p>
         }
-    </div>
+    </ng-template>
 </app-smart-section>
 
 @if(modalVisible()) {
-<bp-modal-add-edit-document [(visible)]="modalVisible" (cancelClicked)="modalVisible.set(false)"></bp-modal-add-edit-document>
+<bp-modal-add-edit-document [type]="privacyDocumentTypeEnum.Diploma" [(visible)]="modalVisible" (cancelClicked)="modalVisible.set(false)" (submitClicked)="needRefresh.emit()"></bp-modal-add-edit-document>
 }

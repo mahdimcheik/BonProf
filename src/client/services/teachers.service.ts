@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { FilterTeacher, RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate, PrivacyDocumentDetailsListResponse, PrivacyDocumentDetailsResponse } from "../models";
+import { FilterTeacher, RequestOptions, UserDetailsListResponse, UserDetailsResponse, UserUpdate, PrivacyDocumentDetailsListResponse, PrivacyDocumentDetailsResponse, PrivacyDocumentTypeDetailsListResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class TeachersService {
@@ -143,5 +143,21 @@ export class TeachersService {
         };
 
         return this.httpClient.post(url, formData, requestOptions);
+    }
+
+    teachersDocumentTypesGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<PrivacyDocumentTypeDetailsListResponse>;
+    teachersDocumentTypesGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<PrivacyDocumentTypeDetailsListResponse>>;
+    teachersDocumentTypesGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<PrivacyDocumentTypeDetailsListResponse>>;
+    teachersDocumentTypesGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/teachers/document-types`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 }

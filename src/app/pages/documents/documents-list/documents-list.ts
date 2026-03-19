@@ -33,14 +33,17 @@ export class DocumentsList implements OnInit {
     teacheWapperService = inject(TeacherWrapperService);
     DocumentType = DocumentTypeEnum;
     documents = signal<PrivacyDocumentDetails[]>([]);
+    types = this.teacheWapperService.types;
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        this.loadDocuments();
     }
+
     async loadDocuments() {
         const res = await firstValueFrom(this.teacheWapperService.getPrivacyDocuments());
         if (res) {
             this.documents.set(res);
         }
+        await firstValueFrom(this.teacheWapperService.getDocumentTypes());
     }
 }

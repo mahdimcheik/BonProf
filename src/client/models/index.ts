@@ -609,6 +609,13 @@ export interface PrivacyDocumentTypeDetails {
     displayName: string | null;
 }
 
+export interface PrivacyDocumentTypeDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<PrivacyDocumentTypeDetails>;
+    count?: number | null;
+}
+
 export interface Product {
     id?: string;
     createdAt: Date;
