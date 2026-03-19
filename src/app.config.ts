@@ -3,19 +3,19 @@ import { errorHandlerInterceptor } from '@/pages/shared/interceptors/error-handl
 import { exceptionLoaderInterceptor } from '@/pages/shared/interceptors/exception-loader.interceptor';
 import { loaderInterceptor } from '@/pages/shared/interceptors/loader.interceptor';
 import { TokenInterceptor } from '@/pages/shared/interceptors/token.interceptor';
+import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import localeFr from '@angular/common/locales/fr';
 import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { registerLicense } from '@syncfusion/ej2-base';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { registerLicense } from '@syncfusion/ej2-base';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 import { provideDefaultClient } from './client/providers';
 import { environment } from './environments/environment';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
 
 const basePath = environment.API_URL;
 registerLicense(environment.SYNCFUSION_LICENSE_KEY);
