@@ -1,1 +1,11 @@
-<p>documents-by-type works!</p>
+<app-smart-section [title]="`Documents (${type()})`" [editMode]="true" buttonIcon="pi pi-plus" (onAddClick)="onAddDocument()">
+    <div>
+        @for (document of relatedDocuments(); track $index) {
+        <h2>{{ document.title }}</h2>
+        }
+    </div>
+</app-smart-section>
+
+@if(modalVisible()) {
+<bp-modal-add-edit-document [(visible)]="modalVisible" (cancelClicked)="modalVisible.set(false)"></bp-modal-add-edit-document>
+}

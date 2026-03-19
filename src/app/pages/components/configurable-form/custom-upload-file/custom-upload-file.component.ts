@@ -49,10 +49,12 @@ import { TooltipModule } from 'primeng/tooltip';
                         <div class="flex flex-col items-center ml-4 flex-1 justify-center">
                             <span>Votre avatar</span>
                             <img [src]="url()" alt="" class=" mx-auto mt-2 max-h-24 object-contain border rounded-2" />
+                            <p>{{ url() }}</p>
                         </div>
                     }
                 </div>
             </ng-template>
+
             <ng-template pTemplate="content" let-files>
                 <div class="space-y-2">
                     @if (files && files.length > 0) {

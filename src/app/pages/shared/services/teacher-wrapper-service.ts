@@ -11,4 +11,12 @@ export class TeacherWrapperService {
     getTeachers(filters: FilterTeacher) {
         return this.teacherService.teachersAllPost(filters);
     }
+
+    getPrivacyDocuments() {
+        return this.teacherService.teachersGetDocumentsGet().pipe(map((response) => response.data));
+    }
+
+    uploadDocument(file: File, typeId: string, title: string) {
+        return this.teacherService.teachersUploadDocumentPost(title, typeId, file);
+    }
 }
