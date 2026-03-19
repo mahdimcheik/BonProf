@@ -8,7 +8,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { GenderDetails, LanguageDetails, TeacherUpdate, UserUpdate } from 'src/client';
+import { GenderDetails, LanguageDetails, UserUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
@@ -324,5 +324,8 @@ export class PersonnalInfosEdition implements OnInit {
         this.languagesList.set(languagesData);
         const gendersData = await firstValueFrom(this.gendersWrapperService.getGenders());
         this.genderOptions.set(gendersData ?? []);
+    }
+    goToPorfile() {
+        this.router.navigate([this.mainService.isTeacher() ? 'dashboard/teacher/profile/me' : 'dashboard/student/profile/me']);
     }
 }

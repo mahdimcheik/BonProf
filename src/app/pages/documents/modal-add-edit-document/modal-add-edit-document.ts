@@ -54,7 +54,7 @@ export class ModalAddEditDocument {
                             label: 'Fichier',
                             type: 'file',
                             placeholder: 'Choisir votre fichier',
-                            accept: '*/*',
+                            accept: 'image/*, application/pdf',
                             maxFileSize: 1000000,
                             showCancelButton: true,
                             multiple: false,
