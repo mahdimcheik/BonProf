@@ -1,4 +1,5 @@
 import { NotificationsWrapperService } from '@/pages/shared/services/notification-service';
+import { StoreService } from '@/pages/shared/services/store-service';
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, linkedSignal, model, signal, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,11 +24,11 @@ import { LayoutService } from '../service/layout.service';
         <!-- <div class="relative">
             <button class="flex items-center" (click)="visible.set(!visible())"><i class="pi pi-bell"></i></button>
         </div> -->
-        <p-overlaybadge [value]="displayedCount()" [severity]="count() > 0 ? 'danger' : undefined" styleClass="overlay-badge">
-            <button class="flex items-center " (click)="visible.set(!visible())"><i class="pi pi-bell" style="font-size: 1.25rem"></i></button>
+        <p-overlaybadge [value]="displayedCount()" [severity]="count() > 0 ? 'danger' : undefined" styleClass="overlay-badge cursor-pointer" (click)="visible.set(!visible())">
+            <button class="flex items-center "><i class="pi pi-bell" style="font-size: 1.25rem"></i></button>
         </p-overlaybadge>
-        <p-drawer [(visible)]="visible" position="right" closable="true" [styleClass]="'!w-full md:!w-[50vw]'">
-            <div class="flex flex-wrap gap-4">
+        <p-drawer [(visible)]="visible" position="right" closable="true" [styleClass]="'!w-full md:!w-[50vw] relative'">
+            <div class="flex flex-wrap gap-4 fixed top-[45px]">
                 <div class="flex items-center">
                     <p-radiobutton name="seen" [value]="undefined" [(ngModel)]="seen" inputId="isUndefined" />
                     <label for="isUndefined" class="ml-2">Toutes</label>
@@ -63,15 +64,15 @@ import { LayoutService } from '../service/layout.service';
                     </div>
                 }
             </div>
-            <div>
-                <p-button icon="pi pi-chevron-down" styleClass="!w-full" variant="text" (onClick)="loadMore()"> </p-button>
-            </div>
+            <p-button icon="pi pi-chevron-down" styleClass="!w-full !absolute !bottom-0" variant="text" (onClick)="loadMore()"> </p-button>
         </p-drawer>
     </div>`
 })
 export class NotificationsMenu {
     notificationService = inject(NotificationsWrapperService);
+    storeService = inject(StoreService);
     layoutService = inject(LayoutService);
+
     visible = model(false);
     items!: MenuItem[];
     notifications = this.notificationService.notifications;
@@ -102,6 +103,18 @@ export class NotificationsMenu {
             const seenValue = this.filter();
             untracked(() => {
                 this.laodNotifications(this.filter());
+            });
+        });
+
+        let firstLoad = true;
+        effect(async () => {
+            const notification = this.storeService.notificationAlert();
+            if (!firstLoad) {
+                firstLoad = false;
+                return;
+            }
+            untracked(async () => {
+                await this.laodNotifications(this.filter());
             });
         });
     }

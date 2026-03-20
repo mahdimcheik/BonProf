@@ -71,8 +71,6 @@ export class ProductEdition {
 
     submit($event: FormGroup<any>) {
         const values = $event.value.informations;
-        console.log(values);
-
         if (this.product()) {
             const updatedProduct: ProductUpdate = values;
             updatedProduct.id = this.product()!.id;

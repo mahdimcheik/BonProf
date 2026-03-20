@@ -128,13 +128,13 @@ export class SignalRService {
         this.hubConnection.on(SignalRNotificationTypeEnum.Message, (message) => {});
 
         this.hubConnection.on(SignalRNotificationTypeEnum.Notification, (notification) => {
-            this.storeService.Notification.set(notification);
+            this.storeService.notificationAlert.set(notification);
         });
 
         this.hubConnection.on(SignalRNotificationTypeEnum.Chat, (chat) => {});
 
         this.hubConnection.on(SignalRNotificationTypeEnum.Ping, () => {
-            this.storeService.Ping.set({ message: 'Ping received' });
+            this.storeService.pingAlert.set({ message: 'Ping received' });
         });
     }
 
@@ -143,7 +143,7 @@ export class SignalRService {
         this.pingInterval = setInterval(async () => {
             try {
                 if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
-                    await this.hubConnection.invoke('GetOnlineCount');
+                    await this.hubConnection.invoke('Ping');
                 }
             } catch (error) {
                 this.handleConnectionError();

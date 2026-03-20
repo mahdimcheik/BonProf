@@ -6,10 +6,10 @@ import { NotificationDetails } from 'src/client';
 })
 export class StoreService {
     // signal R
-    Notification = signal<any>(null);
-    Message = signal<any>(null);
-    Chat = signal<any>(null);
-    Ping = signal<any>(null);
+    notificationAlert = signal<any>(null);
+    messageAlert = signal<any>(null);
+    chatAlert = signal<any>(null);
+    pingAlert = signal<any>(null);
 
     // notifications
     notifications = signal<NotificationDetails[]>([]);
