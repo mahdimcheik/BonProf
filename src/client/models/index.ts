@@ -253,6 +253,12 @@ export interface FileUrlResponse {
     count?: number | null;
 }
 
+export interface FilterNotification {
+    isSeen?: boolean | null;
+    first?: number;
+    row?: number | null;
+}
+
 export interface FilterTeacher {
     city?: string | null;
     postalCode?: string | null;
@@ -344,6 +350,7 @@ export interface GenApi {
     cursusCategoryEnum?: CursusCategoryEnum;
     slotTypeEnum?: SlotTypeEnum;
     documentTypeEnum?: DocumentTypeEnum;
+    signalRNotificationTypeEnum?: SignalRNotificationTypeEnum;
     notificationTypeEnum?: NotificationTypeEnum;
 }
 
@@ -497,11 +504,48 @@ export interface LoginResponse {
     count?: number | null;
 }
 
+export interface Notification {
+    id?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    name: string;
+    color: string;
+    icon?: string | null;
+    message: string;
+    isSeen: boolean;
+    userId: string;
+    user?: UserApp;
+}
+
+export interface NotificationDetails {
+    id?: string;
+    name?: string | null;
+    message?: string | null;
+    isSeen?: boolean;
+    createdAt?: Date;
+}
+
+export interface NotificationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<NotificationDetails>;
+    count?: number | null;
+}
+
+export interface NotificationDetailsResponse {
+    message: string;
+    status: number;
+    data?: NotificationDetails;
+    count?: number | null;
+}
+
 export enum NotificationTypeEnum {
-    Message = "Message",
-    Ping = "Ping",
-    Notification = "Notification",
-    Chat = "Chat"
+    Account = "Account",
+    Reservation = "Reservation",
+    Payment = "Payment",
+    Chat = "Chat",
+    Product = "Product"
 }
 
 export interface ObjectResponse {
@@ -742,6 +786,13 @@ export enum RoleEnum {
     Teacher = "Teacher",
     Admin = "Admin",
     SuperAdmin = "SuperAdmin"
+}
+
+export enum SignalRNotificationTypeEnum {
+    Message = "Message",
+    Ping = "Ping",
+    Notification = "Notification",
+    Chat = "Chat"
 }
 
 export interface Slot {
@@ -1056,6 +1107,7 @@ export interface UserApp {
     status?: StatusAccount;
     genderId: string;
     gender?: Gender;
+    notifications?: Array<Notification>;
     teacher?: Teacher;
     student?: Student;
     userRoles?: Array<GuidIdentityUserRole>;

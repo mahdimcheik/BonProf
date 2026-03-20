@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { MessageService } from 'primeng/api';
-import { NotificationTypeEnum, RoleDetails, RoleEnum } from 'src/client';
+import { RoleDetails, RoleEnum, SignalRNotificationTypeEnum } from 'src/client';
 import { environment } from 'src/environments/environment';
 import { StoreService } from './store-service';
 
@@ -125,16 +125,16 @@ export class SignalRService {
         });
 
         // Message handlers
-        this.hubConnection.on(NotificationTypeEnum.Message, (message) => {});
+        this.hubConnection.on(SignalRNotificationTypeEnum.Message, (message) => {});
 
-        this.hubConnection.on(NotificationTypeEnum.Notification, (notification) => {
-            this.storeService.Notification.set(notification);
+        this.hubConnection.on(SignalRNotificationTypeEnum.Notification, (notification) => {
+            this.storeService.notificationAlert.set(notification);
         });
 
-        this.hubConnection.on(NotificationTypeEnum.Chat, (chat) => {});
+        this.hubConnection.on(SignalRNotificationTypeEnum.Chat, (chat) => {});
 
-        this.hubConnection.on(NotificationTypeEnum.Ping, () => {
-            this.storeService.Ping.set({ message: 'Ping received' });
+        this.hubConnection.on(SignalRNotificationTypeEnum.Ping, () => {
+            this.storeService.pingAlert.set({ message: 'Ping received' });
         });
     }
 
@@ -143,7 +143,7 @@ export class SignalRService {
         this.pingInterval = setInterval(async () => {
             try {
                 if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
-                    await this.hubConnection.invoke('GetOnlineCount');
+                    await this.hubConnection.invoke('Ping');
                 }
             } catch (error) {
                 this.handleConnectionError();
@@ -189,7 +189,7 @@ export class SignalRService {
         }
     }
 
-    async sendMessage(recipientEmail: string, type: NotificationTypeEnum, message: any) {
+    async sendMessage(recipientEmail: string, type: SignalRNotificationTypeEnum, message: any) {
         try {
             if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
                 await this.hubConnection.invoke('SendMessageByUserEmail', recipientEmail, type, message);

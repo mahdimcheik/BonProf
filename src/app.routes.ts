@@ -2,7 +2,7 @@ import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
 import { ReservationsPage } from '@/pages/reservations/reservations-page/reservations-page';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
-import { isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
+import { isStudentOnlyGuard, isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
 import { Landing } from '@/site/landing/landing';
 import { MainPage } from '@/site/landing/pages/main-page/main-page';
@@ -51,7 +51,7 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: 'teacher',
-                canActivate: [isConnectedGuard, isTeacherOnlyGuard],
+                canActivate: [isTeacherOnlyGuard],
                 children: [
                     {
                         path: 'profile/:id',
@@ -77,7 +77,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'student',
-                canActivate: [isConnectedGuard],
+                canActivate: [isStudentOnlyGuard],
                 children: [
                     {
                         path: 'profile/:id',
