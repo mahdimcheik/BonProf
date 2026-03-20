@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { MainService } from '../services/main.service';
+import { SignalRService } from '../services/signal-r-service';
 /***
  * Guard qui empêche l'accès à une route si l'utilisateur est connecté.
  * Si l'utilisateur n'est pas connecté, il peut accéder à la route.
@@ -44,8 +45,11 @@ export const canNotRegisterGuard: CanActivateFn = async (route, state) => {
 
 export const isConnectedGuard: CanActivateFn = async (route, state) => {
     const authService = inject(MainService);
+    const signalRService = inject(SignalRService);
     // Check if the user is connected , dans la mémoire
     if (authService.userConnected().email) {
+        await signalRService.initiateAndConnect(authService.token());
+        await signalRService.addToAppropriateGroup(authService.userConnected().roles ?? []);
         return true;
     }
 

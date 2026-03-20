@@ -25,6 +25,7 @@ import {
 import { environment } from 'src/environments/environment';
 import { CityDetails } from '../models/geolocalisation';
 import { LocalstorageService } from './localstorage.service';
+import { SignalRService } from './signal-r-service';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,7 @@ export class MainService {
     localStorageService = inject(LocalstorageService);
     teacherService = inject(TeachersService);
     studentService = inject(StudentsService);
+    signalRService = inject(SignalRService);
 
     ApplicationName = 'BonProf';
     logoUrl = 'assets/bird.svg';
@@ -157,6 +159,12 @@ export class MainService {
                 this.token.set(res.data?.token ?? '');
                 this.userConnected.set(res.data?.user as UserDetails);
                 this.localStorageService.setUser(res.data?.user ?? '');
+                // Connect to SignalR hub if token is available
+                if (res.data?.token) {
+                    this.signalRService.initiateAndConnect(res.data.token).then(() => {
+                        this.signalRService.addToAppropriateGroup(res.data?.user?.roles ?? []);
+                    });
+                }
             })
         );
     }
@@ -238,6 +246,11 @@ export class MainService {
 
     logout(): Observable<ObjectResponse> {
         this.reset();
+
+        // Remove user from SignalR groups and stop connection
+        const roles = [...(this.userConnected()?.roles?.map((r) => ({ ...r })) ?? [])];
+        this.signalRService.removeFromAppropriateGroup(roles);
+        this.signalRService.stopConnection();
 
         return this.authService.authLogoutGet().pipe(
             tap(() => {
