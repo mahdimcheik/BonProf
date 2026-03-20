@@ -1,7 +1,6 @@
 import { SmartSectionComponent } from '@/pages/components/smart-section/smart-section.component';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { Component, inject, input, linkedSignal, model, output, signal } from '@angular/core';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DocumentTypeEnum, PrivacyDocumentDetails } from 'src/client';
@@ -9,7 +8,7 @@ import { ModalAddEditDocument } from '../modal-add-edit-document/modal-add-edit-
 
 @Component({
     selector: 'bp-documents-by-type',
-    imports: [SmartSectionComponent, ButtonModule, ModalAddEditDocument, DialogModule, PdfJsViewerModule],
+    imports: [SmartSectionComponent, ButtonModule, ModalAddEditDocument, DialogModule],
     templateUrl: './documents-by-type.html'
 })
 export class DocumentsByType {

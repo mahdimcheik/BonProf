@@ -344,6 +344,7 @@ export interface GenApi {
     cursusCategoryEnum?: CursusCategoryEnum;
     slotTypeEnum?: SlotTypeEnum;
     documentTypeEnum?: DocumentTypeEnum;
+    notificationTypeEnum?: NotificationTypeEnum;
 }
 
 export interface Gender {
@@ -494,6 +495,13 @@ export interface LoginResponse {
     status: number;
     data?: Login;
     count?: number | null;
+}
+
+export enum NotificationTypeEnum {
+    Message = "Message",
+    Ping = "Ping",
+    Notification = "Notification",
+    Chat = "Chat"
 }
 
 export interface ObjectResponse {
