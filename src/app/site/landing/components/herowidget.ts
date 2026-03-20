@@ -19,30 +19,32 @@ import { firstValueFrom } from 'rxjs';
             <div class="mx-6 md:mx-20 mt-0 md:mt-6">
                 <h1 class="text-6xl font-bold text-gray-900 leading-tight dark:!text-gray-700"><span class="font-light block">En construction</span>Ce site est un prototype en développement</h1>
                 <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">Réserver, payer, consulter et suivre vos cours facilement.</p>
-                <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
-                    <p-autocomplete
-                        [(ngModel)]="selectedCity"
-                        (completeMethod)="search($event)"
-                        [suggestions]="cities()"
-                        (onSelect)="onCitySelect($event)"
-                        optionLabel="displayLabel"
-                        styleClass="flex-1"
-                        [inputStyleClass]="'w-full h-[45px]'"
-                        [panelStyle]="{ 'z-index': '998' }"
-                        appendTo="body"
-                        placeholder="Entrez votre ville ou code postal"
-                    >
-                        <ng-template let-cityDetails #item>
-                            <div class="flex items-center gap-2">
-                                <div>{{ cityDetails.displayLabel }}</div>
-                            </div>
-                        </ng-template>
-                        <ng-template #header>
-                            <div class="font-medium px-3 py-2">Villes et codes postaux</div>
-                        </ng-template>
-                    </p-autocomplete>
-                    <button pButton pRipple type="button" label="Réserver" class="text-xl! " (click)="goToCatalog()"></button>
-                </div>
+                @if (mainService.isStudent()) {
+                    <div class="flex flex-col md:flex-row md:items-center md:gap-4 gap-4">
+                        <p-autocomplete
+                            [(ngModel)]="selectedCity"
+                            (completeMethod)="search($event)"
+                            [suggestions]="cities()"
+                            (onSelect)="onCitySelect($event)"
+                            optionLabel="displayLabel"
+                            styleClass="flex-1"
+                            [inputStyleClass]="'w-full h-[45px]'"
+                            [panelStyle]="{ 'z-index': '998' }"
+                            appendTo="body"
+                            placeholder="Entrez votre ville ou code postal"
+                        >
+                            <ng-template let-cityDetails #item>
+                                <div class="flex items-center gap-2">
+                                    <div>{{ cityDetails.displayLabel }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template #header>
+                                <div class="font-medium px-3 py-2">Villes et codes postaux</div>
+                            </ng-template>
+                        </p-autocomplete>
+                        <button pButton pRipple type="button" label="Réserver" class="text-xl! " (click)="goToCatalog()"></button>
+                    </div>
+                }
             </div>
             <div class="flex justify-center md:justify-end  mt-6 md:mt-0">
                 <img src="assets/banner.webp" alt="Hero Image" class="w-full md:w-[400px] h-auto" />

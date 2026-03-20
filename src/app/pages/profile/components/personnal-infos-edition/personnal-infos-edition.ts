@@ -1,5 +1,6 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { FormSection, Structure } from '@/pages/components/configurable-form/related-models';
+import { GenderPipe } from '@/pages/shared/pipes/gender-pipe';
 import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { LanguagesWrapperService } from '@/pages/shared/services/languages-service';
 import { MainService } from '@/pages/shared/services/main.service';
@@ -12,14 +13,16 @@ import { GenderDetails, LanguageDetails, UserUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-personnal-infos-edition',
-    imports: [ConfigurableFormComponent],
-    templateUrl: './personnal-infos-edition.html'
+    imports: [ConfigurableFormComponent, GenderPipe],
+    templateUrl: './personnal-infos-edition.html',
+    providers: [GenderPipe]
 })
 export class PersonnalInfosEdition implements OnInit {
     mainService = inject(MainService);
     languagesWrapperService = inject(LanguagesWrapperService);
     gendersWrapperService = inject(GenderWrapperService);
     router = inject(Router);
+    genderPipe = inject(GenderPipe);
 
     user = this.mainService.userConnected;
     languagesList = signal<LanguageDetails[]>([]);
@@ -74,6 +77,7 @@ export class PersonnalInfosEdition implements OnInit {
                     type: 'select',
                     compareKey: 'id',
                     displayKey: 'name',
+                    valueFormatter: (option: any) => this.genderPipe.transform(option.name),
                     value: user?.gender?.id || null,
                     fullWidth: true,
                     options: this.genderOptions()

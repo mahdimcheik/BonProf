@@ -73,7 +73,10 @@ export class MainService {
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
         if (user && user.email) {
-            return [{ label: 'Deconnexion', command: () => this.logout().subscribe() }];
+            return [
+                { label: 'Deconnexion', command: () => this.logout().subscribe() },
+                { label: 'Profil', command: () => this.router.navigate(['/profile/me']) }
+            ] as MenuItem[];
         }
         return [
             {
@@ -100,7 +103,7 @@ export class MainService {
                     label: 'Administration',
                     root: true
                 },
-                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me'] },
+                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me/edition'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] },
                 { label: 'Catalog', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/catalog/me'] },
                 { label: 'Documents', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/documents'] }
@@ -116,7 +119,7 @@ export class MainService {
                     label: 'Administration',
                     root: true
                 },
-                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me'] },
+                { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me/edition'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] },
                 { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/reservations'] }
             ];
