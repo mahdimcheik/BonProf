@@ -12,5 +12,6 @@ export class StoreService {
     Ping = signal<any>(null);
 
     // notifications
-    Notifications = signal<NotificationDetails[]>([]);
+    notifications = signal<NotificationDetails[]>([]);
+    notficationCount = signal<number>(0);
 }

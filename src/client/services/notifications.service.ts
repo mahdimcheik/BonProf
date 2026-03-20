@@ -56,4 +56,20 @@ export class NotificationsService {
 
         return this.httpClient.put(url, null, requestOptions);
     }
+
+    notificationsAllToggleSeenPut(observe?: 'body', options?: RequestOptions<'json'>): Observable<NotificationDetailsResponse>;
+    notificationsAllToggleSeenPut(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<NotificationDetailsResponse>>;
+    notificationsAllToggleSeenPut(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<NotificationDetailsResponse>>;
+    notificationsAllToggleSeenPut(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/notifications/all-toggle-seen`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.put(url, null, requestOptions);
+    }
 }

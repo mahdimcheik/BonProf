@@ -544,7 +544,8 @@ export enum NotificationTypeEnum {
     Account = "Account",
     Reservation = "Reservation",
     Payment = "Payment",
-    Chat = "Chat"
+    Chat = "Chat",
+    Product = "Product"
 }
 
 export interface ObjectResponse {

@@ -9,16 +9,23 @@ import { StoreService } from './store-service';
 export class NotificationsWrapperService {
     notificationService = inject(NotificationsService);
     storeService = inject(StoreService);
-    notifications = this.storeService.Notifications;
+    notifications = this.storeService.notifications;
+    notficationCount = this.storeService.notficationCount;
 
     getNotifications(filter: FilterNotification) {
         return this.notificationService.notificationsPost(filter).pipe(
-            map((response) => response.data),
-            tap((notifications) => this.notifications.set(notifications ?? []))
+            tap((response) => {
+                this.notifications.set(response.data ?? []);
+                this.notficationCount.set(response.count ?? 0);
+            })
         );
     }
 
     toggleSeen(id: string) {
         return this.notificationService.notificationsIdToggleSeenPut(id).pipe(map((response) => response.data));
+    }
+
+    toggleSeenAll() {
+        return this.notificationService.notificationsAllToggleSeenPut().pipe(tap(() => this.notficationCount.set(0)));
     }
 }
