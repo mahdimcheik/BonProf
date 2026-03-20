@@ -253,6 +253,12 @@ export interface FileUrlResponse {
     count?: number | null;
 }
 
+export interface FilterNotification {
+    isSeen?: boolean | null;
+    first?: number;
+    row?: number | null;
+}
+
 export interface FilterTeacher {
     city?: string | null;
     postalCode?: string | null;

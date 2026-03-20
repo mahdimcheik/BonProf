@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, NotificationDetailsListResponse, NotificationDetailsResponse } from "../models";
+import { FilterNotification, RequestOptions, NotificationDetailsListResponse, NotificationDetailsResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class NotificationsService {
@@ -25,32 +25,20 @@ export class NotificationsService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    notificationsGet(isSeen?: boolean, first?: number, row?: number, observe?: 'body', options?: RequestOptions<'json'>): Observable<NotificationDetailsListResponse>;
-    notificationsGet(isSeen?: boolean, first?: number, row?: number, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<NotificationDetailsListResponse>>;
-    notificationsGet(isSeen?: boolean, first?: number, row?: number, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<NotificationDetailsListResponse>>;
-    notificationsGet(isSeen?: boolean, first?: number, row?: number, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    notificationsPost(filterNotification?: FilterNotification, observe?: 'body', options?: RequestOptions<'json'>): Observable<NotificationDetailsListResponse>;
+    notificationsPost(filterNotification?: FilterNotification, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<NotificationDetailsListResponse>>;
+    notificationsPost(filterNotification?: FilterNotification, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<NotificationDetailsListResponse>>;
+    notificationsPost(filterNotification?: FilterNotification, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/notifications`;
-
-        let params = new HttpParams();
-        if (isSeen != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, isSeen, 'IsSeen');
-        }
-        if (first != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, first, 'First');
-        }
-        if (row != null) {
-            params = HttpParamsBuilder.addToHttpParams(params, row, 'Row');
-        }
 
         const requestOptions: any = {
             observe: observe as any,
-            params,
             reportProgress: options?.reportProgress,
             withCredentials: options?.withCredentials,
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.get(url, requestOptions);
+        return this.httpClient.post(url, filterNotification, requestOptions);
     }
 
     notificationsIdToggleSeenPut(id: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<NotificationDetailsResponse>;
