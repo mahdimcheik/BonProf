@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { MainService } from '@/pages/shared/services/main.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -55,10 +56,14 @@ import { RippleModule } from 'primeng/ripple';
                 </div>
             </div>
 
-            <div class="text-center mt-12">
-                <p-button label="Chercher un bon prof" icon="pi pi-arrow-right" iconPos="right" size="large" [routerLink]="'/fast-search'" />
-            </div>
+            @if (!mainService.isTeacher()) {
+                <div class="text-center mt-12">
+                    <p-button label="Chercher un bon prof" icon="pi pi-arrow-right" iconPos="right" size="large" [routerLink]="'/fast-search'" />
+                </div>
+            }
         </div>
     `
 })
-export class HighlightsWidget {}
+export class HighlightsWidget {
+    mainService = inject(MainService);
+}
