@@ -1,1 +1,28 @@
-<p>reservation-card works!</p>
+@if (data()) {
+<div class="shadow-md hover:shadow-lg transition-shadow duration-200 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6">
+    <div class="flex flex-col gap-4">
+        <!-- Header: Reservation title + status -->
+        <div class="flex justify-between items-start gap-3">
+            <div class="flex flex-col gap-1 flex-1">
+                <h3 class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">{{ data()?.title ?? 'Réservation' }}</h3>
+                @if (data()!.description) {
+                <div class="flex items-start gap-2 text-surface-600 dark:text-surface-400">
+                    <i class="pi pi-align-left text-sm mt-0.5"></i>
+                    <span class="text-sm">{{ data()!.description }}</span>
+                </div>
+                }
+            </div>
+
+            @if (data()?.status) {
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-white flex-shrink-0" [style.background-color]="data()!.status!.color">
+                @if (data()!.status!.icon) {
+                <i [class]="'pi ' + data()!.status!.icon + ' text-xs'"></i>
+                } {{ data()!.status!.name }}
+            </span>
+            }
+        </div>
+
+        <hr class="border-surface-200 dark:border-surface-700 m-0" />
+    </div>
+</div>
+}

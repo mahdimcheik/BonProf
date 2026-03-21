@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, GridifyQuery, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, GridifyQuery, ReservationDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -121,9 +121,9 @@ export class SlotsService {
         return this.httpClient.post(url, periodTime, requestOptions);
     }
 
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsListResponse>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsListResponse>>;
+    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsListResponse>>;
     slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/slots/student/reservations`;
 

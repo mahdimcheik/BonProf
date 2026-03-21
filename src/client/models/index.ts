@@ -753,6 +753,13 @@ export interface ReservationDetails {
     student?: StudentDetails;
 }
 
+export interface ReservationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<ReservationDetails>;
+    count?: number | null;
+}
+
 export enum ReservationStatusEnum {
     Pending = "Pending",
     Accepted = "Accepted",

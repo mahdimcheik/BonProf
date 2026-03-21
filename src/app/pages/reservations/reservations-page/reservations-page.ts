@@ -3,7 +3,8 @@ import { SmartGridGridifyComponent } from '@/pages/components/smart-grid-gridify
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { GridifyQuery } from 'src/client';
+import { GridifyQuery, ReservationDetails } from 'src/client';
+import { ReservationCard } from '../reservation-card/reservation-card';
 
 @Component({
     selector: 'bp-reservations-page',
@@ -15,6 +16,8 @@ export class ReservationsPage {
 
     tableState = signal<GridifyQuery>({ page: 1, pageSize: 10, orderBy: null, filter: null });
     globalSearch = signal<string>('');
+    reservations = signal<ReservationDetails[]>([]);
+    renderComponent = ReservationCard;
 
     columnsDef = computed<DynamicColDef[]>(() => [
         { field: 'studentName', header: 'First Name', type: 'text', filterable: true, filterField: 'studentName' },
@@ -36,6 +39,7 @@ export class ReservationsPage {
 
     async loadData(query: GridifyQuery) {
         const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query));
-        console.log('Loaded reservations:', result);
+        this.reservations.set(result);
+        // console.log('Loaded reservations:', result);
     }
 }

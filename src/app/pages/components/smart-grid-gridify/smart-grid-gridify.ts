@@ -1,6 +1,7 @@
 import { CommonModule, NgComponentOutlet } from '@angular/common';
 import { Component, computed, effect, input, model, OnInit, output, signal, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { GridifyQueryBuilder, ConditionalOperator as op } from 'gridify-client';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -9,11 +10,10 @@ import { PaginatorModule } from 'primeng/paginator';
 import { PopoverModule } from 'primeng/popover';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { CustomTableState, DATE_FILTER_MATCH_MODES, DynamicColDef, ICellRendererAngularComp, INITIAL_STATE, INITIAL_STATE_GRIDIFY, SortCriterion, SortOrder } from '../smart-grid/TableColumn ';
+import { GridifyQuery } from 'src/client';
+import { DATE_FILTER_MATCH_MODES, DynamicColDef, ICellRendererAngularComp, INITIAL_STATE_GRIDIFY, SortCriterion, SortOrder } from '../smart-grid/TableColumn ';
 import { CustomSortComponent } from '../smart-grid/custom-sort/custom-sort.component';
 import { ActionButtonRendererComponent } from '../smart-grid/default-component';
-import { GridifyQuery } from 'src/client';
-import { GridifyQueryBuilder, ConditionalOperator as op } from 'gridify-client';
 
 @Component({
     selector: 'bp-smart-grid-gridify',
@@ -32,8 +32,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     heightNumber = computed(() => parseInt(this.height().replace('px', ''), 10));
     title = input<string>('');
     storageName = input<string>('');
-    customComponents = model<{ [key: string]: Type<ICellRendererAngularComp> }>({});
-    itemRendererComponent = input<Type<ICellRendererAngularComp>>();
     itemRendererComponentParams = input<any>();
     itemPropertyName = input<string>();
     dateFilterMatchModes = DATE_FILTER_MATCH_MODES;
@@ -56,13 +54,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
 
     constructor() {
         this.getStateFromLocalStorage();
-        const customComps = this.customComponents();
-        this.componentMap.set({
-            ...customComps,
-            default: ActionButtonRendererComponent
-        });
-
-        // Effect to rebuild GridifyQuery whenever internal state changes
         effect(() => {
             const gridifyQuery = this.buildGridifyQuery();
             this.tableState.set(gridifyQuery);
@@ -70,13 +61,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     }
 
     ngOnInit(): void {}
-
-    getComponent(templateName: string | Type<ICellRendererAngularComp>): Type<ICellRendererAngularComp> {
-        if (typeof templateName === 'string') {
-            return this.componentMap()[templateName] || this.componentMap()['default'];
-        }
-        return templateName;
-    }
 
     getSortOrderForField(field: string): SortOrder {
         const sortCriterion = this.internalSorts().find((s) => s.field === field);
