@@ -1,11 +1,11 @@
-<bp-smart-grid-gridify
+<bp-smart-grid-modernized
     [columns]="columnsDef()"
     [(tableState)]="tableState"
-    [(globalSearch)]="globalSearch"
     [storageName]="'reservations'"
     [data]="reservations()"
     [itemRendererComponentParams]="{ fieldToDisplay: 'studentName' }"
     [lineItemComponent]="renderComponent"
     [totalRecords]="totalRecords()"
     [height]="'850px'"
-></bp-smart-grid-gridify>
+    placeholder="Titre ou description"
+></bp-smart-grid-modernized>

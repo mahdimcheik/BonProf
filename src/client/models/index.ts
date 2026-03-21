@@ -221,6 +221,14 @@ export interface CursusUpdate {
     categoryIds?: Array<string>;
 }
 
+export interface CustomTableState {
+    first?: number;
+    rows?: number;
+    sorts?: Array<SortCriterion>;
+    filters?: Record<string, Filter>;
+    search?: string | null;
+}
+
 export enum DocumentTypeEnum {
     Identification = "Identification",
     Diploma = "Diploma",
@@ -251,6 +259,12 @@ export interface FileUrlResponse {
     status: number;
     data?: FileUrl;
     count?: number | null;
+}
+
+export interface Filter {
+    value?: any | null;
+    matchMode?: string | null;
+    specialFilter?: boolean;
 }
 
 export interface FilterNotification {
@@ -382,13 +396,6 @@ export enum GenderEnum {
     Male = "Male",
     Female = "Female",
     Other = "Other"
-}
-
-export interface GridifyQuery {
-    page?: number;
-    pageSize?: number;
-    orderBy?: string | null;
-    filter?: string | null;
 }
 
 export interface GuidIdentityUserRole {
@@ -869,6 +876,11 @@ export interface SlotUpdate {
     dateTo: Date;
     teacherId: string;
     typeId: string;
+}
+
+export interface SortCriterion {
+    field?: string | null;
+    order?: number;
 }
 
 export interface StatusAccount {

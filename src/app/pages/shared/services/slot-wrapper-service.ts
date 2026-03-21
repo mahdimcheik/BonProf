@@ -1,6 +1,7 @@
+import { CustomTableState } from '@/pages/components/smart-grid';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
-import { GridifyQuery, ReservationCreate, SlotCreate, SlotsService, SlotUpdate, StatusReservationCode } from 'src/client';
+import { ReservationCreate, SlotCreate, SlotsService, SlotUpdate, StatusReservationCode } from 'src/client';
 
 @Injectable({
     providedIn: 'root'
@@ -67,7 +68,7 @@ export class SlotWrapperService {
         return this.slotsService.slotsStudentRemoveReservationDelete(reservationId);
     }
 
-    GetReservationsByStudentGrid(tableState: GridifyQuery) {
+    GetReservationsByStudent(tableState: CustomTableState) {
         return this.slotsService.slotsStudentReservationsPost(tableState);
     }
 }

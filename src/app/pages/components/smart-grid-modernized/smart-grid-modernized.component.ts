@@ -30,6 +30,7 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
     title = input<string>('');
     storageName = input<string>('');
     searchValue = signal<string>('');
+    placeholder = input<string>('Saisir...');
     customComponents = model<{ [key: string]: Type<ICellRendererAngularComp> }>({});
     itemRendererComponent = input<Type<ICellRendererAngularComp>>();
     itemRendererComponentParams = input<any>();
@@ -46,7 +47,9 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
         default: ActionButtonRendererComponent
     });
 
-    constructor() {
+    constructor() {}
+
+    ngOnInit(): void {
         this.getStateFromLocalStorage();
         const customComps = this.customComponents();
         this.componentMap.set({
@@ -54,8 +57,6 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
             default: ActionButtonRendererComponent
         });
     }
-
-    ngOnInit(): void {}
 
     getComponent(templateName: string | Type<ICellRendererAngularComp>): Type<ICellRendererAngularComp> {
         if (typeof templateName === 'string') {
@@ -183,6 +184,7 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
             ...state,
             search: value
         }));
+        this.saveStateToLocalStorage();
     }
 
     // save state to localStorage
@@ -197,6 +199,7 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
             const state = localStorage.getItem(this.storageName());
             if (state) {
                 this.tableState.set(JSON.parse(state));
+                this.searchValue.set(this.tableState().search || '');
             }
         }
     }
