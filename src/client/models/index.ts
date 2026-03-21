@@ -751,6 +751,7 @@ export interface ReservationDetails {
     status?: StatusReservationDetails;
     product?: ProductDetails;
     student?: StudentDetails;
+    slot?: SlotMinimalDetails;
 }
 
 export interface ReservationDetailsListResponse {
@@ -845,6 +846,15 @@ export interface SlotDetailsResponse {
     status: number;
     data?: SlotDetails;
     count?: number | null;
+}
+
+export interface SlotMinimalDetails {
+    id: string;
+    dateFrom: Date;
+    dateTo: Date;
+    teacher?: TeacherDetails;
+    typeId: string;
+    type?: TypeSlotDetails;
 }
 
 export enum SlotTypeEnum {

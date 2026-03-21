@@ -1,28 +1,61 @@
 @if (data()) {
-<div class="shadow-md hover:shadow-lg transition-shadow duration-200 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6">
-    <div class="flex flex-col gap-4">
-        <!-- Header: Reservation title + status -->
-        <div class="flex justify-between items-start gap-3">
-            <div class="flex flex-col gap-1 flex-1">
-                <h3 class="text-lg font-bold text-surface-900 dark:text-surface-0 m-0">{{ data()?.title ?? 'Réservation' }}</h3>
-                @if (data()!.description) {
-                <div class="flex items-start gap-2 text-surface-600 dark:text-surface-400">
-                    <i class="pi pi-align-left text-sm mt-0.5"></i>
-                    <span class="text-sm">{{ data()!.description }}</span>
-                </div>
-                }
-            </div>
+<div class="border-b border-surface-200 dark:border-surface-700 px-4 py-3 hover:bg-surface-50 dark:hover:bg-surface-800 transition-colors duration-150">
+    <!-- Title + status -->
+    <div class="flex items-center justify-between gap-2 mb-2">
+        <span class="text-sm font-semibold text-surface-900 dark:text-surface-0 truncate">{{ data()?.title ?? 'Réservation' }}</span>
+        @if (data()?.status) {
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium text-white flex-shrink-0" [style.background-color]="data()!.status!.color">
+            @if (data()!.status!.icon) {<i [class]="'pi ' + data()!.status!.icon + ' text-xs'"></i>} {{ data()!.status!.name | reservationStatus }}
+        </span>
+        }
+    </div>
 
-            @if (data()?.status) {
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold text-white flex-shrink-0" [style.background-color]="data()!.status!.color">
-                @if (data()!.status!.icon) {
-                <i [class]="'pi ' + data()!.status!.icon + ' text-xs'"></i>
-                } {{ data()!.status!.name }}
+    @if (data()!.description) {
+    <p class="text-xs text-surface-500 dark:text-surface-400 m-0 mb-2 truncate">{{ data()!.description }}</p>
+    }
+
+    <div class="flex flex-col gap-1.5">
+        <!-- Teacher -->
+        @if (data()?.slot?.teacher) {
+        <div class="flex items-center gap-2">
+            <i class="pi pi-chalkboard-teacher text-xs text-surface-400 w-3 flex-shrink-0"></i>
+            @if (data()!.slot!.teacher!.user?.imgUrl) {
+            <img [src]="data()!.slot!.teacher!.user!.imgUrl!" alt="" class="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+            }
+            <span class="text-xs text-surface-700 dark:text-surface-300 truncate"> {{ data()!.slot!.teacher!.user?.firstName }} {{ data()!.slot!.teacher!.user?.lastName }} </span>
+            @if (data()!.slot!.teacher!.isProfessionnal) {
+            <span class="ml-auto text-xs text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center gap-0.5"> <i class="pi pi-verified text-xs"></i> Pro </span>
+            }
+        </div>
+        }
+
+        <!-- Student -->
+        @if (data()?.student) {
+        <div class="flex items-center gap-2">
+            <i class="pi pi-user text-xs text-surface-400 w-3 flex-shrink-0"></i>
+            @if (data()!.student!.user?.imgUrl) {
+            <img [src]="data()!.student!.user!.imgUrl!" alt="" class="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+            }
+            <span class="text-xs text-surface-700 dark:text-surface-300 truncate"> {{ data()!.student!.user?.firstName }} {{ data()!.student!.user?.lastName }} </span>
+            @if (data()!.student!.user?.email) {
+            <span class="ml-auto text-xs text-surface-400 truncate">{{ data()!.student!.user!.email }}</span>
+            }
+        </div>
+        }
+
+        <!-- Slot -->
+        @if (data()?.slot) {
+        <div class="flex items-center gap-2 flex-wrap">
+            <i class="pi pi-calendar text-xs text-surface-400 w-3 flex-shrink-0"></i>
+            <span class="text-xs text-surface-700 dark:text-surface-300">{{ data()!.slot!.dateFrom | date:'dd/MM/yyyy' }}</span>
+            <span class="text-xs text-surface-500">{{ data()!.slot!.dateFrom | date:'HH:mm' }} – {{ data()!.slot!.dateTo | date:'HH:mm' }}</span>
+            @if (data()!.slot!.type) {
+            <span class="inline-flex items-center gap-1 px-1.5 py-px rounded text-xs font-medium text-white" [style.background-color]="data()!.slot!.type!.color">
+                @if (data()!.slot!.type!.icon) {<i [class]="'pi ' + data()!.slot!.type!.icon + ' text-xs'"></i>} {{ data()!.slot!.type!.name | slotType }}
             </span>
             }
         </div>
-
-        <hr class="border-surface-200 dark:border-surface-700 m-0" />
+        }
     </div>
 </div>
 }

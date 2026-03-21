@@ -17,6 +17,7 @@ export class ReservationsPage {
     tableState = signal<GridifyQuery>({ page: 1, pageSize: 10, orderBy: null, filter: null });
     globalSearch = signal<string>('');
     reservations = signal<ReservationDetails[]>([]);
+    totalRecords = signal<number>(0);
     renderComponent = ReservationCard;
 
     columnsDef = computed<DynamicColDef[]>(() => [
@@ -39,7 +40,7 @@ export class ReservationsPage {
 
     async loadData(query: GridifyQuery) {
         const result = await firstValueFrom(this.slotService.GetReservationsByStudentGrid(query));
-        this.reservations.set(result);
-        // console.log('Loaded reservations:', result);
+        this.reservations.set(result.data || []);
+        this.totalRecords.set(result.count || 0);
     }
 }

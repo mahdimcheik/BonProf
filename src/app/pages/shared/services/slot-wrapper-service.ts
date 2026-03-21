@@ -68,6 +68,6 @@ export class SlotWrapperService {
     }
 
     GetReservationsByStudentGrid(tableState: GridifyQuery) {
-        return this.slotsService.slotsStudentReservationsPost(tableState).pipe(map((response) => response.data || []));
+        return this.slotsService.slotsStudentReservationsPost(tableState);
     }
 }

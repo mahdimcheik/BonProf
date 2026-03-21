@@ -13,7 +13,6 @@ import { TableModule } from 'primeng/table';
 import { GridifyQuery } from 'src/client';
 import { DATE_FILTER_MATCH_MODES, DynamicColDef, ICellRendererAngularComp, INITIAL_STATE_GRIDIFY, SortCriterion, SortOrder } from '../smart-grid/TableColumn ';
 import { CustomSortComponent } from '../smart-grid/custom-sort/custom-sort.component';
-import { ActionButtonRendererComponent } from '../smart-grid/default-component';
 
 @Component({
     selector: 'bp-smart-grid-gridify',
@@ -46,11 +45,6 @@ export class SmartGridGridifyComponent<T extends Record<string, any>> implements
     private internalFilters = signal<{ [key: string]: { value: any; matchMode: string; specialFilter?: boolean } }>({});
     private internalPage = signal<number>(1);
     private internalPageSize = signal<number>(10);
-
-    // Internal signals
-    private componentMap = signal<{ [key: string]: Type<ICellRendererAngularComp> }>({
-        default: ActionButtonRendererComponent
-    });
 
     constructor() {
         this.getStateFromLocalStorage();
