@@ -8,8 +8,62 @@
     <ng-template #panel>
         <div class="flex  justify-center h-full relative p-4">
             <p-button variant="text" class="absolute left-[-10px] top-1/2" (onClick)="rezise('left')"> <i class="pi pi-chevron-right "></i></p-button>
-            <h4>{{reservation()?.title}}</h4>
-            <div class="chat"></div>
+            
+            
+                <div class="space-y-3 flex-1 h-full  relative">
+                    <h5 class="font-semibold flex items-center gap-2">
+                        <i class="pi pi-comments text-primary"></i>
+                        Communications
+                    </h5>
+
+                    <!-- Messages Container -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 max-h-80 overflow-y-auto" #messagesContainer>
+                        @if (messages().length === 0) {
+                            <div class="text-center py-8 text-gray-500">
+                                <i class="pi pi-comment text-4xl mb-2 block"></i>
+                                <p>Aucun message pour le moment</p>
+                                <p class="text-sm">Commencez la conversation ci-dessous</p>
+                            </div>
+                        } @else {
+                            <div class="space-y-3">
+                                @for (message of messages(); track $index) {
+                                    <div class="flex" [class.justify-end]="isCurrentUserMessage(message)" [class.justify-start]="!isCurrentUserMessage(message)">
+                                        <div
+                                            class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg"
+                                            [class.bg-primary]="isCurrentUserMessage(message)"
+                                            [class.text-white]="isCurrentUserMessage(message)"
+                                            [class.bg-white]="!isCurrentUserMessage(message)"
+                                            [class.text-gray-800]="!isCurrentUserMessage(message)"
+                                            [class.shadow-sm]="!isCurrentUserMessage(message)"
+                                        >
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="text-xs font-medium" [class.text-primary-100]="isCurrentUserMessage(message)" [class.text-gray-600]="!isCurrentUserMessage(message)">
+                                                    {{ message.author }}
+                                                </span>
+                                                <span class="text-xs" [class.text-primary-200]="isCurrentUserMessage(message)" [class.text-gray-400]="!isCurrentUserMessage(message)">
+                                                    {{ message.sentAt | date: 'short' }}
+                                                </span>
+                                            </div>
+                                            <p class="text-sm leading-relaxed">{{ message.content }}</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Message Input -->
+                     <div class="absolute bottom-0 w-full">
+
+                         <div class="flex gap-2">
+                             <textarea pTextarea [(ngModel)]="newMessage" placeholder="Tapez votre message..." rows="2" class="flex-1 resize-none" (keydown)="onKeyDown($event)" maxlength="500"> </textarea>
+                             <p-button icon="pi pi-send" (onClick)="sendMessage()" class="self-end" styleClass="h-[50px]" pTooltip="Ctrl + Entrée pour envoyer" tooltipPosition="top"> </p-button>
+                         </div>
+     
+                         <p class="text-xs text-gray-500 text-center pt-1">Appuyez sur Ctrl + Entrée pour envoyer rapidement</p>
+                     </div>
+                </div>
+            
         </div>
     </ng-template>
 </p-splitter>
