@@ -143,6 +143,21 @@ export interface CategoryCursusUpdate {
     icon?: string | null;
 }
 
+export interface ConversationDetails {
+    id?: string;
+    content?: string | null;
+    reservationId?: string;
+    senderId?: string;
+    createdAt?: Date;
+}
+
+export interface ConversationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<ConversationDetails>;
+    count?: number | null;
+}
+
 export interface Cursus {
     id?: string;
     createdAt: Date;

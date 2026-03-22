@@ -176,10 +176,10 @@
                                         >
                                             <div class="flex items-center gap-2 mb-1">
                                                 <span class="text-xs font-medium" [class.text-primary-100]="isCurrentUserMessage(message)" [class.text-gray-600]="!isCurrentUserMessage(message)">
-                                                    {{ message.author }}
+                                                    {{ getSenderName(message) }}
                                                 </span>
                                                 <span class="text-xs" [class.text-primary-200]="isCurrentUserMessage(message)" [class.text-gray-400]="!isCurrentUserMessage(message)">
-                                                    {{ message.sentAt | date: 'short' }}
+                                                    {{ message.createdAt | date: 'short' }}
                                                 </span>
                                             </div>
                                             <p class="text-sm leading-relaxed">{{ message.content }}</p>

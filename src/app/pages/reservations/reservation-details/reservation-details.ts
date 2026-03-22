@@ -1,8 +1,8 @@
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { Component, inject, model, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { ReservationDetails } from 'src/client';
+import { ConversationDetails, ReservationDetails } from 'src/client';
 import { SplitterModule } from 'primeng/splitter';
 import { ButtonModule } from "primeng/button";
 import { MainService } from '@/pages/shared/services/main.service';
@@ -14,13 +14,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
 
-export interface ChatMessage {
-    userId: string;
-    author: string;
-    content: string;
-    sentAt: Date; 
-    timestamp: Date;
-}
 @Component({
   selector: 'bp-reservation-details',
   imports: [SplitterModule, ButtonModule, DatePipe, FormsModule, InputTextModule, TextareaModule, TooltipModule, ReservationStatusPipe, SlotTypePipe],
@@ -33,17 +26,22 @@ export class ReservationDetailsPage  implements OnInit {
   reservationId = signal<string>('');
   height = signal<string>(window.screen.height - 200 + 'px');
   panelSizes = signal<[number, number]>([25, 75]);
-  messages = signal<ChatMessage[]>([]);
+  messages = signal<ConversationDetails[]>([]);
   newMessage = signal<string>('');
 
   reservation = signal<ReservationDetails | undefined>(undefined);
+  partner = computed(() => {
+    if (!this.reservation()) {
+      return null;
+    }
+    return this.mainService.isStudent() ? this.reservation()?.slot?.teacher : this.reservation()?.student;    
+  });
+
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.reservationId.set(params['id']);
       this.loadData();
     });
-
-    // window.addEventListener('resize', this.onResize.bind(this));
   }
 
   
@@ -52,6 +50,9 @@ export class ReservationDetailsPage  implements OnInit {
     if (result) {
       this.reservation.set(result!);
     }
+
+    const messages = await firstValueFrom(this.slotService.GetConversationById(this.reservationId()));
+    this.messages.set(messages ?? []);
   }
 
   rezise(direction: 'right' | 'left'){
@@ -62,9 +63,9 @@ export class ReservationDetailsPage  implements OnInit {
     }
   }
 
-      isCurrentUserMessage(message: ChatMessage): boolean {
+      isCurrentUserMessage(message: ConversationDetails): boolean {
         const currentUser = this.mainService.userConnected();
-        return currentUser.id === message.userId;
+        return currentUser.id === message.senderId;
     }
 
         onKeyDown(event: KeyboardEvent) {
@@ -72,6 +73,11 @@ export class ReservationDetailsPage  implements OnInit {
             event.preventDefault();
             this.sendMessage();
         }
+    }
+
+    getSenderName(message: ConversationDetails): string {
+        const currentUser = this.mainService.userConnected();
+        return currentUser.id === message.senderId ? 'Moi' : this.partner()?.user?.firstName + ' ' + this.partner()?.user?.lastName ;
     }
 
     async sendMessage() {

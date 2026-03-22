@@ -77,4 +77,7 @@ export class SlotWrapperService {
     GetReservationById(reservationId: string) {
         return this.slotsService.slotsReservationReservationIdGet(reservationId).pipe(map((response) => response.data)) ;
     }
+      GetConversationById(reservationId: string) {
+        return this.slotsService.slotsConversationReservationIdGet(reservationId).pipe(map((response) => response.data)) ;
+    }
 }
