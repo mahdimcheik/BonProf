@@ -768,6 +768,13 @@ export interface ReservationDetailsListResponse {
     count?: number | null;
 }
 
+export interface ReservationDetailsResponse {
+    message: string;
+    status: number;
+    data?: ReservationDetails;
+    count?: number | null;
+}
+
 export enum ReservationStatusEnum {
     Pending = "Pending",
     Accepted = "Accepted",

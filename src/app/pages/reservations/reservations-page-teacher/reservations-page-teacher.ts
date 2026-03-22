@@ -14,6 +14,7 @@ import { ReservationCard } from '../reservation-card/reservation-card';
 })
 export class ReservationsPageTeacher {
     slotService = inject(SlotWrapperService);
+
     reservationStatusService = inject(StatusReservationWrapperService);
 
     globalSearch = signal<string>('');

@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, CustomTableState, ReservationDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, CustomTableState, ReservationDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse, ReservationDetailsResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -183,6 +183,22 @@ export class SlotsService {
         };
 
         return this.httpClient.post(url, reservationUpdateStatus, requestOptions);
+    }
+
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsResponse>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsResponse>>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsResponse>>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/reservation/${reservationId}`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 
     slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;

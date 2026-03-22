@@ -1,0 +1,15 @@
+<p-splitter [panelSizes]="panelSizes()" [style]="{ height: height() }" class="mb-8 ">
+    <ng-template #panel>
+        <div class="flex justify-center h-full !relative">Panel 1
+            <p-button variant="text" class="absolute right-[-10px]  top-1/2" (onClick)="rezise('right')"> <i class="pi pi-chevron-left "></i></p-button>
+
+        </div>
+    </ng-template>
+    <ng-template #panel>
+        <div class="flex  justify-center h-full relative p-4">
+            <p-button variant="text" class="absolute left-[-10px] top-1/2" (onClick)="rezise('left')"> <i class="pi pi-chevron-right "></i></p-button>
+            <h4>{{reservation()?.title}}</h4>
+            <div class="chat"></div>
+        </div>
+    </ng-template>
+</p-splitter>

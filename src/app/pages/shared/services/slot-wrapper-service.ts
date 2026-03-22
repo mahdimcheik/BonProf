@@ -74,4 +74,7 @@ export class SlotWrapperService {
     GetReservationsByTeacher(tableState: CustomTableState) {
         return this.slotsService.slotsTeacherReservationsPost(tableState);
     }
+    GetReservationById(reservationId: string) {
+        return this.slotsService.slotsReservationReservationIdGet(reservationId).pipe(map((response) => response.data)) ;
+    }
 }
