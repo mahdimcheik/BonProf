@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { TextareaModule } from 'primeng/textarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
+import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
 
 export interface ChatMessage {
     userId: string;
@@ -21,7 +23,7 @@ export interface ChatMessage {
 }
 @Component({
   selector: 'bp-reservation-details',
-  imports: [SplitterModule, ButtonModule, DatePipe, FormsModule,InputTextModule, TextareaModule, TooltipModule],
+  imports: [SplitterModule, ButtonModule, DatePipe, FormsModule, InputTextModule, TextareaModule, TooltipModule, ReservationStatusPipe, SlotTypePipe],
   templateUrl: './reservation-details.html',
 })
 export class ReservationDetailsPage  implements OnInit {
