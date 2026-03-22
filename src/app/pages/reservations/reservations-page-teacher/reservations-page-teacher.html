@@ -1,0 +1,11 @@
+<bp-smart-grid-modernized
+    [columns]="columnsDef()"
+    [(tableState)]="tableState"
+    [storageName]="'reservations-teacher'"
+    [data]="reservations()"
+    [itemRendererComponentParams]="{ fieldToDisplay: 'studentName' }"
+    [lineItemComponent]="renderComponent"
+    [totalRecords]="totalRecords()"
+    [height]="'850px'"
+    placeholder="Titre ou description"
+></bp-smart-grid-modernized>

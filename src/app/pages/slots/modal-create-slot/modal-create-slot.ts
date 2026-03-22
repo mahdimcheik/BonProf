@@ -1,19 +1,20 @@
 import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.component';
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
-import { Component, computed, inject, model, OnInit, output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
-import { Button } from 'primeng/button';
-import { MessageService } from 'primeng/api';
-import { firstValueFrom } from 'rxjs';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
+import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { firstValueFrom } from 'rxjs';
+import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-modal-create-slot',
-    imports: [BaseModalComponent, ConfigurableFormComponent, Button],
+    imports: [BaseModalComponent, ConfigurableFormComponent, Button, ConfirmModalComponent],
     templateUrl: './modal-create-slot.html'
 })
 export class ModalCreateSlot implements OnInit {
@@ -25,9 +26,11 @@ export class ModalCreateSlot implements OnInit {
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
     slot = computed<SlotCreate | SlotUpdate | SlotDetails | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
+    submitButtonLabel = computed(() => (this.slot() ? 'Mettre à jour' : 'Créer'));
     submitClicked = output<SlotCreate | SlotUpdate>();
     cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
+    visibleConfirmDelete = signal(false);
 
     slotForm = computed<Structure>(() => {
         const event = this.event();

@@ -1,6 +1,7 @@
 import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
-import { ReservationsPage } from '@/pages/reservations/reservations-page/reservations-page';
+import { ReservationsPageStudent } from '@/pages/reservations/reservations-page-student/reservations-page-student';
+import { ReservationsPageTeacher } from '@/pages/reservations/reservations-page-teacher/reservations-page-teacher';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
 import { isStudentOnlyGuard, isTeacherOnlyGuard } from '@/pages/shared/guards/roles.guard';
 import { connectionResolver } from '@/pages/shared/resolvers/connection.resolver';
@@ -72,6 +73,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'documents',
                         loadComponent: () => import('./app/pages/documents/documents-list/documents-list').then((m) => m.DocumentsList)
+                    },
+                    {
+                        path: 'reservations',
+                        component: ReservationsPageTeacher
                     }
                 ]
             },
@@ -93,7 +98,7 @@ export const appRoutes: Routes = [
                     },
                     {
                         path: 'reservations',
-                        component: ReservationsPage
+                        component: ReservationsPageStudent
                     }
                 ]
             },
@@ -103,42 +108,6 @@ export const appRoutes: Routes = [
             }
         ]
     },
-
-    // // Dashboard routes (protected)
-    // {
-    //     path: ADMIN_PATH,
-    //     component: AppLayout,
-    //     canActivate: [isConnectedGuard],
-    //     children: [
-    //         { path: SETTINGS_PATH, component: SettingsComponent },
-    //         { path: 'users-list', component: UsersListComponent },
-    //         { path: 'adminitration', component: AdminitrationComponent },
-    //         { path: 'request-list', component: RequestListComponent },
-    //         { path: 'request-list/:id', component: CandidatDetailComponent }
-    //     ]
-    // },
-    // {
-    //     path: STUDENT_PATH,
-    //     component: AppLayout,
-    //     canActivate: [isConnectedGuard],
-    //     children: [
-    //         { path: 'calendar-student', component: CalendarStudentComponent },
-    //         { path: 'list-teachers', component: TeacherListComponent },
-    //         { path: 'favorites', component: StudentFavoritesComponent },
-    //         { path: 'reservation-list', component: ReservationListComponent }
-    //     ]
-    // },
-
-    // {
-    //     path: 'dashboard',
-    //     component: AppLayout,
-    //     children: [
-    //         { path: '', component: Dashboard },
-    //         { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
-    //         { path: 'documentation', component: Documentation },
-    //         { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
-    //     ]
-    // },
     { path: 'notfound', component: Notfound },
     { path: '**', redirectTo: '/notfound' }
 ];

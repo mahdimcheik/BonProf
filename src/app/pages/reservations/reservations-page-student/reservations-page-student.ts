@@ -7,11 +7,11 @@ import { ReservationDetails } from 'src/client';
 import { ReservationCard } from '../reservation-card/reservation-card';
 
 @Component({
-    selector: 'bp-reservations-page',
+    selector: 'bp-reservations-page-student',
     imports: [SmartGridModernizedComponent],
-    templateUrl: './reservations-page.html'
+    templateUrl: './reservations-page-student.html'
 })
-export class ReservationsPage {
+export class ReservationsPageStudent {
     slotService = inject(SlotWrapperService);
 
     globalSearch = signal<string>('');
@@ -20,10 +20,7 @@ export class ReservationsPage {
     totalRecords = signal<number>(0);
     renderComponent = ReservationCard;
 
-    columnsDef = computed<DynamicColDef[]>(() => [
-        // { field: 'studentName', header: 'Etudiant', type: 'text', filterable: true, filterField: 'studentName' },
-        { field: 'teacherName', header: 'Professeur', type: 'text', filterable: true, filterField: 'teacherName' }
-    ]);
+    columnsDef = computed<DynamicColDef[]>(() => [{ field: 'teacherName', header: 'Professeur', type: 'text', filterable: true, filterField: 'teacherName' }]);
 
     constructor() {
         let firstLoad = true;

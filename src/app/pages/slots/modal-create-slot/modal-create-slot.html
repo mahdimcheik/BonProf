@@ -4,7 +4,8 @@
     </div>
     <div footer-end class="flex gap-2 w-full justify-end">
         <p-button label="Quitter" icon="pi pi-times" severity="danger" [outlined]="true" (onClick)="cancel()" />
-        <p-button label="Supprimer" icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="removeSlot()" />
-        <p-button label="Editer" icon="pi pi-pencil" severity="primary" [outlined]="true" (onClick)="formComponent.onSubmit()" />
+        <p-button label="Supprimer" icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="visibleConfirmDelete.set(true)" />
+        <p-button [label]="submitButtonLabel()" icon="pi pi-pencil" severity="primary" [outlined]="true" (onClick)="formComponent.onSubmit()" />
     </div>
 </bp-base-modal>
+<bp-confirm-modal [(visible)]="visibleConfirmDelete" [title]="'Suppression de créneau'" (onCancel)="visibleConfirmDelete.set(false)" (onConfirm)="removeSlot()"></bp-confirm-modal>

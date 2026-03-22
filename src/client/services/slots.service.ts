@@ -137,6 +137,22 @@ export class SlotsService {
         return this.httpClient.post(url, customTableState, requestOptions);
     }
 
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsListResponse>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsListResponse>>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsListResponse>>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/teacher/reservations`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, customTableState, requestOptions);
+    }
+
     slotsStudentBookPost(reservationCreate?: ReservationCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
     slotsStudentBookPost(reservationCreate?: ReservationCreate, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
     slotsStudentBookPost(reservationCreate?: ReservationCreate, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
