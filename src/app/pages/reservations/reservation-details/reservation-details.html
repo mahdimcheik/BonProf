@@ -153,7 +153,7 @@
                     </div>
                     } @else {
                     <div class="space-y-3">
-                        @for (message of messages(); track $index) {
+                        @for (message of messages(); track $index;let i = $index) {
                         <div class="flex" [class.justify-end]="isCurrentUserMessage(message)" [class.justify-start]="!isCurrentUserMessage(message)">
                             <div
                                 class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg"
@@ -169,7 +169,14 @@
                                     <span class="text-xs font-medium" [class.text-primary-100]="isCurrentUserMessage(message)" [class.text-gray-600]="!isCurrentUserMessage(message)"> {{ getSenderName(message) }} </span>
                                     <span class="text-xs" [class.text-primary-200]="isCurrentUserMessage(message)" [class.text-gray-400]="!isCurrentUserMessage(message)"> {{ message.createdAt | date: 'short' }} </span>
                                 </div>
-                                <p class="text-sm leading-relaxed">{{ message.content }}</p>
+                                <p class="text-sm leading-relaxed">
+                                    {{ message.content }} @if(i === messages().length - 1 && !lastMessageSent()) {
+                                    <span class="ml-1 text-xs text-gray-400"> (envoi en cours...) </span>
+                                    }@else { @if(i === messages().length - 1 ) {
+
+                                    <i class="pi pi-check text-xs text-green-500"> </i>
+                                    } }
+                                </p>
                             </div>
                         </div>
                         }
@@ -179,6 +186,9 @@
 
                 <!-- Message Input -->
                 <div class="absolute bottom-0 w-full">
+                    @if(partnerIsWriting()) {
+                    <p class="px-1 bg-gray-200 dark:bg-gray-700 rounded-lg">{{ messageWriting() }}</p>
+                    }
                     <div class="flex gap-2">
                         <textarea pTextarea [(ngModel)]="newMessage" placeholder="Tapez votre message..." rows="2" class="flex-1 resize-none" (keydown)="onKeyDown($event)" maxlength="500"> </textarea>
                         <p-button icon="pi pi-send" (onClick)="sendMessage()" class="self-end" styleClass="h-[50px]" pTooltip="Ctrl + Entrée pour envoyer" tooltipPosition="top"> </p-button>

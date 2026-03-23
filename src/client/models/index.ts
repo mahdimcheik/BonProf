@@ -836,7 +836,8 @@ export enum SignalRNotificationTypeEnum {
     Message = "Message",
     Ping = "Ping",
     Notification = "Notification",
-    Chat = "Chat"
+    Chat = "Chat",
+    Writing = "Writing"
 }
 
 export interface Slot {

@@ -10,6 +10,7 @@ export class StoreService {
     messageAlert = signal<any>(null);
     chatAlert = signal<any>(null);
     pingAlert = signal<any>(null);
+    writingAlert = signal<any>(null);
 
     // notifications
     notifications = signal<NotificationDetails[]>([]);

@@ -136,8 +136,11 @@ export class SignalRService {
             // this.messageService.add({ severity: 'info', summary: 'Nouveau message', detail: `Vous avez reçu un nouveau message de ${JSON.stringify(chat)}` });
         });
 
-        this.hubConnection.on(SignalRNotificationTypeEnum.Ping, () => {
-            this.storeService.pingAlert.set({ message: 'Ping received' });
+        this.hubConnection.on(SignalRNotificationTypeEnum.Ping, (ping) => {
+            this.storeService.pingAlert.set(ping);
+        });
+        this.hubConnection.on(SignalRNotificationTypeEnum.Writing, (writing) => {
+            this.storeService.writingAlert.set(writing);
         });
     }
 
