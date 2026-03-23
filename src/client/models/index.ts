@@ -143,6 +143,27 @@ export interface CategoryCursusUpdate {
     icon?: string | null;
 }
 
+export interface ConversationCreate {
+    content: string;
+    reservationId: string;
+    senderId: string;
+}
+
+export interface ConversationDetails {
+    id?: string;
+    content?: string | null;
+    reservationId?: string;
+    senderId?: string;
+    createdAt?: Date;
+}
+
+export interface ConversationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<ConversationDetails>;
+    count?: number | null;
+}
+
 export interface Cursus {
     id?: string;
     createdAt: Date;
@@ -221,6 +242,14 @@ export interface CursusUpdate {
     categoryIds?: Array<string>;
 }
 
+export interface CustomTableState {
+    first?: number;
+    rows?: number;
+    sorts?: Array<SortCriterion>;
+    filters?: Record<string, Filter>;
+    search?: string | null;
+}
+
 export enum DocumentTypeEnum {
     Identification = "Identification",
     Diploma = "Diploma",
@@ -251,6 +280,12 @@ export interface FileUrlResponse {
     status: number;
     data?: FileUrl;
     count?: number | null;
+}
+
+export interface Filter {
+    value?: any | null;
+    matchMode?: string | null;
+    specialFilter?: boolean;
 }
 
 export interface FilterNotification {
@@ -352,6 +387,7 @@ export interface GenApi {
     documentTypeEnum?: DocumentTypeEnum;
     signalRNotificationTypeEnum?: SignalRNotificationTypeEnum;
     notificationTypeEnum?: NotificationTypeEnum;
+    conversationCreate?: ConversationCreate;
 }
 
 export interface Gender {
@@ -382,13 +418,6 @@ export enum GenderEnum {
     Male = "Male",
     Female = "Female",
     Other = "Other"
-}
-
-export interface GridifyQuery {
-    page?: number;
-    pageSize?: number;
-    orderBy?: string | null;
-    filter?: string | null;
 }
 
 export interface GuidIdentityUserRole {
@@ -751,6 +780,21 @@ export interface ReservationDetails {
     status?: StatusReservationDetails;
     product?: ProductDetails;
     student?: StudentDetails;
+    slot?: SlotMinimalDetails;
+}
+
+export interface ReservationDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<ReservationDetails>;
+    count?: number | null;
+}
+
+export interface ReservationDetailsResponse {
+    message: string;
+    status: number;
+    data?: ReservationDetails;
+    count?: number | null;
 }
 
 export enum ReservationStatusEnum {
@@ -792,7 +836,8 @@ export enum SignalRNotificationTypeEnum {
     Message = "Message",
     Ping = "Ping",
     Notification = "Notification",
-    Chat = "Chat"
+    Chat = "Chat",
+    Writing = "Writing"
 }
 
 export interface Slot {
@@ -840,6 +885,15 @@ export interface SlotDetailsResponse {
     count?: number | null;
 }
 
+export interface SlotMinimalDetails {
+    id: string;
+    dateFrom: Date;
+    dateTo: Date;
+    teacher?: TeacherDetails;
+    typeId: string;
+    type?: TypeSlotDetails;
+}
+
 export enum SlotTypeEnum {
     Presential = "Presential",
     Visio = "Visio",
@@ -852,6 +906,11 @@ export interface SlotUpdate {
     dateTo: Date;
     teacherId: string;
     typeId: string;
+}
+
+export interface SortCriterion {
+    field?: string | null;
+    order?: number;
 }
 
 export interface StatusAccount {

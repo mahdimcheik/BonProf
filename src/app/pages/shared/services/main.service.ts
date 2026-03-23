@@ -106,7 +106,8 @@ export class MainService {
                 { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/teacher/profile/me/edition'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/teacher/planning'] },
                 { label: 'Catalog', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/catalog/me'] },
-                { label: 'Documents', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/documents'] }
+                { label: 'Documents', icon: 'pi pi-fw pi-book', routerLink: ['/dashboard/teacher/documents'] },
+                { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/teacher/reservations'] }
             ];
         } else if (this.isStudent()) {
             return [

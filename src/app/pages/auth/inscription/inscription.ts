@@ -1,5 +1,6 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { GenderPipe } from '@/pages/shared/pipes/gender-pipe';
 import { GenderWrapperService } from '@/pages/shared/services/gender-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { RoleWrapperService } from '@/pages/shared/services/role-wrapper-service';
@@ -15,7 +16,8 @@ import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
 @Component({
     selector: 'bp-inscription',
     imports: [ConfigurableFormComponent, RouterLink, ButtonModule, FormsModule],
-    templateUrl: './inscription.html'
+    templateUrl: './inscription.html',
+    providers: [GenderPipe]
 })
 export class Inscription implements OnInit {
     router = inject(Router);
@@ -23,6 +25,7 @@ export class Inscription implements OnInit {
     roleWrapperService = inject(RoleWrapperService);
     mainService = inject(MainService);
     messageService = inject(MessageService);
+    genderPipe = inject(GenderPipe);
 
     roleOptions = signal<RoleDetails[]>([]);
     authorizedRoles = computed(() => this.roleOptions().filter((role) => role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b4a01' || role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b3703'));
@@ -126,8 +129,7 @@ export class Inscription implements OnInit {
                             displayKey: 'name',
                             compareKey: 'id',
                             valueFormatter: (gender: any) => {
-                                if (!gender || !gender.name) return '';
-                                return gender.name;
+                                return this.genderPipe.transform(gender.name);
                             }
                         }
                     ],

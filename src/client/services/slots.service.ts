@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, GridifyQuery, ReservationCreate, ReservationUpdateStatus, ObjectResponse } from "../models";
+import { SlotCreate, RequestOptions, SlotDetailsResponse, SlotUpdate, BooleanResponse, PeriodTime, SlotDetailsListResponse, CustomTableState, ReservationDetailsListResponse, ReservationCreate, ReservationUpdateStatus, ObjectResponse, ReservationDetailsResponse, ConversationDetailsListResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class SlotsService {
@@ -121,10 +121,10 @@ export class SlotsService {
         return this.httpClient.post(url, periodTime, requestOptions);
     }
 
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<SlotDetailsListResponse>>;
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<SlotDetailsListResponse>>;
-    slotsStudentReservationsPost(gridifyQuery?: GridifyQuery, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    slotsStudentReservationsPost(customTableState?: CustomTableState, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsListResponse>;
+    slotsStudentReservationsPost(customTableState?: CustomTableState, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsListResponse>>;
+    slotsStudentReservationsPost(customTableState?: CustomTableState, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsListResponse>>;
+    slotsStudentReservationsPost(customTableState?: CustomTableState, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/slots/student/reservations`;
 
         const requestOptions: any = {
@@ -134,7 +134,23 @@ export class SlotsService {
             context: this.createContextWithClientId(options?.context)
         };
 
-        return this.httpClient.post(url, gridifyQuery, requestOptions);
+        return this.httpClient.post(url, customTableState, requestOptions);
+    }
+
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsListResponse>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsListResponse>>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsListResponse>>;
+    slotsTeacherReservationsPost(customTableState?: CustomTableState, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/teacher/reservations`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.post(url, customTableState, requestOptions);
     }
 
     slotsStudentBookPost(reservationCreate?: ReservationCreate, observe?: 'body', options?: RequestOptions<'json'>): Observable<SlotDetailsListResponse>;
@@ -167,6 +183,38 @@ export class SlotsService {
         };
 
         return this.httpClient.post(url, reservationUpdateStatus, requestOptions);
+    }
+
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ReservationDetailsResponse>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ReservationDetailsResponse>>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ReservationDetailsResponse>>;
+    slotsReservationReservationIdGet(reservationId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/reservation/${reservationId}`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
+    }
+
+    slotsConversationReservationIdGet(reservationId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ConversationDetailsListResponse>;
+    slotsConversationReservationIdGet(reservationId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ConversationDetailsListResponse>>;
+    slotsConversationReservationIdGet(reservationId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ConversationDetailsListResponse>>;
+    slotsConversationReservationIdGet(reservationId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+        const url = `${this.basePath}/slots/conversation/${reservationId}`;
+
+        const requestOptions: any = {
+            observe: observe as any,
+            reportProgress: options?.reportProgress,
+            withCredentials: options?.withCredentials,
+            context: this.createContextWithClientId(options?.context)
+        };
+
+        return this.httpClient.get(url, requestOptions);
     }
 
     slotsTeacherRemoveReservationDelete(reservationId?: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;

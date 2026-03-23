@@ -1,33 +1,40 @@
 import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.component';
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
-import { Component, computed, inject, model, OnInit, output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
-import { Button } from 'primeng/button';
-import { MessageService } from 'primeng/api';
-import { firstValueFrom } from 'rxjs';
+import { GenderPipe } from '@/pages/shared/pipes/gender-pipe';
+import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
+import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
+import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { firstValueFrom } from 'rxjs';
+import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-modal-create-slot',
-    imports: [BaseModalComponent, ConfigurableFormComponent, Button],
-    templateUrl: './modal-create-slot.html'
+    imports: [BaseModalComponent, ConfigurableFormComponent, Button, ConfirmModalComponent],
+    templateUrl: './modal-create-slot.html',
+    providers: [SlotTypePipe]
 })
 export class ModalCreateSlot implements OnInit {
     typeSlotsService = inject(TypeSlotWrapperService);
     messageService = inject(MessageService);
     slotWrapperService = inject(SlotWrapperService);
+    slotTypePipe = inject(SlotTypePipe);
 
     visible = model(false);
     title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
     slot = computed<SlotCreate | SlotUpdate | SlotDetails | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
+    submitButtonLabel = computed(() => (this.slot() ? 'Mettre à jour' : 'Créer'));
     submitClicked = output<SlotCreate | SlotUpdate>();
     cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
+    visibleConfirmDelete = signal(false);
 
     slotForm = computed<Structure>(() => {
         const event = this.event();
@@ -57,7 +64,10 @@ export class ModalCreateSlot implements OnInit {
                             required: true,
                             placeholder: 'Sélectionner le type de créneau',
                             fullWidth: true,
-                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null
+                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null,
+                            valueFormatter: (option: any) => {
+                                return this.slotTypePipe.transform(option.name);
+                            }
                         },
                         {
                             id: 'dateFrom',

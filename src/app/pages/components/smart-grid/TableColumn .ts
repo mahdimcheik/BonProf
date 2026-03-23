@@ -1,6 +1,5 @@
 import { Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GridifyQuery } from 'src/client';
 
 export interface ICellRendererAngularComp {
     data: any;
@@ -63,11 +62,3 @@ export const DATE_FILTER_MATCH_MODES = [
     { label: 'avant', value: 'before' },
     { label: 'après', value: 'after' }
 ];
-
-// L'état initial est aussi mis à jour
-export const INITIAL_STATE_GRIDIFY: GridifyQuery = {
-    page: 1,
-    pageSize: 10,
-    orderBy: '',
-    filter: ''
-};
