@@ -15,6 +15,7 @@ import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-p
 import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
 import { SignalRService } from '@/pages/shared/services/signal-r-service';
 import { StoreService } from '@/pages/shared/services/store-service';
+import { LayoutService } from '@/layout/service/layout.service';
 
 @Component({
   selector: 'bp-reservation-details',
@@ -23,6 +24,7 @@ import { StoreService } from '@/pages/shared/services/store-service';
 })
 export class ReservationDetailsPage implements OnInit, AfterViewChecked {
   slotService = inject(SlotWrapperService);
+  layoutService = inject(LayoutService);
   signalRService = inject(SignalRService);
   storeService = inject(StoreService);
   activatedRoute = inject(ActivatedRoute);
@@ -30,7 +32,7 @@ export class ReservationDetailsPage implements OnInit, AfterViewChecked {
   reservationId = signal<string>('');
   height = signal<string>(window.screen.height - 200 + 'px');
   chatHeight = signal<string>(window.screen.height - 300 + 'px important');
-  panelSizes = signal<[number, number]>([25, 75]);
+  panelSizes = signal<[number, number]>([75, 25]);
   messages = signal<ConversationDetails[]>([]);
   newMessage = signal<string>('');
 
@@ -121,4 +123,6 @@ export class ReservationDetailsPage implements OnInit, AfterViewChecked {
       container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
     });
   }
+  onBackClick() { window.history.back() }
+
 }

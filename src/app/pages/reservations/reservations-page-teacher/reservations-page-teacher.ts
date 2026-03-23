@@ -40,14 +40,8 @@ export class ReservationsPageTeacher {
     ]);
 
     constructor() {
-        let firstLoad = false;
-
         effect(() => {
             const query = this.tableState();
-            if (firstLoad) {
-                firstLoad = false;
-                return;
-            }
             this.loadData(query);
         });
     }

@@ -11,7 +11,7 @@ import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
-import {  ReservationDetailsPage } from '@/pages/reservations/reservation-details/reservation-details';
+import { ReservationDetailsPage } from '@/pages/reservations/reservation-details/reservation-details';
 
 export const appRoutes: Routes = [
     {
@@ -104,6 +104,10 @@ export const appRoutes: Routes = [
                     {
                         path: 'reservations',
                         component: ReservationsPageStudent
+                    },
+                    {
+                        path: 'reservations/:id',
+                        component: ReservationDetailsPage
                     }
                 ]
             },

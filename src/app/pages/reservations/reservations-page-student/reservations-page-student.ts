@@ -23,14 +23,8 @@ export class ReservationsPageStudent {
     columnsDef = computed<DynamicColDef[]>(() => [{ field: 'teacherName', header: 'Professeur', type: 'text', filterable: true, filterField: 'teacherName' }]);
 
     constructor() {
-        let firstLoad = true;
-
         effect(() => {
             const query = this.tableState();
-            if (firstLoad) {
-                firstLoad = false;
-                return;
-            }
             this.loadData(query);
         });
     }
