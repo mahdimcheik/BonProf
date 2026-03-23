@@ -143,6 +143,12 @@ export interface CategoryCursusUpdate {
     icon?: string | null;
 }
 
+export interface ConversationCreate {
+    content: string;
+    reservationId: string;
+    senderId: string;
+}
+
 export interface ConversationDetails {
     id?: string;
     content?: string | null;
@@ -381,6 +387,7 @@ export interface GenApi {
     documentTypeEnum?: DocumentTypeEnum;
     signalRNotificationTypeEnum?: SignalRNotificationTypeEnum;
     notificationTypeEnum?: NotificationTypeEnum;
+    conversationCreate?: ConversationCreate;
 }
 
 export interface Gender {

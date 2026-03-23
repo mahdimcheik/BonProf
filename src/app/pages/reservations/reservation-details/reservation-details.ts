@@ -1,8 +1,8 @@
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { Component, computed, inject, model, OnInit, signal } from '@angular/core';
+import { AfterViewChecked, Component, computed, contentChild, effect, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { ConversationDetails, ReservationDetails } from 'src/client';
+import { ConversationCreate, ConversationDetails, ReservationDetails } from 'src/client';
 import { SplitterModule } from 'primeng/splitter';
 import { ButtonModule } from "primeng/button";
 import { MainService } from '@/pages/shared/services/main.service';
@@ -13,18 +13,23 @@ import { TextareaModule } from 'primeng/textarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
+import { SignalRService } from '@/pages/shared/services/signal-r-service';
+import { StoreService } from '@/pages/shared/services/store-service';
 
 @Component({
   selector: 'bp-reservation-details',
   imports: [SplitterModule, ButtonModule, DatePipe, FormsModule, InputTextModule, TextareaModule, TooltipModule, ReservationStatusPipe, SlotTypePipe],
   templateUrl: './reservation-details.html',
 })
-export class ReservationDetailsPage  implements OnInit {
+export class ReservationDetailsPage implements OnInit, AfterViewChecked {
   slotService = inject(SlotWrapperService);
+  signalRService = inject(SignalRService);
+  storeService = inject(StoreService);
   activatedRoute = inject(ActivatedRoute);
   mainService = inject(MainService);
   reservationId = signal<string>('');
   height = signal<string>(window.screen.height - 200 + 'px');
+  chatHeight = signal<string>(window.screen.height - 300 + 'px important');
   panelSizes = signal<[number, number]>([25, 75]);
   messages = signal<ConversationDetails[]>([]);
   newMessage = signal<string>('');
@@ -34,17 +39,39 @@ export class ReservationDetailsPage  implements OnInit {
     if (!this.reservation()) {
       return null;
     }
-    return this.mainService.isStudent() ? this.reservation()?.slot?.teacher : this.reservation()?.student;    
+    return this.mainService.isStudent() ? this.reservation()?.slot?.teacher : this.reservation()?.student;
   });
 
-  ngOnInit(): void {
+  messageContainer = viewChild<ElementRef<HTMLElement>>('messagesContainer');
+
+
+  constructor() {
     this.activatedRoute.params.subscribe((params) => {
       this.reservationId.set(params['id']);
       this.loadData();
     });
+    let firstLoad = true;
+    effect(() => {
+      const chat = this.storeService.chatAlert();
+      if (chat && chat.reservationId === this.reservationId()) {
+        if (!firstLoad) {
+          this.loadData();
+        }
+        firstLoad = false;
+      }
+    });
+  }
+  ngAfterViewChecked(): void {
+    const container = this.messageContainer()?.nativeElement;
+    container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }
 
-  
+
+  ngOnInit(): void {
+
+  }
+
+
   async loadData() {
     const result = await firstValueFrom(this.slotService.GetReservationById(this.reservationId()));
     if (result) {
@@ -55,32 +82,43 @@ export class ReservationDetailsPage  implements OnInit {
     this.messages.set(messages ?? []);
   }
 
-  rezise(direction: 'right' | 'left'){
-    if(direction === 'right'){
+  rezise(direction: 'right' | 'left') {
+    if (direction === 'right') {
       this.panelSizes.set([0.1, 99.9]);
-    }else{
+    } else {
       this.panelSizes.set([99.9, 0.1]);
     }
   }
 
-      isCurrentUserMessage(message: ConversationDetails): boolean {
-        const currentUser = this.mainService.userConnected();
-        return currentUser.id === message.senderId;
-    }
+  isCurrentUserMessage(message: ConversationDetails): boolean {
+    const currentUser = this.mainService.userConnected();
+    return currentUser.id === message.senderId;
+  }
 
-        onKeyDown(event: KeyboardEvent) {
-        if (event.ctrlKey && event.key === 'Enter') {
-            event.preventDefault();
-            this.sendMessage();
-        }
+  onKeyDown(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      event.preventDefault();
+      this.sendMessage();
     }
+  }
 
-    getSenderName(message: ConversationDetails): string {
-        const currentUser = this.mainService.userConnected();
-        return currentUser.id === message.senderId ? 'Moi' : this.partner()?.user?.firstName + ' ' + this.partner()?.user?.lastName ;
-    }
+  getSenderName(message: ConversationDetails): string {
+    const currentUser = this.mainService.userConnected();
+    return currentUser.id === message.senderId ? 'Moi' : this.partner()?.user?.firstName + ' ' + this.partner()?.user?.lastName;
+  }
 
-    async sendMessage() {
-        
+  async sendMessage() {
+    const chat: ConversationCreate = {
+      content: this.newMessage(),
+      reservationId: this.reservationId(),
+      senderId: this.mainService.userConnected().id
     }
+    const result = await this.signalRService.SendChatByUserEmail(this.partner()?.user?.email ?? '', chat);
+    this.messages.update(prev => [...prev, { ...chat, createdAt: new Date() }]);
+    this.newMessage.set('');
+    setTimeout(() => {
+      const container = this.messageContainer()?.nativeElement;
+      container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+    });
+  }
 }

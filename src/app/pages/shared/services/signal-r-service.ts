@@ -25,7 +25,7 @@ export class SignalRService {
     private maxReconnectAttempts = 5;
     private isIntentionalDisconnect = false;
 
-    constructor() {}
+    constructor() { }
 
     async initiateAndConnect(token: string) {
         if (this.hubConnection && this.hubConnection.state === signalR.HubConnectionState.Connected) {
@@ -125,13 +125,16 @@ export class SignalRService {
         });
 
         // Message handlers
-        this.hubConnection.on(SignalRNotificationTypeEnum.Message, (message) => {});
+        this.hubConnection.on(SignalRNotificationTypeEnum.Message, (message) => { });
 
         this.hubConnection.on(SignalRNotificationTypeEnum.Notification, (notification) => {
             this.storeService.notificationAlert.set(notification);
         });
 
-        this.hubConnection.on(SignalRNotificationTypeEnum.Chat, (chat) => {});
+        this.hubConnection.on(SignalRNotificationTypeEnum.Chat, (chat) => {
+            this.storeService.chatAlert.set(chat);
+            // this.messageService.add({ severity: 'info', summary: 'Nouveau message', detail: `Vous avez reçu un nouveau message de ${JSON.stringify(chat)}` });
+        });
 
         this.hubConnection.on(SignalRNotificationTypeEnum.Ping, () => {
             this.storeService.pingAlert.set({ message: 'Ping received' });
@@ -202,6 +205,19 @@ export class SignalRService {
         }
     }
 
+    async SendChatByUserEmail(recipientEmail: string, message: any) {
+        try {
+            if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
+                await this.hubConnection.invoke('SendChatByUserEmail', recipientEmail, message);
+            } else {
+                throw new Error('Not connected to server');
+            }
+        } catch (error) {
+            console.error('Failed to send message:', error);
+            throw error;
+        }
+    }
+
     async sendMessageToAll(type: string, message: any) {
         try {
             if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
@@ -230,7 +246,7 @@ export class SignalRService {
     addToGroup(groupName: string) {
         return this.hubConnection
             .invoke('AddToGroup', groupName)
-            .then(() => {})
+            .then(() => { })
             .catch((error) => {
                 console.error(`Failed to add to group ${groupName}:`, error);
             });
