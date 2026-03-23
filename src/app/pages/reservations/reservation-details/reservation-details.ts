@@ -102,11 +102,13 @@ export class ReservationDetailsPage implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.newMessage$.pipe(debounceTime(300), distinctUntilChanged()).subscribe(() => {
-      this.signalRService.sendMessage(this.partner()?.user?.email ?? '', SignalRNotificationTypeEnum.Writing, {
-        content: this.newMessage(),
-        reservationId: this.reservationId(),
-        senderId: this.mainService.userConnected().id
-      } as ConversationCreate);
+      if (this.newMessage()) {
+        this.signalRService.sendMessage(this.partner()?.user?.email ?? '', SignalRNotificationTypeEnum.Writing, {
+          content: this.newMessage(),
+          reservationId: this.reservationId(),
+          senderId: this.mainService.userConnected().id
+        } as ConversationCreate);
+      }
     });
   }
 
