@@ -1,5 +1,7 @@
 import { ConfigurableFormComponent } from '@/pages/components/configurable-form/configurable-form.component';
 import { Structure } from '@/pages/components/configurable-form/related-models';
+import { CategoryCursusPipe } from '@/pages/shared/pipes/category-cursus-pipe';
+import { CursusLevelPipe } from '@/pages/shared/pipes/cursus-level-pipe';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, model, OnInit, output } from '@angular/core';
@@ -10,11 +12,14 @@ import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
 @Component({
     selector: 'bp-cursus-edition',
     imports: [ConfigurableFormComponent],
-    templateUrl: './cursus-edition.html'
+    templateUrl: './cursus-edition.html',
+    providers: [CursusLevelPipe, CategoryCursusPipe]
 })
 export class CursusEdition implements OnInit {
     cursusWrapperService = inject(CursusWrapperService);
     mainService = inject(MainService);
+    cursusLevelPipe = inject(CursusLevelPipe);
+    categoryCursusPipe = inject(CategoryCursusPipe);
 
     clickSubmit = output<CursusDetails | CursusCreate | CursusUpdate>();
     clickCancel = output<void>();
@@ -45,7 +50,10 @@ export class CursusEdition implements OnInit {
                             options: this.levels(),
                             displayKey: 'name',
                             value: cursus ? cursus.levelId : '',
-                            compareKey: 'id'
+                            compareKey: 'id',
+                            valueFormatter: (option: any) => {
+                                return this.cursusLevelPipe.transform(option.name);
+                            }
                         },
                         {
                             id: 'categoryIds',
@@ -56,7 +64,11 @@ export class CursusEdition implements OnInit {
                             options: this.categories(),
                             displayKey: 'name',
                             value: cursus ? cursus.categories?.map((category) => category.id) : [],
-                            compareKey: 'id'
+                            compareKey: 'id',
+                            valueFormatter: (option: any) => {
+                                return this.categoryCursusPipe.transform(option.name);
+                            }
+
                         },
                         { id: 'color', label: 'Couleur', name: 'color', type: 'color', required: true, value: cursus ? cursus.color : '#000000', fullWidth: true },
                         { id: 'description', label: 'Description', name: 'description', type: 'textarea', required: true, value: cursus ? cursus.description : '', fullWidth: true, placeholder: 'Description' }

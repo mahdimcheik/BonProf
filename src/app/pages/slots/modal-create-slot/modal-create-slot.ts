@@ -3,6 +3,8 @@ import { ConfigurableFormComponent } from '@/pages/components/configurable-form/
 import { Structure } from '@/pages/components/configurable-form/related-models';
 import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
+import { GenderPipe } from '@/pages/shared/pipes/gender-pipe';
+import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { TypeSlotWrapperService } from '@/pages/shared/services/type-slot-wrapper-service';
 import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
@@ -15,12 +17,14 @@ import { SlotCreate, SlotDetails, SlotUpdate } from 'src/client';
 @Component({
     selector: 'bp-modal-create-slot',
     imports: [BaseModalComponent, ConfigurableFormComponent, Button, ConfirmModalComponent],
-    templateUrl: './modal-create-slot.html'
+    templateUrl: './modal-create-slot.html',
+    providers: [SlotTypePipe]
 })
 export class ModalCreateSlot implements OnInit {
     typeSlotsService = inject(TypeSlotWrapperService);
     messageService = inject(MessageService);
     slotWrapperService = inject(SlotWrapperService);
+    slotTypePipe = inject(SlotTypePipe);
 
     visible = model(false);
     title = model('Créer un créneau');
@@ -60,7 +64,10 @@ export class ModalCreateSlot implements OnInit {
                             required: true,
                             placeholder: 'Sélectionner le type de créneau',
                             fullWidth: true,
-                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null
+                            value: event?.ExtendedProps?.['slot']?.typeId ?? options[0]?.id ?? null,
+                            valueFormatter: (option: any) => {
+                                return this.slotTypePipe.transform(option.name);
+                            }
                         },
                         {
                             id: 'dateFrom',
