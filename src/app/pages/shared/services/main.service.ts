@@ -94,11 +94,11 @@ export class MainService {
         const user = this.userConnected();
         if (this.isTeacher()) {
             return [
-                {
-                    label: 'Général',
-                    root: true
-                },
-                { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                // {
+                //     label: 'Général',
+                //     root: true
+                // },
+                // { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
                 {
                     label: 'Administration',
                     root: true
@@ -111,11 +111,11 @@ export class MainService {
             ];
         } else if (this.isStudent()) {
             return [
-                {
-                    label: 'Général',
-                    root: true
-                },
-                { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
+                // {
+                //     label: 'Général',
+                //     root: true
+                // },
+                // { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
                 {
                     label: 'Administration',
                     root: true

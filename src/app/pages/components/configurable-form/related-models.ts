@@ -35,6 +35,9 @@ export interface FormField<T> {
     showCancelButton?: boolean;
     auto?: boolean;
 
+    // datepikcker
+    stepMinute?: number;
+
     // value formatter
     valueFormatter?: (value: T | T[]) => any;
     asyncAction?: (query: any) => Promise<any>;

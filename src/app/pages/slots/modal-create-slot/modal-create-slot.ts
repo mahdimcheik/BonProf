@@ -27,10 +27,16 @@ export class ModalCreateSlot implements OnInit {
     slotTypePipe = inject(SlotTypePipe);
 
     visible = model(false);
-    title = model('Créer un créneau');
     event = model.required<CalendarEvent>();
     slot = computed<SlotCreate | SlotUpdate | SlotDetails | null>(() => this.event()?.ExtendedProps?.['slot'] ?? null);
+    title = computed(() => (this.slot() ? 'Modifier le créneau' : 'Créer un créneau'));
     submitButtonLabel = computed(() => (this.slot() ? 'Mettre à jour' : 'Créer'));
+    isInThePast = computed(() => {
+        const now = new Date();
+        const event = this.event();
+        return event ? new Date(event.StartTime) < now : false;
+    });
+    isCreating = computed(() => this.slot() === null);
     submitClicked = output<SlotCreate | SlotUpdate>();
     cancelClicked = output<void>();
     typeSlots = this.typeSlotsService.typeSlots;
@@ -77,6 +83,7 @@ export class ModalCreateSlot implements OnInit {
                             timeOnly: true,
                             fullWidth: true,
                             label: 'Date de début',
+                            stepMinute: 15,
                             required: true,
                             placeholder: 'Sélectionner la date de début',
                             value: event?.StartTime ?? new Date()
@@ -89,6 +96,7 @@ export class ModalCreateSlot implements OnInit {
                             timeOnly: true,
                             label: 'Date de fin',
                             required: true,
+                            stepMinute: 15,
                             fullWidth: true,
                             placeholder: 'Sélectionner la date de fin',
                             value: event?.EndTime ?? new Date()
