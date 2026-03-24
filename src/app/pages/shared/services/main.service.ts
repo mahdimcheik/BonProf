@@ -43,6 +43,7 @@ export class MainService {
     logoUrl = 'assets/bird.svg';
     baseUrl = environment.API_URL;
     token = signal<string>('');
+    redirectUrlAfterLogin = signal<any>(['/']);
 
     // addresses
     selectedCity = signal<CityDetails | null>(null);
@@ -264,6 +265,7 @@ export class MainService {
                     detail: 'Vous avez été déconnecté avec succès.',
                     severity: 'success'
                 });
+                this.redirectUrlAfterLogin.set('/');
             })
         );
     }

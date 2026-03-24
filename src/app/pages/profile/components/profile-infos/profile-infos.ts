@@ -26,6 +26,7 @@ export class ProfileInfos {
         if (this.mainService.userConnected() && this.mainService.userConnected().id && this.mainService.userConnected().id != this.user().id) {
             this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.user().id } });
         } else {
+            this.mainService.redirectUrlAfterLogin.set(['profile', this.user().id]);
             this.router.navigate(['/auth/login']);
         }
     }

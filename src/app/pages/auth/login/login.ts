@@ -96,7 +96,9 @@ export class Login {
                     life: 500,
                     icon: 'pi pi-check-circle'
                 });
-                this.router.navigate(['/']);
+                console.log("redirect url ", this.authService.redirectUrlAfterLogin());
+
+                this.router.navigate(this.authService.redirectUrlAfterLogin());
             });
     }
 }
