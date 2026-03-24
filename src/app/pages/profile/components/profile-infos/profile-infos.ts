@@ -26,15 +26,16 @@ export class ProfileInfos {
         if (this.mainService.userConnected() && this.mainService.userConnected().id && this.mainService.userConnected().id != this.user().id) {
             this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.user().id } });
         } else {
+            this.mainService.redirectUrlAfterLogin.set(['profile', this.user().id]);
             this.router.navigate(['/auth/login']);
         }
     }
     goToEditProfile() {
         if (this.mainService.isTeacher()) {
-            this.router.navigate(['/dashboard/teacher/profile', 'me', 'edition']);
+            this.router.navigate(['/dashboard/teacher/profile', 'me', 'edition'], { queryParams: { tab: 'personnalInfos' } });
         } else {
             if (this.mainService.isStudent()) {
-                this.router.navigate(['/dashboard/student/profile', 'me', 'edition']);
+                this.router.navigate(['/dashboard/student/profile', 'me', 'edition'], { queryParams: { tab: 'personnalInfos' } });
             }
         }
     }

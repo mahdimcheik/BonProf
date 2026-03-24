@@ -177,7 +177,7 @@ export class CalendarStudent implements OnInit {
         }
     }
 
-    onNavigating(args: NavigatingEventArgs): void {}
+    onNavigating(args: NavigatingEventArgs): void { }
 
     onActionComplete(args: ActionEventArgs): void {
         if (args.requestType === 'viewNavigate' || args.requestType === 'dateNavigate') {
@@ -202,11 +202,11 @@ export class CalendarStudent implements OnInit {
         args.cancel = true;
     }
 
-    onDragStop(args: any): void {}
+    onDragStop(args: any): void { }
 
-    onResizeStop(args: any): void {}
+    onResizeStop(args: any): void { }
 
-    onCellClick(event: CellClickEventArgs) {}
+    onCellClick(event: CellClickEventArgs) { }
 
     public onPopupOpen(args: PopupOpenEventArgs): void {
         args.cancel = true;
@@ -215,6 +215,11 @@ export class CalendarStudent implements OnInit {
     clickEvent(event: EventClickArgs) {
         const selectedEvent = event.event as any;
         this.selectedSlot.set(selectedEvent?.ExtendedProps?.slot ?? null);
+
+        if (selectedEvent?.StartTime < new Date() && !this.reservation()) {
+            return;
+        }
+
 
         // Handle Date objects properly - they're already Date instances, not strings
         const startTime = selectedEvent?.StartTime;
