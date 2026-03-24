@@ -7,16 +7,20 @@ import { Component, computed, inject, model, output, signal } from '@angular/cor
 import { FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { CursusDetails, ProductCreate, ProductDetails, ProductUpdate } from 'src/client';
+import { BaseModalComponent } from "@/pages/components/base-modal/base-modal.component";
 
 @Component({
     selector: 'bp-product-edition',
-    imports: [ConfigurableFormComponent],
+    imports: [ConfigurableFormComponent, BaseModalComponent],
     templateUrl: './product-edition.html'
 })
 export class ProductEdition {
     productWrapperService = inject(ProductWrapperService);
     cursusWrapperService = inject(CursusWrapperService);
     mainService = inject(MainService);
+
+    visible = model(false);
+    title = computed(() => (this.product() ? `Editer le produit: ${this.product()!.name}` : 'Ajouter un produit'));
 
     clickSubmit = output<ProductDetails | ProductCreate | ProductUpdate>();
     clickCancel = output<void>();

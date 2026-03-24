@@ -2,7 +2,6 @@ import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-ser
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
-import { Card } from 'primeng/card';
 import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
@@ -12,7 +11,7 @@ import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-
 
 @Component({
     selector: 'bp-cursus-card',
-    imports: [Card, Button, ConfirmModalComponent, CursusEdition, Tag, Tooltip],
+    imports: [Button, ConfirmModalComponent, CursusEdition, Tag, Tooltip],
     templateUrl: './cursus-card.html'
 })
 export class CursusCard {
@@ -20,7 +19,7 @@ export class CursusCard {
     messageService = inject(MessageService);
 
     editMode = model(true);
-    showActions = signal(false);
+    showModal = signal(false);
     cursus = model.required<CursusDetails>();
 
     showEditModal = signal(false);
@@ -43,7 +42,7 @@ export class CursusCard {
                 this.cursus.set(newFormation.data);
             }
         } finally {
-            this.showActions.set(false);
+            this.showModal.set(false);
         }
     }
     showConfirmModal() {

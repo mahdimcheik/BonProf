@@ -1,4 +1,3 @@
-@if(!editMode()){
 <div class="shadow-md hover:shadow-lg transition-shadow duration-200 border-b border-gray-200 dark:border-gray-700 p-4 md:p-6">
     <div class="flex flex-col gap-4">
         <!-- Cursus Header -->
@@ -36,17 +35,7 @@
         </div>
     </div>
 </div>
-} @else {
-<p-card styleClass="shadow-md">
-    <div class="flex flex-col gap-4">
-        <div class="flex justify-between items-center pb-3 border-b border-surface-200 dark:border-surface-700">
-            <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 m-0">Modifier la formation</h3>
-            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="editMode.set(false)" pTooltip="Annuler" tooltipPosition="top" />
-        </div>
-        <bp-product-edition [product]="product()" (clickSubmit)="editProduct($event)" (clickCancel)="editMode.set(false)"></bp-product-edition>
-    </div>
-</p-card>
-} @if(showDeleteConfirm()){
+@if(showDeleteConfirm()){
 <bp-confirm-modal
     [(visible)]="showDeleteConfirm"
     [question]="'Vous êtes sûr de vouloir supprimer le cours ?'"
@@ -57,3 +46,5 @@
     (onClose)="hideConfirmModal()"
 ></bp-confirm-modal>
 }
+
+<bp-product-edition [product]="product()" (clickSubmit)="editProduct($event)" (clickCancel)="editMode.set(false)" [(visible)]="editMode"></bp-product-edition>

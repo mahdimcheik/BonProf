@@ -8,10 +8,11 @@ import { Component, computed, inject, model, OnInit, output } from '@angular/cor
 import { FormGroup } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { CursusCreate, CursusDetails, CursusUpdate } from 'src/client';
+import { BaseModalComponent } from "@/pages/components/base-modal/base-modal.component";
 
 @Component({
     selector: 'bp-cursus-edition',
-    imports: [ConfigurableFormComponent],
+    imports: [ConfigurableFormComponent, BaseModalComponent],
     templateUrl: './cursus-edition.html',
     providers: [CursusLevelPipe, CategoryCursusPipe]
 })
@@ -21,9 +22,13 @@ export class CursusEdition implements OnInit {
     cursusLevelPipe = inject(CursusLevelPipe);
     categoryCursusPipe = inject(CategoryCursusPipe);
 
+    // state
+    visible = model(false);
+    cursus = model<CursusDetails | undefined>(undefined);
+    title = computed(() => (this.cursus() ? `Editer le cursus: ${this.cursus()!.name}` : 'Ajouter un cursus'));
+
     clickSubmit = output<CursusDetails | CursusCreate | CursusUpdate>();
     clickCancel = output<void>();
-    cursus = model<CursusDetails | undefined>(undefined);
     levels = this.cursusWrapperService.levelCursuses;
     categories = this.cursusWrapperService.categoryCursuses;
 
