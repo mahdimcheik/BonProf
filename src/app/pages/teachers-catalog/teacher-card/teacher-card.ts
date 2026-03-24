@@ -36,6 +36,7 @@ export class TeacherCard {
             if (this.mainService.userConnected() && this.mainService.userConnected().id && this.mainService.userConnected().id != this.teacher().id) {
                 this.router.navigate(['/dashboard/student/planning'], { queryParams: { teacherId: this.teacher().id } });
             } else {
+                this.mainService.redirectUrlAfterLogin.set(['/profile', this.teacher().id]);
                 this.router.navigate(['/auth/login']);
             }
         } catch (e) {
