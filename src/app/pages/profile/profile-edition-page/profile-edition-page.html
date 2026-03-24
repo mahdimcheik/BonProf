@@ -1,11 +1,17 @@
 <div class="h-[calc(100vh-115px)] overflow-auto">
     <p-tabs value="personnalInfos" lazy [value]="tab" (valueChange)="onTabChange($event)">
         <p-tablist>
+            <p-tab value="preview">Profil</p-tab>
             <p-tab value="personnalInfos">Infos personnelles</p-tab>
             <p-tab value="formations">Formations</p-tab>
             <p-tab value="addresses">Addresses</p-tab>
         </p-tablist>
         <p-tabpanels class="!p-0">
+            <p-tabpanel value="preview">
+                <ng-template #content>
+                    <bp-profile-page></bp-profile-page>
+                </ng-template>
+            </p-tabpanel>
             <p-tabpanel value="personnalInfos">
                 <ng-template #content>
                     <bp-personnal-infos-edition></bp-personnal-infos-edition>

@@ -99,16 +99,10 @@ export class NotificationsMenu {
     });
 
     constructor() {
-        effect(() => {
-            const seenValue = this.filter();
-            untracked(() => {
-                this.laodNotifications(this.filter());
-            });
-        });
-
         let firstLoad = true;
         effect(async () => {
             const notification = this.storeService.notificationAlert();
+            const seenValue = this.filter();
             if (!firstLoad) {
                 firstLoad = false;
                 return;

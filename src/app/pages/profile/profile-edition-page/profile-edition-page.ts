@@ -7,17 +7,18 @@ import { FormationsList } from '../components/formations-list/formations-list';
 import { PersonnalInfosEdition } from '../components/personnal-infos-edition/personnal-infos-edition';
 import { ProductsList } from '../../products/products-list/products-list';
 import { MainService } from '@/pages/shared/services/main.service';
+import { ProfilePage } from "../profile-page/profile-page";
 
 @Component({
     selector: 'bp-profile-edition-page',
-    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList],
+    imports: [TabsModule, PersonnalInfosEdition, FormationsList, AddressesList, ProfilePage],
     templateUrl: './profile-edition-page.html'
 })
 export class ProfileEditionPage implements OnInit {
     mainService = inject(MainService);
     router = inject(Router);
     activatedRoute = inject(ActivatedRoute);
-    tab: string = 'personnalInfos';
+    tab: string = 'preview';
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe((params) => {
@@ -25,7 +26,7 @@ export class ProfileEditionPage implements OnInit {
             if (tabParam) {
                 this.tab = tabParam;
             } else {
-                this.tab = 'personnalInfos';
+                this.tab = 'preview';
             }
         });
     }
