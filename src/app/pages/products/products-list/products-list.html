@@ -1,10 +1,6 @@
 <app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddCursusBox()">
     <ng-template #main>
-        @if (showEditBox()) {
-        <div class="mt-4">
-            <bp-product-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewProduct($event)"></bp-product-edition>
-        </div>
-        } @for (product of products(); track product.id) {
+        @for (product of products(); track product.id) {
         <!-- <bp-product-card [product]="product" [editMode]="false" (needRefresh)="loadData()"></bp-product-card> -->
         <bp-product-card [product]="product" [editMode]="false" (needRefresh)="loadData()"></bp-product-card>
         }@empty {
@@ -26,3 +22,5 @@
         </div>
     </ng-template>
 </app-smart-section>
+
+<bp-product-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewProduct($event)" [(visible)]="showEditBox"></bp-product-edition>

@@ -1,3 +1,5 @@
-<div>
-    <bp-configurable-form [structure]="cursusForm()" (onFormSubmit)="submit($event)" (onCancel)="onCancel()"></bp-configurable-form>
-</div>
+<bp-base-modal [(visible)]="visible" [title]="title()" [iconClass]="'pi pi-calendar-plus'">
+    <div content class="w-full">
+        <bp-configurable-form [structure]="cursusForm()" (onFormSubmit)="submit($event)" (onCancel)="onCancel()"></bp-configurable-form>
+    </div>
+</bp-base-modal>

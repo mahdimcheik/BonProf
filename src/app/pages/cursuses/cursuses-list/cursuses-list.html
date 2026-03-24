@@ -1,10 +1,6 @@
 <app-smart-section [title]="title" [editMode]="editMode()" [buttonIcon]="buttonIcon()" (onAddClick)="showAddCursusBox()">
     <ng-template #main>
-        @if (showEditBox()) {
-        <div class="mt-4">
-            <bp-cursus-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewCursus($event)"></bp-cursus-edition>
-        </div>
-        } @for (cursus of cursuses(); track cursus.id) {
+        @for (cursus of cursuses(); track cursus.id) {
         <bp-cursus-card [cursus]="cursus" [editMode]="editMode()" (needRefresh)="loadData()"></bp-cursus-card>
         }@empty {
         <div class="text-center min-h-[150px] flex flex-col justify-center items-center">
@@ -27,3 +23,7 @@
         </div>
     </ng-template>
 </app-smart-section>
+
+@if (showEditBox()) {
+<bp-cursus-edition (clickCancel)="hideAddCursusBox()" (clickSubmit)="addNewCursus($event)" [(visible)]="showEditBox"></bp-cursus-edition>
+}
