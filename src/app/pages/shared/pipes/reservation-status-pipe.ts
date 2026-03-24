@@ -1,17 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ReservationStatusEnum } from 'src/client';
+import { StatusReservationCode } from 'src/client';
 
 @Pipe({
     name: 'reservationStatus'
 })
 export class ReservationStatusPipe implements PipeTransform {
-    transform(value: unknown, ...args: unknown[]): unknown {
+    transform(value: string, ...args: unknown[]): unknown {
         if (!value || typeof value !== 'string') return null;
-        if (value == ReservationStatusEnum.Pending) return 'En attente';
-        if (value == ReservationStatusEnum.Accepted) return 'Confirmée';
-        if (value == ReservationStatusEnum.Rejected) return 'Rejetée';
-        if (value == ReservationStatusEnum.Done) return 'finie';
-        if (value == ReservationStatusEnum.Cancelled) return 'Annulée';
+        if (value == StatusReservationCode.Pending) return 'En attente';
+        if (value == StatusReservationCode.Accepted) return 'Confirmée';
+        if (value == StatusReservationCode.Rejected) return 'Rejetée';
+        if (value == StatusReservationCode.Done) return 'finie';
+        if (value == StatusReservationCode.Cancelled) return 'Annulée';
         return null;
     }
 }

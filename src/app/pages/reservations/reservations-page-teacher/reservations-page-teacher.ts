@@ -4,16 +4,19 @@ import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service
 import { StatusReservationWrapperService } from '@/pages/shared/services/status-reservation-wrapper-service';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { ReservationDetails } from 'src/client';
+import { ReservationDetails, StatusReservationDetails } from 'src/client';
 import { ReservationCard } from '../reservation-card/reservation-card';
+import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 
 @Component({
     selector: 'bp-reservations-page-teacher',
     imports: [SmartGridModernizedComponent],
-    templateUrl: './reservations-page-teacher.html'
+    templateUrl: './reservations-page-teacher.html',
+    providers: [ReservationStatusPipe]
 })
 export class ReservationsPageTeacher {
     slotService = inject(SlotWrapperService);
+    reservationPipe = inject(ReservationStatusPipe);
 
     reservationStatusService = inject(StatusReservationWrapperService);
 
@@ -22,6 +25,7 @@ export class ReservationsPageTeacher {
     tableState = signal<CustomTableState>(INITIAL_STATE);
     totalRecords = signal<number>(0);
     allStatusReservations = this.reservationStatusService.statusReservations;
+    allStatusReservationsOptions = computed(() => this.allStatusReservations().map(status => ({ ...status, name: this.reservationPipe.transform(status.code) })));
     renderComponent = ReservationCard;
 
     columnsDef = computed<DynamicColDef[]>(() => [
@@ -33,7 +37,7 @@ export class ReservationsPageTeacher {
             type: 'array',
             filterable: true,
             filterField: 'status',
-            options: this.allStatusReservations(),
+            options: this.allStatusReservationsOptions(),
             optionLabel: 'name',
             optionValue: 'id'
         }

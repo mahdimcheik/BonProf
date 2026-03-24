@@ -47,7 +47,7 @@ export class SmartGridModernizedComponent<T extends Record<string, any>> impleme
         default: ActionButtonRendererComponent
     });
 
-    constructor() {}
+    constructor() { }
 
     ngOnInit(): void {
         this.getStateFromLocalStorage();

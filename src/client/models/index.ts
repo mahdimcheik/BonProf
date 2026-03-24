@@ -378,7 +378,6 @@ export interface GenApi {
     addressTypeEnum?: AddressTypeEnum;
     transactionStatusEnum?: TransactionStatusEnum;
     teacherTransactionTypeEnum?: TeacherTransactionTypeEnum;
-    reservationStatusEnum?: ReservationStatusEnum;
     orderStatusEnum?: OrderStatusEnum;
     cursusLevelEnum?: CursusLevelEnum;
     languageEnum?: LanguageEnum;
@@ -795,14 +794,6 @@ export interface ReservationDetailsResponse {
     status: number;
     data?: ReservationDetails;
     count?: number | null;
-}
-
-export enum ReservationStatusEnum {
-    Pending = "Pending",
-    Accepted = "Accepted",
-    Done = "Done",
-    Rejected = "Rejected",
-    Cancelled = "Cancelled"
 }
 
 export interface ReservationUpdateStatus {
