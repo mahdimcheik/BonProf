@@ -265,7 +265,7 @@ export class MainService {
                     detail: 'Vous avez été déconnecté avec succès.',
                     severity: 'success'
                 });
-                this.redirectUrlAfterLogin.set('/');
+                this.redirectUrlAfterLogin.set(['/']);
             })
         );
     }
