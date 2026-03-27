@@ -1,12 +1,12 @@
 import { ICellRendererAngularComp } from '@/pages/components/smart-grid';
 import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
+import { MainService } from '@/pages/shared/services/main.service';
 import { DatePipe } from '@angular/common';
 import { Component, inject, model } from '@angular/core';
+import { Router } from '@angular/router';
+import { ButtonModule } from "primeng/button";
 import { ReservationDetails } from 'src/client';
 import { SlotTypePipe } from '../../shared/pipes/slot-type-pipe';
-import { Router } from '@angular/router';
-import { MainService } from '@/pages/shared/services/main.service';
-import { ButtonModule } from "primeng/button";
 
 @Component({
     selector: 'bp-reservation-card',

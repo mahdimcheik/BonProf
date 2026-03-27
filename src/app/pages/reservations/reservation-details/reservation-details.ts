@@ -1,23 +1,23 @@
-import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { AfterViewChecked, Component, computed, effect, ElementRef, inject, model, OnInit, signal, untracked, viewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { debounce, debounceTime, firstValueFrom, timer } from 'rxjs';
-import { ConversationCreate, ConversationDetails, ReservationDetails, SignalRNotificationTypeEnum } from 'src/client';
-import { SplitterModule } from 'primeng/splitter';
-import { ButtonModule } from "primeng/button";
-import { MainService } from '@/pages/shared/services/main.service';
-import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { TooltipModule } from 'primeng/tooltip';
-import { TextareaModule } from 'primeng/textarea';
-import { InputTextModule } from 'primeng/inputtext';
+import { LayoutService } from '@/layout/service/layout.service';
 import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 import { SlotTypePipe } from '@/pages/shared/pipes/slot-type-pipe';
+import { MainService } from '@/pages/shared/services/main.service';
 import { SignalRService } from '@/pages/shared/services/signal-r-service';
+import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { StoreService } from '@/pages/shared/services/store-service';
-import { LayoutService } from '@/layout/service/layout.service';
+import { DatePipe } from '@angular/common';
+import { AfterViewChecked, Component, computed, effect, ElementRef, inject, OnInit, signal, untracked, viewChild } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ButtonModule } from "primeng/button";
+import { InputTextModule } from 'primeng/inputtext';
+import { SplitterModule } from 'primeng/splitter';
+import { TextareaModule } from 'primeng/textarea';
+import { TooltipModule } from 'primeng/tooltip';
+import { debounceTime, firstValueFrom, timer } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { ConversationCreate, ConversationDetails, ReservationDetails, SignalRNotificationTypeEnum } from 'src/client';
 
 @Component({
   selector: 'bp-reservation-details',

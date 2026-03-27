@@ -19,19 +19,21 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MainService } from '@/pages/shared/services/main.service';
 import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
 import { Slider } from 'primeng/slider';
+import { CursusLevelPipe } from '@/pages/shared/pipes/cursus-level-pipe';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider, CursusLevelPipe],
     styleUrls: ['./teacher-search.scss'],
-    templateUrl: './teacher-search.html'
+    templateUrl: './teacher-search.html',
+    providers: [CursusLevelPipe]
 })
 export class TeacherSearch implements OnInit {
     mainService = inject(MainService);
     teacherService = inject(TeacherWrapperService);
     cursusWrapperService = inject(CursusWrapperService);
     http = inject(HttpClient);
-
+    levelPipe = inject(CursusLevelPipe);
     teachers = signal<UserDetails[]>([]);
 
     // Filter properties
@@ -71,6 +73,7 @@ export class TeacherSearch implements OnInit {
     });
 
     levels = this.cursusWrapperService.levelCursuses;
+    levelsOptions = computed(() => this.levels().map((level) => ({ ...level, name: this.levelPipe.transform(level.name) ?? level.name })));
 
     ngOnInit(): void {
         if (this.selectedCity()) {
@@ -118,6 +121,8 @@ export class TeacherSearch implements OnInit {
         this.selectedLevels.set([]);
         this.first.set(0);
         this.rows.set(5);
+        this.lat.set(null);
+        this.long.set(null);
         this.loadData();
     }
 

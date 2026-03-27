@@ -58,10 +58,11 @@ export class MainService {
 
     mainTopbarLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
+        const role = this.isTeacher() ? 'teacher' : this.isStudent() ? 'student' : '';
         if (user && user.email) {
             return [
                 { label: 'Accueil', routerLink: '/' },
-                { label: 'Dashboard', routerLink: '/dashboard' },
+                { label: 'Tableau de bord', routerLink: `/dashboard/${role}/profile/me/edition` },
                 { label: 'Mentions Légales', routerLink: '/mentions-legales' }
             ] as MenuItem[];
         } else
@@ -73,10 +74,12 @@ export class MainService {
 
     mainTopbarSecondaryLinks = linkedSignal<MenuItem[]>(() => {
         const user = this.userConnected();
+        const role = this.isTeacher() ? 'teacher' : this.isStudent() ? 'student' : '';
+
         if (user && user.email) {
             return [
                 { label: 'Deconnexion', command: () => this.logout().subscribe() },
-                { label: 'Profil', command: () => this.router.navigate(['/profile/me']) }
+                { label: 'Profil', command: () => this.router.navigate([`/dashboard/${role}/profile/me/edition`]) }
             ] as MenuItem[];
         }
         return [
@@ -123,7 +126,8 @@ export class MainService {
                 },
                 { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me/edition'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] },
-                { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/reservations'] }
+                { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/reservations'] },
+                { label: 'Trouver un prof', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/fast-search'] },
             ];
         } else return [];
     });

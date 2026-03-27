@@ -1,12 +1,12 @@
 import { CustomTableState, DynamicColDef, INITIAL_STATE } from '@/pages/components/smart-grid';
 import { SmartGridModernizedComponent } from '@/pages/components/smart-grid-modernized/smart-grid-modernized.component';
+import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
 import { StatusReservationWrapperService } from '@/pages/shared/services/status-reservation-wrapper-service';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { ReservationDetails, StatusReservationDetails } from 'src/client';
+import { ReservationDetails } from 'src/client';
 import { ReservationCard } from '../reservation-card/reservation-card';
-import { ReservationStatusPipe } from '@/pages/shared/pipes/reservation-status-pipe';
 
 @Component({
     selector: 'bp-reservations-page-teacher',

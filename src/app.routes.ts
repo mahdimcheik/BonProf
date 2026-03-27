@@ -55,10 +55,10 @@ export const appRoutes: Routes = [
                 path: 'teacher',
                 canActivate: [isTeacherOnlyGuard],
                 children: [
-                    {
-                        path: 'profile/:id',
-                        component: ProfilePage
-                    },
+                    // {
+                    //     path: 'profile/:id',
+                    //     component: ProfilePage
+                    // },
                     {
                         path: 'profile/:id/edition',
                         component: ProfileEditionPage
@@ -89,10 +89,10 @@ export const appRoutes: Routes = [
                 path: 'student',
                 canActivate: [isStudentOnlyGuard],
                 children: [
-                    {
-                        path: 'profile/:id',
-                        loadComponent: () => import('./app/pages/profile/profile-student/profile-student').then((m) => m.ProfileStudent)
-                    },
+                    // {
+                    //     path: 'profile/:id',
+                    //     loadComponent: () => import('./app/pages/profile/profile-student/profile-student').then((m) => m.ProfileStudent)
+                    // },
                     {
                         path: 'planning',
                         loadComponent: () => import('./app/pages/slots/calendar-student/calendar-student').then((m) => m.CalendarStudent)
@@ -108,7 +108,11 @@ export const appRoutes: Routes = [
                     {
                         path: 'reservations/:id',
                         component: ReservationDetailsPage
-                    }
+                    },
+                    {
+                        path: 'fast-search',
+                        loadComponent: () => import('./app/pages/teachers-catalog/teacher-search/teacher-search').then((m) => m.TeacherSearch)
+                    },
                 ]
             },
             {

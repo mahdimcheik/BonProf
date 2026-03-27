@@ -68,12 +68,12 @@
                         <!-- Levels -->
                         <div class="flex flex-col gap-2">
                             <label for="levels" class="font-medium text-sm">Niveaux</label>
-                            <p-multiSelect [(ngModel)]="selectedLevels" [options]="levels()" optionLabel="name" optionValue="id" placeholder="Sélectionner des niveaux" [showHeader]="false" class="w-full"> </p-multiSelect>
+                            <p-multiSelect [(ngModel)]="selectedLevels" [options]="levelsOptions()" optionLabel="name" optionValue="id" placeholder="Sélectionner des niveaux" [showHeader]="false" class="w-full"> </p-multiSelect>
                         </div>
 
                         <div class="flex gap-2 items-center">
-                            <button pButton type="button" class="p-button-text p-button-plain" (click)="clearFilters()">Vider</button>
-                            <button pButton type="button" class="p-button-text p-button-plain" (click)="onSearch()">Chercher</button>
+                            <p-button type="button" variant="text" (click)="clearFilters()">Vider</p-button>
+                            <p-button type="button" variant="text" (click)="onSearch()">Chercher</p-button>
                         </div>
                     </div>
                 </ng-template>

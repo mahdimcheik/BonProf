@@ -9,7 +9,11 @@
         <p-tabpanels class="!p-0">
             <p-tabpanel value="preview">
                 <ng-template #content>
+                    @if(mainService.isTeacher()) {
                     <bp-profile-page></bp-profile-page>
+                    }@if(mainService.isStudent()) {
+                    <bp-profile-student></bp-profile-student>
+                    }
                 </ng-template>
             </p-tabpanel>
             <p-tabpanel value="personnalInfos">

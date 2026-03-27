@@ -1,13 +1,13 @@
+import { ContactForm } from '@/pages/components/contact-form/contact-form';
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Divider } from 'primeng/divider';
+import { firstValueFrom } from 'rxjs';
 import { UserDetails } from 'src/client';
 import { ProfileDescription } from '../components/profile-description/profile-description';
-import { Divider } from 'primeng/divider';
-import { ContactForm } from '@/pages/components/contact-form/contact-form';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MainService } from '@/pages/shared/services/main.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProfileInfos } from '../components/profile-infos/profile-infos';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'bp-profile-student',
