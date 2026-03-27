@@ -1,29 +1,30 @@
-import { Component, computed, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
-import { FilterTeacher, UserDetails, CategoryCursus, LevelCursus, AddressCreate } from 'src/client';
-import { TeacherCard } from '../teacher-card/teacher-card';
-import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
-import { debounceTime, firstValueFrom, Subject } from 'rxjs';
-import { Card } from 'primeng/card';
-import { InputText } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
-import { MultiSelect } from 'primeng/multiselect';
-import { Button, ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
-import { LuxonModule } from 'luxon-angular';
-import { DateTime } from 'luxon';
-import { DatePipe } from '@angular/common';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { CityDetails } from '@/pages/shared/models/geolocalisation';
-import { HttpClient } from '@angular/common/http';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MainService } from '@/pages/shared/services/main.service';
-import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
-import { Slider } from 'primeng/slider';
 import { CursusLevelPipe } from '@/pages/shared/pipes/cursus-level-pipe';
+import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-service';
+import { MainService } from '@/pages/shared/services/main.service';
+import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
+import { FooterWidget } from '@/site/landing/components/footerwidget';
+import { DatePipe, NgClass } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, inject, OnInit, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DateTime } from 'luxon';
+import { LuxonModule } from 'luxon-angular';
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputText } from 'primeng/inputtext';
+import { MultiSelect } from 'primeng/multiselect';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { Slider } from 'primeng/slider';
+import { firstValueFrom } from 'rxjs';
+import { FilterTeacher, UserDetails } from 'src/client';
+import { TeacherCard } from '../teacher-card/teacher-card';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider, CursusLevelPipe],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider, NgClass],
     styleUrls: ['./teacher-search.scss'],
     templateUrl: './teacher-search.html',
     providers: [CursusLevelPipe]
@@ -35,6 +36,14 @@ export class TeacherSearch implements OnInit {
     http = inject(HttpClient);
     levelPipe = inject(CursusLevelPipe);
     teachers = signal<UserDetails[]>([]);
+
+    footer = viewChild<FooterWidget>('footer');
+    height = computed(() => {
+        if (this.footer()) {
+            return `calc(100dvh - 220px)`;
+        }
+        return 'calc(100dvh - 120px)';
+    });
 
     // Filter properties
     selectedCity = this.mainService.selectedCity;

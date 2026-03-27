@@ -10,16 +10,18 @@ import { AppTopbar } from './app.topbar';
     selector: 'bp-layout',
     standalone: true,
     imports: [CommonModule, AppTopbar, AppSidebar, RouterModule],
-    template: `<div class="layout-wrapper" [ngClass]="containerClass">
+    template: `
+    <div class="layout-wrapper h-full" [ngClass]="containerClass">
         <app-topbar></app-topbar>
         <app-sidebar></app-sidebar>
-        <div class="layout-main-container">
-            <div class="layout-main">
+        <div class="layout-main-container h-full">
+            <div class="layout-main h-full">
                 <router-outlet></router-outlet>
             </div>
         </div>
         <div class="layout-mask animate-fadein"></div>
-    </div> `
+    </div> 
+    `
 })
 export class AppLayout {
     overlayMenuOpenSubscription: Subscription;

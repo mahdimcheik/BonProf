@@ -3,14 +3,13 @@ import { ProductWrapperService } from '@/pages/shared/services/product-wrapper-s
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
-import { Card } from 'primeng/card';
 import { firstValueFrom } from 'rxjs';
 import { ProductCreate, ProductDetails, ProductUpdate } from 'src/client';
 import { ProductEdition } from '../product-edition/product-edition';
 
 @Component({
     selector: 'bp-product-card',
-    imports: [Card, Button, ConfirmModalComponent, ProductEdition],
+    imports: [Button, ConfirmModalComponent, ProductEdition],
     templateUrl: './product-card.html'
 })
 export class ProductCard {

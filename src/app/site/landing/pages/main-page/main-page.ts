@@ -10,4 +10,4 @@ import { PricingWidget } from '../../components/pricingwidget';
     templateUrl: './main-page.html',
     styleUrl: './main-page.scss'
 })
-export class MainPage {}
+export class MainPage { }

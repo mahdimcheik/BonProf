@@ -1,6 +1,6 @@
 import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, input } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Tooltip } from 'primeng/tooltip';

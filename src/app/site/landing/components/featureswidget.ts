@@ -96,4 +96,4 @@ import { Component } from '@angular/core';
         </div>
     `
 })
-export class FeaturesWidget {}
+export class FeaturesWidget { }

@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
     selector: 'footer-widget',
     imports: [RouterModule],
     template: `
-        <div class="flex flex-row gap-4 justify-center items-center h-[90px] bg-surface-0 dark:bg-surface-900">
+        <div class="flex flex-row gap-4 justify-center items-center h-[90px] bg-surface-0 dark:bg-surface-900" #footer>
             <div class="px-6 md:px-12">
                 <a (click)="router.navigate(['/'], { fragment: 'home' })" class="flex flex-wrap gap-2 items-center justify-center md:justify-start md:mb-0 mb-6 cursor-pointer">
                     <img [src]="mainService.logoUrl" alt="" width="50" height="50" />

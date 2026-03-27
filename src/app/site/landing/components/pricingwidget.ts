@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
-import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'pricing-widget',

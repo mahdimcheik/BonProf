@@ -5,14 +5,13 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, model, output, signal } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
-import { Card } from 'primeng/card';
 import { Tooltip } from 'primeng/tooltip';
 import { firstValueFrom } from 'rxjs';
 import { FormationCreate, FormationDetails, FormationUpdate } from 'src/client';
 
 @Component({
     selector: 'bp-formation-card',
-    imports: [DatePipe, FormationsEdition, ConfirmModalComponent, Card, Button, Tooltip],
+    imports: [DatePipe, FormationsEdition, ConfirmModalComponent, Button, Tooltip],
     templateUrl: './formation-card.html'
 })
 export class FormationCard {

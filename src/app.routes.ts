@@ -1,5 +1,6 @@
 import { ProfileEditionPage } from '@/pages/profile/profile-edition-page/profile-edition-page';
 import { ProfilePage } from '@/pages/profile/profile-page/profile-page';
+import { ReservationDetailsPage } from '@/pages/reservations/reservation-details/reservation-details';
 import { ReservationsPageStudent } from '@/pages/reservations/reservations-page-student/reservations-page-student';
 import { ReservationsPageTeacher } from '@/pages/reservations/reservations-page-teacher/reservations-page-teacher';
 import { isConnectedGuard, isNotConnectedGuard } from '@/pages/shared/guards/can-login.guard';
@@ -11,7 +12,6 @@ import { MentionsLegalesPage } from '@/site/landing/pages/mentions-legales-page/
 import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
-import { ReservationDetailsPage } from '@/pages/reservations/reservation-details/reservation-details';
 
 export const appRoutes: Routes = [
     {
@@ -55,10 +55,6 @@ export const appRoutes: Routes = [
                 path: 'teacher',
                 canActivate: [isTeacherOnlyGuard],
                 children: [
-                    // {
-                    //     path: 'profile/:id',
-                    //     component: ProfilePage
-                    // },
                     {
                         path: 'profile/:id/edition',
                         component: ProfileEditionPage
@@ -89,10 +85,6 @@ export const appRoutes: Routes = [
                 path: 'student',
                 canActivate: [isStudentOnlyGuard],
                 children: [
-                    // {
-                    //     path: 'profile/:id',
-                    //     loadComponent: () => import('./app/pages/profile/profile-student/profile-student').then((m) => m.ProfileStudent)
-                    // },
                     {
                         path: 'planning',
                         loadComponent: () => import('./app/pages/slots/calendar-student/calendar-student').then((m) => m.CalendarStudent)

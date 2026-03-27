@@ -1,13 +1,12 @@
+import { MainService } from '@/pages/shared/services/main.service';
 import { Component, computed, inject, input } from '@angular/core';
-import { UserDetails } from 'src/client';
-import { Card } from 'primeng/card';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { Tag } from 'primeng/tag';
-import { Image } from 'primeng/image';
-import { Button } from 'primeng/button';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { MainService } from '@/pages/shared/services/main.service';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { Button } from 'primeng/button';
+import { Image } from 'primeng/image';
+import { Tag } from 'primeng/tag';
+import { UserDetails } from 'src/client';
 
 @Component({
     selector: 'bp-teacher-card',

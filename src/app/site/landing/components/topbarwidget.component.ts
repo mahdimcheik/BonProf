@@ -6,11 +6,11 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { DrawerModule } from 'primeng/drawer';
+import { Image } from 'primeng/image';
 import { Menu } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
-import { Image } from 'primeng/image';
 
 @Component({
     selector: 'topbar-widget',

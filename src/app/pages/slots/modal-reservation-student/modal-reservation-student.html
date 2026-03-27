@@ -8,12 +8,12 @@
                 <h3 class="text-sm font-bold text-gray-700 dark:text-gray-200 uppercase tracking-wide">Professeur</h3>
             </div>
             <div class="flex items-center gap-3">
-                <p-avatar [image]="slot()?.teacher?.user?.imgUrl ?? undefined" [label]="!slot()?.teacher?.user?.imgUrl ? (slot()?.teacher?.user?.firstName?.charAt(0) ?? '?') : undefined" size="xlarge" shape="circle" />
+                <p-avatar [image]="slot().teacher?.user?.imgUrl ?? undefined" [label]="!slot().teacher?.user?.imgUrl ? (slot().teacher?.user?.firstName?.charAt(0) ?? '?') : undefined" size="xlarge" shape="circle" />
                 <div class="flex flex-col">
-                    <span class="font-semibold text-lg text-gray-900 dark:text-white"> {{ slot()?.teacher?.user?.firstName }} {{ slot()?.teacher?.user?.lastName }} </span>
+                    <span class="font-semibold text-lg text-gray-900 dark:text-white"> {{ slot().teacher?.user?.firstName }} {{ slot().teacher?.user?.lastName }} </span>
                     <span class="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
                         <i class="pi pi-envelope text-xs"></i>
-                        {{ slot()?.teacher?.user?.email }}
+                        {{ slot().teacher?.user?.email }}
                     </span>
                 </div>
             </div>

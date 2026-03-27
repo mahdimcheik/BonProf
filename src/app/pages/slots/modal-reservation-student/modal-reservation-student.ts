@@ -1,13 +1,12 @@
 import { BaseModalComponent } from '@/pages/components/base-modal/base-modal.component';
+import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 import { CalendarEvent } from '@/pages/shared/models/calendar-models';
-import { Component, computed, inject, model, OnInit, output, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
+import { Component, computed, model, OnInit, output, signal } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { ReservationDetails, SlotDetails, StatusReservationCode } from 'src/client';
-import { SlotWrapperService } from '@/pages/shared/services/slot-wrapper-service';
-import { ConfirmModalComponent } from '@/pages/components/confirm-modal/confirm-modal.component';
 
 @Component({
     selector: 'bp-modal-reservation-student',
@@ -42,7 +41,7 @@ export class ModalReservationStudent implements OnInit {
         return new Date(slot.dateTo) < new Date();
     });
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     removeClicked = output<ReservationDetails>();
 

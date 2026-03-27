@@ -23,7 +23,7 @@
             </p-card>
 
             <!-- Social Networks Card -->
-            @let teacher = user()?.teacher; @if(teacher ){
+            @let teacher = user().teacher; @if(teacher ){
             <p-card class="shadow-md hover:shadow-lg transition-shadow duration-200">
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
@@ -62,8 +62,8 @@
 
     <!-- Main Content -->
     <div class="flex-1 min-w-0">
-        <p-card class="shadow-md h-full w-full" [header]="user()?.title ?? 'Description'">
-            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="user()?.description ?? '' | safeHtml"></div>
+        <p-card class="shadow-md h-full w-full" [header]="user().title ?? 'Description'">
+            <div class="text-surface-700 dark:text-surface-300 break-words whitespace-normal overflow-wrap-anywhere" [innerHTML]="user().description ?? '' | safeHtml"></div>
         </p-card>
     </div>
 </div>
