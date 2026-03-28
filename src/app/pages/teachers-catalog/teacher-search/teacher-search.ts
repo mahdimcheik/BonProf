@@ -4,7 +4,7 @@ import { CursusWrapperService } from '@/pages/shared/services/cursus-wrapper-ser
 import { MainService } from '@/pages/shared/services/main.service';
 import { TeacherWrapperService } from '@/pages/shared/services/teacher-wrapper-service';
 import { FooterWidget } from '@/site/landing/components/footerwidget';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,7 @@ import { TeacherCard } from '../teacher-card/teacher-card';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider, NgClass],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider],
     styleUrls: ['./teacher-search.scss'],
     templateUrl: './teacher-search.html',
     providers: [CursusLevelPipe]
