@@ -44,15 +44,6 @@ export class ModalBookSlot {
                     styleClass: '!w-full',
                     fields: [
                         {
-                            id: 'title',
-                            name: 'title',
-                            type: 'text',
-                            label: 'Titre de la réservation',
-                            required: true,
-                            fullWidth: true,
-                            placeholder: 'Entrer le titre de la réservation'
-                        },
-                        {
                             id: 'ProductId',
                             name: 'ProductId',
                             type: 'select',
@@ -63,6 +54,15 @@ export class ModalBookSlot {
                             options: this.products(),
                             compareKey: 'id',
                             displayKey: 'name'
+                        },
+                        {
+                            id: 'title',
+                            name: 'title',
+                            type: 'text',
+                            label: 'Titre de la réservation',
+                            required: true,
+                            fullWidth: true,
+                            placeholder: 'Entrer le titre de la réservation'
                         },
                         {
                             id: 'description',
