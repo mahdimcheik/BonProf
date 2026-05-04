@@ -604,6 +604,33 @@ export interface Order {
     payment?: Payment;
 }
 
+export interface OrderDetails {
+    id: string;
+    orderNumber: string;
+    orderDate: Date;
+    totalAmount: number;
+    reductionPercentage?: number;
+    reductionAmount?: number;
+    status?: StatusOrderDetails;
+    student?: StudentDetails;
+    teacher?: TeacherDetails;
+    reservations?: Array<ReservationDetails>;
+}
+
+export interface OrderDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<OrderDetails>;
+    count?: number | null;
+}
+
+export interface OrderDetailsResponse {
+    message: string;
+    status: number;
+    data?: OrderDetails;
+    count?: number | null;
+}
+
 export enum OrderStatusEnum {
     Pending = "Pending",
     Paid = "Paid",
@@ -926,6 +953,13 @@ export interface StatusOrder {
     createdAt: Date;
     updatedAt?: Date | null;
     archivedAt?: Date | null;
+    name: string;
+    color: string;
+    icon?: string | null;
+}
+
+export interface StatusOrderDetails {
+    id: string;
     name: string;
     color: string;
     icon?: string | null;
