@@ -57,10 +57,10 @@ export class OrderService {
         return this.httpClient.post(url, customTableState, requestOptions);
     }
 
-    orderStudentActiveOrderGet(teacherId: string, observe?: 'body', options?: RequestOptions<'json'>): Observable<OrderDetailsResponse>;
-    orderStudentActiveOrderGet(teacherId: string, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<OrderDetailsResponse>>;
-    orderStudentActiveOrderGet(teacherId: string, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<OrderDetailsResponse>>;
-    orderStudentActiveOrderGet(teacherId: string, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
+    orderStudentActiveOrderGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<OrderDetailsResponse>;
+    orderStudentActiveOrderGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<OrderDetailsResponse>>;
+    orderStudentActiveOrderGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<OrderDetailsResponse>>;
+    orderStudentActiveOrderGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/order/student/active-order`;
 
         const requestOptions: any = {
