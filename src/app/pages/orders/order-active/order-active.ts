@@ -1,12 +1,12 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { OrderWrapperService } from '@/pages/shared/services/order-wrapper-service';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
-import { ReservationCard } from '../reservation-card/reservation-card';
+import { firstValueFrom } from 'rxjs';
 import { OrderDetails, StatusReservationCode } from 'src/client';
-import { OrderWrapperService } from '@/pages/shared/services/order-wrapper-service';
-import { first, firstValueFrom } from 'rxjs';
+import { ReservationCard } from '../reservation-card/reservation-card';
 
 @Component({
     selector: 'bp-order-active',
@@ -21,13 +21,14 @@ export class OrderActive implements OnInit {
     statusReservationCode = StatusReservationCode;
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        this.loadActiveOrder();
     }
 
     async loadActiveOrder() {
         const orderDetails = await firstValueFrom(this.orderService.getActiveOrder());
         if (orderDetails) {
             this.order.set(orderDetails);
+            console.log('Active order details : ', this.order());
         }
     }
 

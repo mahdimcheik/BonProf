@@ -25,22 +25,6 @@ export class OrderService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    orderTeacherOrdersPost(customTableState?: CustomTableState, observe?: 'body', options?: RequestOptions<'json'>): Observable<OrderDetailsListResponse>;
-    orderTeacherOrdersPost(customTableState?: CustomTableState, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<OrderDetailsListResponse>>;
-    orderTeacherOrdersPost(customTableState?: CustomTableState, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<OrderDetailsListResponse>>;
-    orderTeacherOrdersPost(customTableState?: CustomTableState, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/order/teacher/orders`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.post(url, customTableState, requestOptions);
-    }
-
     orderStudentOrdersPost(customTableState?: CustomTableState, observe?: 'body', options?: RequestOptions<'json'>): Observable<OrderDetailsListResponse>;
     orderStudentOrdersPost(customTableState?: CustomTableState, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<OrderDetailsListResponse>>;
     orderStudentOrdersPost(customTableState?: CustomTableState, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<OrderDetailsListResponse>>;

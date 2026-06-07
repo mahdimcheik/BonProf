@@ -143,6 +143,12 @@ export interface CategoryCursusUpdate {
     icon?: string | null;
 }
 
+export interface CheckoutRequest {
+    amount?: number;
+    currency?: string | null;
+    productName?: string | null;
+}
+
 export interface ConversationCreate {
     content: string;
     reservationId: string;
@@ -162,6 +168,10 @@ export interface ConversationDetailsListResponse {
     status: number;
     data?: Array<ConversationDetails>;
     count?: number | null;
+}
+
+export interface CreateAccountRequest {
+    email?: string | null;
 }
 
 export interface Cursus {
@@ -597,8 +607,6 @@ export interface Order {
     status?: StatusOrder;
     studentId: string;
     student?: Student;
-    teacherId: string;
-    teacher?: Teacher;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
@@ -1086,6 +1094,13 @@ export enum TransactionStatusEnum {
     Pending = "Pending",
     Paid = "Paid",
     Failed = "Failed"
+}
+
+export interface TransferRequest {
+    destinationAccountId?: string | null;
+    amount?: number;
+    currency?: string | null;
+    description?: string | null;
 }
 
 export interface TypeAddress {

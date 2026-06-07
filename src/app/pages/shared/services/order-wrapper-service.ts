@@ -9,16 +9,6 @@ import { OrderService } from 'src/client';
 export class OrderWrapperService {
     orderService = inject(OrderService);
 
-    getTeacherOrders(tableState: CustomTableState) {
-        return this.orderService.orderTeacherOrdersPost(tableState).pipe(
-            catchError((res) => {
-                console.log('error res : ', res);
-                return of();
-            }),
-            map((response) => response.data || [])
-        );
-    }
-
     getStudentOrders(tableState: CustomTableState) {
         return this.orderService.orderStudentOrdersPost(tableState).pipe(
             catchError((res) => {

@@ -18,6 +18,7 @@ export { LanguagesService } from "./languages.service";
 export { LevelCursusService } from "./levelCursus.service";
 export { NotificationsService } from "./notifications.service";
 export { OrderService } from "./order.service";
+export { PaymentService } from "./payment.service";
 export { ProductService } from "./product.service";
 export { RolesService } from "./roles.service";
 export { SlotsService } from "./slots.service";
