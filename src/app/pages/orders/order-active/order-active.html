@@ -1,39 +1,42 @@
 <div class="w-full">
     <p-card class="shadow-md">
         <ng-template pTemplate="header">
-            <div class="flex flex-col gap-4 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-surface-800 dark:to-surface-700">
-                <h2 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">Commande #{{ order().orderNumber }}</h2>
-                <div class="flex flex-col gap-2 text-sm">
-                    <div class="flex gap-4">
-                        <span class="text-surface-600 dark:text-surface-400"> <i class="pi pi-calendar mr-2"></i>Date: {{ order().orderDate | date: 'dd/MM/yyyy HH:mm' }} </span>
-                        <span class="text-surface-600 dark:text-surface-400">
-                            <i class="pi pi-bookmark mr-2"></i>
-                            <span
-                                class="px-2 py-1 rounded-full"
-                                [ngClass]="order().status?.name === statusReservationCode.Accepted? 'bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100'"
-                            >
-                                {{ order().status?.name }}
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-6">
+                <div class="flex flex-col gap-4">
+                    <h2 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">Commande #{{ order().orderNumber }}</h2>
+                    <div class="flex flex-col gap-2 text-sm">
+                        <div class="flex gap-4">
+                            <span class="text-surface-600 dark:text-surface-400"> <i class="pi pi-calendar mr-2"></i>Date: {{ order().orderDate | date: 'dd/MM/yyyy HH:mm' }} </span>
+                            <span class="text-surface-600 dark:text-surface-400">
+                                <i class="pi pi-bookmark mr-2"></i>
+                                <span
+                                    class="px-2 py-1 rounded-full"
+                                    [ngClass]="order().status?.name === statusReservationCode.Accepted? 'bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-100' : 'bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100'"
+                                >
+                                    {{ order().status?.name }}
+                                </span>
                             </span>
-                        </span>
+                        </div>
                     </div>
                 </div>
+                <bp-countdown [time]="300"></bp-countdown>
             </div>
         </ng-template>
 
         <!-- Order Information Section -->
         <div class="flex flex-col gap-6 p-6">
-            <!-- Order Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="flex flex-col gap-2">
-                    <label class="text-sm font-semibold text-surface-600 dark:text-surface-400">Étudiant</label>
-                    <span class="text-surface-900 dark:text-surface-0">{{ order().student?.user?.firstName }} {{ order().student?.user?.lastName }}</span>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label class="text-sm font-semibold text-surface-600 dark:text-surface-400">Professeur</label>
-                    <span class="text-surface-900 dark:text-surface-0">{{ order().teacher?.user?.firstName }} {{ order().teacher?.user?.lastName }}</span>
+            <!-- Reservations Section -->
+            <div class="flex flex-col gap-4">
+                <h3 class="text-lg font-bold text-surface-900 dark:text-surface-0">Réservations ({{ order().reservations?.length || 0 }})</h3>
+
+                <div class="flex flex-col gap-3">
+                    @for (reservation of order().reservations; track reservation.id) {
+                    <bp-reservation-card [reservation]="reservation"></bp-reservation-card>
+                    } @empty {
+                    <p class="text-center text-surface-500 dark:text-surface-400 py-8">Aucune réservation dans cette commande</p>
+                    }
                 </div>
             </div>
-
             <p-divider></p-divider>
 
             <!-- Pricing Summary -->
@@ -51,21 +54,6 @@
                 <div class="flex justify-between text-lg font-bold text-surface-900 dark:text-surface-0 pt-3 border-t border-surface-200 dark:border-surface-600">
                     <span>Total à payer:</span>
                     <span>{{ order().totalAmount - (order().reductionAmount || 0) }}€</span>
-                </div>
-            </div>
-
-            <p-divider></p-divider>
-
-            <!-- Reservations Section -->
-            <div class="flex flex-col gap-4">
-                <h3 class="text-lg font-bold text-surface-900 dark:text-surface-0">Réservations ({{ order().reservations?.length || 0 }})</h3>
-
-                <div class="flex flex-col gap-3">
-                    @for (reservation of order().reservations; track reservation.id) {
-                    <bp-reservation-card [reservation]="reservation"></bp-reservation-card>
-                    } @empty {
-                    <p class="text-center text-surface-500 dark:text-surface-400 py-8">Aucune réservation dans cette commande</p>
-                    }
                 </div>
             </div>
         </div>

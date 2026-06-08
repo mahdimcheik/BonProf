@@ -1,8 +1,9 @@
+import { Countdown } from '@/pages/components/countdown/countdown';
 import { OrderWrapperService } from '@/pages/shared/services/order-wrapper-service';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Button } from 'primeng/button';
-import { Card } from 'primeng/card';
+import { CardModule } from 'primeng/card';
 import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
 import { OrderDetails, StatusReservationCode } from 'src/client';
@@ -10,7 +11,7 @@ import { ReservationCard } from '../reservation-card/reservation-card';
 
 @Component({
     selector: 'bp-order-active',
-    imports: [CommonModule, Button, Card, Divider, ReservationCard],
+    imports: [CommonModule, Button, CardModule, Divider, ReservationCard, Countdown],
     templateUrl: './order-active.html',
     styleUrl: './order-active.scss'
 })
