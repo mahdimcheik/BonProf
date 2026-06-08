@@ -623,6 +623,7 @@ export interface OrderDetails {
     student?: StudentDetails;
     teacher?: TeacherDetails;
     reservations?: Array<ReservationDetails>;
+    updatedAt?: Date | null;
 }
 
 export interface OrderDetailsListResponse {

@@ -1,7 +1,9 @@
-<div class="w-full">
-    <p-card class="shadow-md">
-        <ng-template pTemplate="header">
-            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-6">
+@if(totalPrice() > 0) {
+
+<div class="w-full h-[calc(100%-2rem)] flex flex-col justify-between">
+    <div>
+        <div class="header shrink-0 border-b border-surface-200 dark:border-surface-700">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-2">
                 <div class="flex flex-col gap-4">
                     <h2 class="text-2xl font-bold text-surface-900 dark:text-surface-0 m-0">Commande #{{ order().orderNumber }}</h2>
                     <div class="flex flex-col gap-2 text-sm">
@@ -19,51 +21,64 @@
                         </div>
                     </div>
                 </div>
-                <bp-countdown [time]="25"></bp-countdown>
+                @if(totalPrice() > 0 && leftTime() > 0) {
+                <bp-countdown [time]="leftTime()" (onExpiration)="reload()"></bp-countdown>
+                }
             </div>
-        </ng-template>
+        </div>
 
-        <!-- Order Information Section -->
-        <div class="flex flex-col gap-6 p-6">
+        <!-- Order Information Section (scrollable body) -->
+        <div class="flex-1 min-h-0 overflow-y-auto flex flex-col gap-6">
             <!-- Reservations Section -->
             <div class="flex flex-col gap-4">
                 <h3 class="text-lg font-bold text-surface-900 dark:text-surface-0">Réservations ({{ order().reservations?.length || 0 }})</h3>
 
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-3 overflow-y-auto !max-h-[500px] scrollbar-off">
                     @for (reservation of order().reservations; track reservation.id) {
+
                     <bp-reservation-card [reservation]="reservation"></bp-reservation-card>
                     } @empty {
                     <p class="text-center text-surface-500 dark:text-surface-400 py-8">Aucune réservation dans cette commande</p>
                     }
                 </div>
             </div>
-            <p-divider></p-divider>
+        </div>
+    </div>
 
-            <!-- Pricing Summary -->
-            <div class="flex flex-col gap-3">
-                <div class="flex justify-between text-surface-700 dark:text-surface-300">
-                    <span>Montant total:</span>
-                    <span class="font-semibold">{{ order().totalAmount }}€</span>
-                </div>
-                @if (order().reductionPercentage || order().reductionAmount) {
-                <div class="flex justify-between text-orange-600 dark:text-orange-400">
-                    <span>Réduction:</span>
-                    <span class="font-semibold"> @if (order().reductionPercentage) { -{{ order().reductionPercentage }}% } @if (order().reductionAmount) { -{{ order().reductionAmount }}€ } </span>
-                </div>
-                }
-                <div class="flex justify-between text-lg font-bold text-surface-900 dark:text-surface-0 pt-3 border-t border-surface-200 dark:border-surface-600">
-                    <span>Total à payer:</span>
-                    <span>{{ order().totalAmount - (order().reductionAmount || 0) }}€</span>
-                </div>
+    <!-- Footer with Actions -->
+    <div class="shrink-0 border-t border-surface-200 dark:border-surface-700">
+        <!-- Pricing Summary -->
+        <div class="flex flex-col gap-3 p-6 pb-0">
+            <div class="flex justify-between text-surface-700 dark:text-surface-300">
+                <span>Montant total:</span>
+                <span class="font-semibold">{{ order().totalAmount }}€</span>
+            </div>
+            @if (order().reductionPercentage || order().reductionAmount) {
+            <div class="flex justify-between text-orange-600 dark:text-orange-400">
+                <span>Réduction:</span>
+                <span class="font-semibold"> @if (order().reductionPercentage) { -{{ order().reductionPercentage }}% } @if (order().reductionAmount) { -{{ order().reductionAmount }}€ } </span>
+            </div>
+            }
+            <div class="flex justify-between text-lg font-bold text-surface-900 dark:text-surface-0 pt-3 border-t border-surface-200 dark:border-surface-600">
+                <span>Total à payer:</span>
+                <span>{{ order().totalAmount - (order().reductionAmount || 0) }}€</span>
             </div>
         </div>
-
-        <!-- Footer with Actions -->
-        <ng-template pTemplate="footer">
-            <div class="flex gap-3 justify-end p-6 bg-surface-50 dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700">
-                <p-button label="Retour" severity="secondary" (onClick)="goBack()" icon="pi pi-arrow-left"></p-button>
-                <p-button label="Payer" severity="success" (onClick)="openPayment()" icon="pi pi-credit-card" [disabled]="order().status?.name === statusReservationCode.Accepted"></p-button>
-            </div>
-        </ng-template>
+        <div class="flex gap-3 justify-end p-6 bg-surface-50 dark:bg-surface-800 border-t border-surface-200 dark:border-surface-700 rounded-lg">
+            <p-button label="Retour" severity="secondary" (onClick)="goBack()" icon="pi pi-arrow-left"></p-button>
+            <p-button label="Payer" severity="success" (onClick)="openPayment()" icon="pi pi-credit-card" [disabled]="order().status?.name === statusReservationCode.Accepted"></p-button>
+        </div>
+    </div>
+</div>
+}@else {
+<div class="w-full">
+    <p-card class="shadow-md">
+        <div class="flex flex-col items-center gap-4 p-6">
+            <i class="pi pi-info-circle text-4xl text-surface-400"></i>
+            <h2 class="text-xl font-bold text-surface-900 dark:text-surface-0">Aucune commande active</h2>
+            <p class="text-center text-surface-600 dark:text-surface-400">Vous n'avez aucune commande en cours. Passez une commande pour voir les détails ici.</p>
+            <p-button label="Retour" severity="secondary" (onClick)="goBack()" icon="pi pi-history"></p-button>
+        </div>
     </p-card>
 </div>
+}
