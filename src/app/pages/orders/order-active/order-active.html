@@ -36,7 +36,7 @@
                 <div class="flex flex-col gap-3 overflow-y-auto !max-h-[500px] scrollbar-off">
                     @for (reservation of order().reservations; track reservation.id) {
 
-                    <bp-reservation-card [reservation]="reservation"></bp-reservation-card>
+                    <bp-reservation-card [reservation]="reservation" (onChange)="reload()"></bp-reservation-card>
                     } @empty {
                     <p class="text-center text-surface-500 dark:text-surface-400 py-8">Aucune réservation dans cette commande</p>
                     }

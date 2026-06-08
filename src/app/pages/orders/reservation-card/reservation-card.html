@@ -76,3 +76,7 @@
         }
     </div>
 </div>
+
+@if(showDeleteConfirm()){
+<bp-confirm-modal title="Confirmer la suppression" question="Etes vous sur de vouloir supprimer la reservation?" [(visible)]="showDeleteConfirm" (onCancel)="showDeleteConfirm.set(false)" (onConfirm)="removeReservation()"></bp-confirm-modal>
+}
