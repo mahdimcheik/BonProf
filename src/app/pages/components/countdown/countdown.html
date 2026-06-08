@@ -1,30 +1,13 @@
 <div class="countdown" [class.countdown--finished]="finished()">
     <div class="countdown__unit">
-        <div class="countdown__digits">
-            @for (digit of minuteDigits(); track $index) {
-                <span class="countdown__slot">
-                    <!-- Re-created on value change so the enter animation replays. -->
-                    @for (d of [digit]; track d) {
-                        <span class="countdown__digit" animate.enter="countdown__digit--in">{{ d }}</span>
-                    }
-                </span>
-            }
-        </div>
+        <span class="countdown__value">{{ minutes() }}</span>
         <span class="countdown__label">min</span>
     </div>
 
     <span class="countdown__separator">:</span>
 
     <div class="countdown__unit">
-        <div class="countdown__digits">
-            @for (digit of secondDigits(); track $index) {
-                <span class="countdown__slot">
-                    @for (d of [digit]; track d) {
-                        <span class="countdown__digit" animate.enter="countdown__digit--in">{{ d }}</span>
-                    }
-                </span>
-            }
-        </div>
+        <span class="countdown__value">{{ seconds() }}</span>
         <span class="countdown__label">sec</span>
     </div>
 </div>

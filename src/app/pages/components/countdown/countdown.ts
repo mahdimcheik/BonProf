@@ -25,12 +25,11 @@ export class Countdown implements OnInit {
     private readonly destroyRef = inject(DestroyRef);
     private readonly remaining = signal(0);
 
-    /** Two-digit minutes / seconds, split per digit for independent animation. */
-    protected readonly minuteDigits = computed(() =>
-        this.toDigits(Math.floor(this.remaining() / 60))
+    protected readonly minutes = computed(() =>
+        this.pad(Math.floor(this.remaining() / 60))
     );
-    protected readonly secondDigits = computed(() =>
-        this.toDigits(this.remaining() % 60)
+    protected readonly seconds = computed(() =>
+        this.pad(this.remaining() % 60)
     );
     protected readonly finished = computed(() => this.remaining() <= 0);
 
@@ -49,7 +48,7 @@ export class Countdown implements OnInit {
             });
     }
 
-    private toDigits(value: number): string[] {
-        return value.toString().padStart(2, '0').split('');
+    private pad(value: number): string {
+        return value.toString().padStart(2, '0');
     }
 }
