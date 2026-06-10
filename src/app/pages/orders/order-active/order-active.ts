@@ -17,9 +17,9 @@ import { ReservationCard } from '../reservation-card/reservation-card';
 })
 export class OrderActive implements OnInit {
     orderService = inject(OrderWrapperService);
+
     order = signal<OrderDetails>({} as OrderDetails);
     totalPrice = computed(() => this.order().totalAmount);
-    showPaymentModal = signal(false);
     statusReservationCode = StatusReservationCode;
     leftTime = signal<number>(0);
 
@@ -44,9 +44,18 @@ export class OrderActive implements OnInit {
     reload() {
         this.loadActiveOrder();
     }
+    slowReload() {
+        setTimeout(() => {
+            this.loadActiveOrder();
+        }, 2000);
+    }
 
-    openPayment() {
-        this.showPaymentModal.set(true);
+    async openPayment() {
+        const res = await firstValueFrom(this.orderService.createCheckoutSession(this.order().id!));
+        console.log('response: ', res);
+        if (res && res.url) {
+            window.location.href = res.url!;
+        }
     }
 
     goBack() {

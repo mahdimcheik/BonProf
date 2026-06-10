@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { CheckoutRequest, RequestOptions, CreateAccountRequest, TransferRequest } from "../models";
+import { CheckoutRequest, RequestOptions, ObjectResponse, CreateAccountRequest, TransferRequest } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class PaymentService {
@@ -25,9 +25,9 @@ export class PaymentService {
         return context.set(this.clientContextToken, 'default');
     }
 
-    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
-    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
-    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
     paymentCheckoutPost(checkoutRequest?: CheckoutRequest, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/payment/checkout`;
 
@@ -41,9 +41,9 @@ export class PaymentService {
         return this.httpClient.post(url, checkoutRequest, requestOptions);
     }
 
-    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
-    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
-    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
     paymentConnectAccountPost(createAccountRequest?: CreateAccountRequest, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/payment/connect/account`;
 
@@ -57,9 +57,9 @@ export class PaymentService {
         return this.httpClient.post(url, createAccountRequest, requestOptions);
     }
 
-    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
-    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
-    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
     paymentConnectTransferPost(transferRequest?: TransferRequest, observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/payment/connect/transfer`;
 
@@ -73,9 +73,9 @@ export class PaymentService {
         return this.httpClient.post(url, transferRequest, requestOptions);
     }
 
-    paymentWebhookPost(observe?: 'body', options?: RequestOptions<'json'>): Observable<any>;
-    paymentWebhookPost(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<any>>;
-    paymentWebhookPost(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<any>>;
+    paymentWebhookPost(observe?: 'body', options?: RequestOptions<'json'>): Observable<ObjectResponse>;
+    paymentWebhookPost(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<ObjectResponse>>;
+    paymentWebhookPost(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<ObjectResponse>>;
     paymentWebhookPost(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
         const url = `${this.basePath}/payment/webhook`;
 

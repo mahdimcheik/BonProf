@@ -144,9 +144,8 @@ export interface CategoryCursusUpdate {
 }
 
 export interface CheckoutRequest {
-    amount?: number;
+    orderId?: string;
     currency?: string | null;
-    productName?: string | null;
 }
 
 export interface ConversationCreate {

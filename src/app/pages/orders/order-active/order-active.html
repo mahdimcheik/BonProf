@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 @if(totalPrice() > 0 && leftTime() > 0) {
-                <bp-countdown [time]="leftTime()" (onExpiration)="reload()"></bp-countdown>
+                <bp-countdown [time]="leftTime()" (onExpiration)="slowReload()"></bp-countdown>
                 }
             </div>
         </div>
