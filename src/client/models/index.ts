@@ -143,6 +143,11 @@ export interface CategoryCursusUpdate {
     icon?: string | null;
 }
 
+export interface CheckoutRequest {
+    orderId?: string;
+    currency?: string | null;
+}
+
 export interface ConversationCreate {
     content: string;
     reservationId: string;
@@ -162,6 +167,10 @@ export interface ConversationDetailsListResponse {
     status: number;
     data?: Array<ConversationDetails>;
     count?: number | null;
+}
+
+export interface CreateAccountRequest {
+    email?: string | null;
 }
 
 export interface Cursus {
@@ -597,11 +606,37 @@ export interface Order {
     status?: StatusOrder;
     studentId: string;
     student?: Student;
-    teacherId: string;
-    teacher?: Teacher;
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
+}
+
+export interface OrderDetails {
+    id: string;
+    orderNumber: string;
+    orderDate: Date;
+    totalAmount: number;
+    reductionPercentage?: number;
+    reductionAmount?: number;
+    status?: StatusOrderDetails;
+    student?: StudentDetails;
+    teacher?: TeacherDetails;
+    reservations?: Array<ReservationDetails>;
+    updatedAt?: Date | null;
+}
+
+export interface OrderDetailsListResponse {
+    message: string;
+    status: number;
+    data?: Array<OrderDetails>;
+    count?: number | null;
+}
+
+export interface OrderDetailsResponse {
+    message: string;
+    status: number;
+    data?: OrderDetails;
+    count?: number | null;
 }
 
 export enum OrderStatusEnum {
@@ -931,6 +966,13 @@ export interface StatusOrder {
     icon?: string | null;
 }
 
+export interface StatusOrderDetails {
+    id: string;
+    name: string;
+    color: string;
+    icon?: string | null;
+}
+
 export interface StatusReservation {
     id?: string;
     createdAt: Date;
@@ -1052,6 +1094,13 @@ export enum TransactionStatusEnum {
     Pending = "Pending",
     Paid = "Paid",
     Failed = "Failed"
+}
+
+export interface TransferRequest {
+    destinationAccountId?: string | null;
+    amount?: number;
+    currency?: string | null;
+    description?: string | null;
 }
 
 export interface TypeAddress {

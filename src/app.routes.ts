@@ -105,6 +105,10 @@ export const appRoutes: Routes = [
                         path: 'fast-search',
                         loadComponent: () => import('./app/pages/teachers-catalog/teacher-search/teacher-search').then((m) => m.TeacherSearch)
                     },
+                    {
+                        path: 'active-order',
+                        loadComponent: () => import('./app/pages/orders/order-active/order-active').then((m) => m.OrderActive)
+                    }
                 ]
             },
             {

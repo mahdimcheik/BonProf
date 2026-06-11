@@ -115,11 +115,6 @@ export class MainService {
             ];
         } else if (this.isStudent()) {
             return [
-                // {
-                //     label: 'Général',
-                //     root: true
-                // },
-                // { label: 'Activités', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
                 {
                     label: 'Administration',
                     root: true
@@ -127,7 +122,8 @@ export class MainService {
                 { label: 'Profile', icon: 'pi pi-fw pi-id-card', routerLink: ['/dashboard/student/profile/me/edition'] },
                 { label: 'Planning', icon: 'pi pi-fw pi-check-square', routerLink: ['/dashboard/student/planning'] },
                 { label: 'Reservations', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/reservations'] },
-                { label: 'Trouver un prof', icon: 'pi pi-fw pi-calendar', routerLink: ['/dashboard/student/fast-search'] },
+                { label: 'Trouver un prof', icon: 'pi pi-fw pi-search', routerLink: ['/dashboard/student/fast-search'] },
+                { label: 'commandes', icon: 'pi pi-fw pi-list-check', routerLink: ['/dashboard/student/active-order'] }
             ];
         } else return [];
     });

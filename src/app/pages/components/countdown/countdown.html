@@ -1,0 +1,13 @@
+<div class="countdown" [class.countdown--finished]="finished()">
+    <div class="countdown__unit">
+        <span class="countdown__value">{{ minutes() }}</span>
+        <span class="countdown__label">min</span>
+    </div>
+
+    <span class="countdown__separator">:</span>
+
+    <div class="countdown__unit">
+        <span class="countdown__value">{{ seconds() }}</span>
+        <span class="countdown__label">sec</span>
+    </div>
+</div>

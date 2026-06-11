@@ -1,0 +1,82 @@
+<div class="shadow-sm hover:shadow-md transition-shadow duration-200 border border-surface-200 dark:border-surface-700 rounded-lg px-3 py-2.5 bg-surface-50 dark:bg-surface-800">
+    <div class="flex flex-col gap-2">
+        <!-- Header with Title and Actions -->
+        <div class="flex justify-between items-start gap-2">
+            <div class="flex flex-col gap-0.5 flex-1 min-w-0">
+                <h4 class="text-base font-semibold text-surface-900 dark:text-surface-0 m-0 truncate">{{ reservation().title }}</h4>
+
+                @if (reservation().description) {
+                <p class="text-xs text-surface-600 dark:text-surface-400 m-0 truncate"><i class="pi pi-align-left text-xs mr-1"></i>{{ reservation().description }}</p>
+                }
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-1 flex-shrink-0">
+                <!-- <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="secondary" size="small" (onClick)="openEdit()" pTooltip="Modifier" tooltipPosition="top"></p-button> -->
+                <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" size="small" (onClick)="openDeleteConfirm()" pTooltip="Supprimer" tooltipPosition="top"></p-button>
+            </div>
+        </div>
+
+        <!-- Reservation Details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+            <!-- Product -->
+            @if (reservation().product) {
+            <div class="flex items-center gap-2">
+                <i class="pi pi-book text-surface-500 dark:text-surface-400 text-sm"></i>
+                <span class="text-surface-500 dark:text-surface-400">Cours:</span>
+                <span class="text-surface-900 dark:text-surface-0 font-medium truncate">{{ reservation().product?.name }}</span>
+            </div>
+            }
+
+            <!-- Status -->
+            @if (reservation().status) {
+            <div class="flex items-center gap-2">
+                <i class="pi pi-check-circle text-surface-500 dark:text-surface-400 text-sm"></i>
+                <span class="text-surface-500 dark:text-surface-400">Statut:</span>
+                <span
+                    class="px-1.5 py-0.5 rounded text-xs font-semibold w-fit"
+                    [ngClass]="reservation().status?.code === statusReservationCode.Accepted
+              ? 'bg-green-200 text-green-800 dark:bg-green-900 dark:text-green-100'
+              : reservation().status?.code === statusReservationCode.Pending
+              ? 'bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100'
+              : reservation().status?.code === statusReservationCode.Cancelled
+              ? 'bg-red-200 text-red-800 dark:bg-red-900 dark:text-red-100'
+              : 'bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-100'"
+                >
+                    {{ reservation().status?.name }}
+                </span>
+            </div>
+            }
+
+            <!-- Student -->
+            @if (reservation().student) {
+            <div class="flex items-center gap-2">
+                <i class="pi pi-user text-surface-500 dark:text-surface-400 text-sm"></i>
+                <span class="text-surface-500 dark:text-surface-400">Étudiant:</span>
+                <span class="text-surface-900 dark:text-surface-0 font-medium truncate"> {{ reservation().student?.user?.firstName }} {{ reservation().student?.user?.lastName }} </span>
+            </div>
+            }
+
+            <!-- Slot Info -->
+            @if (reservation().slot) {
+            <div class="flex items-center gap-2">
+                <i class="pi pi-calendar text-surface-500 dark:text-surface-400 text-sm"></i>
+                <span class="text-surface-500 dark:text-surface-400">Créneau:</span>
+                <span class="text-surface-900 dark:text-surface-0 font-medium"> {{ reservation().slot?.dateFrom | date: 'dd/MM HH:mm' }} - {{ reservation().slot?.dateTo | date: 'HH:mm' }} </span>
+            </div>
+            }
+        </div>
+
+        <!-- Price Info -->
+        @if (reservation().product?.price) {
+        <div class="flex justify-between items-center pt-1.5 border-t border-surface-200 dark:border-surface-600">
+            <span class="text-surface-600 dark:text-surface-400 text-xs">Prix:</span>
+            <span class="text-base font-bold text-surface-900 dark:text-surface-0">{{ reservation().product?.price }}€</span>
+        </div>
+        }
+    </div>
+</div>
+
+@if(showDeleteConfirm()){
+<bp-confirm-modal title="Confirmer la suppression" question="Etes vous sur de vouloir supprimer la reservation?" [(visible)]="showDeleteConfirm" (onCancel)="showDeleteConfirm.set(false)" (onConfirm)="removeReservation()"></bp-confirm-modal>
+}
