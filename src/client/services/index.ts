@@ -27,3 +27,4 @@ export { StudentsService } from "./students.service";
 export { TeachersService } from "./teachers.service";
 export { TypeAddressesService } from "./typeAddresses.service";
 export { TypeSlotsService } from "./typeSlots.service";
+export { UserManagementService } from "./userManagement.service";

@@ -1,11 +1,13 @@
+import { MainService } from '@/pages/shared/services/main.service';
+import { PaymentWrapperService } from '@/pages/shared/services/payment-wrapper-service';
 import { Component, computed, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
 import { Tag } from 'primeng/tag';
+import { firstValueFrom } from 'rxjs';
 import { UserDetails } from 'src/client';
-import { MainService } from '@/pages/shared/services/main.service';
 
 @Component({
     selector: 'bp-profile-infos',
@@ -14,6 +16,7 @@ import { MainService } from '@/pages/shared/services/main.service';
 })
 export class ProfileInfos {
     mainService = inject(MainService);
+    paymentWrapperService = inject(PaymentWrapperService);
     router = inject(Router);
 
     user = input.required<UserDetails>();
@@ -37,6 +40,14 @@ export class ProfileInfos {
             if (this.mainService.isStudent()) {
                 this.router.navigate(['/dashboard/student/profile', 'me', 'edition'], { queryParams: { tab: 'personnalInfos' } });
             }
+        }
+    }
+
+    async connectToStripe() {
+        const res = await firstValueFrom(this.paymentWrapperService.CreateConnectedAccountAsync({ email: this.user().email! }));
+        console.log('response: ', res);
+        if (res && res.onboardingUrl) {
+            window.location.href = res.onboardingUrl!;
         }
     }
 }

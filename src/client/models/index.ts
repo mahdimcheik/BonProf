@@ -319,6 +319,14 @@ export interface FilterTeacher {
     radius?: number;
 }
 
+export interface FilterUserManagement {
+    name?: string | null;
+    isConfirmed?: boolean | null;
+    roleId?: string;
+    first?: number;
+    row?: number | null;
+}
+
 export interface ForgotPassword {
     email: string;
 }
@@ -609,6 +617,7 @@ export interface Order {
     reservations?: Array<Reservation>;
     paymentId?: string;
     payment?: Payment;
+    checkoutID?: string | null;
 }
 
 export interface OrderDetails {
@@ -676,7 +685,7 @@ export interface Payment {
     method?: PaymentMethod;
     orderId: string;
     order?: Order;
-    transactionRef?: string;
+    transactionRef?: string | null;
 }
 
 export interface PaymentMethod {
@@ -1050,8 +1059,9 @@ export interface Teacher {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative: number;
-    isProfessionnal: boolean;
-    siret?: number | null;
+    siret: number;
+    isConfirmed?: boolean;
+    stripeAccount?: string | null;
     cursuses?: Array<Cursus>;
     experiences?: Array<Experience>;
     slots?: Array<Slot>;
@@ -1059,7 +1069,7 @@ export interface Teacher {
 
 export interface TeacherCreate {
     isProfessionnal: boolean;
-    siret?: number | null;
+    siret: number;
 }
 
 export interface TeacherDetails {
@@ -1072,9 +1082,17 @@ export interface TeacherDetails {
     gitHub?: string | null;
     twitter?: string | null;
     priceIndicative?: number;
-    isProfessionnal?: boolean;
     siret?: number | null;
+    isConfirmed?: boolean;
+    stripeAccount?: string | null;
     user?: UserMinimalDetails;
+}
+
+export interface TeacherDetailsResponse {
+    message: string;
+    status: number;
+    data?: TeacherDetails;
+    count?: number | null;
 }
 
 export enum TeacherTransactionTypeEnum {

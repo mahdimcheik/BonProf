@@ -38,12 +38,24 @@
                         <i class="pi pi-at text-xl text-primary"></i>
                         <span class="text-base">{{user().email}}</span>
                     </div>
-                    @if(user().teacher && user().teacher?.isProfessionnal && user().teacher?.siret) {
+
                     <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
                         <i class="pi pi-verified text-xl text-primary"></i>
                         <span class="text-base">SIRET : {{user().teacher?.siret}}</span>
                     </div>
-                    }
+                    <div class="flex items-center gap-3 text-surface-700 dark:text-surface-300">
+                        @if(!user().teacher?.isConfirmed){
+
+                        <i class="pi pi-times text-xl text-primary text-red-500"></i>
+                        }@else {
+                        <i class="pi pi-verified text-xl text-primary"></i>
+                        }
+                        <span class="text-base"
+                            >{{user().teacher?.isConfirmed ? 'Compte verifié' : 'Compte non verifié'}} @if(!user().teacher?.isConfirmed){
+                            <p-button label="Completer mon profil" icon="pi pi-chevron-right" iconPos="right" size="small" styleClass="text-primary" [text]="true" (onClick)="connectToStripe()" />
+                            }</span
+                        >
+                    </div>
                 </div>
             </div>
 
