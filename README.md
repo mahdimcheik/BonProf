@@ -23,6 +23,7 @@ BonProf se distingue des autres plateformes de soutien scolaire par son approche
    - Système de planification intelligent avec calendrier interactif
    - Visualisation en temps réel des disponibilités
    - Synchronisation automatique des emplois du temps
+   - 
 
 2. **💳 Paiement Intégré**
    - Gestion complète des transactions
