@@ -117,6 +117,19 @@ export const appRoutes: Routes = [
             }
         ]
     },
+    {
+        path: 'payment',
+        children: [
+            {
+                path: 'success',
+                loadComponent: () => import('./app/pages/payments/payment-success/payment-success').then((m) => m.PaymentSuccess)
+            },
+            {
+                path: 'cancel',
+                loadComponent: () => import('./app/pages/payments/payment-canceled/payment-canceled').then((m) => m.PaymentCanceled)
+            }
+        ]
+    },
     { path: 'notfound', component: Notfound },
     { path: '**', redirectTo: '/notfound' }
 ];
