@@ -303,13 +303,6 @@ export interface FavoriteDetails {
     createdAt?: Date;
 }
 
-export interface FavoriteDetailsListResponse {
-    message: string;
-    status: number;
-    data?: Array<FavoriteDetails>;
-    count?: number | null;
-}
-
 export interface FavoriteDetailsResponse {
     message: string;
     status: number;
@@ -347,6 +340,7 @@ export interface FilterTeacher {
     dateTo?: Date | null;
     fullName?: string | null;
     cursusName?: string | null;
+    inFavorites?: boolean | null;
     categoryIds?: Array<string>;
     levelIds?: Array<string>;
     first?: number;

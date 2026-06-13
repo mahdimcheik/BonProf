@@ -12,7 +12,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { BASE_PATH_DEFAULT, CLIENT_CONTEXT_TOKEN_DEFAULT } from "../tokens";
 import { HttpParamsBuilder } from "../utils/http-params-builder";
-import { RequestOptions, FavoriteDetailsListResponse, CreateFavorite, FavoriteDetailsResponse, ObjectResponse, BooleanResponse } from "../models";
+import { CreateFavorite, RequestOptions, FavoriteDetailsResponse, ObjectResponse, BooleanResponse } from "../models";
 
 @Injectable({ providedIn: "root" })
 export class FavoritesService {
@@ -23,22 +23,6 @@ export class FavoritesService {
     private createContextWithClientId(existingContext?: HttpContext): HttpContext {
         const context = existingContext || new HttpContext();
         return context.set(this.clientContextToken, 'default');
-    }
-
-    favoritesStudentGet(observe?: 'body', options?: RequestOptions<'json'>): Observable<FavoriteDetailsListResponse>;
-    favoritesStudentGet(observe?: 'response', options?: RequestOptions<'json'>): Observable<HttpResponse<FavoriteDetailsListResponse>>;
-    favoritesStudentGet(observe?: 'events', options?: RequestOptions<'json'>): Observable<HttpEvent<FavoriteDetailsListResponse>>;
-    favoritesStudentGet(observe?: 'body' | 'events' | 'response', options?: RequestOptions<'arraybuffer' | 'blob' | 'json' | 'text'>): Observable<any> {
-        const url = `${this.basePath}/favorites/student`;
-
-        const requestOptions: any = {
-            observe: observe as any,
-            reportProgress: options?.reportProgress,
-            withCredentials: options?.withCredentials,
-            context: this.createContextWithClientId(options?.context)
-        };
-
-        return this.httpClient.get(url, requestOptions);
     }
 
     favoritesAddPost(createFavorite?: CreateFavorite, observe?: 'body', options?: RequestOptions<'json'>): Observable<FavoriteDetailsResponse>;
