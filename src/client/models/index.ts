@@ -173,6 +173,11 @@ export interface CreateAccountRequest {
     email?: string | null;
 }
 
+export interface CreateFavorite {
+    studentId?: string;
+    teacherId: string;
+}
+
 export interface Cursus {
     id?: string;
     createdAt: Date;
@@ -280,6 +285,31 @@ export interface Experience {
     teacher?: Teacher;
 }
 
+export interface Favorite {
+    id?: string;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    archivedAt?: Date | null;
+    studentId: string;
+    student?: Student;
+    teacherId: string;
+    teacher?: Teacher;
+}
+
+export interface FavoriteDetails {
+    id?: string;
+    studentId?: string;
+    teacherId?: string;
+    createdAt?: Date;
+}
+
+export interface FavoriteDetailsResponse {
+    message: string;
+    status: number;
+    data?: FavoriteDetails;
+    count?: number | null;
+}
+
 export interface FileUrl {
     url?: string | null;
 }
@@ -310,6 +340,7 @@ export interface FilterTeacher {
     dateTo?: Date | null;
     fullName?: string | null;
     cursusName?: string | null;
+    inFavorites?: boolean | null;
     categoryIds?: Array<string>;
     levelIds?: Array<string>;
     first?: number;
@@ -1032,6 +1063,7 @@ export interface Student {
     user?: UserApp;
     reservations?: Array<Reservation>;
     orders?: Array<Order>;
+    favorites?: Array<Favorite>;
 }
 
 export interface StudentCreate {
@@ -1065,6 +1097,7 @@ export interface Teacher {
     cursuses?: Array<Cursus>;
     experiences?: Array<Experience>;
     slots?: Array<Slot>;
+    favorites?: Array<Favorite>;
 }
 
 export interface TeacherCreate {

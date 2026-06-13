@@ -18,13 +18,14 @@ import { InputText } from 'primeng/inputtext';
 import { MultiSelect } from 'primeng/multiselect';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { Slider } from 'primeng/slider';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 import { firstValueFrom } from 'rxjs';
 import { FilterTeacher, UserDetails } from 'src/client';
 import { TeacherCard } from '../teacher-card/teacher-card';
 
 @Component({
     selector: 'bp-teacher-search',
-    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider],
+    imports: [TeacherCard, Card, InputText, DatePickerModule, MultiSelect, AutoCompleteModule, FormsModule, ButtonModule, LuxonModule, DatePipe, PaginatorModule, Slider, ToggleSwitch],
     styleUrls: ['./teacher-search.scss'],
     templateUrl: './teacher-search.html',
     providers: [CursusLevelPipe]
@@ -32,6 +33,7 @@ import { TeacherCard } from '../teacher-card/teacher-card';
 export class TeacherSearch implements OnInit {
     mainService = inject(MainService);
     teacherService = inject(TeacherWrapperService);
+    connected = computed(() => this.mainService.userConnected() != null && this.mainService.userConnected()?.email != null);
     cursusWrapperService = inject(CursusWrapperService);
     http = inject(HttpClient);
     levelPipe = inject(CursusLevelPipe);
@@ -57,6 +59,7 @@ export class TeacherSearch implements OnInit {
     cursusName = signal<string | null>(null);
     selectedCategories = signal<string[]>([]);
     selectedLevels = signal<string[]>([]);
+    inFavorites = signal<boolean>(false);
 
     first = signal<number>(0);
     rows = signal<number>(5);
@@ -101,6 +104,7 @@ export class TeacherSearch implements OnInit {
             dateFrom: this.dateFrom(),
             dateTo: this.dateTo(),
             cursusName: this.cursusName(),
+            inFavorites: this.inFavorites(),
             categoryIds: this.selectedCategories(),
             levelIds: this.selectedLevels(),
             first: this.first(),
@@ -128,6 +132,7 @@ export class TeacherSearch implements OnInit {
         this.postalCode.set(null);
         this.selectedCategories.set([]);
         this.selectedLevels.set([]);
+        this.inFavorites.set(false);
         this.first.set(0);
         this.rows.set(5);
         this.lat.set(null);

@@ -70,6 +70,12 @@
                         <p-multiSelect [(ngModel)]="selectedLevels" [options]="levelsOptions()" optionLabel="name" optionValue="id" placeholder="Sélectionner des niveaux" [showHeader]="false" class="w-full"> </p-multiSelect>
                     </div>
 
+                    <!-- Favorites -->
+                    <div class="flex items-center gap-2">
+                        <p-toggleswitch inputId="inFavorites" [(ngModel)]="inFavorites" [disabled]="!connected()" />
+                        <label for="inFavorites" class="font-medium text-sm">Uniquement mes favoris</label>
+                    </div>
+
                     <div class="flex gap-2 items-center">
                         <p-button type="button" variant="text" (click)="clearFilters()">Vider</p-button>
                         <p-button type="button" variant="text" (click)="onSearch()">Chercher</p-button>
