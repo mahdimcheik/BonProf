@@ -7,7 +7,7 @@ import { Card } from 'primeng/card';
 import { Image } from 'primeng/image';
 import { Tag } from 'primeng/tag';
 import { firstValueFrom } from 'rxjs';
-import { UserDetails } from 'src/client';
+import { RoleEnum, UserDetails } from 'src/client';
 
 @Component({
     selector: 'bp-profile-infos',
@@ -20,6 +20,8 @@ export class ProfileInfos {
     router = inject(Router);
 
     user = input.required<UserDetails>();
+    isTeacher = computed(() => this.user()?.roles?.some((role: any) => role.name === RoleEnum.Teacher));
+    isOwner = computed(() => this.mainService.userConnected()?.id === this.user()?.id);
     showEditButton = input<boolean>(false);
     address = computed(() => {
         return this.user().addresses.length > 0 ? this.user().addresses[0] : null;

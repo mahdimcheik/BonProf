@@ -51,7 +51,7 @@
                         <i class="pi pi-verified text-xl text-primary"></i>
                         }
                         <span class="text-base"
-                            >{{user().teacher?.isConfirmed ? 'Compte verifié' : 'Compte non verifié'}} @if(!user().teacher?.isConfirmed){
+                            >{{user().teacher?.isConfirmed ? 'Compte verifié' : 'Compte non verifié'}} @if(!user().teacher?.isConfirmed && isOwner()) {
                             <p-button label="Completer mon profil" icon="pi pi-chevron-right" iconPos="right" size="small" styleClass="text-primary" [text]="true" (onClick)="connectToStripe()" />
                             }</span
                         >
