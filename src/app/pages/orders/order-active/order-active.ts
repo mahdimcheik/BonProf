@@ -1,22 +1,23 @@
 import { Countdown } from '@/pages/components/countdown/countdown';
 import { OrderWrapperService } from '@/pages/shared/services/order-wrapper-service';
+import { PaymentWrapperService } from '@/pages/shared/services/payment-wrapper-service';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Button } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { Divider } from 'primeng/divider';
 import { firstValueFrom } from 'rxjs';
 import { OrderDetails, StatusReservationCode } from 'src/client';
 import { ReservationCard } from '../reservation-card/reservation-card';
 
 @Component({
     selector: 'bp-order-active',
-    imports: [CommonModule, Button, CardModule, Divider, ReservationCard, Countdown],
+    imports: [CommonModule, Button, CardModule, ReservationCard, Countdown],
     templateUrl: './order-active.html',
     styleUrl: './order-active.scss'
 })
 export class OrderActive implements OnInit {
     orderService = inject(OrderWrapperService);
+    paymentWrapperService = inject(PaymentWrapperService);
 
     order = signal<OrderDetails>({} as OrderDetails);
     totalPrice = computed(() => this.order().totalAmount);
@@ -51,7 +52,7 @@ export class OrderActive implements OnInit {
     }
 
     async openPayment() {
-        const res = await firstValueFrom(this.orderService.createCheckoutSession(this.order().id!));
+        const res = await firstValueFrom(this.paymentWrapperService.createCheckoutSession(this.order().id!));
         console.log('response: ', res);
         if (res && res.url) {
             window.location.href = res.url!;

@@ -11,7 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { firstValueFrom } from 'rxjs';
-import { GenderDetails, RoleDetails, UserCreate } from 'src/client';
+import { GenderDetails, RoleDetails, RoleEnum, UserCreate } from 'src/client';
 
 @Component({
     selector: 'bp-inscription',
@@ -26,11 +26,12 @@ export class Inscription implements OnInit {
     mainService = inject(MainService);
     messageService = inject(MessageService);
     genderPipe = inject(GenderPipe);
+    roleEnum = RoleEnum;
 
     roleOptions = signal<RoleDetails[]>([]);
-    authorizedRoles = computed(() => this.roleOptions().filter((role) => role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b4a01' || role.id == '87a0a5ed-c7bb-4394-a163-7ed7560b3703'));
+    authorizedRoles = computed(() => this.roleOptions().filter((role) => role.name === RoleEnum.Teacher || role.name === RoleEnum.Student));
     genderOptions = signal<GenderDetails[]>([]);
-    selectedUserType = signal<'87a0a5ed-c7bb-4394-a163-7ed7560b4a01' | '87a0a5ed-c7bb-4394-a163-7ed7560b3703'>('87a0a5ed-c7bb-4394-a163-7ed7560b4a01');
+    selectedUserType = signal<RoleEnum>(RoleEnum.Student);
 
     selectedGender = computed(() => {
         if (this.genderOptions().length > 0) {
@@ -138,20 +139,13 @@ export class Inscription implements OnInit {
                 {
                     id: 'isProfessional',
                     name: 'isProfessional',
-                    label: 'Type de compte',
+                    label: 'Administration',
                     fields: [
-                        {
-                            id: 'isProfessional',
-                            name: 'isProfessional',
-                            type: 'checkbox',
-                            label: 'Je suis un professionnel',
-                            value: false,
-                            fullWidth: true
-                        },
                         {
                             id: 'siret',
                             name: 'siret',
                             type: 'number',
+                            required: true,
                             label: 'Numéro de SIRET',
                             placeholder: 'Numéro de SIRET',
                             fullWidth: true
@@ -209,7 +203,7 @@ export class Inscription implements OnInit {
                 }
             ]
         };
-        if (roleId === '87a0a5ed-c7bb-4394-a163-7ed7560b4a01') {
+        if (roleId === RoleEnum.Student) {
             returnStructure.sections = returnStructure.sections?.filter((section) => section.id !== 'isProfessional');
         }
 
@@ -227,21 +221,26 @@ export class Inscription implements OnInit {
         this.roleOptions.set(roles ?? []);
     }
 
-    selectRole(roleId: string) {
-        this.selectedUserType.set(roleId as '87a0a5ed-c7bb-4394-a163-7ed7560b4a01' | '87a0a5ed-c7bb-4394-a163-7ed7560b3703');
+    selectRole(roleName: string) {
+        this.selectedUserType.set(roleName as RoleEnum);
     }
 
     async submit(event: FormGroup<any>) {
         const value = event.value;
+        const roleName = this.selectedUserType();
+        const roleId = this.roleOptions().find((role) => role.name === roleName)?.id;
         const userCreationData: UserCreate = {
             ...value.inscriptionForm,
             ...value.privacy,
             ...value.optionalFields,
-            roleId: this.selectedUserType(),
-            teacher: {
-                isProfessionnal: value.isProfessional?.isProfessional ?? false,
-                siret: value.isProfessional?.siret ?? null
-            },
+            roleId,
+            teacher:
+                roleName === RoleEnum.Teacher
+                    ? {
+                          isProfessionnal: value.isProfessional?.isProfessional ?? false,
+                          siret: value.isProfessional?.siret ?? null
+                      }
+                    : null,
             student: {}
         };
 

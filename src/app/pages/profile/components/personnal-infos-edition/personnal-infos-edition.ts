@@ -164,108 +164,108 @@ export class PersonnalInfosEdition implements OnInit {
 
         const optionalFields: FormSection = isTeacher
             ? {
-                id: 'optionalFields',
-                name: 'optionalFields',
-                label: 'Champs facultatifs',
-                fields: [
-                    {
-                        id: 'title',
-                        name: 'title',
-                        type: 'text',
-                        label: 'Titre',
-                        value: user?.title || '',
-                        fullWidth: true,
-                        required: false,
-                        placeholder: 'Titre'
-                    },
-                    {
-                        id: 'description',
-                        name: 'description',
-                        type: 'texteditor',
-                        label: 'Description',
-                        value: user?.description || '',
-                        fullWidth: true,
-                        required: false,
-                        placeholder: 'Description'
-                    },
-                    {
-                        id: 'languagesIds',
-                        label: 'Langues parlées',
-                        name: 'languagesIds',
-                        type: 'multiselect',
-                        compareKey: 'id',
-                        displayKey: 'name',
-                        value: this.user()?.languages?.map((lang) => lang.id) || [],
-                        fullWidth: true,
-                        options: this.languagesList()
-                    },
-                    {
-                        id: 'priceIndicative',
-                        name: 'priceIndicative',
-                        type: 'number',
-                        label: 'Tarif indicatif (€ par heure)',
-                        value: user?.teacher?.priceIndicative || null,
-                        fullWidth: true,
-                        required: false,
-                        placeholder: 'Tarif indicatif',
-                        disabled: !isTeacher
-                    }
-                ]
-            }
+                  id: 'optionalFields',
+                  name: 'optionalFields',
+                  label: 'Champs facultatifs',
+                  fields: [
+                      {
+                          id: 'title',
+                          name: 'title',
+                          type: 'text',
+                          label: 'Titre',
+                          value: user?.title || '',
+                          fullWidth: true,
+                          required: false,
+                          placeholder: 'Titre'
+                      },
+                      {
+                          id: 'description',
+                          name: 'description',
+                          type: 'texteditor',
+                          label: 'Description',
+                          value: user?.description || '',
+                          fullWidth: true,
+                          required: false,
+                          placeholder: 'Description'
+                      },
+                      {
+                          id: 'languagesIds',
+                          label: 'Langues parlées',
+                          name: 'languagesIds',
+                          type: 'multiselect',
+                          compareKey: 'id',
+                          displayKey: 'name',
+                          value: this.user()?.languages?.map((lang) => lang.id) || [],
+                          fullWidth: true,
+                          options: this.languagesList()
+                      },
+                      {
+                          id: 'priceIndicative',
+                          name: 'priceIndicative',
+                          type: 'number',
+                          label: 'Tarif indicatif (€ par heure)',
+                          value: user?.teacher?.priceIndicative || null,
+                          fullWidth: true,
+                          required: false,
+                          placeholder: 'Tarif indicatif',
+                          disabled: !isTeacher
+                      }
+                  ]
+              }
             : {
-                id: 'optionalFields',
-                name: 'optionalFields',
-                label: 'Champs facultatifs',
-                fields: [
-                    {
-                        id: 'title',
-                        name: 'title',
-                        type: 'text',
-                        label: 'Titre',
-                        value: user?.title || '',
-                        fullWidth: true,
-                        required: false,
-                        placeholder: 'Titre'
-                    },
-                    {
-                        id: 'description',
-                        name: 'description',
-                        type: 'texteditor',
-                        label: 'Description',
-                        value: user?.description || '',
-                        fullWidth: true,
-                        required: false,
-                        placeholder: 'Description'
-                    },
-                    {
-                        id: 'languagesIds',
-                        label: 'Langues parlées',
-                        name: 'languagesIds',
-                        type: 'multiselect',
-                        compareKey: 'id',
-                        displayKey: 'name',
-                        value: this.user()?.languages?.map((lang) => lang.id) || [],
-                        fullWidth: true,
-                        options: this.languagesList()
-                    }
-                ]
-            };
+                  id: 'optionalFields',
+                  name: 'optionalFields',
+                  label: 'Champs facultatifs',
+                  fields: [
+                      {
+                          id: 'title',
+                          name: 'title',
+                          type: 'text',
+                          label: 'Titre',
+                          value: user?.title || '',
+                          fullWidth: true,
+                          required: false,
+                          placeholder: 'Titre'
+                      },
+                      {
+                          id: 'description',
+                          name: 'description',
+                          type: 'texteditor',
+                          label: 'Description',
+                          value: user?.description || '',
+                          fullWidth: true,
+                          required: false,
+                          placeholder: 'Description'
+                      },
+                      {
+                          id: 'languagesIds',
+                          label: 'Langues parlées',
+                          name: 'languagesIds',
+                          type: 'multiselect',
+                          compareKey: 'id',
+                          displayKey: 'name',
+                          value: this.user()?.languages?.map((lang) => lang.id) || [],
+                          fullWidth: true,
+                          options: this.languagesList()
+                      }
+                  ]
+              };
 
         return isTeacher
             ? {
-                id: 'personnalInfos',
-                name: 'personnalInfos',
-                label: 'Informations personnelles',
-                styleClass: 'md:min-w-full min-w-full !p-0',
-                sections: [personnalInfos, avatarSection, optionalFields, socialLinks]
-            }
+                  id: 'personnalInfos',
+                  name: 'personnalInfos',
+                  label: 'Informations personnelles',
+                  styleClass: 'md:min-w-full min-w-full !p-0',
+                  sections: [personnalInfos, avatarSection, optionalFields, socialLinks]
+              }
             : {
-                id: 'personnalInfos',
-                name: 'personnalInfos',
-                label: 'Informations personnelles',
-                styleClass: 'md:min-w-full min-w-full !p-0',
-                sections: [personnalInfos, avatarSection, optionalFields]
-            };
+                  id: 'personnalInfos',
+                  name: 'personnalInfos',
+                  label: 'Informations personnelles',
+                  styleClass: 'md:min-w-full min-w-full !p-0',
+                  sections: [personnalInfos, avatarSection, optionalFields]
+              };
     });
 
     async submit(event: FormGroup<any>) {
@@ -296,7 +296,7 @@ export class PersonnalInfosEdition implements OnInit {
             if (event.value.avatar) {
                 await firstValueFrom(this.mainService.updateAvatar(event.value.avatar.profilePicture));
             }
-            await this.router.navigate(['dashboard/teacher/profile/me']);
+            await this.router.navigate(['dashboard/teacher/profile/me/edition']);
         } else if (this.mainService.isStudent()) {
             const updatedUser: UserUpdate = {
                 ...this.user(),
@@ -316,7 +316,7 @@ export class PersonnalInfosEdition implements OnInit {
             if (event.value.avatar) {
                 await firstValueFrom(this.mainService.updateAvatar(event.value.avatar.profilePicture));
             }
-            await this.router.navigate(['dashboard/student/profile/me']);
+            await this.router.navigate(['dashboard/student/profile/me/edition']);
         }
     }
 

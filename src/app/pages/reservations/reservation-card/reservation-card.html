@@ -24,9 +24,6 @@
             <img [src]="data()!.slot!.teacher!.user!.imgUrl!" alt="" class="w-5 h-5 rounded-full object-cover flex-shrink-0" />
             }
             <span class="text-xs text-surface-700 dark:text-surface-300 truncate"> {{ data()!.slot!.teacher!.user?.firstName }} {{ data()!.slot!.teacher!.user?.lastName }} </span>
-            @if (data()!.slot!.teacher!.isProfessionnal) {
-            <span class="ml-auto text-xs text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center gap-0.5"> <i class="pi pi-verified text-xs"></i> Pro </span>
-            }
         </div>
         }
 

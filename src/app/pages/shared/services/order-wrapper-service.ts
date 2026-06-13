@@ -30,13 +30,13 @@ export class OrderWrapperService {
         );
     }
 
-    createCheckoutSession(orderId: string) {
-        return this.paymentService.paymentCheckoutPost({ orderId: orderId, currency: 'eur' }).pipe(
-            catchError((res) => {
-                console.log('error res : ', res);
-                return of();
-            }),
-            map((response) => response.data)
-        );
-    }
+    // createCheckoutSession(orderId: string) {
+    //     return this.paymentService.paymentCheckoutPost({ orderId: orderId, currency: 'eur' }).pipe(
+    //         catchError((res) => {
+    //             console.log('error res : ', res);
+    //             return of();
+    //         }),
+    //         map((response) => response.data)
+    //     );
+    // }
 }

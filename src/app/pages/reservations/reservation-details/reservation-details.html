@@ -73,8 +73,6 @@
                                 <p class="text-base font-semibold text-surface-900 dark:text-surface-0">{{ reservation()!.slot!.teacher!.user?.firstName }} {{ reservation()!.slot!.teacher!.user?.lastName }}</p>
                                 @if (reservation()!.slot!.teacher!.user?.email) {
                                 <p class="text-sm text-surface-500 truncate">{{ reservation()!.slot!.teacher!.user!.email }}</p>
-                                } @if (reservation()!.slot!.teacher!.isProfessionnal) {
-                                <span class="inline-flex items-center gap-1 mt-1 text-xs text-blue-600 dark:text-blue-400 font-medium"> <i class="pi pi-verified text-xs"></i> Professionnel certifié </span>
                                 }
                             </div>
                             @if (reservation()!.slot!.teacher!.priceIndicative) {
