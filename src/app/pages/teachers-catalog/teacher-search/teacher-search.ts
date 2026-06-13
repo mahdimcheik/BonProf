@@ -33,6 +33,7 @@ import { TeacherCard } from '../teacher-card/teacher-card';
 export class TeacherSearch implements OnInit {
     mainService = inject(MainService);
     teacherService = inject(TeacherWrapperService);
+    connected = computed(() => this.mainService.userConnected() != null && this.mainService.userConnected()?.email != null);
     cursusWrapperService = inject(CursusWrapperService);
     http = inject(HttpClient);
     levelPipe = inject(CursusLevelPipe);

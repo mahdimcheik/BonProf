@@ -72,7 +72,7 @@
 
                     <!-- Favorites -->
                     <div class="flex items-center gap-2">
-                        <p-toggleswitch inputId="inFavorites" [(ngModel)]="inFavorites" />
+                        <p-toggleswitch inputId="inFavorites" [(ngModel)]="inFavorites" [disabled]="!connected()" />
                         <label for="inFavorites" class="font-medium text-sm">Uniquement mes favoris</label>
                     </div>
 
